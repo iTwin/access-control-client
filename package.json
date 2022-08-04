@@ -1,0 +1,28 @@
+{
+  "name": "@itwin/access-control-client",
+  "version": "0.1.0",
+  "description": "Access control client for the iTwin platform",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "~4.4.0",
+    "@itwin/eslint-plugin": "^3.2.7"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iTwin/access-control-client"
+  },
+  "author": {
+    "name": "Bentley Systems, Inc",
+    "url": "http://www.bentley.com"
+  },
+  "license": "MIT",
+  "keywords": [
+    "Bentley",
+    "iTwin",
+    "access-control"
+  ]
+}
