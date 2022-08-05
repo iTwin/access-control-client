@@ -7,6 +7,7 @@ import type { AccessToken } from "@itwin/core-bentley";
 import type { AccessControlAPIResponse} from "../../access-control-client";
 import { AccessControlClient } from "../../access-control-client";
 import { TestConfig } from "../TestConfig";
+import type { PermissionsResponse } from "../../accessControlProps";
 
 chai.should();
 describe("AccessControlClient", () => {
@@ -20,12 +21,27 @@ describe("AccessControlClient", () => {
 
   it("should get a list of permissions", async () => {
     // Act
-    const iTwinsResponse: AccessControlAPIResponse<Permissions> =
+    const iTwinsResponse: AccessControlAPIResponse<PermissionsResponse> =
       await accessControlClient.getPermissions(accessToken);
 
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(200);
     chai.expect(iTwinsResponse.data).to.not.be.empty;
+    chai.expect(iTwinsResponse.data!.permissions).to.not.be.empty;
 
+  });
+
+  it("should get a list of permissions for an iTwin", async () => {
+    // Arrange
+    const iTwinId = process.env.IMJS_TEST_PROJECT_ID ?? "";
+
+    // Act
+    const iTwinsResponse: AccessControlAPIResponse<PermissionsResponse> =
+      await accessControlClient.getITwinPermissions(accessToken, iTwinId);
+
+    // Assert
+    chai.expect(iTwinsResponse.status).to.be.eq(200);
+    chai.expect(iTwinsResponse.data).to.not.be.empty;
+    chai.expect(iTwinsResponse.data!.permissions).to.not.be.empty;
   });
 });
