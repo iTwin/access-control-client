@@ -22,7 +22,7 @@ describe("AccessControlClient", () => {
   it("should get a list of permissions", async () => {
     // Act
     const iTwinsResponse: AccessControlAPIResponse<PermissionsResponse> =
-      await accessControlClient.getPermissions(accessToken);
+      await accessControlClient.queryPermissionsAsync(accessToken);
 
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(200);
@@ -37,7 +37,7 @@ describe("AccessControlClient", () => {
 
     // Act
     const iTwinsResponse: AccessControlAPIResponse<PermissionsResponse> =
-      await accessControlClient.getITwinPermissions(accessToken, iTwinId);
+      await accessControlClient.queryITwinPermissionsAsync(accessToken, iTwinId);
 
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(200);

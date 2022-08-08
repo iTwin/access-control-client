@@ -9,9 +9,11 @@ import type { AccessToken } from "@itwin/core-bentley";
 import type { Method } from "axios";
 import type { AxiosRequestConfig } from "axios";
 import axios from "axios";
-import type { AccessControlAPIResponse, MemberResponse, MembersResponse, NewMember, PermissionsResponse } from "./accessControlProps";
+import type { AccessControl, AccessControlAPIResponse, AccessControlQueryArg, MemberResponse, MembersResponse, NewMember, NewRole, PermissionsResponse, Role, RoleResponse, RolesResponse } from "./accessControlProps";
 
-export class AccessControlClient { // Need interface
+// TODO: Add querying capabilities
+
+export class AccessControlClient implements AccessControl{
   private _baseUrl: string = "https://api.bentley.com/accesscontrol/itwins";
 
   public constructor() {
@@ -29,10 +31,12 @@ export class AccessControlClient { // Need interface
    * @param accessToken The client access token string
    * @returns Array of permissions
    */
-  public async getPermissions(
+  public async queryPermissionsAsync(
     accessToken: AccessToken,
+    arg?: AccessControlQueryArg
   ): Promise<AccessControlAPIResponse<PermissionsResponse>>{
-    const url = `${this._baseUrl}/permissions`;
+    let url = `${this._baseUrl}/permissions`;
+    if (arg) url += this.getQueryString(arg);
     return this.sendGenericAPIRequest(accessToken, "GET", url);
   }
 
@@ -41,11 +45,13 @@ export class AccessControlClient { // Need interface
    * @param iTwinId The id of the iTwin
    * @returns Array of permissions
    */
-  public async getITwinPermissions(
+  public async queryITwinPermissionsAsync(
     accessToken: AccessToken,
-    iTwinId: string
+    iTwinId: string,
+    arg?: AccessControlQueryArg
   ): Promise<AccessControlAPIResponse<PermissionsResponse>>{
-    const url = `${this._baseUrl}/${iTwinId}/permissions`;
+    let url = `${this._baseUrl}/${iTwinId}/permissions`;
+    if (arg) url += this.getQueryString(arg);
     return this.sendGenericAPIRequest(accessToken, "GET", url);
   }
 
@@ -58,11 +64,13 @@ export class AccessControlClient { // Need interface
    * @param iTwinId The id of the iTwin
    * @returns Array of members
    */
-  public async getITwinMembers(
+  public async queryITwinMembersAsync(
     accessToken: AccessToken,
-    iTwinId: string
+    iTwinId: string,
+    arg?: AccessControlQueryArg
   ): Promise<AccessControlAPIResponse<MembersResponse>>{
-    const url = `${this._baseUrl}/${iTwinId}/members`;
+    let url = `${this._baseUrl}/${iTwinId}/members`;
+    if (arg) url += this.getQueryString(arg);
     return this.sendGenericAPIRequest(accessToken, "GET", url); // TODO: Consider how to handle paging
   }
 
@@ -72,7 +80,7 @@ export class AccessControlClient { // Need interface
    * @param memberId The id of the member
    * @returns Member
    */
-  public async getITwinMember(
+  public async getITwinMemberAsync(
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string
@@ -87,7 +95,7 @@ export class AccessControlClient { // Need interface
    * @param newMembers The list of new members to be added along with their role
    * @returns // TODO: What to put here if nothing is returned
    */
-  public async addITwinMembers(
+  public async addITwinMembersAsync(
     accessToken: AccessToken,
     iTwinId: string,
     newMembers: NewMember[]
@@ -105,7 +113,7 @@ export class AccessControlClient { // Need interface
    * @param memberId The id of the member
    * @returns // TODO: What to put here if nothing is returned
    */
-  public async removeITwinMember(
+  public async removeITwinMemberAsync(
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string
@@ -121,7 +129,7 @@ export class AccessControlClient { // Need interface
    * @param roleIds The ids of the roles to be assigned
    * @returns Member
    */
-  public async updateITwinMember(
+  public async updateITwinMemberAsync(
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string,
@@ -136,10 +144,92 @@ export class AccessControlClient { // Need interface
 
   // #endregion Members
 
+  // #region Roles
+
+  /** Retrieves a list of roles the for a specified iTwin
+   * @param accessToken The client access token string
+   * @param iTwinId The id of the iTwin
+   * @returns Roles
+   */
+  public async queryITwinRolesAsync(
+    accessToken: AccessToken,
+    iTwinId: string,
+    arg?: AccessControlQueryArg
+  ): Promise<AccessControlAPIResponse<RolesResponse>>{
+    let url = `${this._baseUrl}/${iTwinId}/roles`;
+    if (arg) url += this.getQueryString(arg);
+    return this.sendGenericAPIRequest(accessToken, "GET", url);
+  }
+
+  /** Retrieves a role for a specified iTwin
+   * @param accessToken The client access token string
+   * @param iTwinId The id of the iTwin
+   * @returns Role
+   */
+  public async getITwinRoleAsync(
+    accessToken: AccessToken,
+    iTwinId: string,
+    roleId: string,
+  ): Promise<AccessControlAPIResponse<Role>>{
+    const url = `${this._baseUrl}/${iTwinId}/roles/${roleId}`;
+    return this.sendGenericAPIRequest(accessToken, "GET", url);
+  }
+
+  /** Creates a new iTwin Role
+   * @param accessToken The client access token string
+   * @param iTwinId The id of the iTwin
+   * @param role The role to be created
+   * @returns Role
+   */
+  public async createITwinRoleAsync(
+    accessToken: AccessToken,
+    iTwinId: string,
+    role: NewRole
+  ): Promise<AccessControlAPIResponse<RoleResponse>>{
+    const url = `${this._baseUrl}/${iTwinId}/roles`;
+    return this.sendGenericAPIRequest(accessToken, "POST", url, role); // TODO: Check if newRole as body is correct
+  }
+
+  /** Removes an existing iTwin Role
+   * @param accessToken The client access token string
+   * @param iTwinId The id of the iTwin
+   * @param roleId The id of the role to remove
+   * @returns // TODO: What to put here if nothing is returned
+   */
+  public async removeITwinRoleAsync(
+    accessToken: AccessToken,
+    iTwinId: string,
+    roleId: string,
+  ): Promise<AccessControlAPIResponse<undefined>>{
+    const url = `${this._baseUrl}/${iTwinId}/roles/${roleId}`;
+    return this.sendGenericAPIRequest(accessToken, "DELETE", url);
+  }
+
+  /** Updates an existing iTwin Role
+   * @param accessToken The client access token string
+   * @param iTwinId The id of the iTwin
+   * @param roleId The id of the role to update
+   * @param role The updated role
+   * @returns Role
+   */
+  public async updateITwinRoleAsync(
+    accessToken: AccessToken,
+    iTwinId: string,
+    roleId: string,
+    role: NewRole
+  ): Promise<AccessControlAPIResponse<RoleResponse>>{
+    const url = `${this._baseUrl}/${iTwinId}/roles/${roleId}`;
+    return this.sendGenericAPIRequest(accessToken, "PATCH", url, role);
+  }
+
+  // #endregion Roles
+
+  // #region Helper Methods
+
   /**
    * Sends a basic API request
    * @param accessTokenString The client access token string
-   * @param method The method type of the request (ex. GET, POST, etc)
+   * @param method The method type of the request (ex. GET, POST, DELETE, etc)
    * @param url The url of the request
    */
   private async sendGenericAPIRequest(
@@ -188,4 +278,32 @@ export class AccessControlClient { // Need interface
       },
     };
   }
+
+  /**
+   * Build a query to be appended to a URL
+   * @param queryArg Object container queryable properties
+   * @returns query string with AccessControlQueryArg applied, which should be appended to a url
+   */
+  private getQueryString(queryArg: AccessControlQueryArg): string {
+    let queryString = "";
+
+    if (queryArg.search) {
+      queryString += `&$search=${queryArg.search}`;
+    }
+
+    if (queryArg.top) {
+      queryString += `&$top=${queryArg.top}`;
+    }
+
+    if (queryArg.skip) {
+      queryString += `&$skip=${queryArg.skip}`;
+    }
+
+    // trim & from start of string
+    queryString.replace(/^&+/, "");
+
+    return queryString;
+  }
+
+  // #endregion Helper Methods
 }
