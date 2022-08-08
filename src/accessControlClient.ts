@@ -11,7 +11,7 @@ import type { AxiosRequestConfig } from "axios";
 import axios from "axios";
 import type { AccessControl, AccessControlAPIResponse, AccessControlQueryArg, MemberResponse, MembersResponse, NewMember, NewRole, PermissionsResponse, Role, RoleResponse, RolesResponse } from "./accessControlProps";
 
-// TODO: Add querying capabilities
+// TODO: Expand querying capabilities
 
 export class AccessControlClient implements AccessControl{
   private _baseUrl: string = "https://api.bentley.com/accesscontrol/itwins";
@@ -245,7 +245,7 @@ export class AccessControlClient implements AccessControl{
 
       return {
         status: response.status,
-        data: response.data,
+        data: response.data.error || response.data === "" ? undefined : response.data,
         error: response.data.error,
       };
     } catch (err) {

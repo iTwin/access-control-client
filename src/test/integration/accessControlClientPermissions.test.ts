@@ -10,7 +10,7 @@ import { TestConfig } from "../TestConfig";
 import type { PermissionsResponse } from "../../accessControlProps";
 
 chai.should();
-describe("AccessControlClient", () => {
+describe("AccessControlClient Permissions", () => {
   const accessControlClient: AccessControlClient = new AccessControlClient();
   let accessToken: AccessToken;
 
@@ -33,11 +33,11 @@ describe("AccessControlClient", () => {
 
   it("should get a list of permissions for an iTwin", async () => {
     // Arrange
-    const iTwinId = process.env.IMJS_TEST_PROJECT_ID ?? "";
+    const iTwinId = process.env.IMJS_TEST_PROJECT_ID;
 
     // Act
     const iTwinsResponse: AccessControlAPIResponse<PermissionsResponse> =
-      await accessControlClient.queryITwinPermissionsAsync(accessToken, iTwinId);
+      await accessControlClient.queryITwinPermissionsAsync(accessToken, iTwinId!);
 
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(200);

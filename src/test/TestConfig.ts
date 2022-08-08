@@ -14,6 +14,9 @@ import {
 export class TestConfig {
   public static readonly iTwinProjectNumber: string = "APIM-Test-Project-20210204T00-58";
 
+  public static readonly permanentRoleName: string =  process.env.IMJS_TEST_PERMANENT_ROLE_NAME!;
+  public static readonly permanentRoleId: string = process.env.IMJS_TEST_PERMANENT_ROLE_ID!;
+
   /** Login the specified user and return the AuthorizationToken */
   public static async getAccessToken(
     user: TestUserCredentials = TestUsers.regular
