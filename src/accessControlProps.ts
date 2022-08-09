@@ -76,7 +76,7 @@ export interface AccessControl {
   ): Promise<AccessControlAPIResponse<RoleResponse>>;
 
   /** Removes an existing iTwin Role */
-  removeITwinRoleAsync(
+  deleteITwinRoleAsync(
     accessToken: AccessToken,
     iTwinId: string,
     roleId: string,

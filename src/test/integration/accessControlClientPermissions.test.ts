@@ -32,12 +32,9 @@ describe("AccessControlClient Permissions", () => {
   });
 
   it("should get a list of permissions for an iTwin", async () => {
-    // Arrange
-    const iTwinId = process.env.IMJS_TEST_PROJECT_ID;
-
     // Act
     const iTwinsResponse: AccessControlAPIResponse<PermissionsResponse> =
-      await accessControlClient.getITwinPermissionsAsync(accessToken, iTwinId!);
+      await accessControlClient.getITwinPermissionsAsync(accessToken, TestConfig.projectId);
 
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(200);

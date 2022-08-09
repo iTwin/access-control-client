@@ -53,7 +53,7 @@ export class AccessControlClient implements AccessControl{
 
   // #region Members
 
-  /** Retrieves a list of team members and their roles assigned to a specified iTwin.
+  /** Retrieves a list of iTwin members and their roles assignments.
    * @param accessToken The client access token string
    * @param iTwinId The id of the iTwin
    * @returns Array of members
@@ -87,13 +87,13 @@ export class AccessControlClient implements AccessControl{
    * @param accessToken The client access token string
    * @param iTwinId The id of the iTwin
    * @param newMembers The list of new members to be added along with their role
-   * @returns // TODO: What to put here if nothing is returned
+   * @returns No Content
    */
   public async addITwinMembersAsync(
     accessToken: AccessToken,
     iTwinId: string,
     newMembers: NewMember[]
-  ): Promise<AccessControlAPIResponse<undefined>>{  // TODO: Probably not used undefined, maybe another Response object?
+  ): Promise<AccessControlAPIResponse<undefined>>{
     const url = `${this._baseUrl}/${iTwinId}/members`;
     const body = {
       members: newMembers,
@@ -101,11 +101,11 @@ export class AccessControlClient implements AccessControl{
     return this.sendGenericAPIRequest(accessToken, "POST", url, body);
   }
 
-  /** Remove the specified iTwin member
+  /** Remove the specified member from the iTwin
    * @param accessToken The client access token string
    * @param iTwinId The id of the iTwin
    * @param memberId The id of the member
-   * @returns // TODO: What to put here if nothing is returned
+   * @returns No Content
    */
   public async removeITwinMemberAsync(
     accessToken: AccessToken,
@@ -140,7 +140,7 @@ export class AccessControlClient implements AccessControl{
 
   // #region Roles
 
-  /** Retrieves a list of roles the for a specified iTwin
+  /** Retrieves a list of available user roles that are defined for a specified iTwin
    * @param accessToken The client access token string
    * @param iTwinId The id of the iTwin
    * @returns Roles
@@ -153,7 +153,7 @@ export class AccessControlClient implements AccessControl{
     return this.sendGenericAPIRequest(accessToken, "GET", url);
   }
 
-  /** Retrieves a role for a specified iTwin
+  /** Retrieves the specified role for the specified iTwin
    * @param accessToken The client access token string
    * @param iTwinId The id of the iTwin
    * @returns Role
@@ -179,16 +179,16 @@ export class AccessControlClient implements AccessControl{
     role: NewRole
   ): Promise<AccessControlAPIResponse<RoleResponse>>{
     const url = `${this._baseUrl}/${iTwinId}/roles`;
-    return this.sendGenericAPIRequest(accessToken, "POST", url, role); // TODO: Check if newRole as body is correct
+    return this.sendGenericAPIRequest(accessToken, "POST", url, role);
   }
 
-  /** Removes an existing iTwin Role
+  /** Delete the specified iTwin role
    * @param accessToken The client access token string
    * @param iTwinId The id of the iTwin
    * @param roleId The id of the role to remove
-   * @returns // TODO: What to put here if nothing is returned
+   * @returns No Content
    */
-  public async removeITwinRoleAsync(
+  public async deleteITwinRoleAsync(
     accessToken: AccessToken,
     iTwinId: string,
     roleId: string,
@@ -197,7 +197,7 @@ export class AccessControlClient implements AccessControl{
     return this.sendGenericAPIRequest(accessToken, "DELETE", url);
   }
 
-  /** Updates an existing iTwin Role
+  /** Update the specified iTwin role
    * @param accessToken The client access token string
    * @param iTwinId The id of the iTwin
    * @param roleId The id of the role to update
