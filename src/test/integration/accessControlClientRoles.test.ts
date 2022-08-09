@@ -23,42 +23,12 @@ describe("AccessControlClient Roles", () => {
   it("should get a list of roles for an iTwin", async () => {
     // Act
     const iTwinsResponse: AccessControlAPIResponse<RolesResponse> =
-      await accessControlClient.queryITwinRolesAsync(accessToken, iTwinId!);
+      await accessControlClient.getITwinRolesAsync(accessToken, iTwinId!);
 
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(200);
     chai.expect(iTwinsResponse.data).to.not.be.empty;
     chai.expect(iTwinsResponse.data!.roles).to.not.be.empty;
-  });
-
-  it("should get a list of roles for an iTwin when using top", async () => {
-    // Arrange
-    const numberOfRoles = 3;
-
-    // Act
-    const iTwinsResponse: AccessControlAPIResponse<RolesResponse> =
-      await accessControlClient.queryITwinRolesAsync(accessToken, iTwinId!, {top: numberOfRoles});
-
-    // Assert
-    chai.expect(iTwinsResponse.status).to.be.eq(200);
-    chai.expect(iTwinsResponse.data).to.not.be.empty;
-    chai.expect(iTwinsResponse.data!.roles.length).to.be.eq(numberOfRoles);
-  });
-
-  it("should get a list of roles for an iTwin when using search", async () => {
-    // Arrange
-    const searchTerm = "Test Role";
-
-    // Act
-    const iTwinsResponse: AccessControlAPIResponse<RolesResponse> =
-      await accessControlClient.queryITwinRolesAsync(accessToken, iTwinId!, {search: searchTerm});
-
-    // Assert
-    chai.expect(iTwinsResponse.status).to.be.eq(200);
-    chai.expect(iTwinsResponse.data).to.not.be.empty;
-    iTwinsResponse.data!.roles.forEach((role) => {
-      chai.expect(role.displayName.includes(searchTerm) || role.description.includes(searchTerm)).to.be.true;
-    });
   });
 
   it("should get a specific role for an iTwin", async () => {
@@ -120,7 +90,7 @@ describe("AccessControlClient Roles", () => {
     chai.expect(iTwinsResponse.data).to.be.undefined;
   });
 
-  it("should get create, update, and remove a role", async () => {
+  it("should create, update, and remove a role", async () => {
     // --- CREATE ROLE ---
     // Arrange
     const newRoleName = `APIM Access Control Typescript Client Test Role 1 ${new Date().toISOString()}`;

@@ -10,12 +10,12 @@ import type { AccessToken } from "@itwin/core-bentley";
 
 export interface AccessControl {
   /** Retrieves the list of all available permissions **/
-  queryPermissionsAsync(
+  getPermissionsAsync(
     accessToken: AccessToken,
   ): Promise<AccessControlAPIResponse<PermissionsResponse>>;
 
   /** Retrieves a list of permissions the identity has for a specified iTwin */
-  queryITwinPermissionsAsync(
+  getITwinPermissionsAsync(
     accessToken: AccessToken,
     iTwinId: string
   ): Promise<AccessControlAPIResponse<PermissionsResponse>>;
@@ -56,7 +56,7 @@ export interface AccessControl {
   ): Promise<AccessControlAPIResponse<MemberResponse>>;
 
   /** Retrieves a list of roles the for a specified iTwin */
-  queryITwinRolesAsync(
+  getITwinRolesAsync(
     accessToken: AccessToken,
     iTwinId: string,
   ): Promise<AccessControlAPIResponse<RolesResponse>>;
@@ -95,7 +95,6 @@ export interface AccessControl {
 export interface AccessControlQueryArg {
   top?: number;
   skip?: number;
-  search?: string;
 }
 
 export interface AccessControlAPIResponse<T> {

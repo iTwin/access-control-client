@@ -11,8 +11,6 @@ import type { AxiosRequestConfig } from "axios";
 import axios from "axios";
 import type { AccessControl, AccessControlAPIResponse, AccessControlQueryArg, MemberResponse, MembersResponse, NewMember, NewRole, PermissionsResponse, Role, RoleResponse, RolesResponse } from "./accessControlProps";
 
-// TODO: Expand querying capabilities
-
 export class AccessControlClient implements AccessControl{
   private _baseUrl: string = "https://api.bentley.com/accesscontrol/itwins";
 
@@ -31,12 +29,10 @@ export class AccessControlClient implements AccessControl{
    * @param accessToken The client access token string
    * @returns Array of permissions
    */
-  public async queryPermissionsAsync(
+  public async getPermissionsAsync(
     accessToken: AccessToken,
-    arg?: AccessControlQueryArg
   ): Promise<AccessControlAPIResponse<PermissionsResponse>>{
-    let url = `${this._baseUrl}/permissions`;
-    if (arg) url += this.getQueryString(arg);
+    const url = `${this._baseUrl}/permissions`;
     return this.sendGenericAPIRequest(accessToken, "GET", url);
   }
 
@@ -45,13 +41,11 @@ export class AccessControlClient implements AccessControl{
    * @param iTwinId The id of the iTwin
    * @returns Array of permissions
    */
-  public async queryITwinPermissionsAsync(
+  public async getITwinPermissionsAsync(
     accessToken: AccessToken,
     iTwinId: string,
-    arg?: AccessControlQueryArg
   ): Promise<AccessControlAPIResponse<PermissionsResponse>>{
-    let url = `${this._baseUrl}/${iTwinId}/permissions`;
-    if (arg) url += this.getQueryString(arg);
+    const url = `${this._baseUrl}/${iTwinId}/permissions`;
     return this.sendGenericAPIRequest(accessToken, "GET", url);
   }
 
@@ -70,7 +64,7 @@ export class AccessControlClient implements AccessControl{
     arg?: AccessControlQueryArg
   ): Promise<AccessControlAPIResponse<MembersResponse>>{
     let url = `${this._baseUrl}/${iTwinId}/members`;
-    if (arg) url += this.getQueryString(arg);
+    if (arg) url += `?${this.getQueryString(arg)}`;
     return this.sendGenericAPIRequest(accessToken, "GET", url); // TODO: Consider how to handle paging
   }
 
@@ -151,13 +145,11 @@ export class AccessControlClient implements AccessControl{
    * @param iTwinId The id of the iTwin
    * @returns Roles
    */
-  public async queryITwinRolesAsync(
+  public async getITwinRolesAsync(
     accessToken: AccessToken,
     iTwinId: string,
-    arg?: AccessControlQueryArg
   ): Promise<AccessControlAPIResponse<RolesResponse>>{
-    let url = `${this._baseUrl}/${iTwinId}/roles`;
-    if (arg) url += this.getQueryString(arg);
+    const url = `${this._baseUrl}/${iTwinId}/roles`;
     return this.sendGenericAPIRequest(accessToken, "GET", url);
   }
 
@@ -286,10 +278,6 @@ export class AccessControlClient implements AccessControl{
    */
   private getQueryString(queryArg: AccessControlQueryArg): string {
     let queryString = "";
-
-    if (queryArg.search) {
-      queryString += `&$search=${queryArg.search}`;
-    }
 
     if (queryArg.top) {
       queryString += `&$top=${queryArg.top}`;
