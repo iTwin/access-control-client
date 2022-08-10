@@ -5,13 +5,14 @@
 import * as chai from "chai";
 import type { AccessToken } from "@itwin/core-bentley";
 import type { AccessControlAPIResponse} from "../../access-control-client";
-import { AccessControlClient } from "../../access-control-client";
+import type { IAccessControlClient } from "../../access-control-client";
 import { TestConfig } from "../TestConfig";
-import type { PermissionsResponse } from "../../accessControlProps";
+import type { PermissionsResponse } from "../../accessControlTypes";
+import { AccessControlClient } from "../../AccessControlClient";
 
 chai.should();
 describe("AccessControlClient Permissions", () => {
-  const accessControlClient: AccessControlClient = new AccessControlClient();
+  const accessControlClient: IAccessControlClient = new AccessControlClient();
   let accessToken: AccessToken;
 
   before(async function () {
@@ -22,7 +23,7 @@ describe("AccessControlClient Permissions", () => {
   it("should get a list of permissions", async () => {
     // Act
     const iTwinsResponse: AccessControlAPIResponse<PermissionsResponse> =
-      await accessControlClient.getPermissionsAsync(accessToken);
+      await accessControlClient.permissions.getPermissionsAsync(accessToken);
 
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(200);
@@ -34,7 +35,7 @@ describe("AccessControlClient Permissions", () => {
   it("should get a list of permissions for an iTwin", async () => {
     // Act
     const iTwinsResponse: AccessControlAPIResponse<PermissionsResponse> =
-      await accessControlClient.getITwinPermissionsAsync(accessToken, TestConfig.projectId);
+      await accessControlClient.permissions.getITwinPermissionsAsync(accessToken, TestConfig.projectId);
 
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(200);
@@ -48,7 +49,7 @@ describe("AccessControlClient Permissions", () => {
 
     // Act
     const iTwinsResponse: AccessControlAPIResponse<PermissionsResponse> =
-      await accessControlClient.getITwinPermissionsAsync(accessToken, notExistantITwinId);
+      await accessControlClient.permissions.getITwinPermissionsAsync(accessToken, notExistantITwinId);
 
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(404);

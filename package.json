@@ -2,7 +2,9 @@
   "name": "@itwin/access-control-client",
   "version": "0.1.0",
   "description": "Access control client for the iTwin platform",
-  "main": "index.js",
+  "main": "lib/cjs/access-control-client.js",
+  "module": "lib/esm/access-control-client.js",
+  "typings": "lib/cjs/access-control-client",
   "scripts": {
     "build": "npm run -s build:cjs && npm run -s build:esm",
     "build:cjs": "tsc 1>&2 --outDir lib/cjs",

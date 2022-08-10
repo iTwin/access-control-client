@@ -2,16 +2,16 @@
  * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
-import * as chai from "chai";
 import type { AccessToken } from "@itwin/core-bentley";
-import type { AccessControlAPIResponse} from "../../access-control-client";
-import { AccessControlClient } from "../../access-control-client";
+import * as chai from "chai";
+import type { AccessControlAPIResponse, IAccessControlClient } from "../../access-control-client";
+import { AccessControlClient } from "../../AccessControlClient";
+import type { MemberResponse, MembersResponse } from "../../accessControlTypes";
 import { TestConfig } from "../TestConfig";
-import type { MemberResponse, MembersResponse } from "../../accessControlProps";
 
 chai.should();
 describe("AccessControlClient Members", () => {
-  const accessControlClient: AccessControlClient = new AccessControlClient();
+  const accessControlClient: IAccessControlClient = new AccessControlClient();
   let accessToken: AccessToken;
 
   before(async function () {
@@ -22,7 +22,7 @@ describe("AccessControlClient Members", () => {
   it("should get a list of members for an iTwin", async () => {
     // Act
     const iTwinsResponse: AccessControlAPIResponse<MembersResponse> =
-      await accessControlClient.queryITwinMembersAsync(accessToken, TestConfig.projectId);
+      await accessControlClient.members.queryITwinMembersAsync(accessToken, TestConfig.projectId);
 
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(200);
@@ -36,7 +36,7 @@ describe("AccessControlClient Members", () => {
 
     // Act
     const iTwinsResponse: AccessControlAPIResponse<MembersResponse> =
-      await accessControlClient.queryITwinMembersAsync(accessToken, TestConfig.projectId, {top: topAmount});
+      await accessControlClient.members.queryITwinMembersAsync(accessToken, TestConfig.projectId, {top: topAmount});
 
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(200);
@@ -48,13 +48,13 @@ describe("AccessControlClient Members", () => {
   it("should get a filtered list of members for an iTwin using $skip", async () => {
     // Arrange
     const unFilteredList: AccessControlAPIResponse<MembersResponse> =
-      await accessControlClient.queryITwinMembersAsync(accessToken, TestConfig.projectId);
+      await accessControlClient.members.queryITwinMembersAsync(accessToken, TestConfig.projectId);
     const skipAmmount = 5;
     const topAmount = 3;
 
     // Act
     const iTwinsResponse: AccessControlAPIResponse<MembersResponse> =
-      await accessControlClient.queryITwinMembersAsync(accessToken, TestConfig.projectId, {skip: skipAmmount, top: topAmount});
+      await accessControlClient.members.queryITwinMembersAsync(accessToken, TestConfig.projectId, {skip: skipAmmount, top: topAmount});
 
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(200);
@@ -69,7 +69,7 @@ describe("AccessControlClient Members", () => {
   it("should get a specific member for an iTwin", async () => {
     // Act
     const iTwinsResponse: AccessControlAPIResponse<MemberResponse> =
-      await accessControlClient.getITwinMemberAsync(accessToken, TestConfig.projectId, TestConfig.regularUserId);
+      await accessControlClient.members.getITwinMemberAsync(accessToken, TestConfig.projectId, TestConfig.regularUserId);
 
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(200);
@@ -83,7 +83,7 @@ describe("AccessControlClient Members", () => {
 
     // Act
     const iTwinsResponse: AccessControlAPIResponse<MemberResponse> =
-      await accessControlClient.getITwinMemberAsync(accessToken, TestConfig.projectId, notExistantUserId);
+      await accessControlClient.members.getITwinMemberAsync(accessToken, TestConfig.projectId, notExistantUserId);
 
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(404);
@@ -95,7 +95,7 @@ describe("AccessControlClient Members", () => {
     try {
     // --- Add Member ---
     // Act
-      const addMemberResponse: AccessControlAPIResponse<undefined> = await accessControlClient.addITwinMembersAsync(accessToken, TestConfig.projectId, [{
+      const addMemberResponse: AccessControlAPIResponse<undefined> = await accessControlClient.members.addITwinMembersAsync(accessToken, TestConfig.projectId, [{
         email: TestConfig.temporaryUserEmail,
         roleId: TestConfig.permanentRoleId1,
       }]);
@@ -107,7 +107,7 @@ describe("AccessControlClient Members", () => {
       // --- Check member exists and has role ---
       // Act
       const getMemberResponse: AccessControlAPIResponse<MemberResponse> =
-      await accessControlClient.getITwinMemberAsync(accessToken, TestConfig.projectId, TestConfig.temporaryUserId);
+      await accessControlClient.members.getITwinMemberAsync(accessToken, TestConfig.projectId, TestConfig.temporaryUserId);
 
       chai.expect(getMemberResponse.status).to.be.eq(200);
       chai.expect(getMemberResponse.data!).to.not.be.undefined;
@@ -118,7 +118,7 @@ describe("AccessControlClient Members", () => {
       // --- Update member's role ---
       // Act
       const updatedMemberResponse: AccessControlAPIResponse<MemberResponse> =
-      await accessControlClient.updateITwinMemberAsync(accessToken, TestConfig.projectId, TestConfig.temporaryUserId, [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2]);
+      await accessControlClient.members.updateITwinMemberAsync(accessToken, TestConfig.projectId, TestConfig.temporaryUserId, [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2]);
 
       chai.expect(updatedMemberResponse.status).to.be.eq(200);
       chai.expect(updatedMemberResponse.data!).to.not.be.undefined;
@@ -130,7 +130,7 @@ describe("AccessControlClient Members", () => {
       // --- Remove member ---
       // Act
       const removeMemberResponse: AccessControlAPIResponse<undefined> =
-      await accessControlClient.removeITwinMemberAsync(accessToken, TestConfig.projectId, TestConfig.temporaryUserId);
+      await accessControlClient.members.removeITwinMemberAsync(accessToken, TestConfig.projectId, TestConfig.temporaryUserId);
 
       chai.expect(removeMemberResponse.status).to.be.eq(204);
       chai.expect(removeMemberResponse.data).to.be.undefined;

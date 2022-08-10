@@ -8,7 +8,13 @@
 
 import type { AccessToken } from "@itwin/core-bentley";
 
-export interface AccessControl {
+export interface IAccessControlClient {
+  permissions: IPermissionsClient;
+  roles: IRolesClient;
+  members: IMembersClient;
+}
+
+export interface IPermissionsClient {
   /** Retrieves the list of all available permissions **/
   getPermissionsAsync(
     accessToken: AccessToken,
@@ -19,11 +25,14 @@ export interface AccessControl {
     accessToken: AccessToken,
     iTwinId: string
   ): Promise<AccessControlAPIResponse<PermissionsResponse>>;
+}
 
+export interface IMembersClient{
   /** Retrieves a list of team members and their roles assigned to a specified iTwin. */
   queryITwinMembersAsync(
     accessToken: AccessToken,
-    iTwinId: string
+    iTwinId: string,
+    arg?: AccessControlQueryArg
   ): Promise<AccessControlAPIResponse<MembersResponse>>;
 
   /** Retrieves a specific member for a specified iTwin. */
@@ -54,7 +63,9 @@ export interface AccessControl {
     memberId: string,
     roleIds: string[]
   ): Promise<AccessControlAPIResponse<MemberResponse>>;
+}
 
+export interface IRolesClient {
   /** Retrieves a list of roles the for a specified iTwin */
   getITwinRolesAsync(
     accessToken: AccessToken,
@@ -91,7 +102,6 @@ export interface AccessControl {
   ): Promise<AccessControlAPIResponse<RoleResponse>>;
 }
 
-// TODO: Expand these options
 export interface AccessControlQueryArg {
   top?: number;
   skip?: number;
