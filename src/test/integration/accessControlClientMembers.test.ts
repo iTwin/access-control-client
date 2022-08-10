@@ -4,9 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 import type { AccessToken } from "@itwin/core-bentley";
 import * as chai from "chai";
-import type { AccessControlAPIResponse, IAccessControlClient } from "../../access-control-client";
 import { AccessControlClient } from "../../AccessControlClient";
-import type { Member } from "../../accessControlTypes";
+import type { AccessControlAPIResponse, IAccessControlClient, Member } from "../../accessControlTypes";
 import { TestConfig } from "../TestConfig";
 
 chai.should();
