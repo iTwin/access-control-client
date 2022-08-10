@@ -6,7 +6,7 @@
  * @module AccessControlClient
  */
 import type { AccessToken } from "@itwin/core-bentley";
-import type { AccessControlAPIResponse, AccessControlQueryArg, IMembersClient, MemberResponse, MembersResponse, NewMember } from "../accessControlTypes";
+import type { AccessControlAPIResponse, AccessControlQueryArg, IMembersClient, Member, NewMember } from "../accessControlTypes";
 import { BaseClient } from "./BaseClient";
 
 export class MembersClient extends BaseClient implements IMembersClient{
@@ -19,10 +19,10 @@ export class MembersClient extends BaseClient implements IMembersClient{
     accessToken: AccessToken,
     iTwinId: string,
     arg?: AccessControlQueryArg
-  ): Promise<AccessControlAPIResponse<MembersResponse>>{
+  ): Promise<AccessControlAPIResponse<Member[]>>{
     let url = `${this._baseUrl}/${iTwinId}/members`;
     if (arg) url += `?${this.getQueryString(arg)}`;
-    return this.sendGenericAPIRequest(accessToken, "GET", url); // TODO: Consider how to handle paging
+    return this.sendGenericAPIRequest(accessToken, "GET", url, undefined, "members"); // TODO: Consider how to handle paging
   }
 
   /** Retrieves a specific member for a specified iTwin.
@@ -35,9 +35,9 @@ export class MembersClient extends BaseClient implements IMembersClient{
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string
-  ): Promise<AccessControlAPIResponse<MemberResponse>>{
+  ): Promise<AccessControlAPIResponse<Member>>{
     const url = `${this._baseUrl}/${iTwinId}/members/${memberId}`;
-    return this.sendGenericAPIRequest(accessToken, "GET", url);
+    return this.sendGenericAPIRequest(accessToken, "GET", url, undefined, "member");
   }
 
   /** Add new iTwin members
@@ -85,11 +85,11 @@ export class MembersClient extends BaseClient implements IMembersClient{
     iTwinId: string,
     memberId: string,
     roleIds: string[]
-  ): Promise<AccessControlAPIResponse<MemberResponse>> {
+  ): Promise<AccessControlAPIResponse<Member>> {
     const url = `${this._baseUrl}/${iTwinId}/members/${memberId}`;
     const body = {
       roleIds,
     };
-    return this.sendGenericAPIRequest(accessToken, "PATCH", url, body);
+    return this.sendGenericAPIRequest(accessToken, "PATCH", url, body, "member");
   }
 }

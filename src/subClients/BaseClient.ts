@@ -33,7 +33,8 @@ export class BaseClient {
     accessToken: AccessToken,
     method: Method,
     url: string,
-    data?: any
+    data?: any,
+    property?: string
   ): Promise<AccessControlAPIResponse<any>> { // TODO: Change any response
     const requestOptions = this.getRequestOptions(accessToken, method, url, data);
 
@@ -42,7 +43,7 @@ export class BaseClient {
 
       return {
         status: response.status,
-        data: response.data.error || response.data === "" ? undefined : response.data,
+        data: response.data.error || response.data === "" ? undefined : property ? response.data[property] : response.data,
         error: response.data.error,
       };
     } catch (err) {

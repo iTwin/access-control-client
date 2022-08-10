@@ -2,13 +2,12 @@
  * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
-import * as chai from "chai";
 import type { AccessToken } from "@itwin/core-bentley";
-import type { AccessControlAPIResponse} from "../../access-control-client";
-import type { IAccessControlClient } from "../../access-control-client";
-import { TestConfig } from "../TestConfig";
-import type { PermissionsResponse } from "../../accessControlTypes";
+import * as chai from "chai";
+import type { AccessControlAPIResponse, IAccessControlClient } from "../../access-control-client";
 import { AccessControlClient } from "../../AccessControlClient";
+import type { Permission } from "../../accessControlTypes";
+import { TestConfig } from "../TestConfig";
 
 chai.should();
 describe("AccessControlClient Permissions", () => {
@@ -22,25 +21,24 @@ describe("AccessControlClient Permissions", () => {
 
   it("should get a list of permissions", async () => {
     // Act
-    const iTwinsResponse: AccessControlAPIResponse<PermissionsResponse> =
+    const iTwinsResponse: AccessControlAPIResponse<Permission[]> =
       await accessControlClient.permissions.getPermissionsAsync(accessToken);
 
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(200);
     chai.expect(iTwinsResponse.data).to.not.be.empty;
-    chai.expect(iTwinsResponse.data!.permissions).to.not.be.empty;
-
+    chai.expect(iTwinsResponse.data!.length).to.be.greaterThan(0);
   });
 
   it("should get a list of permissions for an iTwin", async () => {
     // Act
-    const iTwinsResponse: AccessControlAPIResponse<PermissionsResponse> =
+    const iTwinsResponse: AccessControlAPIResponse<Permission[]> =
       await accessControlClient.permissions.getITwinPermissionsAsync(accessToken, TestConfig.projectId);
 
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(200);
     chai.expect(iTwinsResponse.data).to.not.be.empty;
-    chai.expect(iTwinsResponse.data!.permissions).to.not.be.empty;
+    chai.expect(iTwinsResponse.data!.length).to.be.greaterThan(0);
   });
 
   it("should get a 404 when getting permissions for a non-existant iTwin", async () => {
@@ -48,7 +46,7 @@ describe("AccessControlClient Permissions", () => {
     const notExistantITwinId = "22acf21e-0575-4faf-849b-bcd538718269";
 
     // Act
-    const iTwinsResponse: AccessControlAPIResponse<PermissionsResponse> =
+    const iTwinsResponse: AccessControlAPIResponse<Permission[]> =
       await accessControlClient.permissions.getITwinPermissionsAsync(accessToken, notExistantITwinId);
 
     // Assert

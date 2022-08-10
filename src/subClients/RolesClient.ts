@@ -6,7 +6,7 @@
  * @module AccessControlClient
  */
 import type { AccessToken } from "@itwin/core-bentley";
-import type { AccessControlAPIResponse, IRolesClient, NewRole, Role, RoleResponse, RolesResponse } from "../accessControlTypes";
+import type { AccessControlAPIResponse, IRolesClient, NewRole, Role } from "../accessControlTypes";
 import { BaseClient } from "./BaseClient";
 
 export class RolesClient extends BaseClient implements IRolesClient{
@@ -18,9 +18,9 @@ export class RolesClient extends BaseClient implements IRolesClient{
   public async getITwinRolesAsync(
     accessToken: AccessToken,
     iTwinId: string,
-  ): Promise<AccessControlAPIResponse<RolesResponse>>{
+  ): Promise<AccessControlAPIResponse<Role[]>>{
     const url = `${this._baseUrl}/${iTwinId}/roles`;
-    return this.sendGenericAPIRequest(accessToken, "GET", url);
+    return this.sendGenericAPIRequest(accessToken, "GET", url, undefined, "roles");
   }
 
   /** Retrieves the specified role for the specified iTwin
@@ -47,9 +47,9 @@ export class RolesClient extends BaseClient implements IRolesClient{
     accessToken: AccessToken,
     iTwinId: string,
     role: NewRole
-  ): Promise<AccessControlAPIResponse<RoleResponse>>{
+  ): Promise<AccessControlAPIResponse<Role>>{
     const url = `${this._baseUrl}/${iTwinId}/roles`;
-    return this.sendGenericAPIRequest(accessToken, "POST", url, role);
+    return this.sendGenericAPIRequest(accessToken, "POST", url, role, "role");
   }
 
   /** Delete the specified iTwin role
@@ -79,8 +79,8 @@ export class RolesClient extends BaseClient implements IRolesClient{
     iTwinId: string,
     roleId: string,
     role: NewRole
-  ): Promise<AccessControlAPIResponse<RoleResponse>>{
+  ): Promise<AccessControlAPIResponse<Role>>{
     const url = `${this._baseUrl}/${iTwinId}/roles/${roleId}`;
-    return this.sendGenericAPIRequest(accessToken, "PATCH", url, role);
+    return this.sendGenericAPIRequest(accessToken, "PATCH", url, role, "role");
   }
 }

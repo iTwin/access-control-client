@@ -6,7 +6,7 @@
  * @module AccessControlClient
  */
 import type { AccessToken } from "@itwin/core-bentley";
-import type { AccessControlAPIResponse, IPermissionsClient, PermissionsResponse } from "../accessControlTypes";
+import type { AccessControlAPIResponse, IPermissionsClient, Permission } from "../accessControlTypes";
 import { BaseClient } from "./BaseClient";
 
 export class PermissionsClient extends BaseClient implements IPermissionsClient{
@@ -16,9 +16,9 @@ export class PermissionsClient extends BaseClient implements IPermissionsClient{
     */
   public async getPermissionsAsync(
     accessToken: AccessToken,
-  ): Promise<AccessControlAPIResponse<PermissionsResponse>>{
+  ): Promise<AccessControlAPIResponse<Permission[]>>{
     const url = `${this._baseUrl}/permissions`;
-    return this.sendGenericAPIRequest(accessToken, "GET", url);
+    return this.sendGenericAPIRequest(accessToken, "GET", url, undefined, "permissions");
   }
 
   /** Retrieves a list of permissions the identity has for a specified iTwin
@@ -29,8 +29,8 @@ export class PermissionsClient extends BaseClient implements IPermissionsClient{
   public async getITwinPermissionsAsync(
     accessToken: AccessToken,
     iTwinId: string,
-  ): Promise<AccessControlAPIResponse<PermissionsResponse>>{
+  ): Promise<AccessControlAPIResponse<Permission[]>>{
     const url = `${this._baseUrl}/${iTwinId}/permissions`;
-    return this.sendGenericAPIRequest(accessToken, "GET", url);
+    return this.sendGenericAPIRequest(accessToken, "GET", url, undefined, "permissions");
   }
 }

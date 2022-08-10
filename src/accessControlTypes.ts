@@ -18,13 +18,13 @@ export interface IPermissionsClient {
   /** Retrieves the list of all available permissions **/
   getPermissionsAsync(
     accessToken: AccessToken,
-  ): Promise<AccessControlAPIResponse<PermissionsResponse>>;
+  ): Promise<AccessControlAPIResponse<Permission[]>>;
 
   /** Retrieves a list of permissions the identity has for a specified iTwin */
   getITwinPermissionsAsync(
     accessToken: AccessToken,
     iTwinId: string
-  ): Promise<AccessControlAPIResponse<PermissionsResponse>>;
+  ): Promise<AccessControlAPIResponse<Permission[]>>;
 }
 
 export interface IMembersClient{
@@ -33,14 +33,14 @@ export interface IMembersClient{
     accessToken: AccessToken,
     iTwinId: string,
     arg?: AccessControlQueryArg
-  ): Promise<AccessControlAPIResponse<MembersResponse>>;
+  ): Promise<AccessControlAPIResponse<Member[]>>;
 
   /** Retrieves a specific member for a specified iTwin. */
   getITwinMemberAsync(
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string
-  ): Promise<AccessControlAPIResponse<MemberResponse>>;
+  ): Promise<AccessControlAPIResponse<Member>>;
 
   /** Add new iTwin members */
   addITwinMembersAsync(
@@ -62,7 +62,7 @@ export interface IMembersClient{
     iTwinId: string,
     memberId: string,
     roleIds: string[]
-  ): Promise<AccessControlAPIResponse<MemberResponse>>;
+  ): Promise<AccessControlAPIResponse<Member>>;
 }
 
 export interface IRolesClient {
@@ -70,7 +70,7 @@ export interface IRolesClient {
   getITwinRolesAsync(
     accessToken: AccessToken,
     iTwinId: string,
-  ): Promise<AccessControlAPIResponse<RolesResponse>>;
+  ): Promise<AccessControlAPIResponse<Role[]>>;
 
   /** Retrieves a role for a specified iTwin */
   getITwinRoleAsync(
@@ -84,7 +84,7 @@ export interface IRolesClient {
     accessToken: AccessToken,
     iTwinId: string,
     role: NewRole
-  ): Promise<AccessControlAPIResponse<RoleResponse>>;
+  ): Promise<AccessControlAPIResponse<Role>>;
 
   /** Removes an existing iTwin Role */
   deleteITwinRoleAsync(
@@ -99,7 +99,7 @@ export interface IRolesClient {
     iTwinId: string,
     roleId: string,
     role: NewRole
-  ): Promise<AccessControlAPIResponse<RoleResponse>>;
+  ): Promise<AccessControlAPIResponse<Role>>;
 }
 
 export interface AccessControlQueryArg {
@@ -126,13 +126,9 @@ export interface ErrorDetail {
   target?: string;
 }
 
-type Permission = string;
+export type Permission = string;
 
-export interface PermissionsResponse {
-  permissions: Permission[];
-}
-
-interface Member {
+export interface Member {
   id: string;
   email: string;
   givenName: string;
@@ -146,14 +142,6 @@ export interface NewMember {
   roleId: string;
 }
 
-export interface MembersResponse {
-  members: Member[];
-}
-
-export interface MemberResponse {
-  member: Member;
-}
-
 export interface Role {
   id: string;
   displayName: string;
@@ -162,11 +150,3 @@ export interface Role {
 }
 
 export type NewRole = Omit<Role, "id">;
-
-export interface RolesResponse {
-  roles: Role[];
-}
-
-export interface RoleResponse {
-  role: Role;
-}
