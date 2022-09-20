@@ -37,7 +37,7 @@ import type { AccessToken } from "@itwin/core-bentley";
 import { AccessControlClient, IAccessControlClient, Role, AccessControlAPIResponse } from "@itwin/access-control-client";
 
 /** Function that gets a specific role for an iTwin and then prints the id and displayName to the console. */
-async function printiTwinRoleIds(): Promise<void> {
+async function printiTwinRole(): Promise<void> {
   const accessControlClient: IAccessControlClient = new AccessControlClient();
   const accessToken: AccessToken = { get_access_token_logic_here };
   
@@ -46,6 +46,35 @@ async function printiTwinRoleIds(): Promise<void> {
     
    const actualRole = iTwinsResponse.data!;
    console.log(actualRole.id, actualRole.displayName);
+}
+```
+
+### Create, update, and delete a Role
+```typescript
+import type { AccessToken } from "@itwin/core-bentley";
+import { AccessControlClient, IAccessControlClient, Role, NewRole, AccessControlAPIResponse } from "@itwin/access-control-client";
+
+/** Function that creates, updates, and deletes a role. */
+async function printiTwinRole(): Promise<void> {
+  const accessControlClient: IAccessControlClient = new AccessControlClient();
+  const accessToken: AccessToken = { get_access_token_logic_here };
+  
+  // Create role
+  const createResponse: AccessControlAPIResponse<Role> =
+    await accessControlClient.roles.createITwinRoleAsync(accessToken, "71fd32ed-5ee4-4e22-bc4d-b8e973e0b7b7", "d8215a6b-465d-44ff-910b-40d4541d1ebf");
+    
+  // Update role
+  const updatedRole: NewRole = {
+    displayName: newRoleName,
+    description: "UPDATED ROLE DESCRIPTION" ,
+    permissions: [],
+  };
+  const updateResponse: AccessControlAPIResponse<Role> =
+    await accessControlClient.roles.updateITwinRoleAsync(accessToken, "71fd32ed-5ee4-4e22-bc4d-b8e973e0b7b7", createResponse.data!.id, updatedRole);
+    
+  // Delete Role
+  const deleteResponse: AccessControlAPIResponse<undefined> =
+    await accessControlClient.roles.deleteITwinRoleAsync(accessToken, "71fd32ed-5ee4-4e22-bc4d-b8e973e0b7b7", createResponse.data!.id);
 }
 ```
 
