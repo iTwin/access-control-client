@@ -31,6 +31,24 @@ async function printiTwinRoleIds(): Promise<void> {
 }
 ```
 
+### Get specific role for an iTwin
+```typescript
+import type { AccessToken } from "@itwin/core-bentley";
+import { AccessControlClient, IAccessControlClient, Role, AccessControlAPIResponse } from "@itwin/access-control-client";
+
+/** Function that gets a specific role for an iTwin and then prints the id and displayName to the console. */
+async function printiTwinRoleIds(): Promise<void> {
+  const accessControlClient: IAccessControlClient = new AccessControlClient();
+  const accessToken: AccessToken = { get_access_token_logic_here };
+  
+  const iTwinsResponse: AccessControlAPIResponse<Role> =
+    await accessControlClient.roles.getITwinRoleAsync(accessToken, "2f981e83-47e4-4f36-8ee9-4264453688a1", "2d593231-db14-4c1f-9db4-96f2b91b0bde");
+    
+   const actualRole = iTwinsResponse.data!;
+   console.log(actualRole.id, actualRole.displayName);
+}
+```
+
 ## Contributing to this Repository
 
 For information on how to contribute to this project, please read [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines, [GETTINGSTARTED.md](GETTINGSTARTED.md) for information on working with the documentation in this repository.
