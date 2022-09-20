@@ -65,7 +65,7 @@ async function printiTwinRole(): Promise<void> {
     
   // Update role
   const updatedRole: NewRole = {
-    displayName: newRoleName,
+    displayName: "Some new role name",
     description: "UPDATED ROLE DESCRIPTION" ,
     permissions: [],
   };
