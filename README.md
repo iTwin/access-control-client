@@ -9,3 +9,7 @@ If you have questions, or wish to contribute to iTwin.js, see our [Contributing 
 ## About this Repository
 
 Contains the __@itwin/access-control-client__ package that wraps sending requests to the access control service. Visit the [iTwins API](https://developer.bentley.com/apis/access-control/) for more documentation on the iTwins service.
+
+## Contributing to this Repository
+
+For information on how to contribute to this project, please read [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines, [GETTINGSTARTED.md](GETTINGSTARTED.md) for information on working with the documentation in this repository.
