@@ -8,7 +8,7 @@ If you have questions, or wish to contribute to iTwin.js, see our [Contributing 
 
 ## About this Repository
 
-Contains the __@itwin/access-control-client__ package that wraps sending requests to the access control service. Visit the [iTwins API](https://developer.bentley.com/apis/access-control/) for more documentation on the iTwins service.
+Contains the __@itwin/access-control-client__ package that wraps sending requests to the access control service. Visit the [Access Control API](https://developer.bentley.com/apis/access-control/) for more documentation on the Access Control service.
 
 ## Usage examples
 
@@ -75,6 +75,88 @@ async function printiTwinRole(): Promise<void> {
   // Delete Role
   const deleteResponse: AccessControlAPIResponse<undefined> =
     await accessControlClient.roles.deleteITwinRoleAsync(accessToken, "71fd32ed-5ee4-4e22-bc4d-b8e973e0b7b7", createResponse.data!.id);
+}
+```
+
+### Get list of Members for an iTwin
+```typescript
+import type { AccessToken } from "@itwin/core-bentley";
+import { AccessControlClient, IAccessControlClient, Member, AccessControlAPIResponse } from "@itwin/access-control-client";
+
+/** Function that queries all Members for a given iTwin and prints their ids to the console. */
+async function printiTwinMemberIds(): Promise<void> {
+  const accessControlClient: IAccessControlClient = new AccessControlClient();
+  const accessToken: AccessToken = { get_access_token_logic_here };
+  
+  const iTwinsResponse: AccessControlAPIResponse<Member[]> =
+    await accessControlClient.members.queryITwinMembersAsync(accessToken, "9bd7d24d-1508-4dba-99ab-23b3166401a0");
+    
+   iTwinsResponse.data!.forEach((actualMember: Member) => {
+    console.log(actualMember.id);
+  });
+}
+```
+
+### Get a filtered list of Members for an iTwin using $top/$skip
+```typescript
+import type { AccessToken } from "@itwin/core-bentley";
+import { AccessControlClient, IAccessControlClient, Member, AccessControlAPIResponse } from "@itwin/access-control-client";
+
+/** Function that queries all Members for a given iTwin and prints their ids to the console. */
+async function printiTwinMemberIds(): Promise<void> {
+  const skipAmmount = 5;
+  const topAmount = 3;
+  const accessControlClient: IAccessControlClient = new AccessControlClient();
+  const accessToken: AccessToken = { get_access_token_logic_here };
+  
+  const iTwinsResponse: AccessControlAPIResponse<Member[]> =
+    await accessControlClient.members.queryITwinMembersAsync(accessToken, "9bd7d24d-1508-4dba-99ab-23b3166401a0", {skip: skipAmmount, top: topAmount});
+    
+   iTwinsResponse.data!.forEach((actualMember: Member) => {
+    console.log(actualMember.id);
+  });
+}
+```
+
+### Get a specific Member of an iTwin
+```typescript
+import type { AccessToken } from "@itwin/core-bentley";
+import { AccessControlClient, IAccessControlClient, Member, AccessControlAPIResponse } from "@itwin/access-control-client";
+
+/** Function that gets a member of an iTwin prints the id and email to the console. */
+async function printiTwinMemberIds(): Promise<void> {
+  const accessControlClient: IAccessControlClient = new AccessControlClient();
+  const accessToken: AccessToken = { get_access_token_logic_here };
+  
+  const iTwinsResponse: AccessControlAPIResponse<Member> =
+    await accessControlClient.members.getITwinMemberAsync(accessToken, "9bd7d24d-1508-4dba-99ab-23b3166401a0", "a083cc1c-f51a-4c52-8614-5774ab79eca1");
+  
+  const actualMember = iTwinsResponse.data!;
+  console.log(actualMember.id, actualMember.email);
+}
+```
+
+### Create, update, and delete a Member
+```typescript
+import type { AccessToken } from "@itwin/core-bentley";
+import { AccessControlClient, IAccessControlClient, Member, NewMember, AccessControlAPIResponse } from "@itwin/access-control-client";
+
+/** Function that creates, updates, and deletes a member. */
+async function printiTwinRole(): Promise<void> {
+  const accessControlClient: IAccessControlClient = new AccessControlClient();
+  const accessToken: AccessToken = { get_access_token_logic_here };
+  
+  // Create member
+  const createResponse: AccessControlAPIResponse<Role> =
+    await accessControlClient.members.addITwinMembersAsync(accessToken, "71fd32ed-5ee4-4e22-bc4d-b8e973e0b7b7", "d8215a6b-465d-44ff-910b-40d4541d1ebf");
+    
+  // Update member's role
+  const updatedMemberResponse: AccessControlAPIResponse<Member> =
+    await accessControlClient.members.updateITwinMemberAsync(accessToken, "b1803a0c-d440-4902-b527-54bf7f72500f", "6401109c-75d7-46b8-8dbd-182d02155141", ["25162c0c-dce7-419e-bb51-fd13efd5b54a",  "10e3d778-0d35-4c4d-bf77-547bb366cb14"]);
+    
+  // Delete member
+  const removeMemberResponse: AccessControlAPIResponse<undefined> =
+    await accessControlClient.members.removeITwinMemberAsync(accessToken, "b1803a0c-d440-4902-b527-54bf7f72500f", "6401109c-75d7-46b8-8dbd-182d02155141");
 }
 ```
 
