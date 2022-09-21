@@ -34,7 +34,7 @@ export class RolesClient extends BaseClient implements IRolesClient{
     roleId: string,
   ): Promise<AccessControlAPIResponse<Role>>{
     const url = `${this._baseUrl}/${iTwinId}/roles/${roleId}`;
-    return this.sendGenericAPIRequest(accessToken, "GET", url);
+    return this.sendGenericAPIRequest(accessToken, "GET", url, undefined, "role");
   }
 
   /** Creates a new iTwin Role
