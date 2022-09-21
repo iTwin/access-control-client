@@ -160,6 +160,44 @@ async function printiTwinRole(): Promise<void> {
 }
 ```
 
+### Get a list of Permissions
+```typescript
+import type { AccessToken } from "@itwin/core-bentley";
+import { AccessControlClient, IAccessControlClient, Permission, AccessControlAPIResponse } from "@itwin/access-control-client";
+
+/** Function that queries all Permissions and prints the ids to the console. */
+async function printiTwinPermissionIds(): Promise<void> {
+  const accessControlClient: IAccessControlClient = new AccessControlClient();
+  const accessToken: AccessToken = { get_access_token_logic_here };
+  
+  const iTwinsResponse: AccessControlAPIResponse<Permission[]> =
+    await accessControlClient.permissions.getPermissionsAsync(accessToken);
+    
+   iTwinsResponse.data!.forEach((actualPermission: Permission) => {
+    console.log(actualPermission.id);
+  });
+}
+```
+
+### Get a list of Permissions for an iTwin
+```typescript
+import type { AccessToken } from "@itwin/core-bentley";
+import { AccessControlClient, IAccessControlClient, Permission, AccessControlAPIResponse } from "@itwin/access-control-client";
+
+/** Function that queries Permissions for a given iTwin and prints the ids to the console. */
+async function printiTwinPermissionIds(): Promise<void> {
+  const accessControlClient: IAccessControlClient = new AccessControlClient();
+  const accessToken: AccessToken = { get_access_token_logic_here };
+  
+  const iTwinsResponse: AccessControlAPIResponse<Permission[]> =
+    await accessControlClient.permissions.getITwinPermissionsAsync(accessToken, "6c704296-9028-4a1e-ae67-c0104a11402a");
+    
+   iTwinsResponse.data!.forEach((actualPermission: Permission) => {
+    console.log(actualPermission.id);
+  });
+}
+```
+
 ## Contributing to this Repository
 
 For information on how to contribute to this project, please read [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines, [GETTINGSTARTED.md](GETTINGSTARTED.md) for information on working with the documentation in this repository.
