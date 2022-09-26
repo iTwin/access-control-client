@@ -5,7 +5,7 @@
 import type { AccessToken } from "@itwin/core-bentley";
 import * as chai from "chai";
 import { AccessControlClient } from "../../AccessControlClient";
-import type { AccessControlAPIResponse, IAccessControlClient, NewRole, Role } from "../../accessControlTypes";
+import type { AccessControlAPIResponse, IAccessControlClient, Role } from "../../accessControlTypes";
 import { TestConfig } from "../TestConfig";
 
 chai.should();
@@ -58,7 +58,7 @@ describe("AccessControlClient Roles", () => {
   it("should get a 404 when trying to update a non-existant role", async () => {
     // Arrange
     const nonExistantRoleId = "22acf21e-0575-4faf-849b-bcd538718269";
-    const emptyUpdatedRole: NewRole = {
+    const emptyUpdatedRole: Role = {
       displayName: "NonExistantRoleName",
       description: "NonExistantRoleDescription",
       permissions: [],
@@ -93,7 +93,7 @@ describe("AccessControlClient Roles", () => {
     // Arrange
     const newRoleName = `APIM Access Control Typescript Client Test Role 1 ${new Date().toISOString()}`;
     const newRoleDescription = "Integration test role - should not persist";
-    const newRole: NewRole = {
+    const newRole: Role = {
       displayName: newRoleName,
       description: newRoleDescription,
       permissions: [],
@@ -110,7 +110,7 @@ describe("AccessControlClient Roles", () => {
 
     // --- UPDATE ROLE ---
     // Arrange
-    const updatedRole: NewRole = {
+    const updatedRole: Role = {
       displayName: newRoleName,
       description: "UPDATED ROLE DESCRIPTION" ,
       permissions: [],
@@ -118,7 +118,7 @@ describe("AccessControlClient Roles", () => {
 
     // Act
     const updateResponse: AccessControlAPIResponse<Role> =
-      await accessControlClient.roles.updateITwinRoleAsync(accessToken, TestConfig.projectId, createResponse.data!.id, updatedRole);
+      await accessControlClient.roles.updateITwinRoleAsync(accessToken, TestConfig.projectId, createResponse.data!.id!, updatedRole);
 
     // Assert
     chai.expect(updateResponse.status).to.be.eq(200);
@@ -128,7 +128,7 @@ describe("AccessControlClient Roles", () => {
     // --- DELETE ROLE ---
     // Act
     const deleteResponse: AccessControlAPIResponse<undefined> =
-      await accessControlClient.roles.deleteITwinRoleAsync(accessToken, TestConfig.projectId, createResponse.data!.id);
+      await accessControlClient.roles.deleteITwinRoleAsync(accessToken, TestConfig.projectId, createResponse.data!.id!);
 
     // Assert
     chai.expect(deleteResponse.status).to.be.eq(204);
