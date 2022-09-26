@@ -91,49 +91,46 @@ describe("AccessControlClient Members", () => {
   });
 
   it("should get add, get, update, and remove a member", async () => {
-    try {
     // --- Add Member ---
     // Act
-      const addMemberResponse: AccessControlAPIResponse<undefined> = await accessControlClient.members.addITwinMembersAsync(accessToken, TestConfig.projectId, [{
-        email: TestConfig.temporaryUserEmail,
-        roleId: TestConfig.permanentRoleId1,
-      }]);
+    const addMemberResponse: AccessControlAPIResponse<undefined> = await accessControlClient.members.addITwinMembersAsync(accessToken, TestConfig.projectId, [{
+      email: TestConfig.temporaryUserEmail,
+      roleid: TestConfig.permanentRoleId1,
+    }]);
 
-      // Assert
-      chai.expect(addMemberResponse.status).to.be.eq(201);
-      chai.expect(addMemberResponse.data).to.be.undefined;
+    // Assert
+    chai.expect(addMemberResponse.status).to.be.eq(201);
+    chai.expect(addMemberResponse.data).to.be.undefined;
 
-      // --- Check member exists and has role ---
-      // Act
-      const getMemberResponse: AccessControlAPIResponse<Member> =
-      await accessControlClient.members.getITwinMemberAsync(accessToken, TestConfig.projectId, TestConfig.temporaryUserId);
+    // --- Check member exists and has role ---
+    // Act
+    const getMemberResponse: AccessControlAPIResponse<Member> =
+    await accessControlClient.members.getITwinMemberAsync(accessToken, TestConfig.projectId, TestConfig.temporaryUserId);
 
-      chai.expect(getMemberResponse.status).to.be.eq(200);
-      chai.expect(getMemberResponse.data!).to.not.be.undefined;
-      chai.expect(getMemberResponse.data!.email).to.be.eq(TestConfig.temporaryUserEmail);
-      chai.expect(getMemberResponse.data!.roles.length).to.be.eq(1);
-      chai.expect(getMemberResponse.data!.roles[0].id).to.be.eq(TestConfig.permanentRoleId1);
+    chai.expect(getMemberResponse.status).to.be.eq(200);
+    chai.expect(getMemberResponse.data!).to.not.be.undefined;
+    chai.expect(getMemberResponse.data!.email).to.be.eq(TestConfig.temporaryUserEmail);
+    chai.expect(getMemberResponse.data!.roles!.length).to.be.eq(1);
+    chai.expect(getMemberResponse.data!.roles![0].id).to.be.eq(TestConfig.permanentRoleId1);
 
-      // --- Update member's role ---
-      // Act
-      const updatedMemberResponse: AccessControlAPIResponse<Member> =
-      await accessControlClient.members.updateITwinMemberAsync(accessToken, TestConfig.projectId, TestConfig.temporaryUserId, [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2]);
+    // --- Update member's role ---
+    // Act
+    const updatedMemberResponse: AccessControlAPIResponse<Member> =
+    await accessControlClient.members.updateITwinMemberAsync(accessToken, TestConfig.projectId, TestConfig.temporaryUserId, [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2]);
 
-      chai.expect(updatedMemberResponse.status).to.be.eq(200);
-      chai.expect(updatedMemberResponse.data!).to.not.be.undefined;
-      chai.expect(updatedMemberResponse.data!.id).to.be.eq(TestConfig.temporaryUserId);
-      chai.expect(updatedMemberResponse.data!.roles.length).to.be.eq(2);
-      chai.expect(updatedMemberResponse.data!.roles.map((x) => x.id)).to.include(TestConfig.permanentRoleId1);
-      chai.expect(updatedMemberResponse.data!.roles.map((x) => x.id)).to.include(TestConfig.permanentRoleId2);
-    } finally {
-      // --- Remove member ---
-      // Act
-      const removeMemberResponse: AccessControlAPIResponse<undefined> =
-      await accessControlClient.members.removeITwinMemberAsync(accessToken, TestConfig.projectId, TestConfig.temporaryUserId);
+    chai.expect(updatedMemberResponse.status).to.be.eq(200);
+    chai.expect(updatedMemberResponse.data!).to.not.be.undefined;
+    chai.expect(updatedMemberResponse.data!.id).to.be.eq(TestConfig.temporaryUserId);
+    chai.expect(updatedMemberResponse.data!.roles!.length).to.be.eq(2);
+    chai.expect(updatedMemberResponse.data!.roles!.map((x) => x.id)).to.include(TestConfig.permanentRoleId1);
+    chai.expect(updatedMemberResponse.data!.roles!.map((x) => x.id)).to.include(TestConfig.permanentRoleId2);
+    // --- Remove member ---
+    // Act
+    const removeMemberResponse: AccessControlAPIResponse<undefined> =
+    await accessControlClient.members.removeITwinMemberAsync(accessToken, TestConfig.projectId, TestConfig.temporaryUserId);
 
-      chai.expect(removeMemberResponse.status).to.be.eq(204);
-      chai.expect(removeMemberResponse.data).to.be.undefined;
-    }
+    chai.expect(removeMemberResponse.status).to.be.eq(204);
+    chai.expect(removeMemberResponse.data).to.be.undefined;
   });
 
 });

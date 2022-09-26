@@ -46,7 +46,7 @@ export interface IMembersClient{
   addITwinMembersAsync(
     accessToken: AccessToken,
     iTwinId: string,
-    newMembers: NewMember[]
+    newMembers: Member[]
   ): Promise<AccessControlAPIResponse<undefined>>;
 
   /**  Remove the specified iTwin member */
@@ -83,7 +83,7 @@ export interface IRolesClient {
   createITwinRoleAsync(
     accessToken: AccessToken,
     iTwinId: string,
-    role: NewRole
+    role: Role
   ): Promise<AccessControlAPIResponse<Role>>;
 
   /** Removes an existing iTwin Role */
@@ -98,7 +98,7 @@ export interface IRolesClient {
     accessToken: AccessToken,
     iTwinId: string,
     roleId: string,
-    role: NewRole
+    role: Role
   ): Promise<AccessControlAPIResponse<Role>>;
 }
 
@@ -129,24 +129,18 @@ export interface ErrorDetail {
 export type Permission = string;
 
 export interface Member {
-  id: string;
-  email: string;
-  givenName: string;
-  surname: string;
-  organization: string;
-  roles: Omit<Role, "permissions">[];
-}
-
-export interface NewMember {
-  email: string;
-  roleId: string;
+  id?: string;
+  roleid?: string;
+  email?: string;
+  givenName?: string;
+  surname?: string;
+  organization?: string;
+  roles?: Omit<Role, "permissions">[];
 }
 
 export interface Role {
-  id: string;
+  id?: string;
   displayName: string;
   description: string;
   permissions: Permission[];
 }
-
-export type NewRole = Omit<Role, "id">;

@@ -6,7 +6,7 @@
  * @module AccessControlClient
  */
 import type { AccessToken } from "@itwin/core-bentley";
-import type { AccessControlAPIResponse, IRolesClient, NewRole, Role } from "../accessControlTypes";
+import type { AccessControlAPIResponse, IRolesClient, Role } from "../accessControlTypes";
 import { BaseClient } from "./BaseClient";
 
 export class RolesClient extends BaseClient implements IRolesClient{
@@ -46,7 +46,7 @@ export class RolesClient extends BaseClient implements IRolesClient{
   public async createITwinRoleAsync(
     accessToken: AccessToken,
     iTwinId: string,
-    role: NewRole
+    role: Role
   ): Promise<AccessControlAPIResponse<Role>>{
     const url = `${this._baseUrl}/${iTwinId}/roles`;
     return this.sendGenericAPIRequest(accessToken, "POST", url, role, "role");
@@ -78,7 +78,7 @@ export class RolesClient extends BaseClient implements IRolesClient{
     accessToken: AccessToken,
     iTwinId: string,
     roleId: string,
-    role: NewRole
+    role: Role
   ): Promise<AccessControlAPIResponse<Role>>{
     const url = `${this._baseUrl}/${iTwinId}/roles/${roleId}`;
     return this.sendGenericAPIRequest(accessToken, "PATCH", url, role, "role");

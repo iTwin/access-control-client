@@ -6,7 +6,7 @@
  * @module AccessControlClient
  */
 import type { AccessToken } from "@itwin/core-bentley";
-import type { AccessControlAPIResponse, AccessControlQueryArg, IMembersClient, Member, NewMember } from "../accessControlTypes";
+import type { AccessControlAPIResponse, AccessControlQueryArg, IMembersClient, Member } from "../accessControlTypes";
 import { BaseClient } from "./BaseClient";
 
 export class MembersClient extends BaseClient implements IMembersClient{
@@ -49,7 +49,7 @@ export class MembersClient extends BaseClient implements IMembersClient{
   public async addITwinMembersAsync(
     accessToken: AccessToken,
     iTwinId: string,
-    newMembers: NewMember[]
+    newMembers: Member[]
   ): Promise<AccessControlAPIResponse<undefined>>{
     const url = `${this._baseUrl}/${iTwinId}/members`;
     const body = {
