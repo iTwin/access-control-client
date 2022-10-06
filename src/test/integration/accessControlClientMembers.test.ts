@@ -10,7 +10,15 @@ import { TestConfig } from "../TestConfig";
 
 chai.should();
 describe("AccessControlClient Members", () => {
+  let baseUrl: string = "https://api.bentley.com/accesscontrol/itwins";
+  const urlPrefix = process.env.IMJS_URL_PREFIX;
+  if (urlPrefix) {
+    const url = new URL(baseUrl);
+    url.hostname = urlPrefix + url.hostname;
+    baseUrl = url.href;
+  }
   const accessControlClient: IAccessControlClient = new AccessControlClient();
+  const customAccessControlClient: IAccessControlClient = new AccessControlClient(baseUrl);
   let accessToken: AccessToken;
 
   before(async function () {
@@ -22,6 +30,17 @@ describe("AccessControlClient Members", () => {
     // Act
     const iTwinsResponse: AccessControlAPIResponse<Member[]> =
       await accessControlClient.members.queryITwinMembersAsync(accessToken, TestConfig.projectId);
+
+    // Assert
+    chai.expect(iTwinsResponse.status).to.be.eq(200);
+    chai.expect(iTwinsResponse.data).to.not.be.empty;
+    chai.expect(iTwinsResponse.data!.length).to.be.greaterThan(0);
+  });
+
+  it("should get a list of members for an iTwin with custom url", async () => {
+    // Act
+    const iTwinsResponse: AccessControlAPIResponse<Member[]> =
+      await customAccessControlClient.members.queryITwinMembersAsync(accessToken, TestConfig.projectId);
 
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(200);

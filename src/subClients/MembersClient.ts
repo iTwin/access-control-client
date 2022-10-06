@@ -10,6 +10,10 @@ import type { AccessControlAPIResponse, AccessControlQueryArg, IMembersClient, M
 import { BaseClient } from "./BaseClient";
 
 export class MembersClient extends BaseClient implements IMembersClient{
+  public constructor(url?: string) {
+    super(url);
+  }
+
   /** Retrieves a list of iTwin members and their roles assignments.
     * @param accessToken The client access token string
     * @param iTwinId The id of the iTwin

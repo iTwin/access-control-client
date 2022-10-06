@@ -10,6 +10,10 @@ import type { AccessControlAPIResponse, IPermissionsClient, Permission } from ".
 import { BaseClient } from "./BaseClient";
 
 export class PermissionsClient extends BaseClient implements IPermissionsClient{
+  public constructor(url?: string) {
+    super(url);
+  }
+
   /** Retrieves the list of all available permissions
     * @param accessToken The client access token string
     * @returns Array of permissions
