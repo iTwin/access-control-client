@@ -40,6 +40,34 @@ async function printiTwinRoleIds(): Promise<void> {
 }
 ```
 
+### Get list of Roles for an iTwin (with custom url)
+
+```typescript
+import type { AccessToken } from "@itwin/core-bentley";
+import {
+  AccessControlClient,
+  IAccessControlClient,
+  Role,
+  AccessControlAPIResponse,
+} from "@itwin/access-control-client";
+
+/** Function that queries all Roles for a given iTwin and prints their ids to the console. */
+async function printiTwinRoleIds(): Promise<void> {
+  const accessControlClient: IAccessControlClient = new AccessControlClient("https://api.bentley.com/accesscontrol/itwins");
+  const accessToken: AccessToken = { get_access_token_logic_here };
+
+  const iTwinsResponse: AccessControlAPIResponse<Role[]> =
+    await accessControlClient.roles.getITwinRolesAsync(
+      accessToken,
+      "2f981e83-47e4-4f36-8ee9-4264453688a1"
+    );
+
+  iTwinsResponse.data!.forEach((actualRole: Role) => {
+    console.log(actualRole.id);
+  });
+}
+```
+
 ### Get specific role for an iTwin
 
 ```typescript
