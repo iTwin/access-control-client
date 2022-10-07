@@ -11,7 +11,13 @@ import { PermissionsClient } from "./subClients/PermissionsClient";
 import { RolesClient } from "./subClients/RolesClient";
 
 export class AccessControlClient implements IAccessControlClient {
-  public permissions: IPermissionsClient = new PermissionsClient();
-  public roles: IRolesClient = new RolesClient();
-  public members: IMembersClient = new MembersClient();
+  private _baseUrl?: string;
+
+  public constructor(url?: string){
+    this._baseUrl = url;
+  }
+
+  public permissions: IPermissionsClient = new PermissionsClient(this._baseUrl);
+  public roles: IRolesClient = new RolesClient(this._baseUrl);
+  public members: IMembersClient = new MembersClient(this._baseUrl);
 }

@@ -10,6 +10,10 @@ import type { AccessControlAPIResponse, IRolesClient, Role } from "../accessCont
 import { BaseClient } from "./BaseClient";
 
 export class RolesClient extends BaseClient implements IRolesClient{
+  public constructor(url?: string) {
+    super(url);
+  }
+
   /** Retrieves a list of available user roles that are defined for a specified iTwin
     * @param accessToken The client access token string
     * @param iTwinId The id of the iTwin
