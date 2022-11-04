@@ -47,7 +47,7 @@ export interface IMembersClient{
     accessToken: AccessToken,
     iTwinId: string,
     newMembers: Member[]
-  ): Promise<AccessControlAPIResponse<undefined>>;
+  ): Promise<AccessControlAPIResponse<Member[]>>;
 
   /**  Remove the specified iTwin member */
   removeITwinMemberAsync(

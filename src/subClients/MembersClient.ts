@@ -48,18 +48,18 @@ export class MembersClient extends BaseClient implements IMembersClient{
     * @param accessToken The client access token string
     * @param iTwinId The id of the iTwin
     * @param newMembers The list of new members to be added along with their role
-    * @returns No Content
+    * @returns Member[]
     */
   public async addITwinMembersAsync(
     accessToken: AccessToken,
     iTwinId: string,
     newMembers: Member[]
-  ): Promise<AccessControlAPIResponse<undefined>>{
+  ): Promise<AccessControlAPIResponse<Member[]>>{
     const url = `${this._baseUrl}/${iTwinId}/members`;
     const body = {
       members: newMembers,
     };
-    return this.sendGenericAPIRequest(accessToken, "POST", url, body);
+    return this.sendGenericAPIRequest(accessToken, "POST", url, body, "members");
   }
 
   /** Remove the specified member from the iTwin
