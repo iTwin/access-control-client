@@ -112,14 +112,15 @@ describe("AccessControlClient Members", () => {
   it("should get add, get, update, and remove a member", async () => {
     // --- Add Member ---
     // Act
-    const addMemberResponse: AccessControlAPIResponse<undefined> = await accessControlClient.members.addITwinMembersAsync(accessToken, TestConfig.projectId, [{
+    const addMemberResponse: AccessControlAPIResponse<Member[]> = await accessControlClient.members.addITwinMembersAsync(accessToken, TestConfig.projectId, [{
       email: TestConfig.temporaryUserEmail,
       roleid: TestConfig.permanentRoleId1,
     }]);
 
     // Assert
     chai.expect(addMemberResponse.status).to.be.eq(201);
-    chai.expect(addMemberResponse.data).to.be.undefined;
+    chai.expect(addMemberResponse.data).to.not.be.empty;
+    chai.expect(addMemberResponse.data!.length).to.be.greaterThan(0);
 
     // --- Check member exists and has role ---
     // Act
