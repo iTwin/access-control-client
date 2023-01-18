@@ -11,13 +11,15 @@ import type { AccessToken } from "@itwin/core-bentley";
 export interface IAccessControlClient {
   permissions: IPermissionsClient;
   roles: IRolesClient;
-  members: IMembersClient;
+  groups: IGroupsClient;
+  userMembers: IUserMembersClient;
+  groupMembers: IGroupMembersClient;
 }
 
 export interface IPermissionsClient {
   /** Retrieves the list of all available permissions **/
   getPermissionsAsync(
-    accessToken: AccessToken,
+    accessToken: AccessToken
   ): Promise<AccessControlAPIResponse<Permission[]>>;
 
   /** Retrieves a list of permissions the identity has for a specified iTwin */
@@ -27,56 +29,94 @@ export interface IPermissionsClient {
   ): Promise<AccessControlAPIResponse<Permission[]>>;
 }
 
-export interface IMembersClient{
-  /** Retrieves a list of team members and their roles assigned to a specified iTwin. */
-  queryITwinMembersAsync(
+export interface IUserMembersClient {
+  /** Retrieves a list of user members and their roles assigned to a specified iTwin. */
+  queryITwinUserMembersAsync(
     accessToken: AccessToken,
     iTwinId: string,
     arg?: AccessControlQueryArg
-  ): Promise<AccessControlAPIResponse<Member[]>>;
+  ): Promise<AccessControlAPIResponse<UserMember[]>>;
 
-  /** Retrieves a specific member for a specified iTwin. */
-  getITwinMemberAsync(
+  /** Retrieves a specific user member for a specified iTwin. */
+  getITwinUserMemberAsync(
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string
-  ): Promise<AccessControlAPIResponse<Member>>;
+  ): Promise<AccessControlAPIResponse<UserMember>>;
 
-  /** Add new iTwin members */
-  addITwinMembersAsync(
+  /** Add new iTwin user members */
+  addITwinUserMembersAsync(
     accessToken: AccessToken,
     iTwinId: string,
-    newMembers: Member[]
-  ): Promise<AccessControlAPIResponse<Member[]>>;
+    newMembers: UserMember[]
+  ): Promise<AccessControlAPIResponse<UserMember[]>>;
 
-  /**  Remove the specified iTwin member */
-  removeITwinMemberAsync(
+  /**  Remove the specified iTwin user member */
+  removeITwinUserMemberAsync(
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string
   ): Promise<AccessControlAPIResponse<undefined>>;
 
-  /**  Update iTwin team member roles */
-  updateITwinMemberAsync(
+  /**  Update iTwin user member roles */
+  updateITwinUserMemberAsync(
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string,
     roleIds: string[]
-  ): Promise<AccessControlAPIResponse<Member>>;
+  ): Promise<AccessControlAPIResponse<UserMember>>;
+}
+
+export interface IGroupMembersClient {
+  /** Retrieves a list of group members and their roles assigned to a specified iTwin. */
+  queryITwinGroupMembersAsync(
+    accessToken: AccessToken,
+    iTwinId: string,
+    arg?: AccessControlQueryArg
+  ): Promise<AccessControlAPIResponse<GroupMember[]>>;
+
+  /** Retrieves a specific group member for a specified iTwin. */
+  getITwinGroupMemberAsync(
+    accessToken: AccessToken,
+    iTwinId: string,
+    memberId: string
+  ): Promise<AccessControlAPIResponse<GroupMember>>;
+
+  /** Add new iTwin group members */
+  addITwinGroupMembersAsync(
+    accessToken: AccessToken,
+    iTwinId: string,
+    newMembers: GroupMember[]
+  ): Promise<AccessControlAPIResponse<GroupMember[]>>;
+
+  /**  Remove the specified iTwin group member */
+  removeITwinGroupMemberAsync(
+    accessToken: AccessToken,
+    iTwinId: string,
+    memberId: string
+  ): Promise<AccessControlAPIResponse<undefined>>;
+
+  /**  Update iTwin group member roles */
+  updateITwinGroupMemberAsync(
+    accessToken: AccessToken,
+    iTwinId: string,
+    memberId: string,
+    roleIds: string[]
+  ): Promise<AccessControlAPIResponse<GroupMember>>;
 }
 
 export interface IRolesClient {
   /** Retrieves a list of roles the for a specified iTwin */
   getITwinRolesAsync(
     accessToken: AccessToken,
-    iTwinId: string,
+    iTwinId: string
   ): Promise<AccessControlAPIResponse<Role[]>>;
 
   /** Retrieves a role for a specified iTwin */
   getITwinRoleAsync(
     accessToken: AccessToken,
     iTwinId: string,
-    roleId: string,
+    roleId: string
   ): Promise<AccessControlAPIResponse<Role>>;
 
   /** Creates a new iTwin Role */
@@ -90,7 +130,7 @@ export interface IRolesClient {
   deleteITwinRoleAsync(
     accessToken: AccessToken,
     iTwinId: string,
-    roleId: string,
+    roleId: string
   ): Promise<AccessControlAPIResponse<undefined>>;
 
   /** Updates an existing iTwin Role */
@@ -100,6 +140,43 @@ export interface IRolesClient {
     roleId: string,
     role: Role
   ): Promise<AccessControlAPIResponse<Role>>;
+}
+
+export interface IGroupsClient {
+  /** Retrieves a list of groups the for a specified iTwin */
+  getITwinGroupsAsync(
+    accessToken: AccessToken,
+    iTwinId: string
+  ): Promise<AccessControlAPIResponse<Group[]>>;
+
+  /** Retrieves a group for a specified iTwin */
+  getITwinGroupAsync(
+    accessToken: AccessToken,
+    iTwinId: string,
+    groupId: string
+  ): Promise<AccessControlAPIResponse<Group>>;
+
+  /** Creates a new iTwin group */
+  createITwinGroupAsync(
+    accessToken: AccessToken,
+    iTwinId: string,
+    group: Group
+  ): Promise<AccessControlAPIResponse<Group>>;
+
+  /** Removes an existing iTwin group */
+  deleteITwinGroupAsync(
+    accessToken: AccessToken,
+    iTwinId: string,
+    groupId: string
+  ): Promise<AccessControlAPIResponse<undefined>>;
+
+  /** Updates an existing iTwin group */
+  updateITwinGroupAsync(
+    accessToken: AccessToken,
+    iTwinId: string,
+    groupId: string,
+    group: Group
+  ): Promise<AccessControlAPIResponse<Group>>;
 }
 
 export interface AccessControlQueryArg {
@@ -128,7 +205,7 @@ export interface ErrorDetail {
 
 export type Permission = string;
 
-export interface Member {
+export interface UserMember {
   id?: string;
   roleid?: string;
   email?: string;
@@ -138,9 +215,24 @@ export interface Member {
   roles?: Omit<Role, "permissions">[];
 }
 
+export interface GroupMember {
+  id?: string;
+  groupName?: string;
+  groupDescription?: string;
+  roles?: Omit<Role, "permissions">[];
+}
+
 export interface Role {
   id?: string;
   displayName: string;
   description: string;
   permissions: Permission[];
+}
+
+export interface Group {
+  id?: string;
+  name?: string;
+  description?: string;
+  users?: string[];
+  imsGroups?: string[];
 }
