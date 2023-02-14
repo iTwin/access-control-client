@@ -18,6 +18,14 @@ export class TestConfig {
   public static readonly permanentRoleName2: string =  process.env.IMJS_TEST_PERMANENT_ROLE_NAME2!;
   public static readonly permanentRoleId2: string = process.env.IMJS_TEST_PERMANENT_ROLE_ID2!;
 
+  public static readonly permanentGroupName1: string =  process.env.IMJS_TEST_PERMANENT_Group_NAME1!;
+  public static readonly permanentGroupId1: string = process.env.IMJS_TEST_PERMANENT_Group_ID1!;
+
+  public static readonly permanentGroupName2: string =  process.env.IMJS_TEST_PERMANENT_Group_NAME2!;
+  public static readonly permanentGroupId2: string = process.env.IMJS_TEST_PERMANENT_Group_ID2!;
+
+  public static readonly permanentImsGroupName: string = process.env.IMJS_TEST_PERMANENT_IMSGROUP_NAME!;
+
   public static readonly temporaryUserEmail: string = process.env.IMJS_TEST_TEMP_USER_EMAIL!;
   public static readonly temporaryUserId: string = process.env.IMJS_TEST_TEMP_USER_ID!;
 
