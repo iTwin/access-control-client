@@ -12,14 +12,12 @@
   "files.exclude": {
     "**/.nyc_output": true,
     "**/.rush": true,
-    "**/*.build.log": true,
     "**/*.build.error.log": true,
+    "**/*.build.log": true,
     "**/generated-docs": true,
-    "**/package-deps.json": true,
-    "**/node_modules": true,
-    "**/test-apps/**/build": true,
     "**/out": true,
-    "**/lib": true,
+    "**/package-deps.json": true,
+    "**/test-apps/**/build": true,
     "common/temp": true
   },
   "files.trimTrailingWhitespace": true,
@@ -50,25 +48,21 @@
   ],
   "json.schemas": [
     {
-      "fileMatch": [
-        "certa.json"
-      ],
+      "fileMatch": ["certa.json"],
       "url": "./tools/certa/certa.schema.json"
-    },
+    }
   ],
   "markdownlint.config": {
     "MD024": {
       "allow_different_nesting": true
-    },
+    }
   },
-  "markdownlint.ignore": [
-    "**/CHANGELOG.md"
-  ],
+  "markdownlint.ignore": ["**/CHANGELOG.md"],
   "eslint.validate": [
     "javascript",
     "javascriptreact",
     "typescript",
-    "typescriptreact",
+    "typescriptreact"
   ],
   "eslint.workingDirectories": [
     {
