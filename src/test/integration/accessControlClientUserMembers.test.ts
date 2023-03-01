@@ -118,7 +118,7 @@ describe("AccessControlClient User Members", () => {
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(200);
     chai.expect(iTwinsResponse.data).to.not.be.empty;
-    chai.expect(iTwinsResponse.data?.id).to.be.eq(TestConfig.regularUserId);
+    chai.expect(iTwinsResponse.data!.id).to.be.eq(TestConfig.regularUserId);
   });
 
   it("should get a 404 when trying to get a non-existant user member", async () => {
@@ -171,11 +171,11 @@ describe("AccessControlClient User Members", () => {
     chai.expect(getUserMemberResponse.status).to.be.eq(200);
     chai.expect(getUserMemberResponse.data).to.not.be.undefined;
     chai
-      .expect(getUserMemberResponse.data?.email)
+      .expect(getUserMemberResponse.data!.email)
       .to.be.eq(TestConfig.temporaryUserEmail);
-    chai.expect(getUserMemberResponse.data?.roles!.length).to.be.eq(1);
+    chai.expect(getUserMemberResponse.data!.roles!.length).to.be.eq(1);
     chai
-      .expect(getUserMemberResponse.data?.roles![0].id)
+      .expect(getUserMemberResponse.data!.roles![0].id)
       .to.be.eq(TestConfig.permanentRoleId1);
 
     // --- Update member's role ---
@@ -191,14 +191,14 @@ describe("AccessControlClient User Members", () => {
     chai.expect(updatedUserMemberResponse.status).to.be.eq(200);
     chai.expect(updatedUserMemberResponse.data).to.not.be.undefined;
     chai
-      .expect(updatedUserMemberResponse.data?.id)
+      .expect(updatedUserMemberResponse.data!.id)
       .to.be.eq(TestConfig.temporaryUserId);
-    chai.expect(updatedUserMemberResponse.data?.roles!.length).to.be.eq(2);
+    chai.expect(updatedUserMemberResponse.data!.roles!.length).to.be.eq(2);
     chai
-      .expect(updatedUserMemberResponse.data?.roles!.map((x) => x.id))
+      .expect(updatedUserMemberResponse.data!.roles!.map((x) => x.id))
       .to.include(TestConfig.permanentRoleId1);
     chai
-      .expect(updatedUserMemberResponse.data?.roles!.map((x) => x.id))
+      .expect(updatedUserMemberResponse.data!.roles!.map((x) => x.id))
       .to.include(TestConfig.permanentRoleId2);
 
     // --- Remove member ---

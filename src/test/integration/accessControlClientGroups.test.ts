@@ -56,8 +56,8 @@ describe("AccessControlClient Groups", () => {
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(200);
     chai.expect(iTwinsResponse.data).to.not.be.empty;
-    chai.expect(iTwinsResponse.data?.id).to.be.eq(TestConfig.permanentGroupId1);
-    chai.expect(iTwinsResponse.data?.name).to.be.eq(TestConfig.permanentGroupName1);
+    chai.expect(iTwinsResponse.data!.id).to.be.eq(TestConfig.permanentGroupId1);
+    chai.expect(iTwinsResponse.data!.name).to.be.eq(TestConfig.permanentGroupName1);
   });
 
   it("should get a 404 when trying to get a non-existant group", async () => {
@@ -122,33 +122,55 @@ describe("AccessControlClient Groups", () => {
 
     // Assert
     chai.expect(createResponse.status).to.be.eq(201);
-    chai.expect(createResponse.data?.name).to.be.eq(newGroup.name);
-    chai.expect(createResponse.data?.description).to.be.eq(newGroup.description);
+    chai.expect(createResponse.data!.name).to.be.eq(newGroup.name);
+    chai.expect(createResponse.data!.description).to.be.eq(newGroup.description);
 
     // --- UPDATE GROUP ---
     // Arrange
     const updatedGroup: Group = {
-      name: newGroupName,
-      description: newGroupDescription,
+      name: `${newGroupName} Updated Name`,
+      description: `${newGroupDescription} Updated Description`,
       users: [TestConfig.temporaryUserEmail],
       imsGroups: [TestConfig.permanentImsGroupName],
     };
 
     // Act
     const updateResponse: AccessControlAPIResponse<Group> =
-      await accessControlClient.groups.updateITwinGroupAsync(accessToken, TestConfig.projectId, createResponse.data?.id as string, updatedGroup);
+      await accessControlClient.groups.updateITwinGroupAsync(accessToken, TestConfig.projectId, createResponse.data!.id as string, updatedGroup);
 
     // Assert
     chai.expect(updateResponse.status).to.be.eq(200);
-    chai.expect(updateResponse.data?.name).to.be.eq(updatedGroup.name);
-    chai.expect(updateResponse.data?.description).to.be.eq(updatedGroup.description);
-    chai.expect(updateResponse.data?.users).to.be.eq(updatedGroup.users);
-    chai.expect(updateResponse.data?.imsGroups).to.be.eq(updatedGroup.imsGroups);
+    chai.expect(updateResponse.data!.name).to.be.eq(updatedGroup.name);
+    chai.expect(updateResponse.data!.description).to.be.eq(updatedGroup.description);
+    chai
+      .expect(updateResponse.data!.users!.map((x) => x))
+      .to.include(TestConfig.temporaryUserEmail);
+    chai
+      .expect(updateResponse.data!.imsGroups!.map((x) => x))
+      .to.include(TestConfig.permanentImsGroupName);
+
+    // --- UPDATE GROUP BACK TO EMPTY---
+    // Arrange
+    const updatedEmptyGroup: Group = {
+      users: [],
+      imsGroups: [],
+    };
+
+    // Act
+    const updateEmptyResponse: AccessControlAPIResponse<Group> =
+      await accessControlClient.groups.updateITwinGroupAsync(accessToken, TestConfig.projectId, createResponse.data!.id as string, updatedEmptyGroup);
+
+    // Assert
+    chai.expect(updateEmptyResponse.status).to.be.eq(200);
+    chai.expect(updateEmptyResponse.data!.name).to.be.eq(updatedGroup.name);
+    chai.expect(updateEmptyResponse.data!.description).to.be.eq(updatedGroup.description);
+    chai.expect(updateEmptyResponse.data!.users!.length).to.be.eq(0);
+    chai.expect(updateEmptyResponse.data!.imsGroups!.length).to.be.eq(0);
 
     // --- DELETE GROUP ---
     // Act
     const deleteResponse: AccessControlAPIResponse<undefined> =
-      await accessControlClient.groups.deleteITwinGroupAsync(accessToken, TestConfig.projectId, createResponse.data?.id as string);
+      await accessControlClient.groups.deleteITwinGroupAsync(accessToken, TestConfig.projectId, createResponse.data!.id as string);
 
     // Assert
     chai.expect(deleteResponse.status).to.be.eq(204);

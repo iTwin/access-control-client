@@ -85,7 +85,7 @@ describe("AccessControlClient Group Members", () => {
         accessToken,
         TestConfig.projectId
       );
-    const skipAmmount = 5;
+    const skipAmmount = 1;
     const topAmount = 3;
 
     // Act
@@ -118,7 +118,7 @@ describe("AccessControlClient Group Members", () => {
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(200);
     chai.expect(iTwinsResponse.data).to.not.be.empty;
-    chai.expect(iTwinsResponse.data?.id).to.be.eq(TestConfig.permanentGroupId1);
+    chai.expect(iTwinsResponse.data!.id).to.be.eq(TestConfig.permanentGroupId1);
   });
 
   it("should get a 404 when trying to get a non-existant group member", async () => {
@@ -161,21 +161,21 @@ describe("AccessControlClient Group Members", () => {
 
     // --- Check member exists and has role ---
     // Act
-    const getUserMemberResponse: AccessControlAPIResponse<GroupMember> =
+    const getGroupMemberResponse: AccessControlAPIResponse<GroupMember> =
       await accessControlClient.groupMembers.getITwinGroupMemberAsync(
         accessToken,
         TestConfig.projectId,
         TestConfig.permanentGroupId2
       );
 
-    chai.expect(getUserMemberResponse.status).to.be.eq(200);
-    chai.expect(getUserMemberResponse.data).to.not.be.undefined;
+    chai.expect(getGroupMemberResponse.status).to.be.eq(200);
+    chai.expect(getGroupMemberResponse.data).to.not.be.undefined;
     chai
-      .expect(getUserMemberResponse.data?.id)
+      .expect(getGroupMemberResponse.data!.id)
       .to.be.eq(TestConfig.permanentGroupId2);
-    chai.expect(getUserMemberResponse.data?.roles!.length).to.be.eq(1);
+    chai.expect(getGroupMemberResponse.data!.roles!.length).to.be.eq(1);
     chai
-      .expect(getUserMemberResponse.data?.roles![0].id)
+      .expect(getGroupMemberResponse.data!.roles![0].id)
       .to.be.eq(TestConfig.permanentRoleId1);
 
     // --- Update member's role ---
@@ -191,14 +191,14 @@ describe("AccessControlClient Group Members", () => {
     chai.expect(updatedUserMemberResponse.status).to.be.eq(200);
     chai.expect(updatedUserMemberResponse.data).to.not.be.undefined;
     chai
-      .expect(updatedUserMemberResponse.data?.id)
+      .expect(updatedUserMemberResponse.data!.id)
       .to.be.eq(TestConfig.permanentGroupId2);
-    chai.expect(updatedUserMemberResponse.data?.roles!.length).to.be.eq(2);
+    chai.expect(updatedUserMemberResponse.data!.roles!.length).to.be.eq(2);
     chai
-      .expect(updatedUserMemberResponse.data?.roles!.map((x) => x.id))
+      .expect(updatedUserMemberResponse.data!.roles!.map((x) => x.id))
       .to.include(TestConfig.permanentRoleId1);
     chai
-      .expect(updatedUserMemberResponse.data?.roles!.map((x) => x.id))
+      .expect(updatedUserMemberResponse.data!.roles!.map((x) => x.id))
       .to.include(TestConfig.permanentRoleId2);
 
     // --- Remove member ---
