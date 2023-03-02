@@ -3,7 +3,7 @@
 ## 2.0.0
   - Added groups client
   - Added group member client
-  - Added user member cleint
+  - Added user member client
   - Removed members client 
 
 ## 1.3.0
