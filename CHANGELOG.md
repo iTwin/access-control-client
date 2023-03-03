@@ -1,5 +1,14 @@
 # Change Log - @itwin/access-control-client
 
+## 2.0.0
+  - Added groups client
+  - Added group member client
+  - Added user member client
+  - Removed members client 
+
+## 1.3.0
+  - Added support for the `accept` header inside of `BaseClient`.
+
 ## 1.2.0
 
 - Return newly added members.
