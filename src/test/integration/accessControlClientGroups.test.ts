@@ -127,7 +127,13 @@ describe("AccessControlClient Groups", () => {
 
     // --- UPDATE GROUP ---
     // Arrange
-    const updatedGroup: Group = {
+    const updatedGroup: {
+      id?: string;
+      name?: string;
+      description?: string;
+      users?: string[];
+      imsGroups?: string[];
+    } = {
       name: `${newGroupName} Updated Name`,
       description: `${newGroupDescription} Updated Description`,
       users: [TestConfig.temporaryUserEmail],
