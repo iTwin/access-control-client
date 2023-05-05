@@ -149,7 +149,7 @@ describe("AccessControlClient Groups", () => {
     chai.expect(updateResponse.data!.name).to.be.eq(updatedGroup.name);
     chai.expect(updateResponse.data!.description).to.be.eq(updatedGroup.description);
     chai
-      .expect(updateResponse.data!.users!.map((x) => x))
+      .expect(updateResponse.data!.members!.map((x) => x))
       .to.include(TestConfig.temporaryUserEmail);
     chai
       .expect(updateResponse.data!.imsGroups!.map((x) => x))
@@ -158,7 +158,7 @@ describe("AccessControlClient Groups", () => {
     // --- UPDATE GROUP BACK TO EMPTY---
     // Arrange
     const updatedEmptyGroup: Group = {
-      users: [],
+      members: [],
       imsGroups: [],
     };
 
@@ -170,7 +170,7 @@ describe("AccessControlClient Groups", () => {
     chai.expect(updateEmptyResponse.status).to.be.eq(200);
     chai.expect(updateEmptyResponse.data!.name).to.be.eq(updatedGroup.name);
     chai.expect(updateEmptyResponse.data!.description).to.be.eq(updatedGroup.description);
-    chai.expect(updateEmptyResponse.data!.users!.length).to.be.eq(0);
+    chai.expect(updateEmptyResponse.data!.members!.length).to.be.eq(0);
     chai.expect(updateEmptyResponse.data!.imsGroups!.length).to.be.eq(0);
 
     // --- DELETE GROUP ---

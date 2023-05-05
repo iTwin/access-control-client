@@ -233,7 +233,7 @@ export interface Group {
   id?: string;
   name?: string;
   description?: string;
-  users?: GroupUser[];
+  members?: GroupUser[];
   imsGroups?: string[];
 }
 
