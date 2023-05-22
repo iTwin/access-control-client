@@ -1,10 +1,14 @@
 # Change Log - @itwin/access-control-client
 
+## 2.1.0
+  - Changed the `users` property to `members` on the `Groups` object.
+    - `members` property now accepts a `GroupUser[]` object instead of a `string[]`
+
 ## 2.0.0
   - Added groups client
   - Added group member client
   - Added user member client
-  - Removed members client 
+  - Removed members client
 
 ## 1.3.0
   - Added support for the `accept` header inside of `BaseClient`.

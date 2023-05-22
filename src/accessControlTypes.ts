@@ -175,7 +175,7 @@ export interface IGroupsClient {
     accessToken: AccessToken,
     iTwinId: string,
     groupId: string,
-    group: Group
+    group: GroupUpdate
   ): Promise<AccessControlAPIResponse<Group>>;
 }
 
@@ -233,6 +233,22 @@ export interface Group {
   id?: string;
   name?: string;
   description?: string;
-  users?: string[];
+  members?: GroupUser[];
+  imsGroups?: string[];
+}
+
+export interface GroupUser {
+  id?: string;
+  email?: string;
+  givenName?: string;
+  surname?: string;
+  organization?: string;
+}
+
+export interface GroupUpdate {
+  id?: string;
+  name?: string;
+  description?: string;
+  members?: string[];
   imsGroups?: string[];
 }
