@@ -143,7 +143,7 @@ describe("AccessControlClient Groups", () => {
     chai.expect(updateResponse.data!.name).to.be.eq(updatedGroup.name);
     chai.expect(updateResponse.data!.description).to.be.eq(updatedGroup.description);
     chai
-      .expect(updateResponse.data!.members!.map((x) => x))
+      .expect(updateResponse.data!.members!.map((x) => x.email!))
       .to.include(TestConfig.temporaryUserEmail);
     chai
       .expect(updateResponse.data!.imsGroups!.map((x) => x))
