@@ -1,7 +1,8 @@
 # Change Log - @itwin/access-control-client
 
 ## 2.1.0
-  - Replace the `email` property with the `GroupUser` property on the `Group` object.
+  - Changed the `users` property to `members` on the `Groups` object.
+    - `members` property now accepts a `GroupUser[]` object instead of a `string[]`
 
 ## 2.0.0
   - Added groups client
