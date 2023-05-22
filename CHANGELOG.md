@@ -3,7 +3,6 @@
 ## 2.1.0
   - Replace the `email` property with the `GroupUser` property on the `Group` object.
 
-
 ## 2.0.0
   - Added groups client
   - Added group member client
