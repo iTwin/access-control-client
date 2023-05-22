@@ -5,7 +5,7 @@
 import type { AccessToken } from "@itwin/core-bentley";
 import * as chai from "chai";
 import { AccessControlClient } from "../../AccessControlClient";
-import type { AccessControlAPIResponse, Group, IAccessControlClient } from "../../accessControlTypes";
+import type { AccessControlAPIResponse, Group, GroupUpdate, IAccessControlClient } from "../../accessControlTypes";
 import { TestConfig } from "../TestConfig";
 
 chai.should();
@@ -77,7 +77,7 @@ describe("AccessControlClient Groups", () => {
   it("should get a 404 when trying to update a non-existant group", async () => {
     // Arrange
     const nonExistantGroupId = "22acf21e-0575-4faf-849b-bcd538718269";
-    const emptyUpdatedGroup: Group = {
+    const emptyUpdatedGroup: GroupUpdate = {
       name: "NonExistantGroupName",
       description: "NonExistantRoleDescription",
     };
@@ -127,16 +127,10 @@ describe("AccessControlClient Groups", () => {
 
     // --- UPDATE GROUP ---
     // Arrange
-    const updatedGroup: {
-      id?: string;
-      name?: string;
-      description?: string;
-      users?: string[];
-      imsGroups?: string[];
-    } = {
+    const updatedGroup: GroupUpdate = {
       name: `${newGroupName} Updated Name`,
       description: `${newGroupDescription} Updated Description`,
-      users: [TestConfig.temporaryUserEmail],
+      members: [TestConfig.temporaryUserEmail],
       imsGroups: [TestConfig.permanentImsGroupName],
     };
 
@@ -157,7 +151,7 @@ describe("AccessControlClient Groups", () => {
 
     // --- UPDATE GROUP BACK TO EMPTY---
     // Arrange
-    const updatedEmptyGroup: Group = {
+    const updatedEmptyGroup: GroupUpdate = {
       members: [],
       imsGroups: [],
     };
