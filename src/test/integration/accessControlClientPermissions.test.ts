@@ -5,7 +5,7 @@
 import type { AccessToken } from "@itwin/core-bentley";
 import * as chai from "chai";
 import { AccessControlClient } from "../../AccessControlClient";
-import type { AccessControlAPIResponse, IAccessControlClient, Permission } from "../../accessControlTypes";
+import type { AccessControlAPIResponse, IAccessControlClient, ITwinPermission, Permission } from "../../accessControlTypes";
 import { TestConfig } from "../TestConfig";
 
 chai.should();
@@ -50,7 +50,7 @@ describe("AccessControlClient Permissions", () => {
 
   it("should get a list of permissions for an iTwin", async () => {
     // Act
-    const iTwinsResponse: AccessControlAPIResponse<Permission[]> =
+    const iTwinsResponse: AccessControlAPIResponse<ITwinPermission[]> =
       await accessControlClient.permissions.getITwinPermissionsAsync(accessToken, TestConfig.projectId);
 
     // Assert
@@ -64,7 +64,7 @@ describe("AccessControlClient Permissions", () => {
     const notExistantITwinId = "22acf21e-0575-4faf-849b-bcd538718269";
 
     // Act
-    const iTwinsResponse: AccessControlAPIResponse<Permission[]> =
+    const iTwinsResponse: AccessControlAPIResponse<ITwinPermission[]> =
       await accessControlClient.permissions.getITwinPermissionsAsync(accessToken, notExistantITwinId);
 
     // Assert

@@ -26,7 +26,7 @@ export interface IPermissionsClient {
   getITwinPermissionsAsync(
     accessToken: AccessToken,
     iTwinId: string
-  ): Promise<AccessControlAPIResponse<Permission[]>>;
+  ): Promise<AccessControlAPIResponse<ITwinPermission[]>>;
 }
 
 export interface IUserMembersClient {
@@ -203,7 +203,13 @@ export interface ErrorDetail {
   target?: string;
 }
 
-export type Permission = string;
+export type ITwinPermission = string;
+
+export interface Permission {
+  id: string;
+  description: string;
+  api: string;
+}
 
 export interface UserMember {
   id?: string;

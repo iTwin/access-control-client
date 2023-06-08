@@ -6,7 +6,7 @@
  * @module AccessControlClient
  */
 import type { AccessToken } from "@itwin/core-bentley";
-import type { AccessControlAPIResponse, IPermissionsClient, Permission } from "../accessControlTypes";
+import type { AccessControlAPIResponse, IPermissionsClient, ITwinPermission, Permission } from "../accessControlTypes";
 import { BaseClient } from "./BaseClient";
 
 export class PermissionsClient extends BaseClient implements IPermissionsClient{
@@ -33,7 +33,7 @@ export class PermissionsClient extends BaseClient implements IPermissionsClient{
   public async getITwinPermissionsAsync(
     accessToken: AccessToken,
     iTwinId: string,
-  ): Promise<AccessControlAPIResponse<Permission[]>>{
+  ): Promise<AccessControlAPIResponse<ITwinPermission[]>>{
     const url = `${this._baseUrl}/${iTwinId}/permissions`;
     return this.sendGenericAPIRequest(accessToken, "GET", url, undefined, "permissions");
   }
