@@ -1,5 +1,8 @@
 # Change Log - @itwin/access-control-client
 
+## 2.2.0
+  - Added owner member client
+
 ## 2.1.0
   - Changed the `users` property to `members` on the `Groups` object.
     - `members` property now accepts a `GroupUser[]` object instead of a `string[]`

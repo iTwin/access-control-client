@@ -14,6 +14,7 @@ export interface IAccessControlClient {
   groups: IGroupsClient;
   userMembers: IUserMembersClient;
   groupMembers: IGroupMembersClient;
+  ownerMembers: IOwnerMembersClient;
 }
 
 export interface IPermissionsClient {
@@ -65,6 +66,29 @@ export interface IUserMembersClient {
     memberId: string,
     roleIds: string[]
   ): Promise<AccessControlAPIResponse<UserMember>>;
+}
+
+export interface IOwnerMembersClient {
+  /** Retrieves a list of owner members on a specified iTwin. */
+  queryITwinOwnerMembersAsync(
+    accessToken: AccessToken,
+    iTwinId: string,
+    arg?: AccessControlQueryArg
+  ): Promise<AccessControlAPIResponse<OwnerMember[]>>;
+
+  /** Add new iTwin owner member */
+  addITwinOwnerMemberAsync(
+    accessToken: AccessToken,
+    iTwinId: string,
+    newMember: OwnerMember
+  ): Promise<AccessControlAPIResponse<OwnerMember>>;
+
+  /**  Remove the specified iTwin owner member */
+  removeITwinOwnerMemberAsync(
+    accessToken: AccessToken,
+    iTwinId: string,
+    memberId: string
+  ): Promise<AccessControlAPIResponse<undefined>>;
 }
 
 export interface IGroupMembersClient {
@@ -213,6 +237,14 @@ export interface UserMember {
   surname?: string;
   organization?: string;
   roles?: Omit<Role, "permissions">[];
+}
+
+export interface OwnerMember {
+  id?: string;
+  email?: string;
+  givenName?: string;
+  surname?: string;
+  organization?: string;
 }
 
 export interface GroupMember {
