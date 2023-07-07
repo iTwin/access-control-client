@@ -117,7 +117,7 @@ describe("AccessControlClient Owner Members", () => {
           email: TestConfig.temporaryUserEmail,
         },
       );
-
+    console.log(`adding ${TestConfig.temporaryUserEmail} owner`);
     // Assert
     chai.expect(addOwnerMemberResponse.status).to.be.eq(201);
     chai.expect(addOwnerMemberResponse.data).to.not.be.empty;

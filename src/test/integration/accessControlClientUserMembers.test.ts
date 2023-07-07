@@ -154,6 +154,7 @@ describe("AccessControlClient User Members", () => {
         ]
       );
 
+    console.log(`adding ${TestConfig.temporaryUserEmail} user`);
     // Assert
     chai.expect(addUserMemberResponse.status).to.be.eq(201);
     chai.expect(addUserMemberResponse.data).to.not.be.empty;
