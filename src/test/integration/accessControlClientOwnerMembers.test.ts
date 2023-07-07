@@ -133,7 +133,7 @@ describe("AccessControlClient Owner Members", () => {
     chai.expect(queryOwnerMemberResponse.status).to.be.eq(200);
     chai.expect(queryOwnerMemberResponse.data).to.not.be.undefined;
     chai.expect(queryOwnerMemberResponse.data![1]).to.not.be.undefined;
-    let newOwner = queryOwnerMemberResponse.data![1];
+    const newOwner = queryOwnerMemberResponse.data![1];
     chai.expect(newOwner).to.not.be.undefined;
     chai
       .expect(newOwner.email)

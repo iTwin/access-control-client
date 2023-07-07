@@ -9,10 +9,10 @@ import type {
   IAccessControlClient,
   IGroupMembersClient,
   IGroupsClient,
+  IOwnerMembersClient,
   IPermissionsClient,
   IRolesClient,
   IUserMembersClient,
-  IOwnerMembersClient,
 } from "./accessControlTypes";
 import { PermissionsClient } from "./subClients/PermissionsClient";
 import { RolesClient } from "./subClients/RolesClient";
