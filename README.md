@@ -276,7 +276,69 @@ async function printiTwinRole(): Promise<void> {
     );
 }
 ```
+### Get list of Owner Members for an iTwin
 
+```typescript
+import type { AccessToken } from "@itwin/core-bentley";
+import {
+  AccessControlClient,
+  IAccessControlClient,
+  OwnerMember,
+  AccessControlAPIResponse,
+} from "@itwin/access-control-client";
+
+/** Function that queries all Owner Members for a given iTwin and prints their ids to the console. */
+async function printiTwinOwnerMemberIds(): Promise<void> {
+  const accessControlClient: IAccessControlClient = new AccessControlClient();
+  const accessToken: AccessToken = { get_access_token_logic_here };
+
+  const iTwinsResponse: AccessControlAPIResponse<OwnerMember[]> =
+    await accessControlClient.ownerMembers.queryITwinOwnerMembersAsync(
+      accessToken,
+      "9bd7d24d-1508-4dba-99ab-23b3166401a0"
+    );
+
+  iTwinsResponse.data!.forEach((actualOwnerMember: OwnerMember) => {
+    console.log(actualOwnerMember.id);
+  });
+}
+```
+
+### Create, and delete an Owner Member
+
+```typescript
+import type { AccessToken } from "@itwin/core-bentley";
+import {
+  AccessControlClient,
+  IAccessControlClient,
+  OwnerMember,
+  AccessControlAPIResponse,
+} from "@itwin/access-control-client";
+
+/** Function that creates, and deletes an owner member. */
+async function createAndRemoveOwnerMember(): Promise<void> {
+  const accessControlClient: IAccessControlClient = new AccessControlClient();
+  const accessToken: AccessToken = { get_access_token_logic_here };
+
+  // Create owner member
+  const createOwnerMemberResponse: AccessControlAPIResponse<OwnerMember> =
+    await accessControlClient.ownerMembers.addITwinOwnerMemberAsync(
+      accessToken,
+      "71fd32ed-5ee4-4e22-bc4d-b8e973e0b7b7",
+      {
+        email: "test.user@bentley.com",
+      }
+    );
+
+  // Delete owner member
+  const removeOwnerMemberResponse: AccessControlAPIResponse<undefined> =
+    await accessControlClient.ownerMembers.removeITwinOwnerMemberAsync(
+      accessToken,
+      "b1803a0c-d440-4902-b527-54bf7f72500f",
+      "6401109c-75d7-46b8-8dbd-182d02155141"
+    );
+}
+```
 
 ### Get list of Groups for an iTwin
 
