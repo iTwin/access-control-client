@@ -9,13 +9,13 @@ import type { AccessToken } from "@itwin/core-bentley";
 import type { Method } from "axios";
 import type { AxiosRequestConfig } from "axios";
 import axios from "axios";
-import type { AccessControlAPIResponse, AccessControlQueryArg} from "../accessControlTypes";
+import type { AccessControlAPIResponse, AccessControlQueryArg } from "../accessControlTypes";
 
 export class BaseClient {
   protected _baseUrl: string = "https://api.bentley.com/accesscontrol/itwins";
 
   public constructor(url?: string) {
-    if(url !== undefined){
+    if (url !== undefined) {
       this._baseUrl = url;
     } else {
       const urlPrefix = process.env.IMJS_URL_PREFIX;
@@ -41,7 +41,7 @@ export class BaseClient {
     property?: string
   ): Promise<AccessControlAPIResponse<any>> { // TODO: Change any response
     const requestOptions = this.getRequestOptions(accessToken, method, url, data);
-
+    console.log(`sendGenericAPIRequest: ${method} ${url} ${JSON.stringify(data)}`);
     try {
       const response = await axios(requestOptions);
 
@@ -56,7 +56,7 @@ export class BaseClient {
         error: {
           code: "InternalServerError",
           message:
-             "An internal exception happened while calling iTwins Service",
+            "An internal exception happened while calling iTwins Service",
         },
       };
     }
