@@ -41,7 +41,6 @@ export class BaseClient {
     property?: string
   ): Promise<AccessControlAPIResponse<any>> { // TODO: Change any response
     const requestOptions = this.getRequestOptions(accessToken, method, url, data);
-    console.log(`sendGenericAPIRequest: ${method} ${url} ${JSON.stringify(data)}`);
     try {
       const response = await axios(requestOptions);
 
