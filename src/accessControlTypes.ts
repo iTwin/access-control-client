@@ -134,7 +134,7 @@ export interface IRolesClient {
   getITwinRolesAsync(
     accessToken: AccessToken,
     iTwinId: string,
-    additionalHeaders?: { [key: string]: string; }
+    additionalHeaders?: { [key: string]: string }
   ): Promise<AccessControlAPIResponse<Role[]>>;
 
   /** Retrieves a role for a specified iTwin */

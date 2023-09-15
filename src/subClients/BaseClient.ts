@@ -39,7 +39,7 @@ export class BaseClient {
     url: string,
     data?: any,
     property?: string,
-    additionalHeaders?: { [key: string]: string; }
+    additionalHeaders?: { [key: string]: string }
   ): Promise<AccessControlAPIResponse<any>> { // TODO: Change any response
     const requestOptions = this.getRequestOptions(accessToken, method, url, data, additionalHeaders);
     try {
@@ -66,7 +66,7 @@ export class BaseClient {
     * Build the request methods, headers, and other options
     * @param accessTokenString The client access token string
     */
-  protected getRequestOptions(accessTokenString: string, method: Method, url: string, data?: any, additionalHeaders?: { [key: string]: string; }): AxiosRequestConfig {
+  protected getRequestOptions(accessTokenString: string, method: Method, url: string, data?: any, additionalHeaders?: { [key: string]: string }): AxiosRequestConfig {
     return {
       method,
       url,
