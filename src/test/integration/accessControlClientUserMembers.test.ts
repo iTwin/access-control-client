@@ -139,7 +139,8 @@ describe("AccessControlClient User Members", () => {
     chai.expect(iTwinsResponse.error!.code).to.be.eq("TeamMemberNotFound");
   });
 
-  it("should get add, get, update, and remove a user member", async () => {
+  //skipping while invitation API is in dev/qa
+  it.skip("should get add, get, update, and remove a user member", async () => {
     // --- Add Member ---
     // Act
     const addUserMemberResponse: AccessControlAPIResponse<UserMember[]> =
