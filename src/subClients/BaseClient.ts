@@ -38,9 +38,10 @@ export class BaseClient {
     method: Method,
     url: string,
     data?: any,
-    property?: string
+    property?: string,
+    additionalHeaders?: { [key: string]: string }
   ): Promise<AccessControlAPIResponse<any>> { // TODO: Change any response
-    const requestOptions = this.getRequestOptions(accessToken, method, url, data);
+    const requestOptions = this.getRequestOptions(accessToken, method, url, data, additionalHeaders);
     try {
       const response = await axios(requestOptions);
 
@@ -65,7 +66,7 @@ export class BaseClient {
     * Build the request methods, headers, and other options
     * @param accessTokenString The client access token string
     */
-  protected getRequestOptions(accessTokenString: string, method: Method, url: string, data?: any): AxiosRequestConfig {
+  protected getRequestOptions(accessTokenString: string, method: Method, url: string, data?: any, additionalHeaders?: { [key: string]: string }): AxiosRequestConfig {
     return {
       method,
       url,
@@ -74,6 +75,7 @@ export class BaseClient {
         "authorization": accessTokenString,
         "content-type": "application/json",
         "accept": "application/vnd.bentley.itwin-platform.v2+json",
+        ...additionalHeaders,
       },
       validateStatus(status) {
         return status < 500; // Resolve only if the status code is less than 500

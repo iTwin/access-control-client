@@ -12,16 +12,16 @@ import {
 /** Basic configuration used by all tests
  */
 export class TestConfig {
-  public static readonly permanentRoleName1: string =  process.env.IMJS_TEST_PERMANENT_ROLE_NAME1!;
+  public static readonly permanentRoleName1: string = process.env.IMJS_TEST_PERMANENT_ROLE_NAME1!;
   public static readonly permanentRoleId1: string = process.env.IMJS_TEST_PERMANENT_ROLE_ID1!;
 
-  public static readonly permanentRoleName2: string =  process.env.IMJS_TEST_PERMANENT_ROLE_NAME2!;
+  public static readonly permanentRoleName2: string = process.env.IMJS_TEST_PERMANENT_ROLE_NAME2!;
   public static readonly permanentRoleId2: string = process.env.IMJS_TEST_PERMANENT_ROLE_ID2!;
 
-  public static readonly permanentGroupName1: string =  process.env.IMJS_TEST_PERMANENT_GROUP_NAME1!;
+  public static readonly permanentGroupName1: string = process.env.IMJS_TEST_PERMANENT_GROUP_NAME1!;
   public static readonly permanentGroupId1: string = process.env.IMJS_TEST_PERMANENT_GROUP_ID1!;
 
-  public static readonly permanentGroupName2: string =  process.env.IMJS_TEST_PERMANENT_GROUP_NAME2!;
+  public static readonly permanentGroupName2: string = process.env.IMJS_TEST_PERMANENT_GROUP_NAME2!;
   public static readonly permanentGroupId2: string = process.env.IMJS_TEST_PERMANENT_GROUP_ID2!;
 
   public static readonly permanentImsGroupName: string = process.env.IMJS_TEST_PERMANENT_IMSGROUP_NAME!;
