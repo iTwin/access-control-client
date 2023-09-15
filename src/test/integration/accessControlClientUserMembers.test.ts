@@ -139,7 +139,7 @@ describe("AccessControlClient User Members", () => {
     chai.expect(iTwinsResponse.error!.code).to.be.eq("TeamMemberNotFound");
   });
 
-  //skipping while invitation API is in dev/qa
+  // skipping while invitation API is in dev/qa
   it.skip("should get add, get, update, and remove a user member", async () => {
     // --- Add Member ---
     // Act
