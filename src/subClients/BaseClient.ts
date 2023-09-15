@@ -75,7 +75,7 @@ export class BaseClient {
         "authorization": accessTokenString,
         "content-type": "application/json",
         "accept": "application/vnd.bentley.itwin-platform.v2+json",
-        ...additionalHeaders
+        ...additionalHeaders,
       },
       validateStatus(status) {
         return status < 500; // Resolve only if the status code is less than 500
