@@ -48,6 +48,17 @@ describe("AccessControlClient Roles", () => {
     chai.expect(iTwinsResponse.data!.length).to.be.greaterThan(0);
   });
 
+  it("should get a list of roles for an iTwin with additional headers", async () => {
+    // Act
+    const iTwinsResponse: AccessControlAPIResponse<Role[]> =
+      await customAccessControlClient.roles.getITwinRolesAsync(accessToken, TestConfig.projectId, { "test-custom-header": "custom-value:xyz-123-abc" });
+
+    // Assert
+    chai.expect(iTwinsResponse.status).to.be.eq(200);
+    chai.expect(iTwinsResponse.data).to.not.be.empty;
+    chai.expect(iTwinsResponse.data!.length).to.be.greaterThan(0);
+  });
+
   it("should get a specific role for an iTwin", async () => {
     // Act
     const iTwinsResponse: AccessControlAPIResponse<Role> =
@@ -131,7 +142,7 @@ describe("AccessControlClient Roles", () => {
     // Arrange
     const updatedRole: Role = {
       displayName: newRoleName,
-      description: "UPDATED ROLE DESCRIPTION" ,
+      description: "UPDATED ROLE DESCRIPTION",
       permissions: [],
     };
 

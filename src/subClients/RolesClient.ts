@@ -9,7 +9,7 @@ import type { AccessToken } from "@itwin/core-bentley";
 import type { AccessControlAPIResponse, IRolesClient, Role } from "../accessControlTypes";
 import { BaseClient } from "./BaseClient";
 
-export class RolesClient extends BaseClient implements IRolesClient{
+export class RolesClient extends BaseClient implements IRolesClient {
   public constructor(url?: string) {
     super(url);
   }
@@ -22,9 +22,10 @@ export class RolesClient extends BaseClient implements IRolesClient{
   public async getITwinRolesAsync(
     accessToken: AccessToken,
     iTwinId: string,
-  ): Promise<AccessControlAPIResponse<Role[]>>{
+    additionalHeaders?: { [key: string]: string; }
+  ): Promise<AccessControlAPIResponse<Role[]>> {
     const url = `${this._baseUrl}/${iTwinId}/roles`;
-    return this.sendGenericAPIRequest(accessToken, "GET", url, undefined, "roles");
+    return this.sendGenericAPIRequest(accessToken, "GET", url, undefined, "roles", additionalHeaders);
   }
 
   /** Retrieves the specified role for the specified iTwin
@@ -36,7 +37,7 @@ export class RolesClient extends BaseClient implements IRolesClient{
     accessToken: AccessToken,
     iTwinId: string,
     roleId: string,
-  ): Promise<AccessControlAPIResponse<Role>>{
+  ): Promise<AccessControlAPIResponse<Role>> {
     const url = `${this._baseUrl}/${iTwinId}/roles/${roleId}`;
     return this.sendGenericAPIRequest(accessToken, "GET", url, undefined, "role");
   }
@@ -51,7 +52,7 @@ export class RolesClient extends BaseClient implements IRolesClient{
     accessToken: AccessToken,
     iTwinId: string,
     role: Role
-  ): Promise<AccessControlAPIResponse<Role>>{
+  ): Promise<AccessControlAPIResponse<Role>> {
     const url = `${this._baseUrl}/${iTwinId}/roles`;
     return this.sendGenericAPIRequest(accessToken, "POST", url, role, "role");
   }
@@ -66,7 +67,7 @@ export class RolesClient extends BaseClient implements IRolesClient{
     accessToken: AccessToken,
     iTwinId: string,
     roleId: string,
-  ): Promise<AccessControlAPIResponse<undefined>>{
+  ): Promise<AccessControlAPIResponse<undefined>> {
     const url = `${this._baseUrl}/${iTwinId}/roles/${roleId}`;
     return this.sendGenericAPIRequest(accessToken, "DELETE", url);
   }
@@ -83,7 +84,7 @@ export class RolesClient extends BaseClient implements IRolesClient{
     iTwinId: string,
     roleId: string,
     role: Role
-  ): Promise<AccessControlAPIResponse<Role>>{
+  ): Promise<AccessControlAPIResponse<Role>> {
     const url = `${this._baseUrl}/${iTwinId}/roles/${roleId}`;
     return this.sendGenericAPIRequest(accessToken, "PATCH", url, role, "role");
   }
