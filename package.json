@@ -1,6 +1,6 @@
 {
   "name": "@itwin/access-control-client",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "Access control client for the iTwin platform",
   "main": "lib/cjs/access-control-client.js",
   "module": "lib/esm/access-control-client.js",
@@ -19,7 +19,7 @@
     "pack": "npm pack"
   },
   "dependencies": {
-    "axios": "^1.6.1"
+    "axios": "~1.6.1"
   },
   "devDependencies": {
     "@itwin/build-tools": "^3.0.0",
