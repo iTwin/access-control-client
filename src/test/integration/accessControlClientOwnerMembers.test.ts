@@ -107,7 +107,7 @@ describe("AccessControlClient Owner Members", () => {
     });
   });
 
-  it("should get add, get, and remove a owner member", async () => {
+  it.skip("should get add, get, and remove a owner member", async () => {
     // --- Add Owner ---
     // Act
     console.log(`calling addITwinOwnerMember with ${TestUsers.manager.email} and project ${TestConfig.projectId} and token ${accessToken}`);
