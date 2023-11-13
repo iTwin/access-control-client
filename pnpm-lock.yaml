@@ -1,9 +1,5 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 dependencies:
   axios:
     specifier: ^1.6.1
@@ -23,8 +19,8 @@ devDependencies:
     specifier: ^3.0.0
     version: 3.2.8(eslint@7.32.0)(typescript@4.4.4)
   '@itwin/oidc-signin-tool':
-    specifier: ^3.6.2
-    version: 3.7.2(@itwin/core-bentley@3.2.8)(@itwin/core-geometry@4.2.3)
+    specifier: 3.6.1
+    version: 3.6.1(@itwin/core-bentley@3.2.8)
   '@types/chai':
     specifier: ^4.1.4
     version: 4.3.3
@@ -227,29 +223,6 @@ packages:
     resolution: {integrity: sha512-GRZMTQKqjza5Tjg3SRc0zmmXAS5E867dKITrbFYLo9zV/8t3KdzCb8EwFcNNxdlSBWpCBMtUWqH4rbZRJgTEHw==}
     dev: true
 
-  /@itwin/core-bentley@4.2.3:
-    resolution: {integrity: sha512-epJGdAI2ZXYAfvWJJn7NXx9wjQcLNXGCd3ZC9cKCouZ6uF3K9XJrBLRIu6cyLR5eZ+DNvmQ5VYQ5vXwPoXQcLg==}
-    dev: true
-
-  /@itwin/core-common@4.2.3(@itwin/core-bentley@3.2.8)(@itwin/core-geometry@4.2.3):
-    resolution: {integrity: sha512-1klIxYLai9cs3avYzGlD0W4KDYFdT106zKs5GsHfv7dUWsXloC+BtlpBAdvCgrzawfkAHevzirul0qPjjrbvCw==}
-    peerDependencies:
-      '@itwin/core-bentley': ^4.2.3
-      '@itwin/core-geometry': ^4.2.3
-    dependencies:
-      '@itwin/core-bentley': 3.2.8
-      '@itwin/core-geometry': 4.2.3
-      flatbuffers: 1.12.0
-      js-base64: 3.7.5
-    dev: true
-
-  /@itwin/core-geometry@4.2.3:
-    resolution: {integrity: sha512-9Mr5fPyaAoWjwnquc69wp02mts6ez1y15iowTD/4STlTzAfGkp+jB31TkIRijwPF8seZhKYsvm0USDO5loneTQ==}
-    dependencies:
-      '@itwin/core-bentley': 4.2.3
-      flatbuffers: 1.12.0
-    dev: true
-
   /@itwin/eslint-plugin@3.2.8(eslint@7.32.0)(typescript@4.4.4):
     resolution: {integrity: sha512-wk72LwLUovAZRZIjQqD0Rmre168DAYK1rq3D8178WLGRtv69uD8ok8Ee6WDTQUuEe6JO9SglGkg03/S/brZuSQ==}
     hasBin: true
@@ -277,21 +250,18 @@ packages:
       - supports-color
     dev: true
 
-  /@itwin/oidc-signin-tool@3.7.2(@itwin/core-bentley@3.2.8)(@itwin/core-geometry@4.2.3):
-    resolution: {integrity: sha512-DA5uWjGKFWP+ISySlLYXsTCHTogJn4O+z+R/XNmcR/8jiRiFMGr3aYmjklgrvUmYDJyl8llxSnVMz9w115+D1w==}
-    requiresBuild: true
+  /@itwin/oidc-signin-tool@3.6.1(@itwin/core-bentley@3.2.8):
+    resolution: {integrity: sha512-4M391FMMwPuRVZSC8DAtLlWlWMDwAVigI8ZY5gvPkHTOOHSAKPxFxZD/zXsySJ3Rn+tFNpP6DctU6OVxrYolRQ==}
     peerDependencies:
-      '@itwin/core-bentley': '>=3.3.0'
+      '@itwin/core-bentley': ^3.3.0
     dependencies:
       '@itwin/certa': 3.7.16
       '@itwin/core-bentley': 3.2.8
-      '@itwin/core-common': 4.2.3(@itwin/core-bentley@3.2.8)(@itwin/core-geometry@4.2.3)
-      '@playwright/test': 1.31.2
       dotenv: 10.0.0
       dotenv-expand: 5.1.0
       openid-client: 4.9.1
+      puppeteer: 13.7.0
     transitivePeerDependencies:
-      - '@itwin/core-geometry'
       - bufferutil
       - electron
       - encoding
@@ -376,17 +346,6 @@ packages:
   /@panva/asn1.js@1.0.0:
     resolution: {integrity: sha512-UdkG3mLEqXgnlKsWanWcgb6dOjUzJ+XC5f+aWw30qrtjxeNUSfKX1cd5FBzOaXQumoe9nIqeZUvrRJS03HCCtw==}
     engines: {node: '>=10.13.0'}
-    dev: true
-
-  /@playwright/test@1.31.2:
-    resolution: {integrity: sha512-BYVutxDI4JeZKV1+ups6dt5WiqKhjBtIYowyZIJ3kBDmJgsuPKsqqKNIMFbUePLSCmp2cZu+BDL427RcNKTRYw==}
-    engines: {node: '>=14'}
-    hasBin: true
-    dependencies:
-      '@types/node': 14.14.31
-      playwright-core: 1.31.2
-    optionalDependencies:
-      fsevents: 2.3.2
     dev: true
 
   /@sinclair/typebox@0.24.27:
@@ -1965,6 +1924,10 @@ packages:
     resolution: {integrity: sha512-t1CcaZbvm8pOlikqrsIM9GOa7Ipp07+4h/q9u0JXBWjPCjHdBl9KkddX87Vv9vBHoBGtwV79sYQNGnQM6iS5gg==}
     dev: true
 
+  /devtools-protocol@0.0.981744:
+    resolution: {integrity: sha512-0cuGS8+jhR67Fy7qG3i3Pc7Aw494sb9yG9QgpG97SFVWwolgYjlhJg7n+UaHxOQT30d1TYu/EYe9k01ivLErIg==}
+    dev: true
+
   /diff-sequences@28.1.1:
     resolution: {integrity: sha512-FU0iFaH/E23a+a718l8Qa/19bF9p06kgE0KipMOMadwa3SjnaElKzPaUC0vnibs6/B/9ni97s61mcejk8W1fQw==}
     engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
@@ -2753,10 +2716,6 @@ packages:
   /flat@5.0.2:
     resolution: {integrity: sha512-b6suED+5/3rTpUBdG1gupIl8MPFCAMA0QXwmljLhvCUKcUvdE4gWky9zpuGCcXHOsz4J9wPGNWq6OKpmIzz3hQ==}
     hasBin: true
-    dev: true
-
-  /flatbuffers@1.12.0:
-    resolution: {integrity: sha512-c7CZADjRcl6j0PlvFy0ZqXQ67qSEZfrVPynmnL+2zPc+NtMvrF8Y0QceMo7QqnSPc7+uWjUIAbvCQ5WIKlMVdQ==}
     dev: true
 
   /flatted@3.2.6:
@@ -3589,10 +3548,6 @@ packages:
     deprecated: this version is no longer supported
     dependencies:
       '@panva/asn1.js': 1.0.0
-    dev: true
-
-  /js-base64@3.7.5:
-    resolution: {integrity: sha512-3MEt5DTINKqfScXKfJFrRbxkrnk2AxPWGBL/ycjz4dK8iqiSJ06UxD8jh8xuh6p10TX4t2+7FsBYVxxQbMg+qA==}
     dev: true
 
   /js-tokens@4.0.0:
@@ -4654,12 +4609,6 @@ packages:
       find-up: 2.1.0
     dev: true
 
-  /playwright-core@1.31.2:
-    resolution: {integrity: sha512-a1dFgCNQw4vCsG7bnojZjDnPewZcw7tZUNFN0ZkcLYKj+mPmXvg4MpaaKZ5SgqPsOmqIf2YsVRkgqiRDxD+fDQ==}
-    engines: {node: '>=14'}
-    hasBin: true
-    dev: true
-
   /posix-character-classes@0.1.1:
     resolution: {integrity: sha512-xTgYBc3fuo7Yt7JbiuFxSYGToMoz8fLoE6TC9Wx1P/u+LfeThMOAqmuyECnlBaaJb+u1m9hHiXUEtwW4OzfUJg==}
     engines: {node: '>=0.10.0'}
@@ -4772,6 +4721,31 @@ packages:
   /punycode@2.1.1:
     resolution: {integrity: sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==}
     engines: {node: '>=6'}
+    dev: true
+
+  /puppeteer@13.7.0:
+    resolution: {integrity: sha512-U1uufzBjz3+PkpCxFrWzh4OrMIdIb2ztzCu0YEPfRHjHswcSwHZswnK+WdsOQJsRV8WeTg3jLhJR4D867+fjsA==}
+    engines: {node: '>=10.18.1'}
+    deprecated: < 19.4.0 is no longer supported
+    requiresBuild: true
+    dependencies:
+      cross-fetch: 3.1.5
+      debug: 4.3.4(supports-color@8.1.1)
+      devtools-protocol: 0.0.981744
+      extract-zip: 2.0.1
+      https-proxy-agent: 5.0.1
+      pkg-dir: 4.2.0
+      progress: 2.0.3
+      proxy-from-env: 1.1.0
+      rimraf: 3.0.2
+      tar-fs: 2.1.1
+      unbzip2-stream: 1.4.3
+      ws: 8.5.0
+    transitivePeerDependencies:
+      - bufferutil
+      - encoding
+      - supports-color
+      - utf-8-validate
     dev: true
 
   /puppeteer@15.5.0:
@@ -6175,6 +6149,19 @@ packages:
         optional: true
     dev: true
 
+  /ws@8.5.0:
+    resolution: {integrity: sha512-BWX0SWVgLPzYwF8lTzEy1egjhS4S4OEAHfsO8o65WOVsrnSRGaSiUaa9e0ggGlkMTtBlmOpEXiie9RUcBO86qg==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: ^5.0.2
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+    dev: true
+
   /ws@8.8.0:
     resolution: {integrity: sha512-JDAgSYQ1ksuwqfChJusw1LSJ8BizJ2e/vVu5Lxjq3YvNJNlROv1ui4i+c/kUUrPheBvQl4c5UbERhTwKa6QBJQ==}
     engines: {node: '>=10.0.0'}
@@ -6292,3 +6279,7 @@ packages:
     optionalDependencies:
       commander: 2.20.3
     dev: true
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
