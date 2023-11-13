@@ -26,7 +26,7 @@
     "@itwin/certa": "^3.0.0",
     "@itwin/core-bentley": "^3.0.0",
     "@itwin/eslint-plugin": "^3.0.0",
-    "@itwin/oidc-signin-tool": "^3.2.0",
+    "@itwin/oidc-signin-tool": "^3.7.2",
     "@types/chai": "^4.1.4",
     "@types/jest": "^28.1.6",
     "@types/mocha": "^8.2.2",
