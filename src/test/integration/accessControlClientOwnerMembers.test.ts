@@ -111,13 +111,14 @@ describe("AccessControlClient Owner Members", () => {
     // --- Add Owner ---
     // Act
     const addOwnerMemberResponse: AccessControlAPIResponse<OwnerMember> =
-      await accessControlClient.ownerMembers.addITwinOwnerMemberAsync(
-        accessToken,
-        TestConfig.projectId,
-        {
-          email: TestUsers.manager.email,
-        },
-      );
+      console.log(`calling addITwinOwnerMember with ${TestUsers.manager.email} and token ${accessToken}`);
+    await accessControlClient.ownerMembers.addITwinOwnerMemberAsync(
+      accessToken,
+      TestConfig.projectId,
+      {
+        email: TestUsers.manager.email,
+      },
+    );
     // Assert
     chai.expect(addOwnerMemberResponse.status).to.be.eq(201);
     chai.expect(addOwnerMemberResponse.data).to.not.be.empty;
