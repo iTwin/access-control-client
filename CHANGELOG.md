@@ -1,5 +1,8 @@
 # Change Log - @itwin/access-control-client
 
+## 2.3.1
+  - Upgrading axios version to ^1.6.1
+
 ## 2.2.0
   - Added owner member client
 
