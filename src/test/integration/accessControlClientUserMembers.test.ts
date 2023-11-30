@@ -7,6 +7,7 @@ import * as chai from "chai";
 import { AccessControlClient } from "../../AccessControlClient";
 import type {
   AccessControlAPIResponse,
+  AddUserMemberResponse,
   IAccessControlClient,
   UserMember,
 } from "../../accessControlTypes";
@@ -139,11 +140,10 @@ describe("AccessControlClient User Members", () => {
     chai.expect(iTwinsResponse.error!.code).to.be.eq("TeamMemberNotFound");
   });
 
-  // skipping while invitation API is in dev/qa
-  it.skip("should get add, get, update, and remove a user member", async () => {
+  it("should get add, get, update, and remove a user member", async () => {
     // --- Add Member ---
     // Act
-    const addUserMemberResponse: AccessControlAPIResponse<UserMember[]> =
+    const addUserMemberResponse: AccessControlAPIResponse<AddUserMemberResponse> =
       await accessControlClient.userMembers.addITwinUserMembersAsync(
         accessToken,
         TestConfig.projectId,
@@ -158,7 +158,8 @@ describe("AccessControlClient User Members", () => {
     // Assert
     chai.expect(addUserMemberResponse.status).to.be.eq(201);
     chai.expect(addUserMemberResponse.data).to.not.be.empty;
-    chai.expect(addUserMemberResponse.data!.length).to.be.greaterThan(0);
+    chai.expect(addUserMemberResponse.data!.members.length).to.be.greaterThan(0);
+    chai.expect(addUserMemberResponse.data!.invitations.length).to.be.eq(0);
 
     // --- Check member exists and has role ---
     // Act

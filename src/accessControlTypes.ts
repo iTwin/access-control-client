@@ -1,3 +1,4 @@
+/* eslint-disable spaced-comment */
 /*---------------------------------------------------------------------------------------------
  * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
  * See LICENSE.md in the project root for license terms and full copyright notice.
@@ -7,6 +8,8 @@
  */
 
 import type { AccessToken } from "@itwin/core-bentley";
+
+//#region clients
 
 export interface IAccessControlClient {
   permissions: IPermissionsClient;
@@ -45,12 +48,12 @@ export interface IUserMembersClient {
     memberId: string
   ): Promise<AccessControlAPIResponse<UserMember>>;
 
-  /** Add new iTwin user members */
+  /** Add or invite new iTwin user members */
   addITwinUserMembersAsync(
     accessToken: AccessToken,
     iTwinId: string,
     newMembers: UserMember[]
-  ): Promise<AccessControlAPIResponse<UserMember[]>>;
+  ): Promise<AccessControlAPIResponse<AddUserMemberResponse>>;
 
   /**  Remove the specified iTwin user member */
   removeITwinUserMemberAsync(
@@ -76,12 +79,12 @@ export interface IOwnerMembersClient {
     arg?: AccessControlQueryArg
   ): Promise<AccessControlAPIResponse<OwnerMember[]>>;
 
-  /** Add new iTwin owner member */
+  /** Add or invite new iTwin owner member */
   addITwinOwnerMemberAsync(
     accessToken: AccessToken,
     iTwinId: string,
     newMember: OwnerMember
-  ): Promise<AccessControlAPIResponse<OwnerMember>>;
+  ): Promise<AccessControlAPIResponse<AddOwnerMemberResponse>>;
 
   /**  Remove the specified iTwin owner member */
   removeITwinOwnerMemberAsync(
@@ -204,6 +207,19 @@ export interface IGroupsClient {
   ): Promise<AccessControlAPIResponse<Group>>;
 }
 
+export interface IMemberInvitationsClient {
+  /** Retrieves a list of member invitations. */
+  queryITwinUserMembersAsync(
+    accessToken: AccessToken,
+    iTwinId: string,
+    arg?: AccessControlQueryArg
+  ): Promise<AccessControlAPIResponse<MemberInvitation[]>>;
+}
+
+//#endregion
+
+//#region generic-responses
+
 export interface AccessControlQueryArg {
   top?: number;
   skip?: number;
@@ -227,6 +243,24 @@ export interface ErrorDetail {
   message: string;
   target?: string;
 }
+
+//#endregion
+
+//#region custom responses
+
+export interface AddOwnerMemberResponse {
+  member?: OwnerMember;
+  invitation?: MemberInvitation;
+}
+
+export interface AddUserMemberResponse {
+  members: UserMember[];
+  invitations: MemberInvitation[];
+}
+
+//#endregion
+
+//#region base object
 
 export type Permission = string;
 
@@ -285,3 +319,21 @@ export interface GroupUpdate {
   members?: string[];
   imsGroups?: string[];
 }
+
+export interface MemberInvitation {
+  id: string;
+  email: string;
+  invitedByEmail: string;
+  status: MemberInvitationStatus;
+  createdDate: string;
+  expirationDate: string;
+  roles?: Omit<Role, "permissions"|"description">[];
+}
+
+export enum MemberInvitationStatus {
+  Pending = "Pending",
+  Accepted = "Accepted"
+}
+
+//#endregion
+

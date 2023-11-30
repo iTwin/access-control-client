@@ -9,6 +9,7 @@ import type { AccessToken } from "@itwin/core-bentley";
 import type {
   AccessControlAPIResponse,
   AccessControlQueryArg,
+  AddUserMemberResponse,
   IUserMembersClient,
   UserMember,
 } from "../accessControlTypes";
@@ -70,14 +71,14 @@ export class UserMembersClient
   /** Add new iTwin user members
    * @param accessToken The client access token string
    * @param iTwinId The id of the iTwin
-   * @param newMembers The list of new members to be added along with their role
-   * @returns Member[]
+   * @param newMembers The list of members to add or invite, along with their role
+   * @returns AddUserMemberResponse -- the added or invited user members
    */
   public async addITwinUserMembersAsync(
     accessToken: AccessToken,
     iTwinId: string,
     newMembers: UserMember[]
-  ): Promise<AccessControlAPIResponse<UserMember[]>> {
+  ): Promise<AccessControlAPIResponse<AddUserMemberResponse>> {
     const url = `${this._baseUrl}/${iTwinId}/members/users`;
     const body = {
       members: newMembers,
@@ -86,8 +87,7 @@ export class UserMembersClient
       accessToken,
       "POST",
       url,
-      body,
-      "members"
+      body
     );
   }
 

@@ -1,23 +1,33 @@
 # Change Log - @itwin/access-control-client
 
+## 3.0.0
+
+- **Breaking** Forcing v2 API usage moving forward
+- Adding member invitations client, and adjusting add user & add owner schemas to include invitations
+
 ## 2.3.1
-  - Upgrading axios version to ^1.6.1
+
+- Upgrading axios version to ^1.6.1
 
 ## 2.2.0
-  - Added owner member client
+
+- Added owner member client
 
 ## 2.1.0
-  - Changed the `users` property to `members` on the `Groups` object.
-    - `members` property now accepts a `GroupUser[]` object instead of a `string[]`
+
+- Changed the `users` property to `members` on the `Groups` object.
+  - `members` property now accepts a `GroupUser[]` object instead of a `string[]`
 
 ## 2.0.0
-  - Added groups client
-  - Added group member client
-  - Added user member client
-  - Removed members client
+
+- Added groups client
+- Added group member client
+- Added user member client
+- Removed members client
 
 ## 1.3.0
-  - Added support for the `accept` header inside of `BaseClient`.
+
+- Added support for the `accept` header inside of `BaseClient`.
 
 ## 1.2.0
 

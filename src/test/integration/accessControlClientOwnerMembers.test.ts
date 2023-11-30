@@ -8,6 +8,7 @@ import * as chai from "chai";
 import { AccessControlClient } from "../../AccessControlClient";
 import type {
   AccessControlAPIResponse,
+  AddOwnerMemberResponse,
   IAccessControlClient,
   OwnerMember,
 } from "../../accessControlTypes";
@@ -107,11 +108,11 @@ describe("AccessControlClient Owner Members", () => {
     });
   });
 
-  it.skip("should get add, get, and remove a owner member", async () => {
+  it("should get add, get, and remove a owner member", async () => {
     // --- Add Owner ---
     // Act
     // console.log(`calling addITwinOwnerMember with ${TestUsers.manager.email} and project ${TestConfig.projectId} and token ${accessToken}`);
-    const addOwnerMemberResponse: AccessControlAPIResponse<OwnerMember> =
+    const addOwnerMemberResponse: AccessControlAPIResponse<AddOwnerMemberResponse> =
       await accessControlClient.ownerMembers.addITwinOwnerMemberAsync(
         accessToken,
         TestConfig.projectId,
@@ -122,7 +123,8 @@ describe("AccessControlClient Owner Members", () => {
     // Assert
     chai.expect(addOwnerMemberResponse.status).to.be.eq(201);
     chai.expect(addOwnerMemberResponse.data).to.not.be.empty;
-    chai.expect(addOwnerMemberResponse.data!.email).to.be.eq(TestConfig.temporaryUserEmail);
+    chai.expect(addOwnerMemberResponse.data!.member).to.not.be.empty;
+    chai.expect(addOwnerMemberResponse.data!.member!.email).to.be.eq(TestConfig.temporaryUserEmail);
 
     // --- Check owner exists ---
     // Act
