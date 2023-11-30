@@ -138,11 +138,10 @@ describe("AccessControlClient Owner Members", () => {
 
     chai.expect(queryOwnerMemberResponse.status).to.be.eq(200);
     chai.expect(queryOwnerMemberResponse.data).to.not.be.undefined;
-    chai.expect(queryOwnerMemberResponse.data![1]).to.not.be.undefined;
-    const newOwner = queryOwnerMemberResponse.data![1];
+    const newOwner = queryOwnerMemberResponse.data?.filter((member) => member.email === TestUsers.manager.email)[0];
     chai.expect(newOwner).to.not.be.undefined;
     chai
-      .expect(newOwner.email)
+      .expect(newOwner!.email)
       .to.be.eq(TestUsers.manager.email);
 
     // --- Remove owner ---
@@ -151,7 +150,7 @@ describe("AccessControlClient Owner Members", () => {
       await accessControlClient.ownerMembers.removeITwinOwnerMemberAsync(
         accessToken,
         TestConfig.projectId,
-        newOwner.id!
+        newOwner!.id!
       );
 
     chai.expect(removeOwnerMemberResponse.status).to.be.eq(204);
