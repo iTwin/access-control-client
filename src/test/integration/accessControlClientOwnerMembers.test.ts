@@ -111,7 +111,9 @@ describe("AccessControlClient Owner Members", () => {
   it("should get add, get, and remove a owner member", async () => {
     // --- Add Owner ---
     // Act
-    // console.log(`calling addITwinOwnerMember with ${TestUsers.manager.email} and project ${TestConfig.projectId} and token ${accessToken}`);
+
+    // eslint-disable-next-line no-console
+    console.log(`calling addITwinOwnerMember with ${TestUsers.manager.email} and project ${TestConfig.projectId} and token ${accessToken}`);
     const addOwnerMemberResponse: AccessControlAPIResponse<AddOwnerMemberResponse> =
       await accessControlClient.ownerMembers.addITwinOwnerMemberAsync(
         accessToken,
