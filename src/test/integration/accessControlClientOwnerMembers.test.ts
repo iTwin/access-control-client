@@ -123,7 +123,7 @@ describe("AccessControlClient Owner Members", () => {
         },
       );
     // Assert
-    chai.expect(addOwnerMemberResponse.status).to.be.eq(201);
+    chai.expect(addOwnerMemberResponse.status).to.be.eq(201, `received error: ${JSON.stringify(addOwnerMemberResponse.error)}`);
     chai.expect(addOwnerMemberResponse.data).to.not.be.empty;
     chai.expect(addOwnerMemberResponse.data!.member).to.not.be.empty;
     chai.expect(addOwnerMemberResponse.data!.member!.email).to.be.eq(TestConfig.temporaryUserEmail);

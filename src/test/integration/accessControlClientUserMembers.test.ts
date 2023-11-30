@@ -159,7 +159,7 @@ describe("AccessControlClient User Members", () => {
       );
 
     // Assert
-    chai.expect(addUserMemberResponse.status).to.be.eq(201);
+    chai.expect(addUserMemberResponse.status).to.be.eq(201, `received error: ${JSON.stringify(addUserMemberResponse.error)}`);
     chai.expect(addUserMemberResponse.data).to.not.be.empty;
     chai.expect(addUserMemberResponse.data!.members.length).to.be.greaterThan(0);
     chai.expect(addUserMemberResponse.data!.invitations.length).to.be.eq(0);
