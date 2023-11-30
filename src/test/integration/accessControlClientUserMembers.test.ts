@@ -11,6 +11,7 @@ import type {
   IAccessControlClient,
   UserMember,
 } from "../../accessControlTypes";
+import { TestUsers } from "@itwin/oidc-signin-tool/lib/cjs/frontend";
 import { TestConfig } from "../TestConfig";
 
 chai.should();
@@ -145,14 +146,14 @@ describe("AccessControlClient User Members", () => {
     // Act
 
     // eslint-disable-next-line no-console
-    console.log(`calling addITwinOwnerMember with ${TestConfig.temporaryUserEmail} and project ${TestConfig.projectId} and token ${accessToken}`);
+    console.log(`calling addITwinOwnerMember with ${TestUsers.regular.email} and project ${TestConfig.projectId} and token ${accessToken}`);
     const addUserMemberResponse: AccessControlAPIResponse<AddUserMemberResponse> =
       await accessControlClient.userMembers.addITwinUserMembersAsync(
         accessToken,
         TestConfig.projectId,
         [
           {
-            email: TestConfig.temporaryUserEmail,
+            email: TestUsers.regular.email,
             roleid: TestConfig.permanentRoleId1,
           },
         ]
@@ -161,8 +162,9 @@ describe("AccessControlClient User Members", () => {
     // Assert
     chai.expect(addUserMemberResponse.status).to.be.eq(201, `received error: ${JSON.stringify(addUserMemberResponse.error)}`);
     chai.expect(addUserMemberResponse.data).to.not.be.empty;
-    chai.expect(addUserMemberResponse.data!.members.length).to.be.greaterThan(0);
+    chai.expect(addUserMemberResponse.data!.members.length).to.be.eq(1);
     chai.expect(addUserMemberResponse.data!.invitations.length).to.be.eq(0);
+    const newMember = addUserMemberResponse.data!.members[0];
 
     // --- Check member exists and has role ---
     // Act
@@ -170,14 +172,14 @@ describe("AccessControlClient User Members", () => {
       await accessControlClient.userMembers.getITwinUserMemberAsync(
         accessToken,
         TestConfig.projectId,
-        TestConfig.temporaryUserId
+        newMember.id!
       );
 
     chai.expect(getUserMemberResponse.status).to.be.eq(200);
     chai.expect(getUserMemberResponse.data).to.not.be.undefined;
     chai
       .expect(getUserMemberResponse.data!.email)
-      .to.be.eq(TestConfig.temporaryUserEmail);
+      .to.be.eq(TestUsers.regular.email);
     chai.expect(getUserMemberResponse.data!.roles!.length).to.be.eq(1);
     chai
       .expect(getUserMemberResponse.data!.roles![0].id)
@@ -189,7 +191,7 @@ describe("AccessControlClient User Members", () => {
       await accessControlClient.userMembers.updateITwinUserMemberAsync(
         accessToken,
         TestConfig.projectId,
-        TestConfig.temporaryUserId,
+        newMember.id!,
         [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2]
       );
 
@@ -197,7 +199,7 @@ describe("AccessControlClient User Members", () => {
     chai.expect(updatedUserMemberResponse.data).to.not.be.undefined;
     chai
       .expect(updatedUserMemberResponse.data!.id)
-      .to.be.eq(TestConfig.temporaryUserId);
+      .to.be.eq(newMember.id!);
     chai.expect(updatedUserMemberResponse.data!.roles!.length).to.be.eq(2);
     chai
       .expect(updatedUserMemberResponse.data!.roles!.map((x) => x.id))
@@ -212,7 +214,7 @@ describe("AccessControlClient User Members", () => {
       await accessControlClient.userMembers.removeITwinUserMemberAsync(
         accessToken,
         TestConfig.projectId,
-        TestConfig.temporaryUserId
+        newMember.id!
       );
 
     chai.expect(removeUserMemberResponse.status).to.be.eq(204);

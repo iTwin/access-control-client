@@ -126,7 +126,7 @@ describe("AccessControlClient Owner Members", () => {
     chai.expect(addOwnerMemberResponse.status).to.be.eq(201, `received error: ${JSON.stringify(addOwnerMemberResponse.error)}`);
     chai.expect(addOwnerMemberResponse.data).to.not.be.empty;
     chai.expect(addOwnerMemberResponse.data!.member).to.not.be.empty;
-    chai.expect(addOwnerMemberResponse.data!.member!.email).to.be.eq(TestConfig.temporaryUserEmail);
+    chai.expect(addOwnerMemberResponse.data!.member!.email).to.be.eq(TestUsers.manager.email);
 
     // --- Check owner exists ---
     // Act
@@ -143,7 +143,7 @@ describe("AccessControlClient Owner Members", () => {
     chai.expect(newOwner).to.not.be.undefined;
     chai
       .expect(newOwner.email)
-      .to.be.eq(TestConfig.temporaryUserEmail);
+      .to.be.eq(TestUsers.manager.email);
 
     // --- Remove owner ---
     // Act
@@ -151,7 +151,7 @@ describe("AccessControlClient Owner Members", () => {
       await accessControlClient.ownerMembers.removeITwinOwnerMemberAsync(
         accessToken,
         TestConfig.projectId,
-        TestConfig.temporaryUserId
+        newOwner.id!
       );
 
     chai.expect(removeOwnerMemberResponse.status).to.be.eq(204);
