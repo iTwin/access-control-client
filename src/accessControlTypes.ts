@@ -18,6 +18,7 @@ export interface IAccessControlClient {
   userMembers: IUserMembersClient;
   groupMembers: IGroupMembersClient;
   ownerMembers: IOwnerMembersClient;
+  memberInvitations: IMemberInvitationsClient;
 }
 
 export interface IPermissionsClient {
@@ -209,7 +210,7 @@ export interface IGroupsClient {
 
 export interface IMemberInvitationsClient {
   /** Retrieves a list of member invitations. */
-  queryITwinUserMembersAsync(
+  queryITwinMemberInvitationsAsync(
     accessToken: AccessToken,
     iTwinId: string,
     arg?: AccessControlQueryArg

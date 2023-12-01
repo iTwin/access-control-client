@@ -26,7 +26,7 @@ export class MemberInvitationsClient
    * @param iTwinId The id of the iTwin
    * @returns Array of member invitations
    */
-  public async queryITwinUserMembersAsync(
+  public async queryITwinMemberInvitationsAsync(
     accessToken: AccessToken,
     iTwinId: string,
     arg?: AccessControlQueryArg
