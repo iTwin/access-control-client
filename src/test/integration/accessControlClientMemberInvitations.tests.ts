@@ -18,7 +18,7 @@ function randomIntFromInterval(min: number, max: number) {
 }
 
 chai.should();
-describe("AccessControlClient User Members", () => {
+describe("AccessControlClient Member Invitations", () => {
   let baseUrl: string = "https://api.bentley.com/accesscontrol/itwins";
   const urlPrefix = process.env.IMJS_URL_PREFIX;
   if (urlPrefix) {
