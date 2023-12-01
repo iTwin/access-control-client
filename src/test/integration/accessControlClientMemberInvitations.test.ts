@@ -41,7 +41,7 @@ describe("AccessControlClient Member Invitations", () => {
       );
     chai.expect(getMemberInvitationsResponse.status).to.be.eq(200);
     chai.expect(getMemberInvitationsResponse.data).to.not.be.empty;
-    chai.expect(getMemberInvitationsResponse.data!.length).to.be.greaterThanOrEqual(8);
+    chai.expect(getMemberInvitationsResponse.data!.length).to.be.eq(8, `${accessToken} ; ${TestConfig.projectId}`);
 
     if (getMemberInvitationsResponse.data!.length < 8) {
       const addUserMemberResponse: AccessControlAPIResponse<AddUserMemberResponse> =
