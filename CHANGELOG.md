@@ -2,8 +2,8 @@
 
 ## 3.0.0
 
-- **Breaking** Forcing v2 API usage moving forward
-- Adding member invitations client, and adjusting add user & add owner schemas to include invitations
+- **Breaking** Adjusting add user & add owner schemas to include invitations
+- Adding member invitations client
 
 ## 2.3.1
 
