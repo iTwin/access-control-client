@@ -9,6 +9,7 @@ import type { AccessToken } from "@itwin/core-bentley";
 import type {
   AccessControlAPIResponse,
   AccessControlQueryArg,
+  AddOwnerMemberResponse,
   IOwnerMembersClient,
   OwnerMember,
 } from "../accessControlTypes";
@@ -49,21 +50,20 @@ export class OwnerMembersClient
   /** Add new iTwin owner member
    * @param accessToken The client access token string
    * @param iTwinId The id of the iTwin
-   * @param newMembers The list of new members to be added along with their role
-   * @returns Member[]
+   * @param newMember The new owner member to add or invite
+   * @returns AddOwnerMemberResponse -- the added or invited owner
    */
   public async addITwinOwnerMemberAsync(
     accessToken: AccessToken,
     iTwinId: string,
     newMember: OwnerMember
-  ): Promise<AccessControlAPIResponse<OwnerMember>> {
+  ): Promise<AccessControlAPIResponse<AddOwnerMemberResponse>> {
     const url = `${this._baseUrl}/${iTwinId}/members/owners`;
     return this.sendGenericAPIRequest(
       accessToken,
       "POST",
       url,
-      newMember,
-      "member"
+      newMember
     );
   }
 

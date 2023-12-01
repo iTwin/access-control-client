@@ -9,6 +9,7 @@ import type {
   IAccessControlClient,
   IGroupMembersClient,
   IGroupsClient,
+  IMemberInvitationsClient,
   IOwnerMembersClient,
   IPermissionsClient,
   IRolesClient,
@@ -20,6 +21,7 @@ import { GroupsClient } from "./subClients/GroupsClient";
 import { UserMembersClient } from "./subClients/UserMembersClient";
 import { GroupMembersClient } from "./subClients/GroupMembersClient";
 import { OwnerMembersClient } from "./subClients/OwnerMembersClient";
+import { MemberInvitationsClient } from "./subClients/MemberInvitationsClient";
 
 export class AccessControlClient implements IAccessControlClient {
   public permissions: IPermissionsClient;
@@ -28,6 +30,7 @@ export class AccessControlClient implements IAccessControlClient {
   public userMembers: IUserMembersClient;
   public groupMembers: IGroupMembersClient;
   public ownerMembers: IOwnerMembersClient;
+  public memberInvitations: IMemberInvitationsClient;
 
   public constructor(url?: string) {
     this.permissions = new PermissionsClient(url);
@@ -36,5 +39,6 @@ export class AccessControlClient implements IAccessControlClient {
     this.userMembers = new UserMembersClient(url);
     this.groupMembers = new GroupMembersClient(url);
     this.ownerMembers = new OwnerMembersClient(url);
+    this.memberInvitations = new MemberInvitationsClient(url);
   }
 }

@@ -8,6 +8,7 @@ import * as chai from "chai";
 import { AccessControlClient } from "../../AccessControlClient";
 import type {
   AccessControlAPIResponse,
+  AddOwnerMemberResponse,
   IAccessControlClient,
   OwnerMember,
 } from "../../accessControlTypes";
@@ -107,11 +108,10 @@ describe("AccessControlClient Owner Members", () => {
     });
   });
 
-  it.skip("should get add, get, and remove a owner member", async () => {
+  it("should get add, get, and remove a owner member", async () => {
     // --- Add Owner ---
     // Act
-    // console.log(`calling addITwinOwnerMember with ${TestUsers.manager.email} and project ${TestConfig.projectId} and token ${accessToken}`);
-    const addOwnerMemberResponse: AccessControlAPIResponse<OwnerMember> =
+    const addOwnerMemberResponse: AccessControlAPIResponse<AddOwnerMemberResponse> =
       await accessControlClient.ownerMembers.addITwinOwnerMemberAsync(
         accessToken,
         TestConfig.projectId,
@@ -120,9 +120,10 @@ describe("AccessControlClient Owner Members", () => {
         },
       );
     // Assert
-    chai.expect(addOwnerMemberResponse.status).to.be.eq(201);
+    chai.expect(addOwnerMemberResponse.status).to.be.eq(201, `received error: ${JSON.stringify(addOwnerMemberResponse.error)}`);
     chai.expect(addOwnerMemberResponse.data).to.not.be.empty;
-    chai.expect(addOwnerMemberResponse.data!.email).to.be.eq(TestConfig.temporaryUserEmail);
+    chai.expect(addOwnerMemberResponse.data!.member).to.not.be.empty;
+    chai.expect(addOwnerMemberResponse.data!.member!.email).to.be.eq(TestUsers.manager.email);
 
     // --- Check owner exists ---
     // Act
@@ -134,12 +135,11 @@ describe("AccessControlClient Owner Members", () => {
 
     chai.expect(queryOwnerMemberResponse.status).to.be.eq(200);
     chai.expect(queryOwnerMemberResponse.data).to.not.be.undefined;
-    chai.expect(queryOwnerMemberResponse.data![1]).to.not.be.undefined;
-    const newOwner = queryOwnerMemberResponse.data![1];
+    const newOwner = queryOwnerMemberResponse.data!.filter((member) => member.email === TestUsers.manager.email)[0];
     chai.expect(newOwner).to.not.be.undefined;
     chai
       .expect(newOwner.email)
-      .to.be.eq(TestConfig.temporaryUserEmail);
+      .to.be.eq(TestUsers.manager.email);
 
     // --- Remove owner ---
     // Act
@@ -147,7 +147,7 @@ describe("AccessControlClient Owner Members", () => {
       await accessControlClient.ownerMembers.removeITwinOwnerMemberAsync(
         accessToken,
         TestConfig.projectId,
-        TestConfig.temporaryUserId
+        newOwner.id!
       );
 
     chai.expect(removeOwnerMemberResponse.status).to.be.eq(204);
