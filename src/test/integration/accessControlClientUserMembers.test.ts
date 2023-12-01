@@ -144,9 +144,6 @@ describe("AccessControlClient User Members", () => {
   it("should get add, get, update, and remove a user member", async () => {
     // --- Add Member ---
     // Act
-
-    // eslint-disable-next-line no-console
-    console.log(`calling addITwinOwnerMember with ${TestUsers.regular.email} and project ${TestConfig.projectId} and token ${accessToken}`);
     const addUserMemberResponse: AccessControlAPIResponse<AddUserMemberResponse> =
       await accessControlClient.userMembers.addITwinUserMembersAsync(
         accessToken,
