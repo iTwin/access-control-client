@@ -53,7 +53,7 @@ export interface IUserMembersClient {
   addITwinUserMembersAsync(
     accessToken: AccessToken,
     iTwinId: string,
-    newMembers: UserMember[]
+    newMembers: AddUserMember[]
   ): Promise<AccessControlAPIResponse<AddUserMemberResponse>>;
 
   /**  Remove the specified iTwin user member */
@@ -114,7 +114,7 @@ export interface IGroupMembersClient {
   addITwinGroupMembersAsync(
     accessToken: AccessToken,
     iTwinId: string,
-    newMembers: GroupMember[]
+    newMembers: AddGroupMember[]
   ): Promise<AccessControlAPIResponse<GroupMember[]>>;
 
   /**  Remove the specified iTwin group member */
@@ -267,12 +267,16 @@ export type Permission = string;
 
 export interface UserMember {
   id?: string;
-  roleid?: string;
   email?: string;
   givenName?: string;
   surname?: string;
   organization?: string;
   roles?: Omit<Role, "permissions">[];
+}
+
+export interface AddUserMember {
+  roleIds?: string[];
+  email?: string;
 }
 
 export interface OwnerMember {
@@ -288,6 +292,11 @@ export interface GroupMember {
   groupName?: string;
   groupDescription?: string;
   roles?: Omit<Role, "permissions">[];
+}
+
+export interface AddGroupMember {
+  groupId?: string;
+  roleIds?: string[];
 }
 
 export interface Role {

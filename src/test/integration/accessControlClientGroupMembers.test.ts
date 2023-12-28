@@ -149,8 +149,8 @@ describe("AccessControlClient Group Members", () => {
         [
           {
             groupId: TestConfig.permanentGroupId2,
-            roleid: TestConfig.permanentRoleId1,
-          } as GroupMember,
+            roleIds: [ TestConfig.permanentRoleId1, TestConfig.permanentRoleId2 ],
+          },
         ]
       );
 

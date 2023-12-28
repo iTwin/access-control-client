@@ -50,35 +50,35 @@ describe("AccessControlClient Member Invitations", () => {
         [
           {
             email: `access-control-client-${randomIntFromInterval(0, 10000)}@example.com`,
-            roleid: TestConfig.permanentRoleId1,
+            roleIds: [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2],
           },
           {
             email: `access-control-client-${randomIntFromInterval(0, 10000)}@example.com`,
-            roleid: TestConfig.permanentRoleId1,
+            roleIds: [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2],
           },
           {
             email: `access-control-client-${randomIntFromInterval(0, 10000)}@example.com`,
-            roleid: TestConfig.permanentRoleId1,
+            roleIds: [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2],
           },
           {
             email: `access-control-client-${randomIntFromInterval(0, 10000)}@example.com`,
-            roleid: TestConfig.permanentRoleId1,
+            roleIds: [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2],
           },
           {
             email: `access-control-client-${randomIntFromInterval(0, 10000)}@example.com`,
-            roleid: TestConfig.permanentRoleId1,
+            roleIds: [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2],
           },
           {
             email: `access-control-client-${randomIntFromInterval(0, 10000)}@example.com`,
-            roleid: TestConfig.permanentRoleId1,
+            roleIds: [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2],
           },
           {
             email: `access-control-client-${randomIntFromInterval(0, 10000)}@example.com`,
-            roleid: TestConfig.permanentRoleId1,
+            roleIds: [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2],
           },
           {
             email: `access-control-client-${randomIntFromInterval(0, 10000)}@example.com`,
-            roleid: TestConfig.permanentRoleId1,
+            roleIds: [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2],
           },
         ]
       );

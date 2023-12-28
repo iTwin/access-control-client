@@ -9,6 +9,7 @@ import type { AccessToken } from "@itwin/core-bentley";
 import type {
   AccessControlAPIResponse,
   AccessControlQueryArg,
+  AddGroupMember,
   GroupMember,
   IGroupMembersClient,
 } from "../accessControlTypes";
@@ -76,7 +77,7 @@ export class GroupMembersClient
   public async addITwinGroupMembersAsync(
     accessToken: AccessToken,
     iTwinId: string,
-    newMembers: GroupMember[]
+    newMembers: AddGroupMember[]
   ): Promise<AccessControlAPIResponse<GroupMember[]>> {
     const url = `${this._baseUrl}/${iTwinId}/members/groups`;
     const body = {

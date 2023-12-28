@@ -151,7 +151,7 @@ describe("AccessControlClient User Members", () => {
         [
           {
             email: TestUsers.regular.email,
-            roleid: TestConfig.permanentRoleId1,
+            roleIds: [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2],
           },
         ]
       );
