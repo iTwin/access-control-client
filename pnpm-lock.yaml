@@ -22,20 +22,20 @@ devDependencies:
     specifier: 3.6.1
     version: 3.6.1(@itwin/core-bentley@3.2.8)
   '@types/chai':
-    specifier: ^4.1.4
-    version: 4.3.3
+    specifier: 4.1.4
+    version: 4.1.4
   '@types/jest':
     specifier: ^28.1.6
     version: 28.1.6
   '@types/mocha':
-    specifier: ^8.2.2
-    version: 8.2.3
+    specifier: 8.2.2
+    version: 8.2.2
   '@types/node':
     specifier: 14.14.31
     version: 14.14.31
   chai:
-    specifier: ^4.1.2
-    version: 4.3.6
+    specifier: 4.1.2
+    version: 4.1.2
   dotenv:
     specifier: ^10.0.0
     version: 10.0.0
@@ -46,8 +46,8 @@ devDependencies:
     specifier: ^7.11.0
     version: 7.32.0
   mocha:
-    specifier: ^8.3.2
-    version: 8.4.0
+    specifier: 8.3.2
+    version: 8.3.2
   rimraf:
     specifier: ^3.0.2
     version: 3.0.2
@@ -157,8 +157,8 @@ packages:
       cross-spawn: 7.0.3
       fs-extra: 8.1.0
       glob: 7.2.3
-      mocha: 8.4.0
-      mocha-junit-reporter: 1.23.3(mocha@8.4.0)
+      mocha: 8.3.2
+      mocha-junit-reporter: 1.23.3(mocha@8.3.2)
       recursive-readdir: 2.2.2
       rimraf: 3.0.2
       tree-kill: 1.2.2
@@ -184,7 +184,7 @@ packages:
       express: 4.18.1
       jsonc-parser: 2.0.3
       lodash: 4.17.21
-      mocha: 8.4.0
+      mocha: 8.3.2
       puppeteer: 5.3.1
       source-map-support: 0.5.21
       uuid: 7.0.3
@@ -377,8 +377,8 @@ packages:
       '@types/responselike': 1.0.0
     dev: true
 
-  /@types/chai@4.3.3:
-    resolution: {integrity: sha512-hC7OMnszpxhZPduX+m+nrx+uFoLkWOMiR4oa/AZF3MuSETYTZmFfJAHqZEM8MVlvfG7BEUcgvtwoCTxBp6hm3g==}
+  /@types/chai@4.1.4:
+    resolution: {integrity: sha512-h6+VEw2Vr3ORiFCyyJmcho2zALnUq9cvdB/IO8Xs9itrJVCenC7o26A6+m7D0ihTTr65eS259H5/Ghl/VjYs6g==}
     dev: true
 
   /@types/http-cache-semantics@4.0.1:
@@ -410,8 +410,8 @@ packages:
       '@types/node': 14.14.31
     dev: true
 
-  /@types/mocha@8.2.3:
-    resolution: {integrity: sha512-ekGvFhFgrc2zYQoX4JeZPmVzZxw6Dtllga7iGHzfbYIYkAMUx/sAFP2GdFpLff+vdHXu5fl7WX9AT+TtqYcsyw==}
+  /@types/mocha@8.2.2:
+    resolution: {integrity: sha512-Lwh0lzzqT5Pqh6z61P3c3P5nm6fzQK/MMHl9UKeneAeInVflBSz1O2EkX6gM6xfJd7FBXBY5purtLx7fUiZ7Hw==}
     dev: true
 
   /@types/node@14.14.31:
@@ -1363,15 +1363,14 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /chai@4.3.6:
-    resolution: {integrity: sha512-bbcp3YfHCUzMOvKqsztczerVgBKSsEijCySNlHHbX3VG1nskvqjz5Rfso1gGwD6w6oOV3eI60pKuMOV5MV7p3Q==}
+  /chai@4.1.2:
+    resolution: {integrity: sha512-YTHf80rJ8M5/cJoFKEV1y3PnexbGs0vSHjouRRU8gLM05Nc3Mqq9zor/P4SCqB/sgvKRLvya7wHLC1XQ9pTjgQ==}
     engines: {node: '>=4'}
     dependencies:
       assertion-error: 1.1.0
       check-error: 1.0.2
       deep-eql: 3.0.1
       get-func-name: 2.0.0
-      loupe: 2.3.4
       pathval: 1.1.1
       type-detect: 4.0.8
     dev: true
@@ -1607,7 +1606,7 @@ packages:
     dev: true
 
   /concat-map@0.0.1:
-    resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
+    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
     dev: true
 
   /concat-stream@1.6.2:
@@ -2929,7 +2928,7 @@ packages:
       fs.realpath: 1.0.0
       inflight: 1.0.6
       inherits: 2.0.4
-      minimatch: 3.0.4
+      minimatch: 3.1.2
       once: 1.4.0
       path-is-absolute: 1.0.1
     dev: true
@@ -3803,12 +3802,6 @@ packages:
       js-tokens: 4.0.0
     dev: true
 
-  /loupe@2.3.4:
-    resolution: {integrity: sha512-OvKfgCC2Ndby6aSTREl5aCCPTNIzlDfQZvZxNUrBrihDhL3xcrYegTblhmEiCrg2kKQz4XsFIaemE5BF4ybSaQ==}
-    dependencies:
-      get-func-name: 2.0.0
-    dev: true
-
   /lowercase-keys@2.0.0:
     resolution: {integrity: sha512-tqNXrS78oMOE73NMxK4EMLQsQowWf8jKooH9g7xPavRT706R6bkQJ6DY2Te7QukaZsulxa30wQ7bk0pm4XiHmA==}
     engines: {node: '>=8'}
@@ -4051,7 +4044,7 @@ packages:
       minimist: 1.2.6
     dev: true
 
-  /mocha-junit-reporter@1.23.3(mocha@8.4.0):
+  /mocha-junit-reporter@1.23.3(mocha@8.3.2):
     resolution: {integrity: sha512-ed8LqbRj1RxZfjt/oC9t12sfrWsjZ3gNnbhV1nuj9R/Jb5/P3Xb4duv2eCfCDMYH+fEu0mqca7m4wsiVjsxsvA==}
     peerDependencies:
       mocha: '>=2.2.5'
@@ -4059,7 +4052,7 @@ packages:
       debug: 2.6.9
       md5: 2.3.0
       mkdirp: 0.5.6
-      mocha: 8.4.0
+      mocha: 8.3.2
       strip-ansi: 4.0.0
       xml: 1.0.1
     transitivePeerDependencies:
@@ -4094,8 +4087,8 @@ packages:
       yargs-unparser: 2.0.0
     dev: true
 
-  /mocha@8.4.0:
-    resolution: {integrity: sha512-hJaO0mwDXmZS4ghXsvPVriOhsxQ7ofcpQdm8dE+jISUOKopitvnXFQmpRR7jd2K6VBG6E26gU3IAbXXGIbu4sQ==}
+  /mocha@8.3.2:
+    resolution: {integrity: sha512-UdmISwr/5w+uXLPKspgoV7/RXZwKRTiTjJ2/AC5ZiEztIoOYdfKb19+9jNmEInzx5pBsCyJQzarAxqIGBNYJhg==}
     engines: {node: '>= 10.12.0'}
     hasBin: true
     dependencies:
@@ -4751,7 +4744,7 @@ packages:
   /puppeteer@15.5.0:
     resolution: {integrity: sha512-+vZPU8iBSdCx1Kn5hHas80fyo0TiVyMeqLGv/1dygX2HKhAZjO9YThadbRTCoTYq0yWw+w/CysldPsEekDtjDQ==}
     engines: {node: '>=14.1.0'}
-    deprecated: < 19.4.0 is no longer supported
+    deprecated: < 21.3.7 is no longer supported
     requiresBuild: true
     dependencies:
       cross-fetch: 3.1.5
@@ -4776,7 +4769,7 @@ packages:
   /puppeteer@5.3.1:
     resolution: {integrity: sha512-YTM1RaBeYrj6n7IlRXRYLqJHF+GM7tasbvrNFx6w1S16G76NrPq7oYFKLDO+BQsXNtS8kW2GxWCXjIMPvfDyaQ==}
     engines: {node: '>=10.18.1'}
-    deprecated: < 19.4.0 is no longer supported
+    deprecated: < 21.3.7 is no longer supported
     requiresBuild: true
     dependencies:
       debug: 4.3.4(supports-color@8.1.1)

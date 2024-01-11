@@ -40,7 +40,7 @@ describe("AccessControlClient Member Invitations", () => {
         TestConfig.projectId
       );
     chai.expect(getMemberInvitationsResponse.status).to.be.eq(200);
-    chai.expect(getMemberInvitationsResponse.data).to.not.be.empty;
+    chai.expect(getMemberInvitationsResponse.data).to.not.be.null;
 
     if (getMemberInvitationsResponse.data!.length < 8) {
       const addUserMemberResponse: AccessControlAPIResponse<AddUserMemberResponse> =
@@ -50,35 +50,35 @@ describe("AccessControlClient Member Invitations", () => {
         [
           {
             email: `access-control-client-${randomIntFromInterval(0, 10000)}@example.com`,
-            roleid: TestConfig.permanentRoleId1,
+            roleIds: [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2],
           },
           {
             email: `access-control-client-${randomIntFromInterval(0, 10000)}@example.com`,
-            roleid: TestConfig.permanentRoleId1,
+            roleIds: [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2],
           },
           {
             email: `access-control-client-${randomIntFromInterval(0, 10000)}@example.com`,
-            roleid: TestConfig.permanentRoleId1,
+            roleIds: [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2],
           },
           {
             email: `access-control-client-${randomIntFromInterval(0, 10000)}@example.com`,
-            roleid: TestConfig.permanentRoleId1,
+            roleIds: [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2],
           },
           {
             email: `access-control-client-${randomIntFromInterval(0, 10000)}@example.com`,
-            roleid: TestConfig.permanentRoleId1,
+            roleIds: [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2],
           },
           {
             email: `access-control-client-${randomIntFromInterval(0, 10000)}@example.com`,
-            roleid: TestConfig.permanentRoleId1,
+            roleIds: [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2],
           },
           {
             email: `access-control-client-${randomIntFromInterval(0, 10000)}@example.com`,
-            roleid: TestConfig.permanentRoleId1,
+            roleIds: [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2],
           },
           {
             email: `access-control-client-${randomIntFromInterval(0, 10000)}@example.com`,
-            roleid: TestConfig.permanentRoleId1,
+            roleIds: [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2],
           },
         ]
       );
@@ -101,7 +101,7 @@ describe("AccessControlClient Member Invitations", () => {
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(200);
     chai.expect(iTwinsResponse.data).to.not.be.empty;
-    chai.expect(iTwinsResponse.data!.length).to.be.greaterThanOrEqual(8);
+    chai.expect(iTwinsResponse.data!.length).to.be.greaterThan(7);
   });
 
   it("should get a filtered list of member invitations for an iTwin using $top", async () => {
