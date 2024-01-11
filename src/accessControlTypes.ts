@@ -275,8 +275,8 @@ export interface UserMember {
 }
 
 export interface AddUserMember {
-  roleIds?: string[];
-  email?: string;
+  roleIds: string[];
+  email: string;
 }
 
 export interface OwnerMember {
@@ -295,8 +295,8 @@ export interface GroupMember {
 }
 
 export interface AddGroupMember {
-  groupId?: string;
-  roleIds?: string[];
+  groupId: string;
+  roleIds: string[];
 }
 
 export interface Role {
