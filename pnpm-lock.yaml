@@ -28,8 +28,8 @@ devDependencies:
     specifier: ^28.1.6
     version: 28.1.6
   '@types/mocha':
-    specifier: ^8.2.2
-    version: 8.2.3
+    specifier: 8.2.2
+    version: 8.2.2
   '@types/node':
     specifier: 14.14.31
     version: 14.14.31
@@ -46,8 +46,8 @@ devDependencies:
     specifier: ^7.11.0
     version: 7.32.0
   mocha:
-    specifier: ^8.3.2
-    version: 8.4.0
+    specifier: 8.3.2
+    version: 8.3.2
   rimraf:
     specifier: ^3.0.2
     version: 3.0.2
@@ -157,8 +157,8 @@ packages:
       cross-spawn: 7.0.3
       fs-extra: 8.1.0
       glob: 7.2.3
-      mocha: 8.4.0
-      mocha-junit-reporter: 1.23.3(mocha@8.4.0)
+      mocha: 8.3.2
+      mocha-junit-reporter: 1.23.3(mocha@8.3.2)
       recursive-readdir: 2.2.2
       rimraf: 3.0.2
       tree-kill: 1.2.2
@@ -184,7 +184,7 @@ packages:
       express: 4.18.1
       jsonc-parser: 2.0.3
       lodash: 4.17.21
-      mocha: 8.4.0
+      mocha: 8.3.2
       puppeteer: 5.3.1
       source-map-support: 0.5.21
       uuid: 7.0.3
@@ -410,8 +410,8 @@ packages:
       '@types/node': 14.14.31
     dev: true
 
-  /@types/mocha@8.2.3:
-    resolution: {integrity: sha512-ekGvFhFgrc2zYQoX4JeZPmVzZxw6Dtllga7iGHzfbYIYkAMUx/sAFP2GdFpLff+vdHXu5fl7WX9AT+TtqYcsyw==}
+  /@types/mocha@8.2.2:
+    resolution: {integrity: sha512-Lwh0lzzqT5Pqh6z61P3c3P5nm6fzQK/MMHl9UKeneAeInVflBSz1O2EkX6gM6xfJd7FBXBY5purtLx7fUiZ7Hw==}
     dev: true
 
   /@types/node@14.14.31:
@@ -1606,7 +1606,7 @@ packages:
     dev: true
 
   /concat-map@0.0.1:
-    resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
+    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
     dev: true
 
   /concat-stream@1.6.2:
@@ -2928,7 +2928,7 @@ packages:
       fs.realpath: 1.0.0
       inflight: 1.0.6
       inherits: 2.0.4
-      minimatch: 3.0.4
+      minimatch: 3.1.2
       once: 1.4.0
       path-is-absolute: 1.0.1
     dev: true
@@ -4044,7 +4044,7 @@ packages:
       minimist: 1.2.6
     dev: true
 
-  /mocha-junit-reporter@1.23.3(mocha@8.4.0):
+  /mocha-junit-reporter@1.23.3(mocha@8.3.2):
     resolution: {integrity: sha512-ed8LqbRj1RxZfjt/oC9t12sfrWsjZ3gNnbhV1nuj9R/Jb5/P3Xb4duv2eCfCDMYH+fEu0mqca7m4wsiVjsxsvA==}
     peerDependencies:
       mocha: '>=2.2.5'
@@ -4052,7 +4052,7 @@ packages:
       debug: 2.6.9
       md5: 2.3.0
       mkdirp: 0.5.6
-      mocha: 8.4.0
+      mocha: 8.3.2
       strip-ansi: 4.0.0
       xml: 1.0.1
     transitivePeerDependencies:
@@ -4087,8 +4087,8 @@ packages:
       yargs-unparser: 2.0.0
     dev: true
 
-  /mocha@8.4.0:
-    resolution: {integrity: sha512-hJaO0mwDXmZS4ghXsvPVriOhsxQ7ofcpQdm8dE+jISUOKopitvnXFQmpRR7jd2K6VBG6E26gU3IAbXXGIbu4sQ==}
+  /mocha@8.3.2:
+    resolution: {integrity: sha512-UdmISwr/5w+uXLPKspgoV7/RXZwKRTiTjJ2/AC5ZiEztIoOYdfKb19+9jNmEInzx5pBsCyJQzarAxqIGBNYJhg==}
     engines: {node: '>= 10.12.0'}
     hasBin: true
     dependencies:
