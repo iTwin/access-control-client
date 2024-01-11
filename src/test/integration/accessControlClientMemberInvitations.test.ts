@@ -101,7 +101,7 @@ describe("AccessControlClient Member Invitations", () => {
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(200);
     chai.expect(iTwinsResponse.data).to.not.be.empty;
-    chai.expect(iTwinsResponse.data!.length).to.be.greaterThanOrEqual(8);
+    chai.expect(iTwinsResponse.data!.length).to.be.greaterThan(7);
   });
 
   it("should get a filtered list of member invitations for an iTwin using $top", async () => {
