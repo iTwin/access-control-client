@@ -173,7 +173,7 @@ describe("AccessControlClient Group Members", () => {
     chai
       .expect(getGroupMemberResponse.data!.id)
       .to.be.eq(TestConfig.permanentGroupId2);
-    chai.expect(getGroupMemberResponse.data!.roles!.length).to.be.eq(1);
+    chai.expect(getGroupMemberResponse.data!.roles!.length).to.be.eq(2);
     chai
       .expect(getGroupMemberResponse.data!.roles![0].id)
       .to.be.eq(TestConfig.permanentRoleId1);

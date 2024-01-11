@@ -177,7 +177,7 @@ describe("AccessControlClient User Members", () => {
     chai
       .expect(getUserMemberResponse.data!.email)
       .to.be.eq(TestUsers.regular.email);
-    chai.expect(getUserMemberResponse.data!.roles!.length).to.be.eq(1);
+    chai.expect(getUserMemberResponse.data!.roles!.length).to.be.eq(2);
     chai
       .expect(getUserMemberResponse.data!.roles![0].id)
       .to.be.eq(TestConfig.permanentRoleId1);
