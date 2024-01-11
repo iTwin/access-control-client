@@ -22,8 +22,8 @@ devDependencies:
     specifier: 3.6.1
     version: 3.6.1(@itwin/core-bentley@3.2.8)
   '@types/chai':
-    specifier: ^4.1.4
-    version: 4.3.3
+    specifier: 4.1.4
+    version: 4.1.4
   '@types/jest':
     specifier: ^28.1.6
     version: 28.1.6
@@ -34,8 +34,8 @@ devDependencies:
     specifier: 14.14.31
     version: 14.14.31
   chai:
-    specifier: ^4.1.2
-    version: 4.3.6
+    specifier: 4.1.2
+    version: 4.1.2
   dotenv:
     specifier: ^10.0.0
     version: 10.0.0
@@ -377,8 +377,8 @@ packages:
       '@types/responselike': 1.0.0
     dev: true
 
-  /@types/chai@4.3.3:
-    resolution: {integrity: sha512-hC7OMnszpxhZPduX+m+nrx+uFoLkWOMiR4oa/AZF3MuSETYTZmFfJAHqZEM8MVlvfG7BEUcgvtwoCTxBp6hm3g==}
+  /@types/chai@4.1.4:
+    resolution: {integrity: sha512-h6+VEw2Vr3ORiFCyyJmcho2zALnUq9cvdB/IO8Xs9itrJVCenC7o26A6+m7D0ihTTr65eS259H5/Ghl/VjYs6g==}
     dev: true
 
   /@types/http-cache-semantics@4.0.1:
@@ -1363,15 +1363,14 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /chai@4.3.6:
-    resolution: {integrity: sha512-bbcp3YfHCUzMOvKqsztczerVgBKSsEijCySNlHHbX3VG1nskvqjz5Rfso1gGwD6w6oOV3eI60pKuMOV5MV7p3Q==}
+  /chai@4.1.2:
+    resolution: {integrity: sha512-YTHf80rJ8M5/cJoFKEV1y3PnexbGs0vSHjouRRU8gLM05Nc3Mqq9zor/P4SCqB/sgvKRLvya7wHLC1XQ9pTjgQ==}
     engines: {node: '>=4'}
     dependencies:
       assertion-error: 1.1.0
       check-error: 1.0.2
       deep-eql: 3.0.1
       get-func-name: 2.0.0
-      loupe: 2.3.4
       pathval: 1.1.1
       type-detect: 4.0.8
     dev: true
@@ -3803,12 +3802,6 @@ packages:
       js-tokens: 4.0.0
     dev: true
 
-  /loupe@2.3.4:
-    resolution: {integrity: sha512-OvKfgCC2Ndby6aSTREl5aCCPTNIzlDfQZvZxNUrBrihDhL3xcrYegTblhmEiCrg2kKQz4XsFIaemE5BF4ybSaQ==}
-    dependencies:
-      get-func-name: 2.0.0
-    dev: true
-
   /lowercase-keys@2.0.0:
     resolution: {integrity: sha512-tqNXrS78oMOE73NMxK4EMLQsQowWf8jKooH9g7xPavRT706R6bkQJ6DY2Te7QukaZsulxa30wQ7bk0pm4XiHmA==}
     engines: {node: '>=8'}
@@ -4751,7 +4744,7 @@ packages:
   /puppeteer@15.5.0:
     resolution: {integrity: sha512-+vZPU8iBSdCx1Kn5hHas80fyo0TiVyMeqLGv/1dygX2HKhAZjO9YThadbRTCoTYq0yWw+w/CysldPsEekDtjDQ==}
     engines: {node: '>=14.1.0'}
-    deprecated: < 19.4.0 is no longer supported
+    deprecated: < 21.3.7 is no longer supported
     requiresBuild: true
     dependencies:
       cross-fetch: 3.1.5
@@ -4776,7 +4769,7 @@ packages:
   /puppeteer@5.3.1:
     resolution: {integrity: sha512-YTM1RaBeYrj6n7IlRXRYLqJHF+GM7tasbvrNFx6w1S16G76NrPq7oYFKLDO+BQsXNtS8kW2GxWCXjIMPvfDyaQ==}
     engines: {node: '>=10.18.1'}
-    deprecated: < 19.4.0 is no longer supported
+    deprecated: < 21.3.7 is no longer supported
     requiresBuild: true
     dependencies:
       debug: 4.3.4(supports-color@8.1.1)
