@@ -9,7 +9,7 @@ import type { AccessControlAPIResponse, IAccessControlClient, Role } from "../..
 import { TestConfig } from "../TestConfig";
 
 chai.should();
-describe("AccessControlClient Roles", () => {
+describe("AccessControlClient Jobs", () => {
   let baseUrl: string = "https://api.bentley.com/accesscontrol/itwins";
   const urlPrefix = process.env.IMJS_URL_PREFIX;
   if (urlPrefix) {
@@ -26,10 +26,10 @@ describe("AccessControlClient Roles", () => {
     accessToken = await TestConfig.getAccessToken();
   });
 
-  it("should get a list of roles for an iTwin", async () => {
+  it("should get the iTwin Job", async () => {
     // Act
     const iTwinsResponse: AccessControlAPIResponse<Role[]> =
-      await accessControlClient.roles.getITwinRolesAsync(accessToken, TestConfig.projectId);
+      await accessControlClient.jobs.getITwinjobsAsync(accessToken, TestConfig.itwinId);
 
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(200);
@@ -37,10 +37,10 @@ describe("AccessControlClient Roles", () => {
     chai.expect(iTwinsResponse.data!.length).to.be.greaterThan(0);
   });
 
-  it("should get a list of roles for an iTwin with custom url", async () => {
+  it("should get a list of jobs for an iTwin with custom url", async () => {
     // Act
     const iTwinsResponse: AccessControlAPIResponse<Role[]> =
-      await customAccessControlClient.roles.getITwinRolesAsync(accessToken, TestConfig.projectId);
+      await customAccessControlClient.jobs.getITwinjobsAsync(accessToken, TestConfig.itwinId);
 
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(200);
@@ -48,10 +48,10 @@ describe("AccessControlClient Roles", () => {
     chai.expect(iTwinsResponse.data!.length).to.be.greaterThan(0);
   });
 
-  it("should get a list of roles for an iTwin with additional headers", async () => {
+  it("should get a list of jobs for an iTwin with additional headers", async () => {
     // Act
     const iTwinsResponse: AccessControlAPIResponse<Role[]> =
-      await customAccessControlClient.roles.getITwinRolesAsync(accessToken, TestConfig.projectId, { "test-custom-header": "custom-value:xyz-123-abc" });
+      await customAccessControlClient.jobs.getITwinjobsAsync(accessToken, TestConfig.itwinId, { "test-custom-header": "custom-value:xyz-123-abc" });
 
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(200);
@@ -62,7 +62,7 @@ describe("AccessControlClient Roles", () => {
   it("should get a specific role for an iTwin", async () => {
     // Act
     const iTwinsResponse: AccessControlAPIResponse<Role> =
-      await accessControlClient.roles.getITwinRoleAsync(accessToken, TestConfig.projectId, TestConfig.permanentRoleId1);
+      await accessControlClient.jobs.getITwinRoleAsync(accessToken, TestConfig.itwinId, TestConfig.permanentRoleId1);
 
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(200);
@@ -77,7 +77,7 @@ describe("AccessControlClient Roles", () => {
 
     // Act
     const iTwinsResponse: AccessControlAPIResponse<Role> =
-      await accessControlClient.roles.getITwinRoleAsync(accessToken, TestConfig.projectId, nonExistantRoleId);
+      await accessControlClient.jobs.getITwinRoleAsync(accessToken, TestConfig.itwinId, nonExistantRoleId);
 
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(404);
@@ -96,7 +96,7 @@ describe("AccessControlClient Roles", () => {
 
     // Act
     const iTwinsResponse: AccessControlAPIResponse<Role> =
-      await accessControlClient.roles.updateITwinRoleAsync(accessToken, TestConfig.projectId, nonExistantRoleId, emptyUpdatedRole);
+      await accessControlClient.jobs.updateITwinRoleAsync(accessToken, TestConfig.itwinId, nonExistantRoleId, emptyUpdatedRole);
 
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(404);
@@ -110,7 +110,7 @@ describe("AccessControlClient Roles", () => {
 
     // Act
     const iTwinsResponse: AccessControlAPIResponse<undefined> =
-      await accessControlClient.roles.deleteITwinRoleAsync(accessToken, TestConfig.projectId, nonExistantRoleId);
+      await accessControlClient.jobs.deleteITwinRoleAsync(accessToken, TestConfig.itwinId, nonExistantRoleId);
 
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(404);
@@ -131,7 +131,7 @@ describe("AccessControlClient Roles", () => {
 
     // Act
     const createResponse: AccessControlAPIResponse<Role> =
-      await accessControlClient.roles.createITwinRoleAsync(accessToken, TestConfig.projectId, newRole);
+      await accessControlClient.jobs.createITwinRoleAsync(accessToken, TestConfig.itwinId, newRole);
 
     // Assert
     chai.expect(createResponse.status).to.be.eq(201);
@@ -148,7 +148,7 @@ describe("AccessControlClient Roles", () => {
 
     // Act
     const updateResponse: AccessControlAPIResponse<Role> =
-      await accessControlClient.roles.updateITwinRoleAsync(accessToken, TestConfig.projectId, createResponse.data!.id!, updatedRole);
+      await accessControlClient.jobs.updateITwinRoleAsync(accessToken, TestConfig.itwinId, createResponse.data!.id!, updatedRole);
 
     // Assert
     chai.expect(updateResponse.status).to.be.eq(200);
@@ -158,7 +158,7 @@ describe("AccessControlClient Roles", () => {
     // --- DELETE ROLE ---
     // Act
     const deleteResponse: AccessControlAPIResponse<undefined> =
-      await accessControlClient.roles.deleteITwinRoleAsync(accessToken, TestConfig.projectId, createResponse.data!.id!);
+      await accessControlClient.jobs.deleteITwinRoleAsync(accessToken, TestConfig.itwinId, createResponse.data!.id!);
 
     // Assert
     chai.expect(deleteResponse.status).to.be.eq(204);
