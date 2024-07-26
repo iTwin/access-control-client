@@ -19,7 +19,7 @@ export interface IAccessControlClient {
   groupMembers: IGroupMembersClient;
   ownerMembers: IOwnerMembersClient;
   memberInvitations: IMemberInvitationsClient;
-  jobs: IJobsClient;
+  itwinJobs: IITwinJobsClient;
 }
 
 export interface IPermissionsClient {
@@ -218,7 +218,7 @@ export interface IMemberInvitationsClient {
   ): Promise<AccessControlAPIResponse<MemberInvitation[]>>;
 }
 
-export interface IJobsClient {
+export interface IITwinJobsClient {
   /** Creates a new iTwin Job */
   createITwinJobAsync(
     accessToken: AccessToken,
@@ -397,8 +397,9 @@ export interface ITwinJob {
 
 export interface ITwinJobActions {
   assignRoles?: ITwinJobAction[],
-  removeRoles?: ITwinJobAction[],
+  unassignRoles?: ITwinJobAction[],
   removeMembers?: Omit<ITwinJobAction, "roleIds">[],
+  options?: any
 }
 
 export interface ITwinJobAction {

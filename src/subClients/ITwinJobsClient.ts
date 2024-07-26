@@ -6,10 +6,10 @@
  * @module AccessControlClient
  */
 import type { AccessToken } from "@itwin/core-bentley";
-import type { AccessControlAPIResponse, IJobsClient, ITwinJob, ITwinJobActions, AccessControlResultMode } from "../accessControlTypes";
+import type { AccessControlAPIResponse, IITwinJobsClient, ITwinJob, ITwinJobActions, AccessControlResultMode } from "../accessControlTypes";
 import { BaseClient } from "./BaseClient";
 
-export class JobsClient extends BaseClient implements IJobsClient {
+export class ITwinJobsClient extends BaseClient implements IITwinJobsClient {
     public constructor(url?: string) {
         super(url);
     }
@@ -26,7 +26,7 @@ export class JobsClient extends BaseClient implements IJobsClient {
         iTwinActions: ITwinJobActions
     ): Promise<AccessControlAPIResponse<ITwinJob>> {
         const url = `${this._baseUrl}/${iTwinId}/jobs`;
-        return this.sendGenericAPIRequest(accessToken, "POST", url, iTwinActions, "actions");
+        return this.sendGenericAPIRequest(accessToken, "POST", url, { actions: iTwinActions });
     }
 
     /** Gets an iTwin Job.
@@ -39,7 +39,7 @@ export class JobsClient extends BaseClient implements IJobsClient {
     public async getITwinJobAsync(
         accessToken: AccessToken,
         iTwinId: string,
-        iTwinJobId?: string,
+        iTwinJobId: string,
         resultMode?: AccessControlResultMode
     ): Promise<AccessControlAPIResponse<ITwinJob>> {
         const headers = this.getResultModeHeaders(resultMode);
