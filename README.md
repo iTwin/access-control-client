@@ -53,7 +53,9 @@ import {
 
 /** Function that queries all Roles for a given iTwin and prints their ids to the console. */
 async function printiTwinRoleIds(): Promise<void> {
-  const accessControlClient: IAccessControlClient = new AccessControlClient("https://api.bentley.com/accesscontrol/itwins");
+  const accessControlClient: IAccessControlClient = new AccessControlClient(
+    "https://api.bentley.com/accesscontrol/itwins"
+  );
   const accessToken: AccessToken = { get_access_token_logic_here };
 
   const iTwinsResponse: AccessControlAPIResponse<Role[]> =
@@ -276,6 +278,7 @@ async function printiTwinRole(): Promise<void> {
     );
 }
 ```
+
 ### Get list of Owner Members for an iTwin
 
 ```typescript
@@ -381,7 +384,9 @@ import {
 
 /** Function that queries all Groups for a given iTwin and prints their ids to the console. */
 async function printiTwinGroupIds(): Promise<void> {
-  const accessControlClient: IAccessControlClient = new AccessControlClient("https://api.bentley.com/accesscontrol/itwins");
+  const accessControlClient: IAccessControlClient = new AccessControlClient(
+    "https://api.bentley.com/accesscontrol/itwins"
+  );
   const accessToken: AccessToken = { get_access_token_logic_here };
 
   const iTwinsResponse: AccessControlAPIResponse<Group[]> =
@@ -453,7 +458,7 @@ async function printiTwinGroup(): Promise<void> {
     name: "Some new group name",
     description: "UPDATED GROUP DESCRIPTION",
     user: ["John.Johnson@example.com"],
-    imsGroups: ["Sample IMS Group"]
+    imsGroups: ["Sample IMS Group"],
   };
   const updateResponse: AccessControlAPIResponse<Group> =
     await accessControlClient.groups.updateITwinGroupAsync(
@@ -656,6 +661,77 @@ async function printiTwinPermissionIds(): Promise<void> {
   iTwinsResponse.data!.forEach((actualPermission: Permission) => {
     console.log(actualPermission.id);
   });
+}
+```
+
+### Create and get iTwin job and related actions
+
+```typescript
+import type { AccessToken } from "@itwin/core-bentley";
+import {
+  AccessControlClient,
+  IAccessControlClient,
+  Member,
+  AccessControlAPIResponse,
+} from "@itwin/access-control-client";
+
+/** Function that creates, updates, and deletes a user member. */
+async function printiTwinRole(): Promise<void> {
+  const accessControlClient: IAccessControlClient = new AccessControlClient();
+  const accessToken: AccessToken = { get_access_token_logic_here };
+
+  const itwinJobActions = {
+    assignRoles: [
+      {
+        email: "John.Johnson@example.com",
+        roleIds: ["65819672-962d-4386-8667-136125bcb7b2"],
+      },
+    ],
+    unassignRoles: [
+      {
+        email: "Maria.Miller@example.com",
+        roleIds: ["d6a62e34-5016-4bac-a9a0-a6522583698e"],
+      },
+    ],
+    removeMembers: [
+      {
+        email: "Jobby.McJobface@example.com",
+      },
+    ],
+  };
+
+  // Create iTwin job
+  const createResponse: AccessControlAPIResponse<ITwinJob> =
+    await accessControlClient.itwinJobs.createITwinJobAsync(
+      accessToken,
+      "d7d82799-3f0c-4175-acbe-cc2573e99359",
+      itwinJobActions
+    );
+
+  // Get the created iTwin job
+  const getiTwinJobResponse: AccessControlAPIResponse<ITwinJob> =
+    await accessControlClient.itwinJobs.getITwinJobAsync(
+      accessToken,
+      "d7d82799-3f0c-4175-acbe-cc2573e99359",
+      createResponse.id
+    );
+
+  // Get the created iTwin job with errors
+  const getiTwinJobResponseWithErrors: AccessControlAPIResponse<ITwinJob> =
+    await accessControlClient.itwinJobs.getITwinJobAsync(
+      accessToken,
+      "d7d82799-3f0c-4175-acbe-cc2573e99359",
+      createResponse.id,
+      "representation"
+    );
+
+  // Get the created iTwin job's action
+  const getiTwinJobResponseWithErrors: AccessControlAPIResponse<ITwinJob> =
+    await accessControlClient.itwinJobs.getITwinJobActionsAsync(
+      accessToken,
+      "d7d82799-3f0c-4175-acbe-cc2573e99359",
+      createResponse.id
+    );
 }
 ```
 
