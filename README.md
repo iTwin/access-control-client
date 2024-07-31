@@ -713,7 +713,7 @@ async function printiTwinRole(): Promise<void> {
     await accessControlClient.itwinJobs.getITwinJobAsync(
       accessToken,
       "d7d82799-3f0c-4175-acbe-cc2573e99359",
-      createResponse.id
+      createResponse.data.id
     );
 
   // Get the created iTwin job with errors
@@ -721,16 +721,16 @@ async function printiTwinRole(): Promise<void> {
     await accessControlClient.itwinJobs.getITwinJobAsync(
       accessToken,
       "d7d82799-3f0c-4175-acbe-cc2573e99359",
-      createResponse.id,
+      createResponse.data.id,
       "representation"
     );
 
-  // Get the created iTwin job's action
-  const getiTwinJobResponseWithErrors: AccessControlAPIResponse<ITwinJob> =
+  // Get the created iTwin job's actions
+  const getiTwinJobActionaResponse: AccessControlAPIResponse<ITwinJobActions> =
     await accessControlClient.itwinJobs.getITwinJobActionsAsync(
       accessToken,
       "d7d82799-3f0c-4175-acbe-cc2573e99359",
-      createResponse.id
+      createResponse.data.id
     );
 }
 ```
