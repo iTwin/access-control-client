@@ -671,7 +671,8 @@ import type { AccessToken } from "@itwin/core-bentley";
 import {
   AccessControlClient,
   IAccessControlClient,
-  Member,
+  ITwinJob,
+  ITwinJobActions,
   AccessControlAPIResponse,
 } from "@itwin/access-control-client";
 
