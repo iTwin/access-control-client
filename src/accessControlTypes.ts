@@ -223,7 +223,7 @@ export interface IITwinJobsClient {
   createITwinJobAsync(
     accessToken: AccessToken,
     iTwinId: string,
-    iTwinActions: ITwinJobActions
+    iTwinJobActions: ITwinJobActions
   ): Promise<AccessControlAPIResponse<ITwinJob>>;
 
   /** Gets an iTwin Job. To see errors, pass in the `representation` result mode. */

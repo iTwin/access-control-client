@@ -23,10 +23,10 @@ export class ITwinJobsClient extends BaseClient implements IITwinJobsClient {
   public async createITwinJobAsync(
     accessToken: AccessToken,
     iTwinId: string,
-    iTwinActions: ITwinJobActions
+    iTwinJobActions: ITwinJobActions
   ): Promise<AccessControlAPIResponse<ITwinJob>> {
     const url = `${this._baseUrl}/${iTwinId}/jobs`;
-    return this.sendGenericAPIRequest(accessToken, "POST", url, { actions: iTwinActions });
+    return this.sendGenericAPIRequest(accessToken, "POST", url, { actions: iTwinJobActions });
   }
 
   /** Gets an iTwin Job.
