@@ -5,7 +5,7 @@
 import type { AccessToken } from "@itwin/core-bentley";
 import * as chai from "chai";
 import { AccessControlClient } from "../../AccessControlClient";
-import type { AccessControlAPIResponse, IAccessControlClient, ITwinJob, ITwinJobAction, ITwinJobActions, Role } from "../../accessControlTypes";
+import type { AccessControlAPIResponse, IAccessControlClient, ITwinJob, ITwinJobActions } from "../../accessControlTypes";
 import { TestConfig } from "../TestConfig";
 
 chai.should();
