@@ -251,7 +251,6 @@ export interface IITwinJobsClient {
  */
 export type AccessControlResultMode = "minimal" | "representation";
 
-
 export interface AccessControlQueryArg {
   top?: number;
   skip?: number;
@@ -387,24 +386,24 @@ export enum ITwinJobStatus {
 /** Contains extra properties with "representation" result mode.
  */
 export interface ITwinJob {
-  id: string,
-  itwinId: string,
-  status: ITwinJobStatus,
+  id: string;
+  itwinId: string;
+  status: ITwinJobStatus;
 
   // extra properties available with "representation" result mode:
-  error?: ErrorDetail[]
+  error?: ErrorDetail[];
 }
 
 export interface ITwinJobActions {
-  assignRoles?: ITwinJobAction[],
-  unassignRoles?: ITwinJobAction[],
-  removeMembers?: Omit<ITwinJobAction, "roleIds">[],
-  options?: any
+  assignRoles?: ITwinJobAction[];
+  unassignRoles?: ITwinJobAction[];
+  removeMembers?: Omit<ITwinJobAction, "roleIds">[];
+  options?: any;
 }
 
 export interface ITwinJobAction {
-  email: string,
-  roleIds: string[]
+  email: string;
+  roleIds: string[];
 }
 
 //#endregion
