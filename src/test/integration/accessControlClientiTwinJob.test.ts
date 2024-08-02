@@ -9,7 +9,7 @@ import type { AccessControlAPIResponse, IAccessControlClient, ITwinJob, ITwinJob
 import { TestConfig } from "../TestConfig";
 
 chai.should();
-describe("AccessControlClient Jobs", () => {
+describe("AccessControlClient iTwin Jobs", () => {
   const accessControlClient: IAccessControlClient = new AccessControlClient();
   let accessToken: AccessToken;
 
