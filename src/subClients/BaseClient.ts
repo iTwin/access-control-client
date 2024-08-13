@@ -6,10 +6,19 @@
  * @module AccessControlClient
  */
 import type { AccessToken } from "@itwin/core-bentley";
-import type { Method } from "axios";
-import type { AxiosRequestConfig } from "axios";
-import axios from "axios";
 import type { AccessControlAPIResponse, AccessControlQueryArg } from "../accessControlTypes";
+
+export type Method =
+    | 'get' | 'GET'
+    | 'delete' | 'DELETE'
+    | 'head' | 'HEAD'
+    | 'options' | 'OPTIONS'
+    | 'post' | 'POST'
+    | 'put' | 'PUT'
+    | 'patch' | 'PATCH'
+    | 'purge' | 'PURGE'
+    | 'link' | 'LINK'
+    | 'unlink' | 'UNLINK';
 
 export class BaseClient {
   protected _baseUrl: string = "https://api.bentley.com/accesscontrol/itwins";
@@ -43,12 +52,13 @@ export class BaseClient {
   ): Promise<AccessControlAPIResponse<any>> { // TODO: Change any response
     const requestOptions = this.getRequestOptions(accessToken, method, url, data, additionalHeaders);
     try {
-      const response = await axios(requestOptions);
+      const response = await fetch(requestOptions.url, requestOptions);
+      const responseData = await response.json();
 
       return {
         status: response.status,
-        data: response.data.error || response.data === "" ? undefined : property ? response.data[property] : response.data,
-        error: response.data.error,
+        data: responseData.error || responseData === "" ? undefined : property ? responseData[property] : responseData,
+        error: responseData.error,
       };
     } catch (err) {
       return {
@@ -65,23 +75,38 @@ export class BaseClient {
   /**
     * Build the request methods, headers, and other options
     * @param accessTokenString The client access token string
+    * @param method The method type of the request (ex. GET, POST, DELETE, etc)
+    * @param url The url of the request
+    * @param data The data to be sent in the request body
+    * @param additionalHeaders Additional headers to be included in the request
     */
-  protected getRequestOptions(accessTokenString: string, method: Method, url: string, data?: any, additionalHeaders?: { [key: string]: string }): AxiosRequestConfig {
-    return {
-      method,
-      url,
-      data,
-      headers: {
-        "authorization": accessTokenString,
-        "content-type": "application/json",
-        "accept": "application/vnd.bentley.itwin-platform.v2+json",
-        ...additionalHeaders,
-      },
-      validateStatus(status) {
-        return status < 500; // Resolve only if the status code is less than 500
-      },
+  private getRequestOptions(
+    accessToken: AccessToken,
+    method: Method,
+    url: string,
+    data?: any,
+    additionalHeaders?: { [key: string]: string }
+  ): RequestInit & { url: string } {
+    const headers: HeadersInit = {
+      "Authorization": accessToken,
+      "Content-Type": "application/json",
+      "accept": "application/vnd.bentley.itwin-platform.v2+json",
+      ...additionalHeaders,
     };
+
+    const requestOptions: RequestInit & { url: string } = {
+      method,
+      headers,
+      url: this._baseUrl + url,
+    };
+
+    if (data) {
+      requestOptions.body = JSON.stringify(data);
+    }
+
+    return requestOptions;
   }
+
 
   /**
     * Build a query to be appended to a URL
