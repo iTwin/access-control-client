@@ -56,6 +56,7 @@ export class BaseClient {
     try {
       const response = await fetch(requestOptions.url, requestOptions);
       console.log('LOG[58]: response ' + JSON.stringify(response, null, 2));
+      console.log('LOG[58]: response.status ' + JSON.stringify(response.status, null, 2));
 
       const responseData = await response.json();
       console.log('LOG[58]: responseData ' + JSON.stringify(responseData, null, 2));
