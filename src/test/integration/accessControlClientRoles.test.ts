@@ -133,6 +133,8 @@ describe("AccessControlClient Roles", () => {
     const createResponse: AccessControlAPIResponse<Role> =
       await accessControlClient.roles.createITwinRoleAsync(accessToken, TestConfig.itwinId, newRole);
 
+    console.log('LOG[136]: createResponse ' + JSON.stringify(createResponse, null, 2));
+
     // Assert
     chai.expect(createResponse.status).to.be.eq(201);
     chai.expect(createResponse.data!.displayName).to.be.eq(newRole.displayName);
@@ -150,6 +152,8 @@ describe("AccessControlClient Roles", () => {
     const updateResponse: AccessControlAPIResponse<Role> =
       await accessControlClient.roles.updateITwinRoleAsync(accessToken, TestConfig.itwinId, createResponse.data!.id!, updatedRole);
 
+      console.log('LOG[153]: updateResponse ' + JSON.stringify(updateResponse, null, 2));
+
     // Assert
     chai.expect(updateResponse.status).to.be.eq(200);
     chai.expect(updateResponse.data!.displayName).to.be.eq(updatedRole.displayName);
@@ -159,6 +163,8 @@ describe("AccessControlClient Roles", () => {
     // Act
     const deleteResponse: AccessControlAPIResponse<undefined> =
       await accessControlClient.roles.deleteITwinRoleAsync(accessToken, TestConfig.itwinId, createResponse.data!.id!);
+
+    console.log('LOG[161]: deleteResponse ' + JSON.stringify(deleteResponse, null, 2));
 
     // Assert
     chai.expect(deleteResponse.status).to.be.eq(204);

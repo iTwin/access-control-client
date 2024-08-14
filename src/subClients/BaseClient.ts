@@ -67,6 +67,9 @@ export class BaseClient {
         error: responseData.error,
       };
     } catch (err) {
+
+      console.log('LOG[70]: err ' + JSON.stringify(err, null, 2));
+
       return {
         status: 500,
         error: {
