@@ -51,9 +51,12 @@ export class BaseClient {
     additionalHeaders?: { [key: string]: string }
   ): Promise<AccessControlAPIResponse<any>> { // TODO: Change any response
     const requestOptions = this.getRequestOptions(accessToken, method, url, data, additionalHeaders);
+    // console.log('LOG[54]: requestOptions ' + JSON.stringify(requestOptions, null, 2));
+
     try {
       const response = await fetch(requestOptions.url, requestOptions);
       const responseData = await response.json();
+      // console.log('LOG[58]: responseData ' + JSON.stringify(responseData, null, 2));
 
       return {
         status: response.status,
@@ -97,7 +100,7 @@ export class BaseClient {
     const requestOptions: RequestInit & { url: string } = {
       method,
       headers,
-      url: this._baseUrl + url,
+      url
     };
 
     if (data) {
