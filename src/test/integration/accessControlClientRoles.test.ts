@@ -9,7 +9,7 @@ import type { AccessControlAPIResponse, IAccessControlClient, Role } from "../..
 import { TestConfig } from "../TestConfig";
 
 chai.should();
-describe("AccessControlClient Roles", () => {
+describe.only("AccessControlClient Roles", () => {
   let baseUrl: string = "https://api.bentley.com/accesscontrol/itwins";
   const urlPrefix = process.env.IMJS_URL_PREFIX;
   if (urlPrefix) {
@@ -118,7 +118,7 @@ describe("AccessControlClient Roles", () => {
     chai.expect(iTwinsResponse.data).to.be.undefined;
   });
 
-  it("should create, update, and delete a role", async () => {
+  it.only("should create, update, and delete a role", async () => {
     // --- CREATE ROLE ---
     // Arrange
     const newRoleName = `APIM Access Control Typescript Client Test Role 1 ${new Date().toISOString()}`;
