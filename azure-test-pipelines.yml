@@ -40,13 +40,13 @@ jobs:
       - script: npm install -g pnpm@6.19.0
         displayName: install pnpm globally
 
-      - script: pnpm install
+      - script: npm install
         displayName: "Install dependencies"
 
-      - script: pnpm run build
+      - script: npm run build
         displayName: "Build"
 
-      - script: pnpm run test
+      - script: npm run test
         displayName: "Test"
 
   - job: Node_14_x
@@ -77,11 +77,11 @@ jobs:
       - script: npm install -g pnpm@6.19.0
         displayName: install pnpm globally
 
-      - script: pnpm install
+      - script: npm install
         displayName: "Install dependencies"
 
-      - script: pnpm run build
+      - script: npm run build
         displayName: "Build"
 
-      - script: pnpm run test
+      - script: npm run test
         displayName: "Test"
