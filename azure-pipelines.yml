@@ -77,7 +77,7 @@ stages:
 
               isBetaVersion=$(echo $accessControlClientVersion | grep -o "beta")
               npmTag="latest"
-              if [ "$isBetaVersion" = "true" ]; then
+              if [ -z "$isBetaVersion" ]; then
                 npmTag="beta"
               else
                 npmTag="latest"
