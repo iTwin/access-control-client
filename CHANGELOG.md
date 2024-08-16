@@ -1,5 +1,9 @@
 # Change Log - @itwin/access-control-client
 
+## 3.0.2
+
+- Upgrading axios version to ^1.7.4
+
 ## 3.0.0
 
 - **Breaking** Adjusting add user & add owner schemas to include invitations
