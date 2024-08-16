@@ -74,7 +74,7 @@ stages:
                 shouldPublish=false
               fi
 
-              if [ $accessControlClientVersion == *"beta"* ]; then
+              if [[ "$accessControlClientVersion" == *"beta"* ]]; then
                 npmTag="beta"
               else
                 npmTag="latest"
