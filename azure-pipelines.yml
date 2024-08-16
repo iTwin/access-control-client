@@ -76,7 +76,7 @@ stages:
               echo "##vso[task.setvariable variable=accessControlClientName;isOutput=true]$accessControlClientName"
             displayName: "Store Build Info"
             name: info
-            condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Agent.OS'], 'Linux'))
+            condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Build.SourceBranch'], 'refs/heads/releases/3.0.2')), eq(variables['Agent.OS'], 'Linux'))
           - task: PublishBuildArtifacts@1
             inputs:
               PathtoPublish: "$(Build.SourcesDirectory)/itwin-access-control-client-$(info.accessControlClientVersion).tgz"
