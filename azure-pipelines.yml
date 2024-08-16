@@ -49,6 +49,7 @@ stages:
           - bash: |
               accessControlClientVersion=$(node -p "require('./package.json').version")
               accessControlClientName=$(node -p "require('./package.json').name")
+
               checkVer() {
                 localVer=$1
                 name=$2
@@ -63,6 +64,7 @@ stages:
                   echo false
                 fi
               }
+
               updateClient=$(checkVer $accessControlClientVersion $accessControlClientName)
               if [ "$updateClient" = "true" ]; then
                 echo "package publishing conditions are met."
@@ -71,12 +73,23 @@ stages:
                 echo "package publishing conditions not met."
                 shouldPublish=false
               fi
+
+
+              isBetaVersion=$(echo $accessControlClientVersion | grep -o "beta")
+              npmTag="latest"
+              if [ "$isBetaVersion" = "true" ]; then
+                npmTag="beta"
+              else
+                npmTag="latest"
+              fi
+
               echo "##vso[task.setvariable variable=shouldPublish;isOutput=true]$shouldPublish"
               echo "##vso[task.setvariable variable=accessControlClientVersion;isOutput=true]$accessControlClientVersion"
               echo "##vso[task.setvariable variable=accessControlClientName;isOutput=true]$accessControlClientName"
+              echo "##vso[task.setvariable variable=npmTag;isOutput=true]$npmTag"
             displayName: "Store Build Info"
             name: info
-            condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Agent.OS'], 'Linux'))
+            condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Build.SourceBranch'], 'refs/heads/releases/3.0.2')), eq(variables['Agent.OS'], 'Linux'))
           - task: PublishBuildArtifacts@1
             inputs:
               PathtoPublish: "$(Build.SourcesDirectory)/itwin-access-control-client-$(info.accessControlClientVersion).tgz"
@@ -95,3 +108,4 @@ stages:
           path: "*.tgz"
           artifactName: AccessControlClient
           name: AccessControlClient
+          releaseTag: dependencies.Build.outputs['BuildPackages.linux.info.npmTag']
