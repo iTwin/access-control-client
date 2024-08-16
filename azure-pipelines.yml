@@ -74,10 +74,7 @@ stages:
                 shouldPublish=false
               fi
 
-
-              isBetaVersion=$(echo $accessControlClientVersion | grep -o "beta")
-              npmTag="latest"
-              if [ -z "$isBetaVersion" ]; then
+              if [ $accessControlClientVersion == *"beta"* ]; then
                 npmTag="beta"
               else
                 npmTag="latest"
