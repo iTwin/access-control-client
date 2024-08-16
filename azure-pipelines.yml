@@ -74,14 +74,16 @@ stages:
                 shouldPublish=false
               fi
 
-
-              isBetaVersion=$(echo $accessControlClientVersion | grep -o "beta")
-              npmTag="latest"
-              if [ "$isBetaVersion" = "true" ]; then
+              if [[ "$accessControlClientVersion" == *"beta"* ]]; then
                 npmTag="beta"
               else
                 npmTag="latest"
               fi
+
+              echo $npmTag
+              echo $shouldPublish
+              echo $accessControlClientVersion
+              echo $accessControlClientName
 
               echo "##vso[task.setvariable variable=shouldPublish;isOutput=true]$shouldPublish"
               echo "##vso[task.setvariable variable=accessControlClientVersion;isOutput=true]$accessControlClientVersion"
@@ -89,7 +91,7 @@ stages:
               echo "##vso[task.setvariable variable=npmTag;isOutput=true]$npmTag"
             displayName: "Store Build Info"
             name: info
-            condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Build.SourceBranch'], 'refs/heads/releases/*')), eq(variables['Agent.OS'], 'Linux'))
+            condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), startsWith(variables['Build.SourceBranch'], 'refs/heads/releases/')), eq(variables['Agent.OS'], 'Linux'))
           - task: PublishBuildArtifacts@1
             inputs:
               PathtoPublish: "$(Build.SourcesDirectory)/itwin-access-control-client-$(info.accessControlClientVersion).tgz"
