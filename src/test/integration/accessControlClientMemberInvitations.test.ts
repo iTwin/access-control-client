@@ -37,7 +37,7 @@ describe("AccessControlClient Member Invitations", () => {
     const getMemberInvitationsResponse: AccessControlAPIResponse<MemberInvitation[]> =
       await accessControlClient.memberInvitations.queryITwinMemberInvitationsAsync(
         accessToken,
-        TestConfig.itwinId
+        TestConfig.projectId
       );
     chai.expect(getMemberInvitationsResponse.status).to.be.eq(200);
     chai.expect(getMemberInvitationsResponse.data).to.not.be.null;
@@ -46,7 +46,7 @@ describe("AccessControlClient Member Invitations", () => {
       const addUserMemberResponse: AccessControlAPIResponse<AddUserMemberResponse> =
       await accessControlClient.userMembers.addITwinUserMembersAsync(
         accessToken,
-        TestConfig.itwinId,
+        TestConfig.projectId,
         [
           {
             email: `access-control-client-${randomIntFromInterval(0, 10000)}@example.com`,
@@ -95,7 +95,7 @@ describe("AccessControlClient Member Invitations", () => {
     const iTwinsResponse: AccessControlAPIResponse<MemberInvitation[]> =
       await accessControlClient.memberInvitations.queryITwinMemberInvitationsAsync(
         accessToken,
-        TestConfig.itwinId
+        TestConfig.projectId
       );
 
     // Assert
@@ -112,7 +112,7 @@ describe("AccessControlClient Member Invitations", () => {
     const iTwinsResponse: AccessControlAPIResponse<MemberInvitation[]> =
     await accessControlClient.memberInvitations.queryITwinMemberInvitationsAsync(
       accessToken,
-      TestConfig.itwinId,
+      TestConfig.projectId,
       { top: topAmount }
     );
 
@@ -128,7 +128,7 @@ describe("AccessControlClient Member Invitations", () => {
     const unFilteredList: AccessControlAPIResponse<MemberInvitation[]> =
     await accessControlClient.memberInvitations.queryITwinMemberInvitationsAsync(
       accessToken,
-      TestConfig.itwinId
+      TestConfig.projectId
     );
     const skipAmmount = 5;
     const topAmount = 3;
@@ -137,7 +137,7 @@ describe("AccessControlClient Member Invitations", () => {
     const iTwinsResponse: AccessControlAPIResponse<MemberInvitation[]> =
     await accessControlClient.memberInvitations.queryITwinMemberInvitationsAsync(
       accessToken,
-      TestConfig.itwinId,
+      TestConfig.projectId,
       { skip: skipAmmount, top: topAmount }
     );
 

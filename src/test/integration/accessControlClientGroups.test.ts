@@ -29,7 +29,7 @@ describe("AccessControlClient Groups", () => {
   it("should get a list of groups for an iTwin", async () => {
     // Act
     const iTwinsResponse: AccessControlAPIResponse<Group[]> =
-      await accessControlClient.groups.getITwinGroupsAsync(accessToken, TestConfig.itwinId);
+      await accessControlClient.groups.getITwinGroupsAsync(accessToken, TestConfig.projectId);
 
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(200);
@@ -40,7 +40,7 @@ describe("AccessControlClient Groups", () => {
   it("should get a list of groups for an iTwin with custom url", async () => {
     // Act
     const iTwinsResponse: AccessControlAPIResponse<Group[]> =
-      await customAccessControlClient.groups.getITwinGroupsAsync(accessToken, TestConfig.itwinId);
+      await customAccessControlClient.groups.getITwinGroupsAsync(accessToken, TestConfig.projectId);
 
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(200);
@@ -51,7 +51,7 @@ describe("AccessControlClient Groups", () => {
   it("should get a specific groups for an iTwin", async () => {
     // Act
     const iTwinsResponse: AccessControlAPIResponse<Group> =
-      await accessControlClient.groups.getITwinGroupAsync(accessToken, TestConfig.itwinId, TestConfig.permanentGroupId1);
+      await accessControlClient.groups.getITwinGroupAsync(accessToken, TestConfig.projectId, TestConfig.permanentGroupId1);
 
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(200);
@@ -66,7 +66,7 @@ describe("AccessControlClient Groups", () => {
 
     // Act
     const iTwinsResponse: AccessControlAPIResponse<Group> =
-      await accessControlClient.groups.getITwinGroupAsync(accessToken, TestConfig.itwinId, nonExistantGroupId);
+      await accessControlClient.groups.getITwinGroupAsync(accessToken, TestConfig.projectId, nonExistantGroupId);
 
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(404);
@@ -84,7 +84,7 @@ describe("AccessControlClient Groups", () => {
 
     // Act
     const iTwinsResponse: AccessControlAPIResponse<Group> =
-      await accessControlClient.groups.updateITwinGroupAsync(accessToken, TestConfig.itwinId, nonExistantGroupId, emptyUpdatedGroup);
+      await accessControlClient.groups.updateITwinGroupAsync(accessToken, TestConfig.projectId, nonExistantGroupId, emptyUpdatedGroup);
 
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(404);
@@ -98,7 +98,7 @@ describe("AccessControlClient Groups", () => {
 
     // Act
     const iTwinsResponse: AccessControlAPIResponse<undefined> =
-      await accessControlClient.groups.deleteITwinGroupAsync(accessToken, TestConfig.itwinId, nonExistantGroupId);
+      await accessControlClient.groups.deleteITwinGroupAsync(accessToken, TestConfig.projectId, nonExistantGroupId);
 
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(404);
@@ -118,7 +118,7 @@ describe("AccessControlClient Groups", () => {
 
     // Act
     const createResponse: AccessControlAPIResponse<Group> =
-      await accessControlClient.groups.createITwinGroupAsync(accessToken, TestConfig.itwinId, newGroup);
+      await accessControlClient.groups.createITwinGroupAsync(accessToken, TestConfig.projectId, newGroup);
 
     // Assert
     chai.expect(createResponse.status).to.be.eq(201);
@@ -136,7 +136,7 @@ describe("AccessControlClient Groups", () => {
 
     // Act
     const updateResponse: AccessControlAPIResponse<Group> =
-      await accessControlClient.groups.updateITwinGroupAsync(accessToken, TestConfig.itwinId, createResponse.data!.id as string, updatedGroup);
+      await accessControlClient.groups.updateITwinGroupAsync(accessToken, TestConfig.projectId, createResponse.data!.id as string, updatedGroup);
 
     // Assert
     chai.expect(updateResponse.status).to.be.eq(200);
@@ -158,7 +158,7 @@ describe("AccessControlClient Groups", () => {
 
     // Act
     const updateEmptyResponse: AccessControlAPIResponse<Group> =
-      await accessControlClient.groups.updateITwinGroupAsync(accessToken, TestConfig.itwinId, createResponse.data!.id as string, updatedEmptyGroup);
+      await accessControlClient.groups.updateITwinGroupAsync(accessToken, TestConfig.projectId, createResponse.data!.id as string, updatedEmptyGroup);
 
     // Assert
     chai.expect(updateEmptyResponse.status).to.be.eq(200);
@@ -170,7 +170,7 @@ describe("AccessControlClient Groups", () => {
     // --- DELETE GROUP ---
     // Act
     const deleteResponse: AccessControlAPIResponse<undefined> =
-      await accessControlClient.groups.deleteITwinGroupAsync(accessToken, TestConfig.itwinId, createResponse.data!.id as string);
+      await accessControlClient.groups.deleteITwinGroupAsync(accessToken, TestConfig.projectId, createResponse.data!.id as string);
 
     // Assert
     chai.expect(deleteResponse.status).to.be.eq(204);
