@@ -31,7 +31,7 @@ export class TestConfig {
 
   public static readonly regularUserId: string = process.env.IMJS_TEST_REGULAR_USER_ID!;
 
-  public static readonly itwinId: string = process.env.IMJS_TEST_ITWIN_ID!;
+  public static readonly projectId: string = process.env.IMJS_TEST_ITWIN_ID!;
 
   /** Login the specified user and return the AuthorizationToken */
   public static async getAccessToken(

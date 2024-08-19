@@ -38,7 +38,7 @@ describe("AccessControlClient Owner Members", () => {
     const iTwinsResponse: AccessControlAPIResponse<OwnerMember[]> =
       await accessControlClient.ownerMembers.queryITwinOwnerMembersAsync(
         accessToken,
-        TestConfig.itwinId
+        TestConfig.projectId
       );
 
     // Assert
@@ -52,7 +52,7 @@ describe("AccessControlClient Owner Members", () => {
     const iTwinsResponse: AccessControlAPIResponse<OwnerMember[]> =
       await customAccessControlClient.ownerMembers.queryITwinOwnerMembersAsync(
         accessToken,
-        TestConfig.itwinId,
+        TestConfig.projectId,
       );
 
     // Assert
@@ -69,7 +69,7 @@ describe("AccessControlClient Owner Members", () => {
     const iTwinsResponse: AccessControlAPIResponse<OwnerMember[]> =
       await accessControlClient.ownerMembers.queryITwinOwnerMembersAsync(
         accessToken,
-        TestConfig.itwinId,
+        TestConfig.projectId,
         { top: topAmount }
       );
 
@@ -85,7 +85,7 @@ describe("AccessControlClient Owner Members", () => {
     const unFilteredList: AccessControlAPIResponse<OwnerMember[]> =
       await accessControlClient.ownerMembers.queryITwinOwnerMembersAsync(
         accessToken,
-        TestConfig.itwinId
+        TestConfig.projectId
       );
     const skipAmmount = 1;
     const topAmount = 1;
@@ -94,7 +94,7 @@ describe("AccessControlClient Owner Members", () => {
     const iTwinsResponse: AccessControlAPIResponse<OwnerMember[]> =
       await accessControlClient.ownerMembers.queryITwinOwnerMembersAsync(
         accessToken,
-        TestConfig.itwinId,
+        TestConfig.projectId,
         { skip: skipAmmount, top: topAmount }
       );
 
@@ -114,7 +114,7 @@ describe("AccessControlClient Owner Members", () => {
     const addOwnerMemberResponse: AccessControlAPIResponse<AddOwnerMemberResponse> =
       await accessControlClient.ownerMembers.addITwinOwnerMemberAsync(
         accessToken,
-        TestConfig.itwinId,
+        TestConfig.projectId,
         {
           email: TestUsers.manager.email,
         },
@@ -130,7 +130,7 @@ describe("AccessControlClient Owner Members", () => {
     const queryOwnerMemberResponse: AccessControlAPIResponse<OwnerMember[]> =
       await accessControlClient.ownerMembers.queryITwinOwnerMembersAsync(
         accessToken,
-        TestConfig.itwinId
+        TestConfig.projectId
       );
 
     chai.expect(queryOwnerMemberResponse.status).to.be.eq(200);
@@ -146,7 +146,7 @@ describe("AccessControlClient Owner Members", () => {
     const removeOwnerMemberResponse: AccessControlAPIResponse<undefined> =
       await accessControlClient.ownerMembers.removeITwinOwnerMemberAsync(
         accessToken,
-        TestConfig.itwinId,
+        TestConfig.projectId,
         newOwner.id!
       );
 

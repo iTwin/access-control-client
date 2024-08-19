@@ -9,7 +9,6 @@ import type {
   IAccessControlClient,
   IGroupMembersClient,
   IGroupsClient,
-  IITwinJobsClient,
   IMemberInvitationsClient,
   IOwnerMembersClient,
   IPermissionsClient,
@@ -23,7 +22,6 @@ import { UserMembersClient } from "./subClients/UserMembersClient";
 import { GroupMembersClient } from "./subClients/GroupMembersClient";
 import { OwnerMembersClient } from "./subClients/OwnerMembersClient";
 import { MemberInvitationsClient } from "./subClients/MemberInvitationsClient";
-import { ITwinJobsClient } from "./subClients/ITwinJobsClient";
 
 export class AccessControlClient implements IAccessControlClient {
   public permissions: IPermissionsClient;
@@ -33,7 +31,6 @@ export class AccessControlClient implements IAccessControlClient {
   public groupMembers: IGroupMembersClient;
   public ownerMembers: IOwnerMembersClient;
   public memberInvitations: IMemberInvitationsClient;
-  public itwinJobs: IITwinJobsClient;
 
   public constructor(url?: string) {
     this.permissions = new PermissionsClient(url);
@@ -43,6 +40,5 @@ export class AccessControlClient implements IAccessControlClient {
     this.groupMembers = new GroupMembersClient(url);
     this.ownerMembers = new OwnerMembersClient(url);
     this.memberInvitations = new MemberInvitationsClient(url);
-    this.itwinJobs = new ITwinJobsClient(url);
   }
 }
