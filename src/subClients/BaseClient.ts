@@ -49,6 +49,7 @@ export class BaseClient {
         status: response.status,
         data: response.data.error || response.data === "" ? undefined : property ? response.data[property] : response.data,
         error: response.data.error,
+        headers: response.headers
       };
     } catch (err) {
       return {
@@ -58,6 +59,7 @@ export class BaseClient {
           message:
             "An internal exception happened while calling iTwins Service",
         },
+        headers: {}
       };
     }
   }
