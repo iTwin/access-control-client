@@ -19,6 +19,7 @@ export interface IAccessControlClient {
   groupMembers: IGroupMembersClient;
   ownerMembers: IOwnerMembersClient;
   memberInvitations: IMemberInvitationsClient;
+  itwinJobs: IITwinJobsClient;
 }
 
 export interface IPermissionsClient {
@@ -217,13 +218,43 @@ export interface IMemberInvitationsClient {
   ): Promise<AccessControlAPIResponse<MemberInvitation[]>>;
 }
 
+export interface IITwinJobsClient {
+  /** Creates a new iTwin Job */
+  createITwinJobAsync(
+    accessToken: AccessToken,
+    iTwinId: string,
+    iTwinJobActions: ITwinJobActions
+  ): Promise<AccessControlAPIResponse<ITwinJob>>;
+
+  /** Gets an iTwin Job. To see errors, pass in the `representation` result mode. */
+  getITwinJobAsync(
+    accessToken: AccessToken,
+    iTwinId: string,
+    iTwinJobId?: string,
+    resultMode?: AccessControlResultMode
+  ): Promise<AccessControlAPIResponse<ITwinJob>>;
+
+  /** Gets the iTwin Job Actions for a specified iTwin Job. */
+  getITwinJobActionsAsync(
+    accessToken: AccessToken,
+    iTwinId: string,
+    iTwinJobId?: string
+  ): Promise<AccessControlAPIResponse<ITwinJobActions>>;
+}
+
 //#endregion
 
 //#region generic-responses
 
+/**
+ * Optional result mode. Minimal is the default, representation returns extra properties
+ */
+export type AccessControlResultMode = "minimal" | "representation";
+
 export interface AccessControlQueryArg {
   top?: number;
   skip?: number;
+  resultMode?: AccessControlResultMode;
 }
 
 export interface AccessControlAPIResponse<T> {
@@ -344,6 +375,36 @@ export interface MemberInvitation {
 export enum MemberInvitationStatus {
   Pending = "Pending",
   Accepted = "Accepted"
+}
+
+export enum ITwinJobStatus {
+  Active = "Active",
+  Complete = "Completed",
+  PartialCompleted = "PartialCompleted",
+  Failed = "Failed"
+}
+
+/** Contains extra properties with "representation" result mode.
+ */
+export interface ITwinJob {
+  id: string;
+  itwinId: string;
+  status: ITwinJobStatus;
+
+  // extra properties available with "representation" result mode:
+  error?: ErrorDetail[];
+}
+
+export interface ITwinJobActions {
+  assignRoles?: ITwinJobAction[];
+  unassignRoles?: ITwinJobAction[];
+  removeMembers?: Omit<ITwinJobAction, "roleIds">[];
+  options?: any;
+}
+
+export interface ITwinJobAction {
+  email: string;
+  roleIds: string[];
 }
 
 //#endregion

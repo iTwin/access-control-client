@@ -1,5 +1,9 @@
 # Change Log - @itwin/access-control-client
 
+## 3.2.0
+
+- Adding iTwin jobs client
+
 ## 3.1.0
 
 - Add headers to the API response object
