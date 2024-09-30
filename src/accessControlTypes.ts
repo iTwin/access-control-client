@@ -261,6 +261,7 @@ export interface AccessControlAPIResponse<T> {
   data?: T;
   status: number;
   error?: Error;
+  headers: { [key: string]: any };
 }
 
 export interface Error {
