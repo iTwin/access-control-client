@@ -38,7 +38,7 @@ describe("AccessControlClient User Members", () => {
     const iTwinsResponse: AccessControlAPIResponse<UserMember[]> =
       await accessControlClient.userMembers.queryITwinUserMembersAsync(
         accessToken,
-        TestConfig.itwinId
+        TestConfig.projectId
       );
 
     // Assert
@@ -52,7 +52,7 @@ describe("AccessControlClient User Members", () => {
     const iTwinsResponse: AccessControlAPIResponse<UserMember[]> =
       await customAccessControlClient.userMembers.queryITwinUserMembersAsync(
         accessToken,
-        TestConfig.itwinId
+        TestConfig.projectId
       );
 
     // Assert
@@ -69,7 +69,7 @@ describe("AccessControlClient User Members", () => {
     const iTwinsResponse: AccessControlAPIResponse<UserMember[]> =
       await accessControlClient.userMembers.queryITwinUserMembersAsync(
         accessToken,
-        TestConfig.itwinId,
+        TestConfig.projectId,
         { top: topAmount }
       );
 
@@ -85,7 +85,7 @@ describe("AccessControlClient User Members", () => {
     const unFilteredList: AccessControlAPIResponse<UserMember[]> =
       await accessControlClient.userMembers.queryITwinUserMembersAsync(
         accessToken,
-        TestConfig.itwinId
+        TestConfig.projectId
       );
     const skipAmmount = 5;
     const topAmount = 3;
@@ -94,7 +94,7 @@ describe("AccessControlClient User Members", () => {
     const iTwinsResponse: AccessControlAPIResponse<UserMember[]> =
       await accessControlClient.userMembers.queryITwinUserMembersAsync(
         accessToken,
-        TestConfig.itwinId,
+        TestConfig.projectId,
         { skip: skipAmmount, top: topAmount }
       );
 
@@ -113,7 +113,7 @@ describe("AccessControlClient User Members", () => {
     const iTwinsResponse: AccessControlAPIResponse<UserMember> =
       await accessControlClient.userMembers.getITwinUserMemberAsync(
         accessToken,
-        TestConfig.itwinId,
+        TestConfig.projectId,
         TestConfig.regularUserId
       );
 
@@ -131,7 +131,7 @@ describe("AccessControlClient User Members", () => {
     const iTwinsResponse: AccessControlAPIResponse<UserMember> =
       await accessControlClient.userMembers.getITwinUserMemberAsync(
         accessToken,
-        TestConfig.itwinId,
+        TestConfig.projectId,
         notExistantUserId
       );
 
@@ -147,7 +147,7 @@ describe("AccessControlClient User Members", () => {
     const addUserMemberResponse: AccessControlAPIResponse<AddUserMemberResponse> =
       await accessControlClient.userMembers.addITwinUserMembersAsync(
         accessToken,
-        TestConfig.itwinId,
+        TestConfig.projectId,
         [
           {
             email: TestUsers.regular.email,
@@ -168,7 +168,7 @@ describe("AccessControlClient User Members", () => {
     const getUserMemberResponse: AccessControlAPIResponse<UserMember> =
       await accessControlClient.userMembers.getITwinUserMemberAsync(
         accessToken,
-        TestConfig.itwinId,
+        TestConfig.projectId,
         newMember.id!
       );
 
@@ -187,7 +187,7 @@ describe("AccessControlClient User Members", () => {
     const updatedUserMemberResponse: AccessControlAPIResponse<UserMember> =
       await accessControlClient.userMembers.updateITwinUserMemberAsync(
         accessToken,
-        TestConfig.itwinId,
+        TestConfig.projectId,
         newMember.id!,
         [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2]
       );
@@ -210,7 +210,7 @@ describe("AccessControlClient User Members", () => {
     const removeUserMemberResponse: AccessControlAPIResponse<undefined> =
       await accessControlClient.userMembers.removeITwinUserMemberAsync(
         accessToken,
-        TestConfig.itwinId,
+        TestConfig.projectId,
         newMember.id!
       );
 

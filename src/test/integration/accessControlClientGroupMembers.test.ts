@@ -36,7 +36,7 @@ describe("AccessControlClient Group Members", () => {
     const iTwinsResponse: AccessControlAPIResponse<GroupMember[]> =
       await accessControlClient.groupMembers.queryITwinGroupMembersAsync(
         accessToken,
-        TestConfig.itwinId
+        TestConfig.projectId
       );
 
     // Assert
@@ -50,7 +50,7 @@ describe("AccessControlClient Group Members", () => {
     const iTwinsResponse: AccessControlAPIResponse<GroupMember[]> =
       await customAccessControlClient.groupMembers.queryITwinGroupMembersAsync(
         accessToken,
-        TestConfig.itwinId
+        TestConfig.projectId
       );
 
     // Assert
@@ -67,7 +67,7 @@ describe("AccessControlClient Group Members", () => {
     const iTwinsResponse: AccessControlAPIResponse<GroupMember[]> =
       await accessControlClient.groupMembers.queryITwinGroupMembersAsync(
         accessToken,
-        TestConfig.itwinId,
+        TestConfig.projectId,
         { top: topAmount }
       );
 
@@ -83,7 +83,7 @@ describe("AccessControlClient Group Members", () => {
     const unFilteredList: AccessControlAPIResponse<GroupMember[]> =
       await accessControlClient.groupMembers.queryITwinGroupMembersAsync(
         accessToken,
-        TestConfig.itwinId
+        TestConfig.projectId
       );
     const skipAmmount = 1;
     const topAmount = 3;
@@ -92,7 +92,7 @@ describe("AccessControlClient Group Members", () => {
     const iTwinsResponse: AccessControlAPIResponse<GroupMember[]> =
       await accessControlClient.groupMembers.queryITwinGroupMembersAsync(
         accessToken,
-        TestConfig.itwinId,
+        TestConfig.projectId,
         { skip: skipAmmount, top: topAmount }
       );
 
@@ -111,7 +111,7 @@ describe("AccessControlClient Group Members", () => {
     const iTwinsResponse: AccessControlAPIResponse<GroupMember> =
       await accessControlClient.groupMembers.getITwinGroupMemberAsync(
         accessToken,
-        TestConfig.itwinId,
+        TestConfig.projectId,
         TestConfig.permanentGroupId1
       );
 
@@ -129,7 +129,7 @@ describe("AccessControlClient Group Members", () => {
     const iTwinsResponse: AccessControlAPIResponse<GroupMember> =
       await accessControlClient.groupMembers.getITwinGroupMemberAsync(
         accessToken,
-        TestConfig.itwinId,
+        TestConfig.projectId,
         notExistantGroupId
       );
 
@@ -145,7 +145,7 @@ describe("AccessControlClient Group Members", () => {
     const addUserMemberResponse: AccessControlAPIResponse<GroupMember[]> =
       await accessControlClient.groupMembers.addITwinGroupMembersAsync(
         accessToken,
-        TestConfig.itwinId,
+        TestConfig.projectId,
         [
           {
             groupId: TestConfig.permanentGroupId2,
@@ -164,7 +164,7 @@ describe("AccessControlClient Group Members", () => {
     const getGroupMemberResponse: AccessControlAPIResponse<GroupMember> =
       await accessControlClient.groupMembers.getITwinGroupMemberAsync(
         accessToken,
-        TestConfig.itwinId,
+        TestConfig.projectId,
         TestConfig.permanentGroupId2
       );
 
@@ -183,7 +183,7 @@ describe("AccessControlClient Group Members", () => {
     const updatedUserMemberResponse: AccessControlAPIResponse<GroupMember> =
       await accessControlClient.groupMembers.updateITwinGroupMemberAsync(
         accessToken,
-        TestConfig.itwinId,
+        TestConfig.projectId,
         TestConfig.permanentGroupId2,
         [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2]
       );
@@ -206,7 +206,7 @@ describe("AccessControlClient Group Members", () => {
     const removeUserMemberResponse: AccessControlAPIResponse<undefined> =
       await accessControlClient.groupMembers.removeITwinGroupMemberAsync(
         accessToken,
-        TestConfig.itwinId,
+        TestConfig.projectId,
         TestConfig.permanentGroupId2
       );
 

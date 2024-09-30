@@ -2,7 +2,10 @@
 
 ## 3.1.0
 
-- Adding iTwin jobs client
+- Add headers to the API response object
+
+## 3.0.2
+
 - Upgrading axios version to ^1.7.4
 
 ## 3.0.0
