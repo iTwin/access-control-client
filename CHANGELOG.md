@@ -1,7 +1,8 @@
 # Change Log - @itwin/access-control-client
 
-## 3.0.2
+## 3.1.0
 
+- Adding iTwin jobs client
 - Upgrading axios version to ^1.7.4
 
 ## 3.0.0
