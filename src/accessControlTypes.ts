@@ -216,6 +216,13 @@ export interface IMemberInvitationsClient {
     iTwinId: string,
     arg?: AccessControlQueryArg
   ): Promise<AccessControlAPIResponse<MemberInvitation[]>>;
+
+  /** Removes an existing member invitation. */
+  deleteITwinMemberInvitationAsync(
+    accessToken: AccessToken,
+    iTwinId: string,
+    invitationId: string
+  ): Promise<AccessControlAPIResponse<undefined>>;
 }
 
 export interface IITwinJobsClient {
