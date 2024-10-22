@@ -1,5 +1,9 @@
 # Change Log - @itwin/access-control-client
 
+## 3.3.0
+
+- Adding `deleteITwinMemberInvitationAsync` method to the `MemberInvitationsClient`.
+
 ## 3.2.0
 
 - Adding iTwin jobs client
