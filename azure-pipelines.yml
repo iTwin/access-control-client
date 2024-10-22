@@ -30,7 +30,7 @@ stages:
         pool:
           vmImage: $(imageName)
         steps:
-          - script: npm install -g pnpm@6.19.0
+          - script: npm install -g pnpm
             displayName: install pnpm globally
 
           - script: pnpm install
