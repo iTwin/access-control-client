@@ -51,7 +51,7 @@ export class MemberInvitationsClient
     iTwinId: string,
     invitationId: string
   ): Promise<AccessControlAPIResponse<undefined>> {
-    let url = `${this._baseUrl}/${iTwinId}/members/invitations/${invitationId}`;
+    const url = `${this._baseUrl}/${iTwinId}/members/invitations/${invitationId}`;
     return this.sendGenericAPIRequest(accessToken, "DELETE", url);
   }
 }

@@ -164,10 +164,10 @@ describe("AccessControlClient Member Invitations", () => {
         ]
       );
 
-      chai.expect(addUserMemberResponse.status).to.be.eq(201, `received error: ${JSON.stringify(addUserMemberResponse.error)}`);
-      chai.expect(addUserMemberResponse.data).to.not.be.empty;
-      chai.expect(addUserMemberResponse.data!.members.length).to.be.eq(0);
-      chai.expect(addUserMemberResponse.data!.invitations.length).to.be.eq(1);
+    chai.expect(addUserMemberResponse.status).to.be.eq(201, `received error: ${JSON.stringify(addUserMemberResponse.error)}`);
+    chai.expect(addUserMemberResponse.data).to.not.be.empty;
+    chai.expect(addUserMemberResponse.data!.members.length).to.be.eq(0);
+    chai.expect(addUserMemberResponse.data!.invitations.length).to.be.eq(1);
 
     const deleteUserMemberInvitationResponse = await accessControlClient.memberInvitations.deleteITwinMemberInvitationAsync(accessToken, TestConfig.itwinId, addUserMemberResponse.data!.invitations[0].id);
 
