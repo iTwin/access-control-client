@@ -150,4 +150,27 @@ describe("AccessControlClient Member Invitations", () => {
       chai.expect(iTwinsResponse.data!.includes(member)).to.be.false;
     });
   });
+
+  it("delete the temporary member invitation", async () => {
+    const addUserMemberResponse: AccessControlAPIResponse<AddUserMemberResponse> =
+      await accessControlClient.userMembers.addITwinUserMembersAsync(
+        accessToken,
+        TestConfig.itwinId,
+        [
+          {
+            email: `access-control-client-${randomIntFromInterval(0, 10000)}-temp@example.com`,
+            roleIds: [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2],
+          },
+        ]
+      );
+
+    chai.expect(addUserMemberResponse.status).to.be.eq(201, `received error: ${JSON.stringify(addUserMemberResponse.error)}`);
+    chai.expect(addUserMemberResponse.data).to.not.be.empty;
+    chai.expect(addUserMemberResponse.data!.members.length).to.be.eq(0);
+    chai.expect(addUserMemberResponse.data!.invitations.length).to.be.eq(1);
+
+    const deleteUserMemberInvitationResponse = await accessControlClient.memberInvitations.deleteITwinMemberInvitationAsync(accessToken, TestConfig.itwinId, addUserMemberResponse.data!.invitations[0].id);
+
+    chai.expect(deleteUserMemberInvitationResponse.status).to.be.eq(204);
+  });
 });

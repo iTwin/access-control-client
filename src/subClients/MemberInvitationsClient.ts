@@ -45,4 +45,13 @@ export class MemberInvitationsClient
       "invitations"
     );
   }
+
+  public async deleteITwinMemberInvitationAsync(
+    accessToken: AccessToken,
+    iTwinId: string,
+    invitationId: string
+  ): Promise<AccessControlAPIResponse<undefined>> {
+    const url = `${this._baseUrl}/${iTwinId}/members/invitations/${invitationId}`;
+    return this.sendGenericAPIRequest(accessToken, "DELETE", url);
+  }
 }
