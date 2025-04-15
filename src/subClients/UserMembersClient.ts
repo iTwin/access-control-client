@@ -73,16 +73,19 @@ export class UserMembersClient
    * @param accessToken The client access token string
    * @param iTwinId The id of the iTwin
    * @param newMembers The list of members to add or invite, along with their role
+   * @param customMessage Send custom message in welcome email when adding new members
    * @returns AddUserMemberResponse -- the added or invited user members
    */
   public async addITwinUserMembersAsync(
     accessToken: AccessToken,
     iTwinId: string,
-    newMembers: AddUserMember[]
+    newMembers: AddUserMember[],
+    customMessage?: string
   ): Promise<AccessControlAPIResponse<AddUserMemberResponse>> {
     const url = `${this._baseUrl}/${iTwinId}/members/users`;
     const body = {
       members: newMembers,
+      customMessage,
     };
     return this.sendGenericAPIRequest(
       accessToken,

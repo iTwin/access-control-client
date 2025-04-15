@@ -54,7 +54,8 @@ export interface IUserMembersClient {
   addITwinUserMembersAsync(
     accessToken: AccessToken,
     iTwinId: string,
-    newMembers: AddUserMember[]
+    newMembers: AddUserMember[],
+    customMessage?: string
   ): Promise<AccessControlAPIResponse<AddUserMemberResponse>>;
 
   /**  Remove the specified iTwin user member */
