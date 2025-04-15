@@ -1,5 +1,9 @@
 # Change Log - @itwin/access-control-client
 
+## 3.3.1
+
+- Adding optional `customMessage` param to the `addITwinUserMembersAsync` function.
+
 ## 3.3.0
 
 - Adding `deleteITwinMemberInvitationAsync` method to the `MemberInvitationsClient`.
