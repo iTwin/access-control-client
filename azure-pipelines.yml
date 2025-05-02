@@ -101,8 +101,11 @@ stages:
 
   - stage: Publish
     displayName: Publish
-    condition: and(succeeded(), eq(dependencies.Build.outputs['BuildPackages.linux.info.shouldPublish'], 'true'))
+    # condition: and(succeeded(), eq(dependencies.Build.outputs['BuildPackages.linux.info.shouldPublish'], 'true'))
     dependsOn: Build
+    variables:
+      - name: releaseTag
+        value: $[stageDependencies.Build.BuildPackages.outputs['info.npmTag']]
 
     jobs:
       - template: templates/npmjs-publish-deployment.yaml@build-pipeline-scripts
@@ -110,4 +113,5 @@ stages:
           path: "*.tgz"
           artifactName: AccessControlClient
           name: AccessControlClient
-          releaseTag: dependencies.Build.outputs['BuildPackages.linux.info.npmTag']
+          dryrun: true
+          releaseTag: ${{ variables.releaseTag }}
