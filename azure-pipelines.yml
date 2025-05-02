@@ -91,13 +91,13 @@ stages:
               echo "##vso[task.setvariable variable=npmTag;isOutput=true]$npmTag"
             displayName: "Store Build Info"
             name: info
-            condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), startsWith(variables['Build.SourceBranch'], 'refs/heads/releases/')), eq(variables['Agent.OS'], 'Linux'), ne(variables['Build.Reason'], 'PullRequest'))
+            # condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), startsWith(variables['Build.SourceBranch'], 'refs/heads/releases/')), eq(variables['Agent.OS'], 'Linux'), ne(variables['Build.Reason'], 'PullRequest'))
           - task: PublishBuildArtifacts@1
             inputs:
               PathtoPublish: "$(Build.SourcesDirectory)/itwin-access-control-client-$(info.accessControlClientVersion).tgz"
               artifactName: AccessControlClient
             displayName: "Publish Access Control client"
-            condition: and(succeeded(), eq(variables['info.shouldPublish'], 'true'))
+            # condition: and(succeeded(), eq(variables['info.shouldPublish'], 'true'))
 
   - stage: Publish
     displayName: Publish
