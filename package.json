@@ -16,7 +16,10 @@
     "test": "npm run -s webpackTests && npm run -s test:chrome",
     "test:chrome": "certa -r chrome",
     "test:electron": "certa -r electron",
-    "pack": "npm pack"
+    "change": "beachball change",
+    "check": "beachball check",
+    "version-bump": "beachball bump",
+    "publish-package": "beachball publish --yes"
   },
   "dependencies": {
     "axios": "~1.8.2"
