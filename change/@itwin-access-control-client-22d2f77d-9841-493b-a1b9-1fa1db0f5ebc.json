@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Add custom message option when adding/inviting new users",
+  "packageName": "@itwin/access-control-client",
+  "email": "isuru.nanayakkara@bentley.com",
+  "dependentChangeType": "patch"
+}
