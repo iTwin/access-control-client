@@ -254,7 +254,13 @@ async function printiTwinRole(): Promise<void> {
     await accessControlClient.userMembers.addITwinUserMembersAsync(
       accessToken,
       "71fd32ed-5ee4-4e22-bc4d-b8e973e0b7b7",
-      "d8215a6b-465d-44ff-910b-40d4541d1ebf"
+      [
+          {
+            email: "user@example.com",
+            roleIds: ["d8215a6b-465d-44ff-910b-40d4541d1ebf"],
+          },
+      ],
+      "Example custom message"
     );
 
   // Update user member's role
