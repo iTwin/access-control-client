@@ -153,7 +153,8 @@ describe("AccessControlClient User Members", () => {
             email: TestUsers.regular.email,
             roleIds: [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2],
           },
-        ]
+        ],
+        "Test custom message"
       );
 
     // Assert
