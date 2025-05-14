@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Adding optional customMessage param to the addITwinUserMembersAsync function.",
+  "packageName": "@itwin/access-control-client",
+  "email": "isuru.nanayakkara@bentley.com",
+  "dependentChangeType": "patch"
+}
