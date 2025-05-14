@@ -1,6 +1,11 @@
 stages:
   - stage: Test
     displayName: Test
+
+    variables:
+      - group: iTwin.js non-secret config variables
+      - group: iTwin.js Integration Test Users
+
     jobs:
       - job: test
         pool:
