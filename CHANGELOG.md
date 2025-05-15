@@ -1,5 +1,17 @@
 # Change Log - @itwin/access-control-client
 
+<!-- This log was last generated on Thu, 15 May 2025 14:36:59 GMT and should not be manually modified. -->
+
+<!-- Start content -->
+
+## 3.4.0
+
+Thu, 15 May 2025 14:36:59 GMT
+
+### Minor changes
+
+- Adding optional `customMessage` param to the `addITwinUserMembersAsync` function. ([commit](https://github.com/iTwin/access-control-client/commit/470d52c12eaf310f6d73aa356f49996703e0c29a))
+
 ## 3.3.0
 
 - Adding `deleteITwinMemberInvitationAsync` method to the `MemberInvitationsClient`.

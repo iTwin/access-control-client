@@ -1,0 +1,20 @@
+{
+  "name": "@itwin/access-control-client",
+  "entries": [
+    {
+      "date": "Thu, 15 May 2025 14:36:59 GMT",
+      "version": "3.4.0",
+      "tag": "@itwin/access-control-client_v3.4.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "isuru.nanayakkara@bentley.com",
+            "package": "@itwin/access-control-client",
+            "commit": "470d52c12eaf310f6d73aa356f49996703e0c29a",
+            "comment": "Adding optional `customMessage` param to the `addITwinUserMembersAsync` function."
+          }
+        ]
+      }
+    }
+  ]
+}
