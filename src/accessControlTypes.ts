@@ -177,7 +177,8 @@ export interface IGroupsClient {
   /** Retrieves a list of groups the for a specified iTwin */
   getITwinGroupsAsync(
     accessToken: AccessToken,
-    iTwinId: string
+    iTwinId: string,
+    additionalHeaders?: { [key: string]: string }
   ): Promise<AccessControlAPIResponse<Group[]>>;
 
   /** Retrieves a group for a specified iTwin */

@@ -22,9 +22,10 @@ export class GroupsClient extends BaseClient implements IGroupsClient{
   public async getITwinGroupsAsync(
     accessToken: AccessToken,
     iTwinId: string,
+    additionalHeaders?: { [key: string]: string }
   ): Promise<AccessControlAPIResponse<Group[]>>{
     const url = `${this._baseUrl}/${iTwinId}/groups`;
-    return this.sendGenericAPIRequest(accessToken, "GET", url, undefined, "groups");
+    return this.sendGenericAPIRequest(accessToken, "GET", url, undefined, "groups", additionalHeaders);
   }
 
   /** Retrieves the specified role for the specified iTwin
