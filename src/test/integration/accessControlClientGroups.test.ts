@@ -40,7 +40,7 @@ describe("AccessControlClient Groups", () => {
   it("should get a list of groups for an iTwin with additional headers", async () => {
     // Act
     const iTwinsResponse: AccessControlAPIResponse<Group[]> =
-      await customAccessControlClient.roles.getITwinGroupsAsync(accessToken, TestConfig.itwinId, { "test-custom-header": "custom-value:xyz-123-abc" });
+      await customAccessControlClient.groups.getITwinGroupsAsync(accessToken, TestConfig.itwinId, { "test-custom-header": "custom-value:xyz-123-abc" });
 
     // Assert
     chai.expect(iTwinsResponse.status).to.be.eq(200);
