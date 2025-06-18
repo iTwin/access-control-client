@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Allow sending additionalHeaders for getITwinGroupsAsync",
-  "packageName": "@itwin/access-control-client",
-  "email": "isuru.nanayakkara@bentley.com",
-  "dependentChangeType": "patch"
-}

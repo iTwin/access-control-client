@@ -1,8 +1,16 @@
 # Change Log - @itwin/access-control-client
 
-<!-- This log was last generated on Thu, 15 May 2025 14:36:59 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 18 Jun 2025 22:14:32 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 3.5.0
+
+Wed, 18 Jun 2025 22:14:32 GMT
+
+### Minor changes
+
+- Allow sending additionalHeaders for getITwinGroupsAsync ([commit](https://github.com/iTwin/access-control-client/commit/96a0431d91886c4a3ca316cb566b62e0f778ebc1))
 
 ## 3.4.0
 

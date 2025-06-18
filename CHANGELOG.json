@@ -2,6 +2,21 @@
   "name": "@itwin/access-control-client",
   "entries": [
     {
+      "date": "Wed, 18 Jun 2025 22:14:32 GMT",
+      "version": "3.5.0",
+      "tag": "@itwin/access-control-client_v3.5.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "isuru.nanayakkara@bentley.com",
+            "package": "@itwin/access-control-client",
+            "commit": "96a0431d91886c4a3ca316cb566b62e0f778ebc1",
+            "comment": "Allow sending additionalHeaders for getITwinGroupsAsync"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 15 May 2025 14:36:59 GMT",
       "version": "3.4.0",
       "tag": "@itwin/access-control-client_v3.4.0",
