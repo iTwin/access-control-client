@@ -333,6 +333,8 @@ export interface GroupMember {
   groupName?: string;
   groupDescription?: string;
   roles?: Omit<Role, "permissions">[];
+  imsGroupsCount?: number;
+  membersCount?: number;
 }
 
 export interface AddGroupMember {
@@ -345,6 +347,7 @@ export interface Role {
   displayName: string;
   description: string;
   permissions: Permission[];
+  assignedDateTime?: string;
 }
 
 export interface Group {
@@ -353,6 +356,8 @@ export interface Group {
   description?: string;
   members?: GroupUser[];
   imsGroups?: string[];
+  imsGroupsCount?: number;
+  membersCount?: number;
 }
 
 export interface GroupUser {
