@@ -347,7 +347,6 @@ export interface Role {
   displayName: string;
   description: string;
   permissions: Permission[];
-  assignedDateTime?: string;
 }
 
 export interface Group {
