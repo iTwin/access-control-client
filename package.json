@@ -22,7 +22,7 @@
     "publish-package": "beachball publish --yes"
   },
   "dependencies": {
-    "axios": "~1.8.2"
+    "axios": "~1.11.0"
   },
   "devDependencies": {
     "@itwin/build-tools": "^3.0.0",
