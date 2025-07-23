@@ -2,6 +2,21 @@
   "name": "@itwin/access-control-client",
   "entries": [
     {
+      "date": "Wed, 23 Jul 2025 13:27:49 GMT",
+      "version": "3.6.0",
+      "tag": "@itwin/access-control-client_v3.6.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "isuru.nanayakkara@bentley.com",
+            "package": "@itwin/access-control-client",
+            "commit": "868b2ff35829b867a3230cc66d3f7d0c074e6dd5",
+            "comment": "Add optional data params 'membersCount' and 'imsGroupsCount' to Group and GroupMember types"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 18 Jun 2025 22:14:32 GMT",
       "version": "3.5.0",
       "tag": "@itwin/access-control-client_v3.5.0",

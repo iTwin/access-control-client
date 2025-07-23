@@ -1,8 +1,16 @@
 # Change Log - @itwin/access-control-client
 
-<!-- This log was last generated on Wed, 18 Jun 2025 22:14:32 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 23 Jul 2025 13:27:49 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 3.6.0
+
+Wed, 23 Jul 2025 13:27:49 GMT
+
+### Minor changes
+
+- Add optional data params 'membersCount' and 'imsGroupsCount' to Group and GroupMember types ([commit](https://github.com/iTwin/access-control-client/commit/868b2ff35829b867a3230cc66d3f7d0c074e6dd5))
 
 ## 3.5.0
 

@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Add optional data params 'membersCount' and 'imsGroupsCount' to Group and GroupMember types",
-  "packageName": "@itwin/access-control-client",
-  "email": "isuru.nanayakkara@bentley.com",
-  "dependentChangeType": "patch"
-}
