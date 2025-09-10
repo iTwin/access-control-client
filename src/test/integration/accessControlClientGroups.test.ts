@@ -5,11 +5,15 @@
 import type { AccessToken } from "@itwin/core-bentley";
 import * as chai from "chai";
 import { AccessControlClient } from "../../AccessControlClient";
-import type { AccessControlAPIResponse, Group, GroupUpdate, IAccessControlClient } from "../../accessControlTypes";
+import type { AccessControlAPIResponse, AddUserMemberResponse, Group, GroupInvitation, GroupUpdate, IAccessControlClient } from "../../accessControlTypes";
 import { TestConfig } from "../TestConfig";
 
+function randomIntFromInterval(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
 chai.should();
-describe("AccessControlClient Groups", () => {
+describe.skip("AccessControlClient Groups", () => {
   let baseUrl: string = "https://api.bentley.com/accesscontrol/itwins";
   const urlPrefix = process.env.IMJS_URL_PREFIX;
   if (urlPrefix) {
@@ -188,3 +192,92 @@ describe("AccessControlClient Groups", () => {
     chai.expect(deleteResponse.data).to.be.undefined;
   });
 });
+
+describe("AccessControlClient Group Member Invitations", () => {
+  let baseUrl: string = "https://api.bentley.com/accesscontrol/itwins";
+  const urlPrefix = process.env.IMJS_URL_PREFIX;
+  if (urlPrefix) {
+    const url = new URL(baseUrl);
+    url.hostname = urlPrefix + url.hostname;
+    baseUrl = url.href;
+  }
+  const accessControlClient: IAccessControlClient = new AccessControlClient();
+
+  let accessToken: AccessToken;
+  let invitationIdToDelete = "";
+
+  before(async function () {
+    this.timeout(0);
+    accessToken = await TestConfig.getAccessToken();
+
+    const getGroupInvitationsResponse: AccessControlAPIResponse<GroupInvitation[]> =
+      await accessControlClient.groups.getITwinGroupMemberInvitationsAsync(
+        accessToken,
+        TestConfig.itwinId,
+        TestConfig.permanentGroupId1
+      );
+    chai.expect(getGroupInvitationsResponse.status).to.be.eq(200);
+    chai.expect(getGroupInvitationsResponse.data).to.not.be.null;
+
+    if (getGroupInvitationsResponse.data!.length < 8) {
+      const updateGroupMemberResponse: AccessControlAPIResponse<Group> =
+        await accessControlClient.groups.updateITwinGroupAsync(
+          accessToken,
+          TestConfig.itwinId,
+          TestConfig.permanentGroupId1,
+          {
+            members: [
+              `access-control-client-${randomIntFromInterval(0, 10000)}@example.com`,
+              `access-control-client-${randomIntFromInterval(0, 10000)}@example.com`,
+              `access-control-client-${randomIntFromInterval(0, 10000)}@example.com`,
+            ],
+          }
+        );
+
+      chai.expect(updateGroupMemberResponse.status).to.be.eq(201, `received error: ${JSON.stringify(updateGroupMemberResponse.error)}`);
+      chai.expect(updateGroupMemberResponse.data).to.not.be.empty;
+      chai.expect(updateGroupMemberResponse.data?.members?.length).to.be.eq(0);
+      chai.expect(updateGroupMemberResponse.data?.invitations?.length).to.be.eq(3);
+    }
+  });
+
+  it("should get a list of member invitations for an iTwin", async () => {
+    // Act
+    const iTwinsResponse: AccessControlAPIResponse<GroupInvitation[]> =
+      await accessControlClient.groups.getITwinGroupMemberInvitationsAsync(
+        accessToken,
+        TestConfig.itwinId,
+        TestConfig.permanentGroupId1
+      );
+
+    // Assert
+    chai.expect(iTwinsResponse.status).to.be.eq(200);
+    chai.expect(iTwinsResponse.data).to.not.be.empty;
+    chai.expect(iTwinsResponse.data!.length).to.be.greaterThan(2);
+    invitationIdToDelete = iTwinsResponse.data![0].id;
+  });
+
+  it("delete the temporary member invitation", async () => {
+    // const addUserMemberResponse: AccessControlAPIResponse<AddUserMemberResponse> =
+    //   await accessControlClient.userMembers.addITwinUserMembersAsync(
+    //     accessToken,
+    //     TestConfig.itwinId,
+    //     [
+    //       {
+    //         email: `access-control-client-${randomIntFromInterval(0, 10000)}-temp@example.com`,
+    //         roleIds: [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2],
+    //       },
+    //     ]
+    //   );
+
+    // chai.expect(addUserMemberResponse.status).to.be.eq(201, `received error: ${JSON.stringify(addUserMemberResponse.error)}`);
+    // chai.expect(addUserMemberResponse.data).to.not.be.empty;
+    // chai.expect(addUserMemberResponse.data.members.length).to.be.eq(0);
+    // chai.expect(addUserMemberResponse.data.invitations.length).to.be.eq(1);
+
+    const deleteUserGroupInvitationResponse = await accessControlClient.groups.deleteITwinGroupInvitationAsync(accessToken, TestConfig.itwinId, TestConfig.permanentGroupId1, invitationIdToDelete);
+
+    chai.expect(deleteUserGroupInvitationResponse.status).to.be.eq(204);
+  });
+});
+

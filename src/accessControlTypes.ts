@@ -209,6 +209,19 @@ export interface IGroupsClient {
     groupId: string,
     group: GroupUpdate
   ): Promise<AccessControlAPIResponse<Group>>;
+
+  getITwinGroupMemberInvitationsAsync(
+    accessToken: AccessToken,
+    iTwinId: string,
+    groupId: string,
+  ): Promise<AccessControlAPIResponse<GroupInvitation[]>>;
+
+  deleteITwinGroupInvitationAsync(
+    accessToken: AccessToken,
+    iTwinId: string,
+    groupId: string,
+    invitationId: string
+  ): Promise<AccessControlAPIResponse<undefined>>;
 }
 
 export interface IMemberInvitationsClient {
@@ -357,6 +370,7 @@ export interface Group {
   imsGroups?: string[];
   imsGroupsCount?: number;
   membersCount?: number;
+  invitations?: GroupInvitation[];
 }
 
 export interface GroupUser {
@@ -383,6 +397,15 @@ export interface MemberInvitation {
   createdDate: string;
   expirationDate: string;
   roles?: Omit<Role, "permissions"|"description">[];
+}
+
+export interface GroupInvitation {
+  id: string;
+  email: string;
+  invitedByEmail: string;
+  status: MemberInvitationStatus;
+  createdDate: string;
+  expirationDate: string;
 }
 
 export enum MemberInvitationStatus {

@@ -6,7 +6,7 @@
  * @module AccessControlClient
  */
 import type { AccessToken } from "@itwin/core-bentley";
-import type { AccessControlAPIResponse, Group, GroupUpdate, IGroupsClient } from "../accessControlTypes";
+import type { AccessControlAPIResponse, Group, GroupInvitation, GroupUpdate, IGroupsClient } from "../accessControlTypes";
 import { BaseClient } from "./BaseClient";
 
 export class GroupsClient extends BaseClient implements IGroupsClient{
@@ -87,5 +87,43 @@ export class GroupsClient extends BaseClient implements IGroupsClient{
   ): Promise<AccessControlAPIResponse<Group>>{
     const url = `${this._baseUrl}/${iTwinId}/groups/${groupId}`;
     return this.sendGenericAPIRequest(accessToken, "PATCH", url, group, "group");
+  }
+
+  /** Get the specified iTwin group member invitations
+    * @param accessToken The client access token string
+    * @param iTwinId The id of the iTwin
+    * @param groupId The id of the group
+    * @returns GroupInvitation[]
+    */
+  public async getITwinGroupMemberInvitationsAsync(
+    accessToken: AccessToken,
+    iTwinId: string,
+    groupId: string,
+  ): Promise<AccessControlAPIResponse<GroupInvitation[]>> {
+    const url = `${this._baseUrl}/${iTwinId}/groups/${groupId}/invitations`;
+
+    return this.sendGenericAPIRequest(
+      accessToken,
+      "GET",
+      url,
+      undefined,
+      "invitations"
+    );
+  }
+
+  /** Delete the specified iTwin group invitation
+    * @param accessToken The client access token string
+    * @param iTwinId The id of the iTwin
+    * @param groupId The id of the group
+    * @param invitationId The id of the group invitation to delete
+    */
+  public async deleteITwinGroupInvitationAsync(
+    accessToken: AccessToken,
+    iTwinId: string,
+    groupId: string,
+    invitationId: string
+  ): Promise<AccessControlAPIResponse<undefined>>{
+    const url = `${this._baseUrl}/${iTwinId}/groups/${groupId}/invitations/${invitationId}`;
+    return this.sendGenericAPIRequest(accessToken, "DELETE", url);
   }
 }
