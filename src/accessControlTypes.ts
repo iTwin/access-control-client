@@ -214,6 +214,7 @@ export interface IGroupsClient {
     accessToken: AccessToken,
     iTwinId: string,
     groupId: string,
+    arg?: AccessControlQueryArg,
   ): Promise<AccessControlAPIResponse<GroupInvitation[]>>;
 
   deleteITwinGroupInvitationAsync(

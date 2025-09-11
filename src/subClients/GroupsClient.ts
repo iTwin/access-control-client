@@ -6,7 +6,7 @@
  * @module AccessControlClient
  */
 import type { AccessToken } from "@itwin/core-bentley";
-import type { AccessControlAPIResponse, Group, GroupInvitation, GroupUpdate, IGroupsClient } from "../accessControlTypes";
+import type { AccessControlAPIResponse, AccessControlQueryArg, Group, GroupInvitation, GroupUpdate, IGroupsClient } from "../accessControlTypes";
 import { BaseClient } from "./BaseClient";
 
 export class GroupsClient extends BaseClient implements IGroupsClient{
@@ -99,8 +99,13 @@ export class GroupsClient extends BaseClient implements IGroupsClient{
     accessToken: AccessToken,
     iTwinId: string,
     groupId: string,
+    arg?: AccessControlQueryArg,
   ): Promise<AccessControlAPIResponse<GroupInvitation[]>> {
-    const url = `${this._baseUrl}/${iTwinId}/groups/${groupId}/invitations`;
+    let url = `${this._baseUrl}/${iTwinId}/groups/${groupId}/invitations`;
+
+    if (arg) {
+      url += `?${this.getQueryString(arg)}`;
+    }
 
     return this.sendGenericAPIRequest(
       accessToken,
