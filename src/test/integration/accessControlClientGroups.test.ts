@@ -5,7 +5,7 @@
 import type { AccessToken } from "@itwin/core-bentley";
 import * as chai from "chai";
 import { AccessControlClient } from "../../AccessControlClient";
-import type { AccessControlAPIResponse, AddUserMemberResponse, Group, GroupInvitation, GroupUpdate, IAccessControlClient } from "../../accessControlTypes";
+import type { AccessControlAPIResponse, Group, GroupInvitation, GroupUpdate, IAccessControlClient } from "../../accessControlTypes";
 import { TestConfig } from "../TestConfig";
 
 function randomIntFromInterval(min: number, max: number) {
