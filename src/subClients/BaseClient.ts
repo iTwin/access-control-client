@@ -6,10 +6,18 @@
  * @module AccessControlClient
  */
 import type { AccessToken } from "@itwin/core-bentley";
-import type { Method } from "axios";
-import type { AxiosRequestConfig } from "axios";
-import axios from "axios";
 import type { AccessControlAPIResponse, AccessControlQueryArg } from "../accessControlTypes";
+
+// Custom types to replace axios types
+type Method = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+
+interface RequestConfig {
+  method: Method;
+  url: string;
+  data?: any;
+  headers?: Record<string, string>;
+  validateStatus?: (status: number) => boolean;
+}
 
 export class BaseClient {
   protected _baseUrl: string = "https://api.bentley.com/accesscontrol/itwins";
@@ -29,7 +37,7 @@ export class BaseClient {
 
   /**
     * Sends a basic API request
-    * @param accessTokenString The client access token string
+    * @param accessToken The client access token
     * @param method The method type of the request (ex. GET, POST, DELETE, etc)
     * @param url The url of the request
     */
@@ -43,13 +51,32 @@ export class BaseClient {
   ): Promise<AccessControlAPIResponse<any>> { // TODO: Change any response
     const requestOptions = this.getRequestOptions(accessToken, method, url, data, additionalHeaders);
     try {
-      const response = await axios(requestOptions);
+      const response = await fetch(requestOptions.url, {
+        method: requestOptions.method,
+        headers: requestOptions.headers,
+        body: requestOptions.data ? JSON.stringify(requestOptions.data) : undefined,
+      });
+
+      let responseData: any;
+      const contentType = response.headers.get("content-type");
+
+      if (contentType && contentType.includes("application/json")) {
+        responseData = await response.json();
+      } else {
+        responseData = await response.text();
+      }
+
+      // Convert Headers object to plain object for compatibility
+      const headers: Record<string, string> = {};
+      response.headers.forEach((value, key) => {
+        headers[key] = value;
+      });
 
       return {
         status: response.status,
-        data: response.data.error || response.data === "" ? undefined : property ? response.data[property] : response.data,
-        error: response.data.error,
-        headers: response.headers,
+        data: responseData?.error || responseData === "" ? undefined : property ? responseData[property] : responseData,
+        error: responseData?.error,
+        headers,
       };
     } catch (err) {
       return {
@@ -66,20 +93,20 @@ export class BaseClient {
 
   /**
     * Build the request methods, headers, and other options
-    * @param accessTokenString The client access token string
+    * @param accessToken The client access token
     */
-  protected getRequestOptions(accessTokenString: string, method: Method, url: string, data?: any, additionalHeaders?: { [key: string]: string }): AxiosRequestConfig {
+  protected getRequestOptions(accessToken: AccessToken, method: Method, url: string, data?: any, additionalHeaders?: { [key: string]: string }): RequestConfig {
     return {
       method,
       url,
       data,
       headers: {
-        "authorization": accessTokenString,
+        "authorization": accessToken,
         "content-type": "application/json",
         "accept": "application/vnd.bentley.itwin-platform.v2+json",
         ...additionalHeaders,
       },
-      validateStatus(status) {
+      validateStatus(status: number) {
         return status < 500; // Resolve only if the status code is less than 500
       },
     };
@@ -102,8 +129,6 @@ export class BaseClient {
     }
 
     // trim & from start of string
-    queryString.replace(/^&+/, "");
-
-    return queryString;
+    return queryString.replace(/^&+/, "");
   }
 }
