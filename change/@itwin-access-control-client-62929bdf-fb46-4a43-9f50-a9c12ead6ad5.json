@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Refactor BaseClient to use fetch API and improve error handling; remove axios dependency",
+  "packageName": "@itwin/access-control-client",
+  "email": "caleb.german@bentley.com",
+  "dependentChangeType": "patch"
+}
