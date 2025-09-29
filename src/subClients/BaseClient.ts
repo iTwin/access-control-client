@@ -138,8 +138,8 @@ export class BaseClient {
           responseData === undefined || responseData === ""
             ? undefined
             : property && hasProperty(responseData, property)
-            ? responseData[property]
-            : responseData,
+              ? responseData[property]
+              : responseData,
         headers: response.headers,
       };
     } catch {
@@ -194,7 +194,7 @@ export class BaseClient {
       body,
       headers: {
         ...headers,
-        authorization: accessTokenString,
+        "authorization": accessTokenString,
         "content-type":
           headers.contentType || headers["content-type"]
             ? headers.contentType || headers["content-type"]
