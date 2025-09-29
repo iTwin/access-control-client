@@ -9,10 +9,10 @@ import type { AccessToken } from "@itwin/core-bentley";
 import type { AccessControlAPIResponse, AccessControlQueryArg } from "../accessControlTypes";
 
 // Custom types to replace axios types
-type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "HEAD" | "OPTIONS";
+type Method = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
 interface RequestConfig {
-  method: HttpMethod;
+  method: Method;
   url: string;
   data?: any;
   headers?: Record<string, string>;
@@ -43,7 +43,7 @@ export class BaseClient {
     */
   protected async sendGenericAPIRequest(
     accessToken: AccessToken,
-    method: HttpMethod,
+    method: Method,
     url: string,
     data?: any,
     property?: string,
@@ -95,7 +95,7 @@ export class BaseClient {
     * Build the request methods, headers, and other options
     * @param accessToken The client access token
     */
-  protected getRequestOptions(accessToken: AccessToken, method: HttpMethod, url: string, data?: any, additionalHeaders?: { [key: string]: string }): RequestConfig {
+  protected getRequestOptions(accessToken: AccessToken, method: Method, url: string, data?: any, additionalHeaders?: { [key: string]: string }): RequestConfig {
     return {
       method,
       url,
