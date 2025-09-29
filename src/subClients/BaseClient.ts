@@ -76,7 +76,7 @@ export class BaseClient {
         status: response.status,
         data: responseData?.error || responseData === "" ? undefined : property ? responseData[property] : responseData,
         error: responseData?.error,
-        headers: headers,
+        headers,
       };
     } catch (err) {
       return {
