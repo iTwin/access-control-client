@@ -1,8 +1,16 @@
 # Change Log - @itwin/access-control-client
 
-<!-- This log was last generated on Wed, 23 Jul 2025 13:27:49 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 02 Oct 2025 15:53:41 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 3.7.0
+
+Thu, 02 Oct 2025 15:53:41 GMT
+
+### Minor changes
+
+- Refactor BaseClient to use fetch API and improve error handling; remove axios dependency ([commit](https://github.com/iTwin/access-control-client/commit/165fa8ae00423c7c375fad98286d83c6ce27d5c8))
 
 ## 3.6.0
 

@@ -2,6 +2,21 @@
   "name": "@itwin/access-control-client",
   "entries": [
     {
+      "date": "Thu, 02 Oct 2025 15:53:41 GMT",
+      "version": "3.7.0",
+      "tag": "@itwin/access-control-client_v3.7.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "caleb.german@bentley.com",
+            "package": "@itwin/access-control-client",
+            "commit": "165fa8ae00423c7c375fad98286d83c6ce27d5c8",
+            "comment": "Refactor BaseClient to use fetch API and improve error handling; remove axios dependency"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 23 Jul 2025 13:27:49 GMT",
       "version": "3.6.0",
       "tag": "@itwin/access-control-client_v3.6.0",
