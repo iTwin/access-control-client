@@ -10,6 +10,9 @@ export default [
     files: ["src/**/*.{ts,tsx}"],
     ignores: ["**/*.test.ts", "src/test/**/*"],
     ...iTwinPlugin.configs.jsdocConfig,
+    rules: {
+      "jsdoc/require-jsdoc": "warn",
+    },
   },
   // Rules for all source files
   {
