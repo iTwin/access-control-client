@@ -3,12 +3,11 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 import type { AccessToken } from "@itwin/core-bentley";
-import * as chai from "chai";
+import { beforeAll, describe, expect, it } from "vitest";
 import { AccessControlClient } from "../../AccessControlClient";
 import type { AccessControlAPIResponse, IAccessControlClient, ITwinJob, ITwinJobActions } from "../../accessControlTypes";
 import { TestConfig } from "../TestConfig";
 
-chai.should();
 describe("AccessControlClient iTwin Jobs", () => {
   const accessControlClient: IAccessControlClient = new AccessControlClient();
   let accessToken: AccessToken;
@@ -16,13 +15,13 @@ describe("AccessControlClient iTwin Jobs", () => {
   let testJob: ITwinJob;
   let testiTwinJobActions: ITwinJobActions;
 
-  before(async function () {
+  beforeAll(async () => {
     accessToken = await TestConfig.getAccessToken();
     testiTwinJobActions = { assignRoles : [{ email: TestConfig.temporaryUserEmail, roleIds: [TestConfig.permanentRoleId1]} ]};
 
     const testJobResponse = await accessControlClient.itwinJobs.createITwinJobAsync(accessToken, TestConfig.itwinId, testiTwinJobActions);
     testJob = testJobResponse.data!;
-  });
+  }, 30000);
 
   it("should get a specific iTwin Job", async () => {
     // Act
@@ -30,11 +29,11 @@ describe("AccessControlClient iTwin Jobs", () => {
       await accessControlClient.itwinJobs.getITwinJobAsync(accessToken, TestConfig.itwinId, testJob.id);
 
     // Assert
-    chai.expect(iTwinJobResponse.status).to.be.eq(200);
-    chai.expect(iTwinJobResponse.data).to.not.be.empty;
+    expect(iTwinJobResponse.status).toBe(200);
+    expect(iTwinJobResponse.data).toBeDefined();
 
-    chai.expect(iTwinJobResponse.data!.id).to.be.eq(testJob.id);
-    chai.expect(iTwinJobResponse.data!.itwinId).to.be.eq(TestConfig.itwinId);
+    expect(iTwinJobResponse.data!.id).toBe(testJob.id);
+    expect(iTwinJobResponse.data!.itwinId).toBe(TestConfig.itwinId);
   });
 
   it("should get a specific iTwin Job with minimal result mode", async () => {
@@ -43,13 +42,13 @@ describe("AccessControlClient iTwin Jobs", () => {
       await accessControlClient.itwinJobs.getITwinJobAsync(accessToken, TestConfig.itwinId, testJob.id, "minimal");
 
     // Assert
-    chai.expect(iTwinJobResponse.status).to.be.eq(200);
-    chai.expect(iTwinJobResponse.data).to.not.be.empty;
+    expect(iTwinJobResponse.status).toBe(200);
+    expect(iTwinJobResponse.data).toBeDefined();
 
-    chai.expect(iTwinJobResponse.data!.id).to.be.eq(testJob.id);
-    chai.expect(iTwinJobResponse.data!.itwinId).to.be.eq(TestConfig.itwinId);
+    expect(iTwinJobResponse.data!.id).toBe(testJob.id);
+    expect(iTwinJobResponse.data!.itwinId).toBe(TestConfig.itwinId);
 
-    chai.expect(iTwinJobResponse.data!.error).to.be.undefined;
+    expect(iTwinJobResponse.data!.error).toBeUndefined();
   });
 
   it("should get a specific iTwin Job with representation return", async () => {
@@ -58,13 +57,13 @@ describe("AccessControlClient iTwin Jobs", () => {
       await accessControlClient.itwinJobs.getITwinJobAsync(accessToken, TestConfig.itwinId, testJob.id, "representation");
 
     // Assert
-    chai.expect(iTwinJobResponse.status).to.be.eq(200);
-    chai.expect(iTwinJobResponse.data).to.not.be.empty;
+    expect(iTwinJobResponse.status).toBe(200);
+    expect(iTwinJobResponse.data).toBeDefined();
 
-    chai.expect(iTwinJobResponse.data!.id).to.be.eq(testJob.id);
-    chai.expect(iTwinJobResponse.data!.itwinId).to.be.eq(TestConfig.itwinId);
+    expect(iTwinJobResponse.data!.id).toBe(testJob.id);
+    expect(iTwinJobResponse.data!.itwinId).toBe(TestConfig.itwinId);
 
-    chai.expect(iTwinJobResponse.data!.error).should.not.equal(undefined);
+    expect(iTwinJobResponse.data!.error).not.toEqual(undefined);
   });
 
   it("should get a 404 when trying to get a non-existant iTwin Job", async () => {
@@ -73,7 +72,7 @@ describe("AccessControlClient iTwin Jobs", () => {
       await accessControlClient.itwinJobs.getITwinJobAsync(accessToken, TestConfig.itwinId, "non-existant-job-id");
 
     // Assert
-    chai.expect(iTwinJobResponse.status).to.be.eq(404);
+    expect(iTwinJobResponse.status).toBe(404);
   });
 
   it("should get a specific iTwin Job Actions", async () => {
@@ -82,15 +81,15 @@ describe("AccessControlClient iTwin Jobs", () => {
       await accessControlClient.itwinJobs.getITwinJobActionsAsync(accessToken, TestConfig.itwinId, testJob.id);
 
     // Assert
-    chai.expect(iTwinJobActionsResponse.status).to.be.eq(200);
-    chai.expect(iTwinJobActionsResponse.data).to.not.be.empty;
+    expect(iTwinJobActionsResponse.status).toBe(200);
+    expect(iTwinJobActionsResponse.data).toBeDefined();
 
-    chai.expect(iTwinJobActionsResponse.data!.assignRoles).to.be.not.empty;
-    chai.expect(iTwinJobActionsResponse.data!.assignRoles!.length).to.be.eq(1);
-    chai.expect(iTwinJobActionsResponse.data!.assignRoles![0].email).to.be.eq(TestConfig.temporaryUserEmail);
-    chai.expect(iTwinJobActionsResponse.data!.assignRoles![0].roleIds).to.be.not.empty;
-    chai.expect(iTwinJobActionsResponse.data!.assignRoles![0].roleIds.length).to.be.eq(1);
-    chai.expect(iTwinJobActionsResponse.data!.assignRoles![0].roleIds[0]).to.be.eq(TestConfig.permanentRoleId1);
+    expect(iTwinJobActionsResponse.data!.assignRoles).toBeDefined();
+    expect(iTwinJobActionsResponse.data!.assignRoles!.length).toBe(1);
+    expect(iTwinJobActionsResponse.data!.assignRoles![0].email).toBe(TestConfig.temporaryUserEmail);
+    expect(iTwinJobActionsResponse.data!.assignRoles![0].roleIds).toBeDefined();
+    expect(iTwinJobActionsResponse.data!.assignRoles![0].roleIds.length).toBe(1);
+    expect(iTwinJobActionsResponse.data!.assignRoles![0].roleIds[0]).toBe(TestConfig.permanentRoleId1);
   });
 
   it("should get a 404 when trying to get a non-existant iTwin Job Actions", async () => {
@@ -99,7 +98,7 @@ describe("AccessControlClient iTwin Jobs", () => {
       await accessControlClient.itwinJobs.getITwinJobActionsAsync(accessToken, TestConfig.itwinId, "non-existant-job-id");
 
     // Assert
-    chai.expect(iTwinJobActionsResponse.status).to.be.eq(404);
+    expect(iTwinJobActionsResponse.status).toBe(404);
   });
 
   it("should create a iTwin Job", async () => {
@@ -108,9 +107,9 @@ describe("AccessControlClient iTwin Jobs", () => {
       await accessControlClient.itwinJobs.createITwinJobAsync(accessToken, TestConfig.itwinId, { unassignRoles : [{ email: TestConfig.temporaryUserEmail, roleIds: [TestConfig.permanentRoleId1]} ]});
 
     // Assert
-    chai.expect(iTwinJobResponse.status).to.be.eq(201);
-    chai.expect(iTwinJobResponse.data).to.not.be.empty;
+    expect(iTwinJobResponse.status).toBe(201);
+    expect(iTwinJobResponse.data).toBeDefined();
 
-    chai.expect(iTwinJobResponse.data!.itwinId).to.be.eq(TestConfig.itwinId);
+    expect(iTwinJobResponse.data!.itwinId).toBe(TestConfig.itwinId);
   });
 });

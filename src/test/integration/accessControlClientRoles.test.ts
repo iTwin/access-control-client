@@ -3,12 +3,11 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 import type { AccessToken } from "@itwin/core-bentley";
-import * as chai from "chai";
+import { beforeAll, describe, expect, it } from "vitest";
 import { AccessControlClient } from "../../AccessControlClient";
 import type { AccessControlAPIResponse, IAccessControlClient, Role } from "../../accessControlTypes";
 import { TestConfig } from "../TestConfig";
 
-chai.should();
 describe("AccessControlClient Roles", () => {
   let baseUrl: string = "https://api.bentley.com/accesscontrol/itwins";
   const urlPrefix = process.env.IMJS_URL_PREFIX;
@@ -21,10 +20,9 @@ describe("AccessControlClient Roles", () => {
   const customAccessControlClient: IAccessControlClient = new AccessControlClient(baseUrl);
   let accessToken: AccessToken;
 
-  before(async function () {
-    this.timeout(0);
+  beforeAll(async () => {
     accessToken = await TestConfig.getAccessToken();
-  });
+  }, 30000);
 
   it("should get a list of roles for an iTwin", async () => {
     // Act
@@ -32,9 +30,9 @@ describe("AccessControlClient Roles", () => {
       await accessControlClient.roles.getITwinRolesAsync(accessToken, TestConfig.itwinId);
 
     // Assert
-    chai.expect(iTwinsResponse.status).to.be.eq(200);
-    chai.expect(iTwinsResponse.data).to.not.be.empty;
-    chai.expect(iTwinsResponse.data!.length).to.be.greaterThan(0);
+    expect(iTwinsResponse.status).toBe(200);
+    expect(iTwinsResponse.data).toBeDefined();
+    expect(iTwinsResponse.data!.length).toBeGreaterThan(0);
   });
 
   it("should get a list of roles for an iTwin with custom url", async () => {
@@ -43,9 +41,9 @@ describe("AccessControlClient Roles", () => {
       await customAccessControlClient.roles.getITwinRolesAsync(accessToken, TestConfig.itwinId);
 
     // Assert
-    chai.expect(iTwinsResponse.status).to.be.eq(200);
-    chai.expect(iTwinsResponse.data).to.not.be.empty;
-    chai.expect(iTwinsResponse.data!.length).to.be.greaterThan(0);
+    expect(iTwinsResponse.status).toBe(200);
+    expect(iTwinsResponse.data).toBeDefined();
+    expect(iTwinsResponse.data!.length).toBeGreaterThan(0);
   });
 
   it("should get a list of roles for an iTwin with additional headers", async () => {
@@ -54,9 +52,9 @@ describe("AccessControlClient Roles", () => {
       await customAccessControlClient.roles.getITwinRolesAsync(accessToken, TestConfig.itwinId, { "test-custom-header": "custom-value:xyz-123-abc" });
 
     // Assert
-    chai.expect(iTwinsResponse.status).to.be.eq(200);
-    chai.expect(iTwinsResponse.data).to.not.be.empty;
-    chai.expect(iTwinsResponse.data!.length).to.be.greaterThan(0);
+    expect(iTwinsResponse.status).toBe(200);
+    expect(iTwinsResponse.data).toBeDefined();
+    expect(iTwinsResponse.data!.length).toBeGreaterThan(0);
   });
 
   it("should get a specific role for an iTwin", async () => {
@@ -65,10 +63,10 @@ describe("AccessControlClient Roles", () => {
       await accessControlClient.roles.getITwinRoleAsync(accessToken, TestConfig.itwinId, TestConfig.permanentRoleId1);
 
     // Assert
-    chai.expect(iTwinsResponse.status).to.be.eq(200);
-    chai.expect(iTwinsResponse.data).to.not.be.empty;
-    chai.expect(iTwinsResponse.data!.id).to.be.eq(TestConfig.permanentRoleId1);
-    chai.expect(iTwinsResponse.data!.displayName).to.be.eq(TestConfig.permanentRoleName1);
+    expect(iTwinsResponse.status).toBe(200);
+    expect(iTwinsResponse.data).toBeDefined();
+    expect(iTwinsResponse.data!.id).toBe(TestConfig.permanentRoleId1);
+    expect(iTwinsResponse.data!.displayName).toBe(TestConfig.permanentRoleName1);
   });
 
   it("should get a 404 when trying to get a non-existant role", async () => {
@@ -80,9 +78,9 @@ describe("AccessControlClient Roles", () => {
       await accessControlClient.roles.getITwinRoleAsync(accessToken, TestConfig.itwinId, nonExistantRoleId);
 
     // Assert
-    chai.expect(iTwinsResponse.status).to.be.eq(404);
-    chai.expect(iTwinsResponse.error!.code).to.be.eq("RoleNotFound");
-    chai.expect(iTwinsResponse.data).to.be.undefined;
+    expect(iTwinsResponse.status).toBe(404);
+    expect(iTwinsResponse.error!.code).toBe("RoleNotFound");
+    expect(iTwinsResponse.data).toBeUndefined();
   });
 
   it("should get a 404 when trying to update a non-existant role", async () => {
@@ -99,9 +97,9 @@ describe("AccessControlClient Roles", () => {
       await accessControlClient.roles.updateITwinRoleAsync(accessToken, TestConfig.itwinId, nonExistantRoleId, emptyUpdatedRole);
 
     // Assert
-    chai.expect(iTwinsResponse.status).to.be.eq(404);
-    chai.expect(iTwinsResponse.error!.code).to.be.eq("RoleNotFound");
-    chai.expect(iTwinsResponse.data).to.be.undefined;
+    expect(iTwinsResponse.status).toBe(404);
+    expect(iTwinsResponse.error!.code).toBe("RoleNotFound");
+    expect(iTwinsResponse.data).toBeUndefined();
   });
 
   it("should get a 404 when trying to remove a non-existant role", async () => {
@@ -113,9 +111,9 @@ describe("AccessControlClient Roles", () => {
       await accessControlClient.roles.deleteITwinRoleAsync(accessToken, TestConfig.itwinId, nonExistantRoleId);
 
     // Assert
-    chai.expect(iTwinsResponse.status).to.be.eq(404);
-    chai.expect(iTwinsResponse.error!.code).to.be.eq("RoleNotFound");
-    chai.expect(iTwinsResponse.data).to.be.undefined;
+    expect(iTwinsResponse.status).toBe(404);
+    expect(iTwinsResponse.error!.code).toBe("RoleNotFound");
+    expect(iTwinsResponse.data).toBeUndefined();
   });
 
   it("should create, update, and delete a role", async () => {
@@ -134,9 +132,9 @@ describe("AccessControlClient Roles", () => {
       await accessControlClient.roles.createITwinRoleAsync(accessToken, TestConfig.itwinId, newRole);
 
     // Assert
-    chai.expect(createResponse.status).to.be.eq(201);
-    chai.expect(createResponse.data!.displayName).to.be.eq(newRole.displayName);
-    chai.expect(createResponse.data!.description).to.be.eq(newRole.description);
+    expect(createResponse.status).toBe(201);
+    expect(createResponse.data!.displayName).toBe(newRole.displayName);
+    expect(createResponse.data!.description).toBe(newRole.description);
 
     // --- UPDATE ROLE ---
     // Arrange
@@ -151,9 +149,9 @@ describe("AccessControlClient Roles", () => {
       await accessControlClient.roles.updateITwinRoleAsync(accessToken, TestConfig.itwinId, createResponse.data!.id!, updatedRole);
 
     // Assert
-    chai.expect(updateResponse.status).to.be.eq(200);
-    chai.expect(updateResponse.data!.displayName).to.be.eq(updatedRole.displayName);
-    chai.expect(updateResponse.data!.description).to.be.eq(updatedRole.description);
+    expect(updateResponse.status).toBe(200);
+    expect(updateResponse.data!.displayName).toBe(updatedRole.displayName);
+    expect(updateResponse.data!.description).toBe(updatedRole.description);
 
     // --- DELETE ROLE ---
     // Act
@@ -161,7 +159,7 @@ describe("AccessControlClient Roles", () => {
       await accessControlClient.roles.deleteITwinRoleAsync(accessToken, TestConfig.itwinId, createResponse.data!.id!);
 
     // Assert
-    chai.expect(deleteResponse.status).to.be.eq(204);
-    chai.expect(deleteResponse.data).to.be.undefined;
+    expect(deleteResponse.status).toBe(204);
+    expect(deleteResponse.data).toBeUndefined();
   });
 });

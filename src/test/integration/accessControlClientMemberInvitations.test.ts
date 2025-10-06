@@ -3,7 +3,7 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 import type { AccessToken } from "@itwin/core-bentley";
-import * as chai from "chai";
+import { beforeAll, describe, expect, it } from "vitest";
 import { AccessControlClient } from "../../AccessControlClient";
 import type {
   AccessControlAPIResponse,
@@ -17,7 +17,6 @@ function randomIntFromInterval(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-chai.should();
 describe("AccessControlClient Member Invitations", () => {
   let baseUrl: string = "https://api.bentley.com/accesscontrol/itwins";
   const urlPrefix = process.env.IMJS_URL_PREFIX;
@@ -30,8 +29,7 @@ describe("AccessControlClient Member Invitations", () => {
 
   let accessToken: AccessToken;
 
-  before(async function () {
-    this.timeout(0);
+  beforeAll(async () => {
     accessToken = await TestConfig.getAccessToken();
 
     const getMemberInvitationsResponse: AccessControlAPIResponse<MemberInvitation[]> =
@@ -39,8 +37,8 @@ describe("AccessControlClient Member Invitations", () => {
         accessToken,
         TestConfig.itwinId
       );
-    chai.expect(getMemberInvitationsResponse.status).to.be.eq(200);
-    chai.expect(getMemberInvitationsResponse.data).to.not.be.null;
+    expect(getMemberInvitationsResponse.status).toBe(200);
+    expect(getMemberInvitationsResponse.data).not.toBeNull();
 
     if (getMemberInvitationsResponse.data!.length < 8) {
       const addUserMemberResponse: AccessControlAPIResponse<AddUserMemberResponse> =
@@ -83,12 +81,12 @@ describe("AccessControlClient Member Invitations", () => {
         ]
       );
 
-      chai.expect(addUserMemberResponse.status).to.be.eq(201, `received error: ${JSON.stringify(addUserMemberResponse.error)}`);
-      chai.expect(addUserMemberResponse.data).to.not.be.empty;
-      chai.expect(addUserMemberResponse.data!.members.length).to.be.eq(0);
-      chai.expect(addUserMemberResponse.data!.invitations.length).to.be.eq(8);
+      expect(addUserMemberResponse.status).toBe(201);
+      expect(addUserMemberResponse.data).toBeDefined();
+      expect(addUserMemberResponse.data!.members.length).toBe(0);
+      expect(addUserMemberResponse.data!.invitations.length).toBe(8);
     }
-  });
+  }, 60000);
 
   it("should get a list of member invitations for an iTwin", async () => {
     // Act
@@ -99,9 +97,9 @@ describe("AccessControlClient Member Invitations", () => {
       );
 
     // Assert
-    chai.expect(iTwinsResponse.status).to.be.eq(200);
-    chai.expect(iTwinsResponse.data).to.not.be.empty;
-    chai.expect(iTwinsResponse.data!.length).to.be.greaterThan(7);
+    expect(iTwinsResponse.status).toBe(200);
+    expect(iTwinsResponse.data).toBeDefined();
+    expect(iTwinsResponse.data!.length).toBeGreaterThan(7);
   });
 
   it("should get a filtered list of member invitations for an iTwin using $top", async () => {
@@ -117,10 +115,10 @@ describe("AccessControlClient Member Invitations", () => {
     );
 
     // Assert
-    chai.expect(iTwinsResponse.status).to.be.eq(200);
-    chai.expect(iTwinsResponse.data).to.not.be.empty;
-    chai.expect(iTwinsResponse.data!).to.not.be.empty;
-    chai.expect(iTwinsResponse.data!.length).to.be.eq(topAmount);
+    expect(iTwinsResponse.status).toBe(200);
+    expect(iTwinsResponse.data).toBeDefined();
+    expect(iTwinsResponse.data!).toBeDefined();
+    expect(iTwinsResponse.data!.length).toBe(topAmount);
   });
 
   it("should get a filtered list of member invitations for an iTwin using $skip", async () => {
@@ -142,12 +140,12 @@ describe("AccessControlClient Member Invitations", () => {
     );
 
     // Assert
-    chai.expect(iTwinsResponse.status).to.be.eq(200);
-    chai.expect(iTwinsResponse.data).to.not.be.empty;
-    chai.expect(iTwinsResponse.data!).to.not.be.empty;
-    chai.expect(iTwinsResponse.data!.length).to.be.eq(topAmount);
+    expect(iTwinsResponse.status).toBe(200);
+    expect(iTwinsResponse.data).toBeDefined();
+    expect(iTwinsResponse.data!).toBeDefined();
+    expect(iTwinsResponse.data!.length).toBe(topAmount);
     unFilteredList.data!.slice(0, skipAmmount).forEach((member) => {
-      chai.expect(iTwinsResponse.data!.includes(member)).to.be.false;
+      expect(iTwinsResponse.data!.includes(member)).toBe(false);
     });
   });
 
@@ -164,13 +162,13 @@ describe("AccessControlClient Member Invitations", () => {
         ]
       );
 
-    chai.expect(addUserMemberResponse.status).to.be.eq(201, `received error: ${JSON.stringify(addUserMemberResponse.error)}`);
-    chai.expect(addUserMemberResponse.data).to.not.be.empty;
-    chai.expect(addUserMemberResponse.data!.members.length).to.be.eq(0);
-    chai.expect(addUserMemberResponse.data!.invitations.length).to.be.eq(1);
+    expect(addUserMemberResponse.status).toBe(201);
+    expect(addUserMemberResponse.data).toBeDefined();
+    expect(addUserMemberResponse.data!.members.length).toBe(0);
+    expect(addUserMemberResponse.data!.invitations.length).toBe(1);
 
     const deleteUserMemberInvitationResponse = await accessControlClient.memberInvitations.deleteITwinMemberInvitationAsync(accessToken, TestConfig.itwinId, addUserMemberResponse.data!.invitations[0].id);
 
-    chai.expect(deleteUserMemberInvitationResponse.status).to.be.eq(204);
+    expect(deleteUserMemberInvitationResponse.status).toBe(204);
   });
 });

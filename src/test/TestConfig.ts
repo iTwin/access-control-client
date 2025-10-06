@@ -4,10 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 import type { AccessToken } from "@itwin/core-bentley";
 import type { TestUserCredentials } from "@itwin/oidc-signin-tool/lib/cjs/frontend";
-import {
-  getAccessTokenFromBackend,
-  TestUsers,
-} from "@itwin/oidc-signin-tool/lib/cjs/frontend";
+import { TestUtility } from "@itwin/oidc-signin-tool";
 
 /** Basic configuration used by all tests
  */
@@ -35,8 +32,12 @@ export class TestConfig {
 
   /** Login the specified user and return the AuthorizationToken */
   public static async getAccessToken(
-    user: TestUserCredentials = TestUsers.super
   ): Promise<AccessToken> {
-    return getAccessTokenFromBackend(user);
+    const userCredentials: TestUserCredentials = {
+      email: process.env.IMJS_ITWIN_TEST_USER!,
+      password: process.env.IMJS_ITWIN_TEST_USER_PASSWORD!,
+    };
+
+    return TestUtility.getAccessToken(userCredentials);
   }
 }

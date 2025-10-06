@@ -3,7 +3,7 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 import type { AccessToken } from "@itwin/core-bentley";
-import * as chai from "chai";
+import { beforeAll, describe, expect, it } from "vitest";
 import { AccessControlClient } from "../../AccessControlClient";
 import type {
   AccessControlAPIResponse,
@@ -12,7 +12,6 @@ import type {
 } from "../../accessControlTypes";
 import { TestConfig } from "../TestConfig";
 
-chai.should();
 describe("AccessControlClient Group Members", () => {
   let baseUrl: string = "https://api.bentley.com/accesscontrol/itwins";
   const urlPrefix = process.env.IMJS_URL_PREFIX;
@@ -26,10 +25,9 @@ describe("AccessControlClient Group Members", () => {
     new AccessControlClient(baseUrl);
   let accessToken: AccessToken;
 
-  before(async function () {
-    this.timeout(0);
+  beforeAll(async () => {
     accessToken = await TestConfig.getAccessToken();
-  });
+  }, 30000);
 
   it("should get a list of group members for an iTwin", async () => {
     // Act
@@ -40,9 +38,9 @@ describe("AccessControlClient Group Members", () => {
       );
 
     // Assert
-    chai.expect(iTwinsResponse.status).to.be.eq(200);
-    chai.expect(iTwinsResponse.data).to.not.be.empty;
-    chai.expect(iTwinsResponse.data!.length).to.be.greaterThan(0);
+    expect(iTwinsResponse.status).toBe(200);
+    expect(iTwinsResponse.data).toBeDefined();
+    expect(iTwinsResponse.data!.length).toBeGreaterThan(0);
   });
 
   it("should get a list of group members for an iTwin with custom url", async () => {
@@ -54,9 +52,9 @@ describe("AccessControlClient Group Members", () => {
       );
 
     // Assert
-    chai.expect(iTwinsResponse.status).to.be.eq(200);
-    chai.expect(iTwinsResponse.data).to.not.be.empty;
-    chai.expect(iTwinsResponse.data!.length).to.be.greaterThan(0);
+    expect(iTwinsResponse.status).toBe(200);
+    expect(iTwinsResponse.data).toBeDefined();
+    expect(iTwinsResponse.data!.length).toBeGreaterThan(0);
   });
 
   it("should get a filtered list of group members for an iTwin using $top", async () => {
@@ -72,10 +70,10 @@ describe("AccessControlClient Group Members", () => {
       );
 
     // Assert
-    chai.expect(iTwinsResponse.status).to.be.eq(200);
-    chai.expect(iTwinsResponse.data).to.not.be.empty;
-    chai.expect(iTwinsResponse.data!).to.not.be.empty;
-    chai.expect(iTwinsResponse.data!.length).to.be.eq(topAmount);
+    expect(iTwinsResponse.status).toBe(200);
+    expect(iTwinsResponse.data).toBeDefined();
+    expect(iTwinsResponse.data!).toBeDefined();
+    expect(iTwinsResponse.data!.length).toBe(topAmount);
   });
 
   it("should get a filtered list of group members for an iTwin using $skip", async () => {
@@ -97,12 +95,12 @@ describe("AccessControlClient Group Members", () => {
       );
 
     // Assert
-    chai.expect(iTwinsResponse.status).to.be.eq(200);
-    chai.expect(iTwinsResponse.data).to.not.be.empty;
-    chai.expect(iTwinsResponse.data!).to.not.be.empty;
-    chai.expect(iTwinsResponse.data!.length).to.be.eq(topAmount);
+    expect(iTwinsResponse.status).toBe(200);
+    expect(iTwinsResponse.data).toBeDefined();
+    expect(iTwinsResponse.data!).toBeDefined();
+    expect(iTwinsResponse.data!.length).toBe(topAmount);
     unFilteredList.data!.slice(0, skipAmmount).forEach((member) => {
-      chai.expect(iTwinsResponse.data!.includes(member)).to.be.false;
+      expect(iTwinsResponse.data!.includes(member)).toBe(false);
     });
   });
 
@@ -116,9 +114,9 @@ describe("AccessControlClient Group Members", () => {
       );
 
     // Assert
-    chai.expect(iTwinsResponse.status).to.be.eq(200);
-    chai.expect(iTwinsResponse.data).to.not.be.empty;
-    chai.expect(iTwinsResponse.data!.id).to.be.eq(TestConfig.permanentGroupId1);
+    expect(iTwinsResponse.status).toBe(200);
+    expect(iTwinsResponse.data).toBeDefined();
+    expect(iTwinsResponse.data!.id).toBe(TestConfig.permanentGroupId1);
   });
 
   it("should get a 404 when trying to get a non-existant group member", async () => {
@@ -134,9 +132,9 @@ describe("AccessControlClient Group Members", () => {
       );
 
     // Assert
-    chai.expect(iTwinsResponse.status).to.be.eq(404);
-    chai.expect(iTwinsResponse.data).to.be.undefined;
-    chai.expect(iTwinsResponse.error!.code).to.be.eq("TeamMemberNotFound");
+    expect(iTwinsResponse.status).toBe(404);
+    expect(iTwinsResponse.data).toBeUndefined();
+    expect(iTwinsResponse.error!.code).toBe("TeamMemberNotFound");
   });
 
   it("should get add, get, update, and remove a group member", async () => {
@@ -155,9 +153,9 @@ describe("AccessControlClient Group Members", () => {
       );
 
     // Assert
-    chai.expect(addUserMemberResponse.status).to.be.eq(201);
-    chai.expect(addUserMemberResponse.data).to.not.be.empty;
-    chai.expect(addUserMemberResponse.data!.length).to.be.greaterThan(0);
+    expect(addUserMemberResponse.status).toBe(201);
+    expect(addUserMemberResponse.data).toBeDefined();
+    expect(addUserMemberResponse.data!.length).toBeGreaterThan(0);
 
     // --- Check member exists and has role ---
     // Act
@@ -168,15 +166,11 @@ describe("AccessControlClient Group Members", () => {
         TestConfig.permanentGroupId2
       );
 
-    chai.expect(getGroupMemberResponse.status).to.be.eq(200);
-    chai.expect(getGroupMemberResponse.data).to.not.be.undefined;
-    chai
-      .expect(getGroupMemberResponse.data!.id)
-      .to.be.eq(TestConfig.permanentGroupId2);
-    chai.expect(getGroupMemberResponse.data!.roles!.length).to.be.eq(2);
-    chai
-      .expect(getGroupMemberResponse.data!.roles![0].id)
-      .to.be.eq(TestConfig.permanentRoleId1);
+    expect(getGroupMemberResponse.status).toBe(200);
+    expect(getGroupMemberResponse.data).toBeDefined();
+    expect(getGroupMemberResponse.data!.id).toBe(TestConfig.permanentGroupId2);
+    expect(getGroupMemberResponse.data!.roles!.length).toBe(2);
+    expect(getGroupMemberResponse.data!.roles![0].id).toBe(TestConfig.permanentRoleId1);
 
     // --- Update member's role ---
     // Act
@@ -188,18 +182,12 @@ describe("AccessControlClient Group Members", () => {
         [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2]
       );
 
-    chai.expect(updatedUserMemberResponse.status).to.be.eq(200);
-    chai.expect(updatedUserMemberResponse.data).to.not.be.undefined;
-    chai
-      .expect(updatedUserMemberResponse.data!.id)
-      .to.be.eq(TestConfig.permanentGroupId2);
-    chai.expect(updatedUserMemberResponse.data!.roles!.length).to.be.eq(2);
-    chai
-      .expect(updatedUserMemberResponse.data!.roles!.map((x) => x.id))
-      .to.include(TestConfig.permanentRoleId1);
-    chai
-      .expect(updatedUserMemberResponse.data!.roles!.map((x) => x.id))
-      .to.include(TestConfig.permanentRoleId2);
+    expect(updatedUserMemberResponse.status).toBe(200);
+    expect(updatedUserMemberResponse.data).toBeDefined();
+    expect(updatedUserMemberResponse.data!.id).toBe(TestConfig.permanentGroupId2);
+    expect(updatedUserMemberResponse.data!.roles!.length).toBe(2);
+    expect(updatedUserMemberResponse.data!.roles!.map((x) => x.id)).toContain(TestConfig.permanentRoleId1);
+    expect(updatedUserMemberResponse.data!.roles!.map((x) => x.id)).toContain(TestConfig.permanentRoleId2);
 
     // --- Remove member ---
     // Act
@@ -210,7 +198,7 @@ describe("AccessControlClient Group Members", () => {
         TestConfig.permanentGroupId2
       );
 
-    chai.expect(removeUserMemberResponse.status).to.be.eq(204);
-    chai.expect(removeUserMemberResponse.data).to.be.undefined;
+    expect(removeUserMemberResponse.status).toBe(204);
+    expect(removeUserMemberResponse.data).toBeUndefined();
   });
 });
