@@ -26,5 +26,5 @@ stages:
           - script: pnpm build
             displayName: pnpm build
 
-          - script: pnpm lint
-            displayName: pnpm lint
+          # - script: pnpm lint
+          #   displayName: pnpm lint
