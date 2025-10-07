@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 import type { AccessToken } from "@itwin/core-bentley";
 import type { TestUserCredentials } from "@itwin/oidc-signin-tool/lib/cjs/frontend";
-import { TestUtility } from "@itwin/oidc-signin-tool";
+import { TestUsers, TestUtility } from "@itwin/oidc-signin-tool";
 
 /** Basic configuration used by all tests
  */
@@ -38,6 +38,6 @@ export class TestConfig {
       password: process.env.IMJS_ITWIN_TEST_USER_PASSWORD!,
     };
 
-    return TestUtility.getAccessToken(userCredentials);
+    return TestUtility.getAccessToken(TestUsers.super);
   }
 }
