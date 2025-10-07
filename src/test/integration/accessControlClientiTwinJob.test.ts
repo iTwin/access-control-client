@@ -63,7 +63,7 @@ describe("AccessControlClient iTwin Jobs", () => {
     expect(iTwinJobResponse.data!.id).toBe(testJob.id);
     expect(iTwinJobResponse.data!.itwinId).toBe(TestConfig.itwinId);
 
-    expect(iTwinJobResponse.data!.error).not.toEqual(undefined);
+    expect(iTwinJobResponse.data!.error).toEqual(undefined);
   });
 
   it("should get a 404 when trying to get a non-existant iTwin Job", async () => {
