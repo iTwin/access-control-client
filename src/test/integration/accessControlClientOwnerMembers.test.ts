@@ -108,20 +108,21 @@ describe("AccessControlClient Owner Members", () => {
 
   it("should get add, get, and remove a owner member", async () => {
     // --- Add Owner ---
+    const managerEmail = TestUsers.manager.email ? TestUsers.manager.email : TestConfig.managerUserEmail;
     // Act
     const addOwnerMemberResponse: AccessControlAPIResponse<AddOwnerMemberResponse> =
       await accessControlClient.ownerMembers.addITwinOwnerMemberAsync(
         accessToken,
         TestConfig.itwinId,
         {
-          email: TestUsers.manager.email,
+          email: managerEmail,
         },
       );
     // Assert
     expect(addOwnerMemberResponse.status).toBe(201);
     expect(addOwnerMemberResponse.data).toBeDefined();
     expect(addOwnerMemberResponse.data!.member).toBeDefined();
-    expect(addOwnerMemberResponse.data!.member!.email).toBe(TestUsers.manager.email);
+    expect(addOwnerMemberResponse.data!.member!.email).toBe(managerEmail);
 
     // --- Check owner exists ---
     // Act
@@ -133,9 +134,9 @@ describe("AccessControlClient Owner Members", () => {
 
     expect(queryOwnerMemberResponse.status).toBe(200);
     expect(queryOwnerMemberResponse.data).toBeDefined();
-    const newOwner = queryOwnerMemberResponse.data!.filter((member) => member.email === TestUsers.manager.email)[0];
+    const newOwner = queryOwnerMemberResponse.data!.filter((member) => member.email === managerEmail)[0];
     expect(newOwner).toBeDefined();
-    expect(newOwner.email).toBe(TestUsers.manager.email);
+    expect(newOwner.email).toBe(managerEmail);
 
     // --- Remove owner ---
     // Act

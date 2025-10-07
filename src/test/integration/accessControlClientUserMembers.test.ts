@@ -140,6 +140,7 @@ describe("AccessControlClient User Members", () => {
   });
 
   it("should get add, get, update, and remove a user member", async () => {
+    const regularEmail = TestUsers.regular.email ? TestUsers.regular.email : TestConfig.regularUserEmail;
     // --- Add Member ---
     // Act
     const addUserMemberResponse: AccessControlAPIResponse<AddUserMemberResponse> =
@@ -148,7 +149,7 @@ describe("AccessControlClient User Members", () => {
         TestConfig.itwinId,
         [
           {
-            email: TestUsers.regular.email,
+            email: regularEmail,
             roleIds: [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2],
           },
         ],
@@ -173,7 +174,7 @@ describe("AccessControlClient User Members", () => {
 
     expect(getUserMemberResponse.status).toBe(200);
     expect(getUserMemberResponse.data).toBeDefined();
-    expect(getUserMemberResponse.data!.email).toBe(TestUsers.regular.email);
+    expect(getUserMemberResponse.data!.email).toBe(regularEmail);
     expect(getUserMemberResponse.data!.roles!.length).toBe(2);
     expect(getUserMemberResponse.data!.roles![0].id).toBe(TestConfig.permanentRoleId1);
 

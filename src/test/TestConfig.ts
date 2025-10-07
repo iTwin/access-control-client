@@ -2,7 +2,6 @@
  * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
-/* eslint-disable no-console */
 import type { AccessToken } from "@itwin/core-bentley";
 import type { TestUserCredentials } from "@itwin/oidc-signin-tool/lib/cjs/frontend";
 import { TestUsers, TestUtility } from "@itwin/oidc-signin-tool";
@@ -27,6 +26,8 @@ export class TestConfig {
   public static readonly temporaryUserEmail: string = process.env.IMJS_TEST_TEMP_USER_EMAIL!;
   public static readonly temporaryUserId: string = process.env.IMJS_TEST_TEMP_USER_ID!;
 
+  public static readonly regularUserEmail: string = process.env.IMJS_TEST_REGULAR_USER_EMAIL!;
+  public static readonly managerUserEmail: string = process.env.IMJS_TEST_MANAGER_USER_EMAIL!;
   public static readonly regularUserId: string = process.env.IMJS_TEST_REGULAR_USER_ID!;
 
   public static readonly itwinId: string = process.env.IMJS_TEST_ITWIN_ID!;
@@ -38,10 +39,6 @@ export class TestConfig {
       email: process.env.IMJS_ITWIN_TEST_USER!,
       password: process.env.IMJS_ITWIN_TEST_USER_PASSWORD!,
     };
-
-    console.log(`Super: ${TestUsers.super.email} ${TestUsers.super.password}`);
-    console.log(`Regular: ${TestUsers.regular.email} ${TestUsers.regular.password}`);
-    console.log(`Manager: ${TestUsers.manager.email} ${TestUsers.manager.password}`);
-    return TestUtility.getAccessToken(userCredentials);
+    return TestUtility.getAccessToken(TestUsers?.super?.password && TestUsers?.super?.email ? TestUsers.super : userCredentials);
   }
 }
