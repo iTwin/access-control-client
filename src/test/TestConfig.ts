@@ -38,6 +38,9 @@ export class TestConfig {
       password: process.env.IMJS_ITWIN_TEST_USER_PASSWORD!,
     };
 
-    return TestUtility.getAccessToken(TestUsers.super ?? userCredentials);
+    console.log(`Super: ${TestUsers.super.email} ${TestUsers.super.password}`);
+    console.log(`Regular: ${TestUsers.regular.email} ${TestUsers.regular.password}`);
+    console.log(`Manager: ${TestUsers.manager.email} ${TestUsers.manager.password}`);
+    return TestUtility.getAccessToken(userCredentials);
   }
 }
