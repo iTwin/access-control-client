@@ -38,6 +38,6 @@ export class TestConfig {
       password: process.env.IMJS_ITWIN_TEST_USER_PASSWORD!,
     };
 
-    return TestUtility.getAccessToken(TestUsers.super);
+    return TestUtility.getAccessToken(TestUsers.super ?? userCredentials);
   }
 }
