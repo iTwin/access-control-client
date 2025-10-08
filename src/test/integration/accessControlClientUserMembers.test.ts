@@ -3,7 +3,7 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 import type { AccessToken } from "@itwin/core-bentley";
-import * as chai from "chai";
+import { beforeAll, describe, expect, it } from "vitest";
 import { AccessControlClient } from "../../AccessControlClient";
 import type {
   AccessControlAPIResponse,
@@ -14,7 +14,6 @@ import type {
 import { TestUsers } from "@itwin/oidc-signin-tool/lib/cjs/frontend";
 import { TestConfig } from "../TestConfig";
 
-chai.should();
 describe("AccessControlClient User Members", () => {
   let baseUrl: string = "https://api.bentley.com/accesscontrol/itwins";
   const urlPrefix = process.env.IMJS_URL_PREFIX;
@@ -28,10 +27,9 @@ describe("AccessControlClient User Members", () => {
     new AccessControlClient(baseUrl);
   let accessToken: AccessToken;
 
-  before(async function () {
-    this.timeout(0);
+  beforeAll(async () => {
     accessToken = await TestConfig.getAccessToken();
-  });
+  }, 30000);
 
   it("should get a list of user members for an iTwin", async () => {
     // Act
@@ -42,9 +40,9 @@ describe("AccessControlClient User Members", () => {
       );
 
     // Assert
-    chai.expect(iTwinsResponse.status).to.be.eq(200);
-    chai.expect(iTwinsResponse.data).to.not.be.empty;
-    chai.expect(iTwinsResponse.data!.length).to.be.greaterThan(0);
+    expect(iTwinsResponse.status).toBe(200);
+    expect(iTwinsResponse.data).toBeDefined();
+    expect(iTwinsResponse.data!.length).toBeGreaterThan(0);
   });
 
   it("should get a list of user members for an iTwin with custom url", async () => {
@@ -56,9 +54,9 @@ describe("AccessControlClient User Members", () => {
       );
 
     // Assert
-    chai.expect(iTwinsResponse.status).to.be.eq(200);
-    chai.expect(iTwinsResponse.data).to.not.be.empty;
-    chai.expect(iTwinsResponse.data!.length).to.be.greaterThan(0);
+    expect(iTwinsResponse.status).toBe(200);
+    expect(iTwinsResponse.data).toBeDefined();
+    expect(iTwinsResponse.data!.length).toBeGreaterThan(0);
   });
 
   it("should get a filtered list of user members for an iTwin using $top", async () => {
@@ -74,10 +72,10 @@ describe("AccessControlClient User Members", () => {
       );
 
     // Assert
-    chai.expect(iTwinsResponse.status).to.be.eq(200);
-    chai.expect(iTwinsResponse.data).to.not.be.empty;
-    chai.expect(iTwinsResponse.data!).to.not.be.empty;
-    chai.expect(iTwinsResponse.data!.length).to.be.eq(topAmount);
+    expect(iTwinsResponse.status).toBe(200);
+    expect(iTwinsResponse.data).toBeDefined();
+    expect(iTwinsResponse.data!).toBeDefined();
+    expect(iTwinsResponse.data!.length).toBe(topAmount);
   });
 
   it("should get a filtered list of user members for an iTwin using $skip", async () => {
@@ -99,12 +97,12 @@ describe("AccessControlClient User Members", () => {
       );
 
     // Assert
-    chai.expect(iTwinsResponse.status).to.be.eq(200);
-    chai.expect(iTwinsResponse.data).to.not.be.empty;
-    chai.expect(iTwinsResponse.data!).to.not.be.empty;
-    chai.expect(iTwinsResponse.data!.length).to.be.eq(topAmount);
+    expect(iTwinsResponse.status).toBe(200);
+    expect(iTwinsResponse.data).toBeDefined();
+    expect(iTwinsResponse.data!).toBeDefined();
+    expect(iTwinsResponse.data!.length).toBe(topAmount);
     unFilteredList.data!.slice(0, skipAmmount).forEach((member) => {
-      chai.expect(iTwinsResponse.data!.includes(member)).to.be.false;
+      expect(iTwinsResponse.data!.includes(member)).toBe(false);
     });
   });
 
@@ -118,9 +116,9 @@ describe("AccessControlClient User Members", () => {
       );
 
     // Assert
-    chai.expect(iTwinsResponse.status).to.be.eq(200);
-    chai.expect(iTwinsResponse.data).to.not.be.empty;
-    chai.expect(iTwinsResponse.data!.id).to.be.eq(TestConfig.regularUserId);
+    expect(iTwinsResponse.status).toBe(200);
+    expect(iTwinsResponse.data).toBeDefined();
+    expect(iTwinsResponse.data!.id).toBe(TestConfig.regularUserId);
   });
 
   it("should get a 404 when trying to get a non-existant user member", async () => {
@@ -136,12 +134,13 @@ describe("AccessControlClient User Members", () => {
       );
 
     // Assert
-    chai.expect(iTwinsResponse.status).to.be.eq(404);
-    chai.expect(iTwinsResponse.data).to.be.undefined;
-    chai.expect(iTwinsResponse.error!.code).to.be.eq("TeamMemberNotFound");
+    expect(iTwinsResponse.status).toBe(404);
+    expect(iTwinsResponse.data).toBeUndefined();
+    expect(iTwinsResponse.error!.code).toBe("TeamMemberNotFound");
   });
 
   it("should get add, get, update, and remove a user member", async () => {
+    const regularEmail = TestUsers.regular.email ? TestUsers.regular.email : TestConfig.regularUserEmail;
     // --- Add Member ---
     // Act
     const addUserMemberResponse: AccessControlAPIResponse<AddUserMemberResponse> =
@@ -150,7 +149,7 @@ describe("AccessControlClient User Members", () => {
         TestConfig.itwinId,
         [
           {
-            email: TestUsers.regular.email,
+            email: regularEmail,
             roleIds: [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2],
           },
         ],
@@ -158,10 +157,10 @@ describe("AccessControlClient User Members", () => {
       );
 
     // Assert
-    chai.expect(addUserMemberResponse.status).to.be.eq(201, `received error: ${JSON.stringify(addUserMemberResponse.error)}`);
-    chai.expect(addUserMemberResponse.data).to.not.be.empty;
-    chai.expect(addUserMemberResponse.data!.members.length).to.be.eq(1);
-    chai.expect(addUserMemberResponse.data!.invitations.length).to.be.eq(0);
+    expect(addUserMemberResponse.status).toBe(201);
+    expect(addUserMemberResponse.data).toBeDefined();
+    expect(addUserMemberResponse.data!.members.length).toBe(1);
+    expect(addUserMemberResponse.data!.invitations.length).toBe(0);
     const newMember = addUserMemberResponse.data!.members[0];
 
     // --- Check member exists and has role ---
@@ -173,15 +172,11 @@ describe("AccessControlClient User Members", () => {
         newMember.id!
       );
 
-    chai.expect(getUserMemberResponse.status).to.be.eq(200);
-    chai.expect(getUserMemberResponse.data).to.not.be.undefined;
-    chai
-      .expect(getUserMemberResponse.data!.email)
-      .to.be.eq(TestUsers.regular.email);
-    chai.expect(getUserMemberResponse.data!.roles!.length).to.be.eq(2);
-    chai
-      .expect(getUserMemberResponse.data!.roles![0].id)
-      .to.be.eq(TestConfig.permanentRoleId1);
+    expect(getUserMemberResponse.status).toBe(200);
+    expect(getUserMemberResponse.data).toBeDefined();
+    expect(getUserMemberResponse.data!.email).toBe(regularEmail);
+    expect(getUserMemberResponse.data!.roles!.length).toBe(2);
+    expect(getUserMemberResponse.data!.roles![0].id).toBe(TestConfig.permanentRoleId1);
 
     // --- Update member's role ---
     // Act
@@ -193,18 +188,12 @@ describe("AccessControlClient User Members", () => {
         [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2]
       );
 
-    chai.expect(updatedUserMemberResponse.status).to.be.eq(200);
-    chai.expect(updatedUserMemberResponse.data).to.not.be.undefined;
-    chai
-      .expect(updatedUserMemberResponse.data!.id)
-      .to.be.eq(newMember.id!);
-    chai.expect(updatedUserMemberResponse.data!.roles!.length).to.be.eq(2);
-    chai
-      .expect(updatedUserMemberResponse.data!.roles!.map((x) => x.id))
-      .to.include(TestConfig.permanentRoleId1);
-    chai
-      .expect(updatedUserMemberResponse.data!.roles!.map((x) => x.id))
-      .to.include(TestConfig.permanentRoleId2);
+    expect(updatedUserMemberResponse.status).toBe(200);
+    expect(updatedUserMemberResponse.data).toBeDefined();
+    expect(updatedUserMemberResponse.data!.id).toBe(newMember.id!);
+    expect(updatedUserMemberResponse.data!.roles!.length).toBe(2);
+    expect(updatedUserMemberResponse.data!.roles!.map((x) => x.id)).toContain(TestConfig.permanentRoleId1);
+    expect(updatedUserMemberResponse.data!.roles!.map((x) => x.id)).toContain(TestConfig.permanentRoleId2);
 
     // --- Remove member ---
     // Act
@@ -215,7 +204,7 @@ describe("AccessControlClient User Members", () => {
         newMember.id!
       );
 
-    chai.expect(removeUserMemberResponse.status).to.be.eq(204);
-    chai.expect(removeUserMemberResponse.data).to.be.undefined;
+    expect(removeUserMemberResponse.status).toBe(204);
+    expect(removeUserMemberResponse.data).toBeUndefined();
   });
 });

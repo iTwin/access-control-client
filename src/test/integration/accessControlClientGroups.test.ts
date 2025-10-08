@@ -3,12 +3,11 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 import type { AccessToken } from "@itwin/core-bentley";
-import * as chai from "chai";
+import { beforeAll, describe, expect, it } from "vitest";
 import { AccessControlClient } from "../../AccessControlClient";
 import type { AccessControlAPIResponse, Group, GroupUpdate, IAccessControlClient } from "../../accessControlTypes";
 import { TestConfig } from "../TestConfig";
 
-chai.should();
 describe("AccessControlClient Groups", () => {
   let baseUrl: string = "https://api.bentley.com/accesscontrol/itwins";
   const urlPrefix = process.env.IMJS_URL_PREFIX;
@@ -21,10 +20,9 @@ describe("AccessControlClient Groups", () => {
   const customAccessControlClient: IAccessControlClient = new AccessControlClient(baseUrl);
   let accessToken: AccessToken;
 
-  before(async function () {
-    this.timeout(0);
+  beforeAll(async () => {
     accessToken = await TestConfig.getAccessToken();
-  });
+  }, 30000);
 
   it("should get a list of groups for an iTwin", async () => {
     // Act
@@ -32,9 +30,9 @@ describe("AccessControlClient Groups", () => {
       await accessControlClient.groups.getITwinGroupsAsync(accessToken, TestConfig.itwinId);
 
     // Assert
-    chai.expect(iTwinsResponse.status).to.be.eq(200);
-    chai.expect(iTwinsResponse.data).to.not.be.empty;
-    chai.expect(iTwinsResponse.data!.length).to.be.greaterThan(0);
+    expect(iTwinsResponse.status).toBe(200);
+    expect(iTwinsResponse.data).toBeDefined();
+    expect(iTwinsResponse.data!.length).toBeGreaterThan(0);
   });
 
   it("should get a list of groups for an iTwin with additional headers", async () => {
@@ -43,9 +41,9 @@ describe("AccessControlClient Groups", () => {
       await customAccessControlClient.groups.getITwinGroupsAsync(accessToken, TestConfig.itwinId, { "test-custom-header": "custom-value:xyz-123-abc" });
 
     // Assert
-    chai.expect(iTwinsResponse.status).to.be.eq(200);
-    chai.expect(iTwinsResponse.data).to.not.be.empty;
-    chai.expect(iTwinsResponse.data!.length).to.be.greaterThan(0);
+    expect(iTwinsResponse.status).toBe(200);
+    expect(iTwinsResponse.data).toBeDefined();
+    expect(iTwinsResponse.data!.length).toBeGreaterThan(0);
   });
 
   it("should get a list of groups for an iTwin with custom url", async () => {
@@ -54,9 +52,9 @@ describe("AccessControlClient Groups", () => {
       await customAccessControlClient.groups.getITwinGroupsAsync(accessToken, TestConfig.itwinId);
 
     // Assert
-    chai.expect(iTwinsResponse.status).to.be.eq(200);
-    chai.expect(iTwinsResponse.data).to.not.be.empty;
-    chai.expect(iTwinsResponse.data!.length).to.be.greaterThan(0);
+    expect(iTwinsResponse.status).toBe(200);
+    expect(iTwinsResponse.data).toBeDefined();
+    expect(iTwinsResponse.data!.length).toBeGreaterThan(0);
   });
 
   it("should get a specific groups for an iTwin", async () => {
@@ -65,10 +63,10 @@ describe("AccessControlClient Groups", () => {
       await accessControlClient.groups.getITwinGroupAsync(accessToken, TestConfig.itwinId, TestConfig.permanentGroupId1);
 
     // Assert
-    chai.expect(iTwinsResponse.status).to.be.eq(200);
-    chai.expect(iTwinsResponse.data).to.not.be.empty;
-    chai.expect(iTwinsResponse.data!.id).to.be.eq(TestConfig.permanentGroupId1);
-    chai.expect(iTwinsResponse.data!.name).to.be.eq(TestConfig.permanentGroupName1);
+    expect(iTwinsResponse.status).toBe(200);
+    expect(iTwinsResponse.data).toBeDefined();
+    expect(iTwinsResponse.data!.id).toBe(TestConfig.permanentGroupId1);
+    expect(iTwinsResponse.data!.name).toBe(TestConfig.permanentGroupName1);
   });
 
   it("should get a 404 when trying to get a non-existant group", async () => {
@@ -80,9 +78,9 @@ describe("AccessControlClient Groups", () => {
       await accessControlClient.groups.getITwinGroupAsync(accessToken, TestConfig.itwinId, nonExistantGroupId);
 
     // Assert
-    chai.expect(iTwinsResponse.status).to.be.eq(404);
-    chai.expect(iTwinsResponse.error!.code).to.be.eq("GroupNotFound");
-    chai.expect(iTwinsResponse.data).to.be.undefined;
+    expect(iTwinsResponse.status).toBe(404);
+    expect(iTwinsResponse.error!.code).toBe("GroupNotFound");
+    expect(iTwinsResponse.data).toBeUndefined();
   });
 
   it("should get a 404 when trying to update a non-existant group", async () => {
@@ -98,9 +96,9 @@ describe("AccessControlClient Groups", () => {
       await accessControlClient.groups.updateITwinGroupAsync(accessToken, TestConfig.itwinId, nonExistantGroupId, emptyUpdatedGroup);
 
     // Assert
-    chai.expect(iTwinsResponse.status).to.be.eq(404);
-    chai.expect(iTwinsResponse.error!.code).to.be.eq("GroupNotFound");
-    chai.expect(iTwinsResponse.data).to.be.undefined;
+    expect(iTwinsResponse.status).toBe(404);
+    expect(iTwinsResponse.error!.code).toBe("GroupNotFound");
+    expect(iTwinsResponse.data).toBeUndefined();
   });
 
   it("should get a 404 when trying to remove a non-existant group", async () => {
@@ -112,9 +110,9 @@ describe("AccessControlClient Groups", () => {
       await accessControlClient.groups.deleteITwinGroupAsync(accessToken, TestConfig.itwinId, nonExistantGroupId);
 
     // Assert
-    chai.expect(iTwinsResponse.status).to.be.eq(404);
-    chai.expect(iTwinsResponse.error!.code).to.be.eq("GroupNotFound");
-    chai.expect(iTwinsResponse.data).to.be.undefined;
+    expect(iTwinsResponse.status).toBe(404);
+    expect(iTwinsResponse.error!.code).toBe("GroupNotFound");
+    expect(iTwinsResponse.data).toBeUndefined();
   });
 
   it("should create, update, and delete a group", async () => {
@@ -132,9 +130,9 @@ describe("AccessControlClient Groups", () => {
       await accessControlClient.groups.createITwinGroupAsync(accessToken, TestConfig.itwinId, newGroup);
 
     // Assert
-    chai.expect(createResponse.status).to.be.eq(201);
-    chai.expect(createResponse.data!.name).to.be.eq(newGroup.name);
-    chai.expect(createResponse.data!.description).to.be.eq(newGroup.description);
+    expect(createResponse.status).toBe(201);
+    expect(createResponse.data!.name).toBe(newGroup.name);
+    expect(createResponse.data!.description).toBe(newGroup.description);
 
     // --- UPDATE GROUP ---
     // Arrange
@@ -150,15 +148,11 @@ describe("AccessControlClient Groups", () => {
       await accessControlClient.groups.updateITwinGroupAsync(accessToken, TestConfig.itwinId, createResponse.data!.id as string, updatedGroup);
 
     // Assert
-    chai.expect(updateResponse.status).to.be.eq(200);
-    chai.expect(updateResponse.data!.name).to.be.eq(updatedGroup.name);
-    chai.expect(updateResponse.data!.description).to.be.eq(updatedGroup.description);
-    chai
-      .expect(updateResponse.data!.members!.map((x) => x.email!))
-      .to.include(TestConfig.temporaryUserEmail);
-    chai
-      .expect(updateResponse.data!.imsGroups!.map((x) => x))
-      .to.include(TestConfig.permanentImsGroupName);
+    expect(updateResponse.status).toBe(200);
+    expect(updateResponse.data!.name).toBe(updatedGroup.name);
+    expect(updateResponse.data!.description).toBe(updatedGroup.description);
+    expect(updateResponse.data!.members!.map((x) => x.email!)).toContain(TestConfig.temporaryUserEmail);
+    expect(updateResponse.data!.imsGroups!.map((x) => x)).toContain(TestConfig.permanentImsGroupName);
 
     // --- UPDATE GROUP BACK TO EMPTY---
     // Arrange
@@ -172,11 +166,11 @@ describe("AccessControlClient Groups", () => {
       await accessControlClient.groups.updateITwinGroupAsync(accessToken, TestConfig.itwinId, createResponse.data!.id as string, updatedEmptyGroup);
 
     // Assert
-    chai.expect(updateEmptyResponse.status).to.be.eq(200);
-    chai.expect(updateEmptyResponse.data!.name).to.be.eq(updatedGroup.name);
-    chai.expect(updateEmptyResponse.data!.description).to.be.eq(updatedGroup.description);
-    chai.expect(updateEmptyResponse.data!.members!.length).to.be.eq(0);
-    chai.expect(updateEmptyResponse.data!.imsGroups!.length).to.be.eq(0);
+    expect(updateEmptyResponse.status).toBe(200);
+    expect(updateEmptyResponse.data!.name).toBe(updatedGroup.name);
+    expect(updateEmptyResponse.data!.description).toBe(updatedGroup.description);
+    expect(updateEmptyResponse.data!.members!.length).toBe(0);
+    expect(updateEmptyResponse.data!.imsGroups!.length).toBe(0);
 
     // --- DELETE GROUP ---
     // Act
@@ -184,7 +178,7 @@ describe("AccessControlClient Groups", () => {
       await accessControlClient.groups.deleteITwinGroupAsync(accessToken, TestConfig.itwinId, createResponse.data!.id as string);
 
     // Assert
-    chai.expect(deleteResponse.status).to.be.eq(204);
-    chai.expect(deleteResponse.data).to.be.undefined;
+    expect(deleteResponse.status).toBe(204);
+    expect(deleteResponse.data).toBeUndefined();
   });
 });

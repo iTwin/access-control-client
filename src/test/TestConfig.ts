@@ -4,10 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 import type { AccessToken } from "@itwin/core-bentley";
 import type { TestUserCredentials } from "@itwin/oidc-signin-tool/lib/cjs/frontend";
-import {
-  getAccessTokenFromBackend,
-  TestUsers,
-} from "@itwin/oidc-signin-tool/lib/cjs/frontend";
+import { TestUsers, TestUtility } from "@itwin/oidc-signin-tool";
 
 /** Basic configuration used by all tests
  */
@@ -29,14 +26,19 @@ export class TestConfig {
   public static readonly temporaryUserEmail: string = process.env.IMJS_TEST_TEMP_USER_EMAIL!;
   public static readonly temporaryUserId: string = process.env.IMJS_TEST_TEMP_USER_ID!;
 
+  public static readonly regularUserEmail: string = process.env.IMJS_TEST_REGULAR_USER_EMAIL!;
+  public static readonly managerUserEmail: string = process.env.IMJS_TEST_MANAGER_USER_EMAIL!;
   public static readonly regularUserId: string = process.env.IMJS_TEST_REGULAR_USER_ID!;
 
   public static readonly itwinId: string = process.env.IMJS_TEST_ITWIN_ID!;
 
   /** Login the specified user and return the AuthorizationToken */
   public static async getAccessToken(
-    user: TestUserCredentials = TestUsers.super
   ): Promise<AccessToken> {
-    return getAccessTokenFromBackend(user);
+    const userCredentials: TestUserCredentials = {
+      email: process.env.IMJS_ITWIN_TEST_USER!,
+      password: process.env.IMJS_ITWIN_TEST_USER_PASSWORD!,
+    };
+    return TestUtility.getAccessToken(TestUsers?.super?.password && TestUsers?.super?.email ? TestUsers.super : userCredentials);
   }
 }

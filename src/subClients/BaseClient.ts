@@ -78,7 +78,7 @@ export class BaseClient {
         error: responseData?.error,
         headers,
       };
-    } catch (err) {
+    } catch {
       return {
         status: 500,
         error: {
