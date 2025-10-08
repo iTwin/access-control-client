@@ -35,7 +35,7 @@ export class GroupMembersClient
     let url = `${this._baseUrl}/${iTwinId}/members/groups`;
 
     if (arg) {
-      url += `?${this.getQueryString(arg)}`;
+      url += `?${this.getQueryString(GroupMembersClient.PAGINATION_PARAM_MAPPING, { top: arg.top, skip: arg.skip })}`;
     }
 
     return this.sendGenericAPIRequest(

@@ -34,7 +34,7 @@ export class MemberInvitationsClient
     let url = `${this._baseUrl}/${iTwinId}/members/invitations`;
 
     if (arg) {
-      url += `?${this.getQueryString(arg)}`;
+      url += `?${this.getQueryString(MemberInvitationsClient.PAGINATION_PARAM_MAPPING, { top: arg.top, skip: arg.skip })}`;
     }
 
     return this.sendGenericAPIRequest(
