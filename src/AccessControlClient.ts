@@ -8,7 +8,6 @@
 import type {
   IAccessControlClient,
   IGroupMembersClient,
-  IGroupsClient,
   IITwinJobsClient,
   IMemberInvitationsClient,
   IOwnerMembersClient,
@@ -24,6 +23,7 @@ import { GroupMembersClient } from "./subClients/GroupMembersClient";
 import { OwnerMembersClient } from "./subClients/OwnerMembersClient";
 import { MemberInvitationsClient } from "./subClients/MemberInvitationsClient";
 import { ITwinJobsClient } from "./subClients/ITwinJobsClient";
+import { IGroupsClient } from "./subClients/accessControlClientInterfaces/GroupClient";
 
 export class AccessControlClient implements IAccessControlClient {
   public permissions: IPermissionsClient;

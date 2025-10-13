@@ -6,8 +6,11 @@
  * @module AccessControlClient
  */
 import type { AccessToken } from "@itwin/core-bentley";
-import type { AccessControlAPIResponse, Group, GroupUpdate, IGroupsClient } from "../accessControlTypes";
+import type { AccessControlAPIResponse } from "../accessControlTypes";
+import type { Group, MultipleGroupsResponse, SingleGroupResponse } from "../types/Groups";
+import type { IGroupsClient } from "./accessControlClientInterfaces/GroupClient";
 import { BaseClient } from "./BaseClient";
+
 
 export class GroupsClient extends BaseClient implements IGroupsClient{
   public constructor(url?: string) {
@@ -19,13 +22,13 @@ export class GroupsClient extends BaseClient implements IGroupsClient{
     * @param iTwinId The id of the iTwin
     * @returns Group[]
     */
-  public async getITwinGroupsAsync(
+  public async getITwinGroups(
     accessToken: AccessToken,
     iTwinId: string,
     additionalHeaders?: { [key: string]: string }
-  ): Promise<AccessControlAPIResponse<Group[]>>{
+  ): Promise<AccessControlAPIResponse<MultipleGroupsResponse>>{
     const url = `${this._baseUrl}/${iTwinId}/groups`;
-    return this.sendGenericAPIRequest(accessToken, "GET", url, undefined, "groups", additionalHeaders);
+    return this.sendGenericAPIRequest(accessToken, "GET", url, undefined, undefined, additionalHeaders);
   }
 
   /** Retrieves the specified role for the specified iTwin
@@ -33,13 +36,13 @@ export class GroupsClient extends BaseClient implements IGroupsClient{
     * @param iTwinId The id of the iTwin
     * @returns Group
     */
-  public async getITwinGroupAsync(
+  public async getITwinGroup(
     accessToken: AccessToken,
     iTwinId: string,
     groupId: string,
-  ): Promise<AccessControlAPIResponse<Group>>{
+  ): Promise<AccessControlAPIResponse<SingleGroupResponse>>{
     const url = `${this._baseUrl}/${iTwinId}/groups/${groupId}`;
-    return this.sendGenericAPIRequest(accessToken, "GET", url, undefined, "group");
+    return this.sendGenericAPIRequest(accessToken, "GET", url);
   }
 
   /** Creates a new iTwin group
@@ -48,13 +51,13 @@ export class GroupsClient extends BaseClient implements IGroupsClient{
     * @param group The group to be created
     * @returns Group
     */
-  public async createITwinGroupAsync(
+  public async createITwinGroup(
     accessToken: AccessToken,
     iTwinId: string,
     group: Group
-  ): Promise<AccessControlAPIResponse<Group>>{
+  ): Promise<AccessControlAPIResponse<SingleGroupResponse>>{
     const url = `${this._baseUrl}/${iTwinId}/groups`;
-    return this.sendGenericAPIRequest(accessToken, "POST", url, group, "group");
+    return this.sendGenericAPIRequest(accessToken, "POST", url, group);
   }
 
   /** Delete the specified iTwin group
@@ -77,15 +80,15 @@ export class GroupsClient extends BaseClient implements IGroupsClient{
     * @param iTwinId The id of the iTwin
     * @param groupId The id of the role to update
     * @param group The updated group
-    * @returns Role
+    * @returns Group that was updated
     */
-  public async updateITwinGroupAsync(
+  public async updateITwinGroup(
     accessToken: AccessToken,
     iTwinId: string,
     groupId: string,
-    group: GroupUpdate
-  ): Promise<AccessControlAPIResponse<Group>>{
+    group: Partial<Pick<Group, "name" | "description"> & { members: string[]; imsGroups: string[] }>
+  ): Promise<AccessControlAPIResponse<SingleGroupResponse>>{
     const url = `${this._baseUrl}/${iTwinId}/groups/${groupId}`;
-    return this.sendGenericAPIRequest(accessToken, "PATCH", url, group, "group");
+    return this.sendGenericAPIRequest(accessToken, "PATCH", url, group);
   }
 }

@@ -7,6 +7,7 @@
  */
 
 import type { AccessToken } from "@itwin/core-bentley";
+import { IGroupsClient } from "./subClients/accessControlClientInterfaces/GroupClient";
 
 //#region clients
 
@@ -172,44 +173,6 @@ export interface IRolesClient {
   ): Promise<AccessControlAPIResponse<Role>>;
 }
 
-export interface IGroupsClient {
-  /** Retrieves a list of groups the for a specified iTwin */
-  getITwinGroupsAsync(
-    accessToken: AccessToken,
-    iTwinId: string,
-    additionalHeaders?: { [key: string]: string }
-  ): Promise<AccessControlAPIResponse<Group[]>>;
-
-  /** Retrieves a group for a specified iTwin */
-  getITwinGroupAsync(
-    accessToken: AccessToken,
-    iTwinId: string,
-    groupId: string
-  ): Promise<AccessControlAPIResponse<Group>>;
-
-  /** Creates a new iTwin group */
-  createITwinGroupAsync(
-    accessToken: AccessToken,
-    iTwinId: string,
-    group: Group
-  ): Promise<AccessControlAPIResponse<Group>>;
-
-  /** Removes an existing iTwin group */
-  deleteITwinGroupAsync(
-    accessToken: AccessToken,
-    iTwinId: string,
-    groupId: string
-  ): Promise<AccessControlAPIResponse<undefined>>;
-
-  /** Updates an existing iTwin group */
-  updateITwinGroupAsync(
-    accessToken: AccessToken,
-    iTwinId: string,
-    groupId: string,
-    group: GroupUpdate
-  ): Promise<AccessControlAPIResponse<Group>>;
-}
-
 export interface IMemberInvitationsClient {
   /** Retrieves a list of member invitations. */
   queryITwinMemberInvitationsAsync(
@@ -347,33 +310,6 @@ export interface Role {
   description: string;
   permissions: Permission[];
 }
-
-export interface Group {
-  id?: string;
-  name?: string;
-  description?: string;
-  members?: GroupUser[];
-  imsGroups?: string[];
-  imsGroupsCount?: number;
-  membersCount?: number;
-}
-
-export interface GroupUser {
-  id?: string;
-  email?: string;
-  givenName?: string;
-  surname?: string;
-  organization?: string;
-}
-
-export interface GroupUpdate {
-  id?: string;
-  name?: string;
-  description?: string;
-  members?: string[];
-  imsGroups?: string[];
-}
-
 export interface MemberInvitation {
   id: string;
   email: string;
