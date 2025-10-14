@@ -102,6 +102,84 @@ describe("AccessControlClient iTwin Jobs", () => {
     expect(iTwinJobActionsResponse.status).toBe(404);
   });
 
+  it("should get a 422 when trying to create a job with invalid email format", async () => {
+    // Arrange
+    const invalidJobActions: ITwinJobActions = {
+      assignRoles: [{ email: "invalid-email-format", roleIds: [TestConfig.permanentRoleId1] }]
+    };
+
+    // Act
+    const iTwinJobResponse: BentleyAPIResponse<ITwinJob> =
+      await accessControlClient.itwinJobs.createITwinJobAsync(accessToken, TestConfig.itwinId, invalidJobActions);
+
+    // Assert
+    expect(iTwinJobResponse.status).toBe(422);
+    expect(iTwinJobResponse.error).toBeDefined();
+    expect(iTwinJobResponse.data).toBeUndefined();
+  });
+
+  it("should get a 422 when trying to create a job with invalid role ID", async () => {
+    // Arrange
+    const invalidJobActions: ITwinJobActions = {
+      assignRoles: [{ email: TestConfig.temporaryUserEmail, roleIds: ["invalid-role-id-format"] }]
+    };
+
+    // Act
+    const iTwinJobResponse: BentleyAPIResponse<ITwinJob> =
+      await accessControlClient.itwinJobs.createITwinJobAsync(accessToken, TestConfig.itwinId, invalidJobActions);
+
+    // Assert
+    expect([422, 400]).toContain(iTwinJobResponse.status); // Could be 422 or 400 depending on validation
+    expect(iTwinJobResponse.error).toBeDefined();
+    expect(iTwinJobResponse.data).toBeUndefined();
+  });
+
+  it("should get a 422 when trying to create a job with empty email", async () => {
+    // Arrange
+    const invalidJobActions: ITwinJobActions = {
+      assignRoles: [{ email: "", roleIds: [TestConfig.permanentRoleId1] }]
+    };
+
+    // Act
+    const iTwinJobResponse: BentleyAPIResponse<ITwinJob> =
+      await accessControlClient.itwinJobs.createITwinJobAsync(accessToken, TestConfig.itwinId, invalidJobActions);
+
+    // Assert
+    expect(iTwinJobResponse.status).toBe(422);
+    expect(iTwinJobResponse.error).toBeDefined();
+    expect(iTwinJobResponse.data).toBeUndefined();
+  });
+
+  it("should get a 422 when trying to create a job with empty roleIds array", async () => {
+    // Arrange
+    const invalidJobActions: ITwinJobActions = {
+      assignRoles: [{ email: TestConfig.temporaryUserEmail, roleIds: [] }]
+    };
+
+    // Act
+    const iTwinJobResponse: BentleyAPIResponse<ITwinJob> =
+      await accessControlClient.itwinJobs.createITwinJobAsync(accessToken, TestConfig.itwinId, invalidJobActions);
+
+    // Assert
+    expect(iTwinJobResponse.status).toBe(422);
+    expect(iTwinJobResponse.error).toBeDefined();
+    expect(iTwinJobResponse.data).toBeUndefined();
+  });
+
+  it("should get a 422 when trying to create a job with empty actions object", async () => {
+    // Arrange
+    const invalidJobActions: ITwinJobActions = {};
+
+    // Act
+    const iTwinJobResponse: BentleyAPIResponse<ITwinJob> =
+      await accessControlClient.itwinJobs.createITwinJobAsync(accessToken, TestConfig.itwinId, invalidJobActions);
+
+    // Assert
+    expect(iTwinJobResponse.status).toBe(422);
+    expect(iTwinJobResponse.error).toBeDefined();
+    expect(iTwinJobResponse.data).toBeUndefined();
+  });
+
   it("should create a iTwin Job", async () => {
     // Act
     const iTwinJobResponse: BentleyAPIResponse<ITwinJob> =
