@@ -6,10 +6,10 @@ import type { AccessToken } from "@itwin/core-bentley";
 import { beforeAll, describe, expect, it } from "vitest";
 import { AccessControlClient } from "../../AccessControlClient";
 import type {
-  AccessControlAPIResponse,
   GroupMember,
   IAccessControlClient,
 } from "../../accessControlTypes";
+import type { BentleyAPIResponse } from "../../types/CommonApiTypes";
 import { TestConfig } from "../TestConfig";
 
 describe("AccessControlClient Group Members", () => {
@@ -31,7 +31,7 @@ describe("AccessControlClient Group Members", () => {
 
   it("should get a list of group members for an iTwin", async () => {
     // Act
-    const iTwinsResponse: AccessControlAPIResponse<GroupMember[]> =
+    const iTwinsResponse: BentleyAPIResponse<GroupMember[]> =
       await accessControlClient.groupMembers.queryITwinGroupMembersAsync(
         accessToken,
         TestConfig.itwinId
@@ -45,7 +45,7 @@ describe("AccessControlClient Group Members", () => {
 
   it("should get a list of group members for an iTwin with custom url", async () => {
     // Act
-    const iTwinsResponse: AccessControlAPIResponse<GroupMember[]> =
+    const iTwinsResponse: BentleyAPIResponse<GroupMember[]> =
       await customAccessControlClient.groupMembers.queryITwinGroupMembersAsync(
         accessToken,
         TestConfig.itwinId
@@ -62,7 +62,7 @@ describe("AccessControlClient Group Members", () => {
     const topAmount = 2;
 
     // Act
-    const iTwinsResponse: AccessControlAPIResponse<GroupMember[]> =
+    const iTwinsResponse: BentleyAPIResponse<GroupMember[]> =
       await accessControlClient.groupMembers.queryITwinGroupMembersAsync(
         accessToken,
         TestConfig.itwinId,
@@ -78,7 +78,7 @@ describe("AccessControlClient Group Members", () => {
 
   it("should get a filtered list of group members for an iTwin using $skip", async () => {
     // Arrange
-    const unFilteredList: AccessControlAPIResponse<GroupMember[]> =
+    const unFilteredList: BentleyAPIResponse<GroupMember[]> =
       await accessControlClient.groupMembers.queryITwinGroupMembersAsync(
         accessToken,
         TestConfig.itwinId
@@ -87,7 +87,7 @@ describe("AccessControlClient Group Members", () => {
     const topAmount = 3;
 
     // Act
-    const iTwinsResponse: AccessControlAPIResponse<GroupMember[]> =
+    const iTwinsResponse: BentleyAPIResponse<GroupMember[]> =
       await accessControlClient.groupMembers.queryITwinGroupMembersAsync(
         accessToken,
         TestConfig.itwinId,
@@ -106,7 +106,7 @@ describe("AccessControlClient Group Members", () => {
 
   it("should get a specific group member for an iTwin", async () => {
     // Act
-    const iTwinsResponse: AccessControlAPIResponse<GroupMember> =
+    const iTwinsResponse: BentleyAPIResponse<GroupMember> =
       await accessControlClient.groupMembers.getITwinGroupMemberAsync(
         accessToken,
         TestConfig.itwinId,
@@ -124,7 +124,7 @@ describe("AccessControlClient Group Members", () => {
     const notExistantGroupId = "22acf21e-0575-4faf-849b-bcd538718269";
 
     // Act
-    const iTwinsResponse: AccessControlAPIResponse<GroupMember> =
+    const iTwinsResponse: BentleyAPIResponse<GroupMember> =
       await accessControlClient.groupMembers.getITwinGroupMemberAsync(
         accessToken,
         TestConfig.itwinId,
@@ -140,7 +140,7 @@ describe("AccessControlClient Group Members", () => {
   it("should get add, get, update, and remove a group member", async () => {
     // --- Add Member ---
     // Act
-    const addUserMemberResponse: AccessControlAPIResponse<GroupMember[]> =
+    const addUserMemberResponse: BentleyAPIResponse<GroupMember[]> =
       await accessControlClient.groupMembers.addITwinGroupMembersAsync(
         accessToken,
         TestConfig.itwinId,
@@ -159,7 +159,7 @@ describe("AccessControlClient Group Members", () => {
 
     // --- Check member exists and has role ---
     // Act
-    const getGroupMemberResponse: AccessControlAPIResponse<GroupMember> =
+    const getGroupMemberResponse: BentleyAPIResponse<GroupMember> =
       await accessControlClient.groupMembers.getITwinGroupMemberAsync(
         accessToken,
         TestConfig.itwinId,
@@ -174,7 +174,7 @@ describe("AccessControlClient Group Members", () => {
 
     // --- Update member's role ---
     // Act
-    const updatedUserMemberResponse: AccessControlAPIResponse<GroupMember> =
+    const updatedUserMemberResponse: BentleyAPIResponse<GroupMember> =
       await accessControlClient.groupMembers.updateITwinGroupMemberAsync(
         accessToken,
         TestConfig.itwinId,
@@ -191,7 +191,7 @@ describe("AccessControlClient Group Members", () => {
 
     // --- Remove member ---
     // Act
-    const removeUserMemberResponse: AccessControlAPIResponse<undefined> =
+    const removeUserMemberResponse: BentleyAPIResponse<undefined> =
       await accessControlClient.groupMembers.removeITwinGroupMemberAsync(
         accessToken,
         TestConfig.itwinId,

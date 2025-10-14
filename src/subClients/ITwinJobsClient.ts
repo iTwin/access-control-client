@@ -6,7 +6,9 @@
  * @module AccessControlClient
  */
 import type { AccessToken } from "@itwin/core-bentley";
-import type { AccessControlAPIResponse, AccessControlResultMode, IITwinJobsClient, ITwinJob, ITwinJobActions } from "../accessControlTypes";
+import type { AccessControlResultMode, IITwinJobsClient } from "../accessControlTypes";
+import type { BentleyAPIResponse } from "../types/CommonApiTypes";
+import type { ITwinJob, ITwinJobActions } from "../types/ITwinJob";
 import { BaseClient } from "./BaseClient";
 
 export class ITwinJobsClient extends BaseClient implements IITwinJobsClient {
@@ -24,7 +26,7 @@ export class ITwinJobsClient extends BaseClient implements IITwinJobsClient {
     accessToken: AccessToken,
     iTwinId: string,
     iTwinJobActions: ITwinJobActions
-  ): Promise<AccessControlAPIResponse<ITwinJob>> {
+  ): Promise<BentleyAPIResponse<ITwinJob>> {
     const url = `${this._baseUrl}/${iTwinId}/jobs`;
     return this.sendGenericAPIRequest(accessToken, "POST", url, { actions: iTwinJobActions });
   }
@@ -36,12 +38,12 @@ export class ITwinJobsClient extends BaseClient implements IITwinJobsClient {
      * @param resultMode (Optional) Access Control result mode: minimal or representation (defaults to minimal)
      * @returns ITwin Job
      */
-  public async getITwinJobAsync(
+  public async getITwinJobAsync<T extends AccessControlResultMode = "minimal">(
     accessToken: AccessToken,
     iTwinId: string,
     iTwinJobId: string,
-    resultMode?: AccessControlResultMode
-  ): Promise<AccessControlAPIResponse<ITwinJob>> {
+    resultMode?: T
+  ): Promise<BentleyAPIResponse<T extends "representation" ? ITwinJob : Omit<ITwinJob, "error">>> {
     const headers = this.getResultModeHeaders(resultMode);
     const url = `${this._baseUrl}/${iTwinId}/jobs/${iTwinJobId}`;
     return this.sendGenericAPIRequest(accessToken, "GET", url, undefined, undefined, headers);
@@ -57,7 +59,7 @@ export class ITwinJobsClient extends BaseClient implements IITwinJobsClient {
     accessToken: AccessToken,
     iTwinId: string,
     iTwinJobId?: string
-  ): Promise<AccessControlAPIResponse<ITwinJobActions>> {
+  ): Promise<BentleyAPIResponse<ITwinJobActions>> {
     const url = `${this._baseUrl}/${iTwinId}/jobs/${iTwinJobId}/actions`;
     return this.sendGenericAPIRequest(accessToken, "GET", url, undefined, "actions");
   }

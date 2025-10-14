@@ -7,11 +7,11 @@
  */
 import type { AccessToken } from "@itwin/core-bentley";
 import type {
-  AccessControlAPIResponse,
   AccessControlQueryArg,
   IMemberInvitationsClient,
   MemberInvitation,
 } from "../accessControlTypes";
+import type { BentleyAPIResponse } from "../types/CommonApiTypes";
 import { BaseClient } from "./BaseClient";
 
 export class MemberInvitationsClient
@@ -30,7 +30,7 @@ export class MemberInvitationsClient
     accessToken: AccessToken,
     iTwinId: string,
     arg?: AccessControlQueryArg
-  ): Promise<AccessControlAPIResponse<MemberInvitation[]>> {
+  ): Promise<BentleyAPIResponse<MemberInvitation[]>> {
     let url = `${this._baseUrl}/${iTwinId}/members/invitations`;
 
     if (arg) {
@@ -50,7 +50,7 @@ export class MemberInvitationsClient
     accessToken: AccessToken,
     iTwinId: string,
     invitationId: string
-  ): Promise<AccessControlAPIResponse<undefined>> {
+  ): Promise<BentleyAPIResponse<undefined>> {
     const url = `${this._baseUrl}/${iTwinId}/members/invitations/${invitationId}`;
     return this.sendGenericAPIRequest(accessToken, "DELETE", url);
   }

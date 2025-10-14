@@ -12,8 +12,8 @@ import type {
   Method,
   ApimError,
   ODataQueryParams,
-} from "src/types/CommonApiTypes";
-import { hasProperty, ParameterMapping } from "src/types/typeUtils";
+} from "../types/CommonApiTypes";
+import { hasProperty, ParameterMapping } from "../types/typeUtils";
 
 /**
  * Type guard to validate if an object is a valid Error structure

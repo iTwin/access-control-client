@@ -7,12 +7,12 @@
  */
 import type { AccessToken } from "@itwin/core-bentley";
 import type {
-  AccessControlAPIResponse,
   AccessControlQueryArg,
   AddOwnerMemberResponse,
   IOwnerMembersClient,
   OwnerMember,
 } from "../accessControlTypes";
+import type { BentleyAPIResponse } from "../types/CommonApiTypes";
 import { BaseClient } from "./BaseClient";
 
 export class OwnerMembersClient
@@ -31,7 +31,7 @@ export class OwnerMembersClient
     accessToken: AccessToken,
     iTwinId: string,
     arg?: AccessControlQueryArg
-  ): Promise<AccessControlAPIResponse<OwnerMember[]>> {
+  ): Promise<BentleyAPIResponse<OwnerMember[]>> {
     let url = `${this._baseUrl}/${iTwinId}/members/owners`;
 
     if (arg) {
@@ -57,7 +57,7 @@ export class OwnerMembersClient
     accessToken: AccessToken,
     iTwinId: string,
     newMember: OwnerMember
-  ): Promise<AccessControlAPIResponse<AddOwnerMemberResponse>> {
+  ): Promise<BentleyAPIResponse<AddOwnerMemberResponse>> {
     const url = `${this._baseUrl}/${iTwinId}/members/owners`;
     return this.sendGenericAPIRequest(
       accessToken,
@@ -77,7 +77,7 @@ export class OwnerMembersClient
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string
-  ): Promise<AccessControlAPIResponse<undefined>> {
+  ): Promise<BentleyAPIResponse<undefined>> {
     const url = `${this._baseUrl}/${iTwinId}/members/owners/${memberId}`;
     return this.sendGenericAPIRequest(accessToken, "DELETE", url);
   }

@@ -7,13 +7,13 @@
  */
 import type { AccessToken } from "@itwin/core-bentley";
 import type {
-  AccessControlAPIResponse,
   AccessControlQueryArg,
   AddUserMember,
   AddUserMemberResponse,
   IUserMembersClient,
   UserMember,
 } from "../accessControlTypes";
+import type { BentleyAPIResponse } from "../types/CommonApiTypes";
 import { BaseClient } from "./BaseClient";
 
 export class UserMembersClient
@@ -32,7 +32,7 @@ export class UserMembersClient
     accessToken: AccessToken,
     iTwinId: string,
     arg?: AccessControlQueryArg
-  ): Promise<AccessControlAPIResponse<UserMember[]>> {
+  ): Promise<BentleyAPIResponse<UserMember[]>> {
     let url = `${this._baseUrl}/${iTwinId}/members/users`;
 
     if (arg) {
@@ -58,7 +58,7 @@ export class UserMembersClient
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string
-  ): Promise<AccessControlAPIResponse<UserMember>> {
+  ): Promise<BentleyAPIResponse<UserMember>> {
     const url = `${this._baseUrl}/${iTwinId}/members/users/${memberId}`;
     return this.sendGenericAPIRequest(
       accessToken,
@@ -81,7 +81,7 @@ export class UserMembersClient
     iTwinId: string,
     newMembers: AddUserMember[],
     customMessage?: string
-  ): Promise<AccessControlAPIResponse<AddUserMemberResponse>> {
+  ): Promise<BentleyAPIResponse<AddUserMemberResponse>> {
     const url = `${this._baseUrl}/${iTwinId}/members/users`;
     const body = {
       members: newMembers,
@@ -105,7 +105,7 @@ export class UserMembersClient
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string
-  ): Promise<AccessControlAPIResponse<undefined>> {
+  ): Promise<BentleyAPIResponse<undefined>> {
     const url = `${this._baseUrl}/${iTwinId}/members/users/${memberId}`;
     return this.sendGenericAPIRequest(accessToken, "DELETE", url);
   }
@@ -122,7 +122,7 @@ export class UserMembersClient
     iTwinId: string,
     memberId: string,
     roleIds: string[]
-  ): Promise<AccessControlAPIResponse<UserMember>> {
+  ): Promise<BentleyAPIResponse<UserMember>> {
     const url = `${this._baseUrl}/${iTwinId}/members/users/${memberId}`;
     const body = {
       roleIds,

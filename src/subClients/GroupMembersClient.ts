@@ -7,12 +7,12 @@
  */
 import type { AccessToken } from "@itwin/core-bentley";
 import type {
-  AccessControlAPIResponse,
   AccessControlQueryArg,
   AddGroupMember,
   GroupMember,
   IGroupMembersClient,
 } from "../accessControlTypes";
+import type { BentleyAPIResponse } from "../types/CommonApiTypes";
 import { BaseClient } from "./BaseClient";
 
 export class GroupMembersClient
@@ -31,7 +31,7 @@ export class GroupMembersClient
     accessToken: AccessToken,
     iTwinId: string,
     arg?: AccessControlQueryArg
-  ): Promise<AccessControlAPIResponse<GroupMember[]>> {
+  ): Promise<BentleyAPIResponse<GroupMember[]>> {
     let url = `${this._baseUrl}/${iTwinId}/members/groups`;
 
     if (arg) {
@@ -57,7 +57,7 @@ export class GroupMembersClient
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string
-  ): Promise<AccessControlAPIResponse<GroupMember>> {
+  ): Promise<BentleyAPIResponse<GroupMember>> {
     const url = `${this._baseUrl}/${iTwinId}/members/groups/${memberId}`;
     return this.sendGenericAPIRequest(
       accessToken,
@@ -78,7 +78,7 @@ export class GroupMembersClient
     accessToken: AccessToken,
     iTwinId: string,
     newMembers: AddGroupMember[]
-  ): Promise<AccessControlAPIResponse<GroupMember[]>> {
+  ): Promise<BentleyAPIResponse<GroupMember[]>> {
     const url = `${this._baseUrl}/${iTwinId}/members/groups`;
     const body = {
       members: newMembers,
@@ -102,7 +102,7 @@ export class GroupMembersClient
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string
-  ): Promise<AccessControlAPIResponse<undefined>> {
+  ): Promise<BentleyAPIResponse<undefined>> {
     const url = `${this._baseUrl}/${iTwinId}/members/groups/${memberId}`;
     return this.sendGenericAPIRequest(accessToken, "DELETE", url);
   }
@@ -119,7 +119,7 @@ export class GroupMembersClient
     iTwinId: string,
     memberId: string,
     roleIds: string[]
-  ): Promise<AccessControlAPIResponse<GroupMember>> {
+  ): Promise<BentleyAPIResponse<GroupMember>> {
     const url = `${this._baseUrl}/${iTwinId}/members/groups/${memberId}`;
     const body = {
       roleIds,

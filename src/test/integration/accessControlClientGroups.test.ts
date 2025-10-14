@@ -5,7 +5,8 @@
 import type { AccessToken } from "@itwin/core-bentley";
 import { beforeAll, describe, expect, it } from "vitest";
 import { AccessControlClient } from "../../AccessControlClient";
-import type { AccessControlAPIResponse, IAccessControlClient } from "../../accessControlTypes";
+import type { IAccessControlClient } from "../../accessControlTypes";
+import type { BentleyAPIResponse } from "../../types/CommonApiTypes";
 import { TestConfig } from "../TestConfig";
 
 describe("AccessControlClient Groups", () => {
@@ -306,7 +307,7 @@ describe("AccessControlClient Groups", () => {
 
     // --- DELETE GROUP ---
     // Act
-    const deleteResponse: AccessControlAPIResponse<undefined> =
+    const deleteResponse: BentleyAPIResponse<undefined> =
       await accessControlClient.groups.deleteITwinGroupAsync(accessToken, TestConfig.itwinId, createResponse.data?.group!.id as string);
 
     // Assert

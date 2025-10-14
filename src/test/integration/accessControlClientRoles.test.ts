@@ -5,7 +5,8 @@
 import type { AccessToken } from "@itwin/core-bentley";
 import { beforeAll, describe, expect, it } from "vitest";
 import { AccessControlClient } from "../../AccessControlClient";
-import type { AccessControlAPIResponse, IAccessControlClient, Role } from "../../accessControlTypes";
+import type { IAccessControlClient, Role } from "../../accessControlTypes";
+import type { BentleyAPIResponse } from "../../types/CommonApiTypes";
 import { TestConfig } from "../TestConfig";
 
 describe("AccessControlClient Roles", () => {
@@ -26,7 +27,7 @@ describe("AccessControlClient Roles", () => {
 
   it("should get a list of roles for an iTwin", async () => {
     // Act
-    const iTwinsResponse: AccessControlAPIResponse<Role[]> =
+    const iTwinsResponse: BentleyAPIResponse<Role[]> =
       await accessControlClient.roles.getITwinRolesAsync(accessToken, TestConfig.itwinId);
 
     // Assert
@@ -37,7 +38,7 @@ describe("AccessControlClient Roles", () => {
 
   it("should get a list of roles for an iTwin with custom url", async () => {
     // Act
-    const iTwinsResponse: AccessControlAPIResponse<Role[]> =
+    const iTwinsResponse: BentleyAPIResponse<Role[]> =
       await customAccessControlClient.roles.getITwinRolesAsync(accessToken, TestConfig.itwinId);
 
     // Assert
@@ -48,7 +49,7 @@ describe("AccessControlClient Roles", () => {
 
   it("should get a list of roles for an iTwin with additional headers", async () => {
     // Act
-    const iTwinsResponse: AccessControlAPIResponse<Role[]> =
+    const iTwinsResponse: BentleyAPIResponse<Role[]> =
       await customAccessControlClient.roles.getITwinRolesAsync(accessToken, TestConfig.itwinId, { "test-custom-header": "custom-value:xyz-123-abc" });
 
     // Assert
@@ -59,7 +60,7 @@ describe("AccessControlClient Roles", () => {
 
   it("should get a specific role for an iTwin", async () => {
     // Act
-    const iTwinsResponse: AccessControlAPIResponse<Role> =
+    const iTwinsResponse: BentleyAPIResponse<Role> =
       await accessControlClient.roles.getITwinRoleAsync(accessToken, TestConfig.itwinId, TestConfig.permanentRoleId1);
 
     // Assert
@@ -74,7 +75,7 @@ describe("AccessControlClient Roles", () => {
     const nonExistantRoleId = "22acf21e-0575-4faf-849b-bcd538718269";
 
     // Act
-    const iTwinsResponse: AccessControlAPIResponse<Role> =
+    const iTwinsResponse: BentleyAPIResponse<Role> =
       await accessControlClient.roles.getITwinRoleAsync(accessToken, TestConfig.itwinId, nonExistantRoleId);
 
     // Assert
@@ -93,7 +94,7 @@ describe("AccessControlClient Roles", () => {
     };
 
     // Act
-    const iTwinsResponse: AccessControlAPIResponse<Role> =
+    const iTwinsResponse: BentleyAPIResponse<Role> =
       await accessControlClient.roles.updateITwinRoleAsync(accessToken, TestConfig.itwinId, nonExistantRoleId, emptyUpdatedRole);
 
     // Assert
@@ -107,7 +108,7 @@ describe("AccessControlClient Roles", () => {
     const nonExistantRoleId = "22acf21e-0575-4faf-849b-bcd538718269";
 
     // Act
-    const iTwinsResponse: AccessControlAPIResponse<undefined> =
+    const iTwinsResponse: BentleyAPIResponse<undefined> =
       await accessControlClient.roles.deleteITwinRoleAsync(accessToken, TestConfig.itwinId, nonExistantRoleId);
 
     // Assert
@@ -128,7 +129,7 @@ describe("AccessControlClient Roles", () => {
     };
 
     // Act
-    const createResponse: AccessControlAPIResponse<Role> =
+    const createResponse: BentleyAPIResponse<Role> =
       await accessControlClient.roles.createITwinRoleAsync(accessToken, TestConfig.itwinId, newRole);
 
     // Assert
@@ -145,7 +146,7 @@ describe("AccessControlClient Roles", () => {
     };
 
     // Act
-    const updateResponse: AccessControlAPIResponse<Role> =
+    const updateResponse: BentleyAPIResponse<Role> =
       await accessControlClient.roles.updateITwinRoleAsync(accessToken, TestConfig.itwinId, createResponse.data!.id!, updatedRole);
 
     // Assert
@@ -155,7 +156,7 @@ describe("AccessControlClient Roles", () => {
 
     // --- DELETE ROLE ---
     // Act
-    const deleteResponse: AccessControlAPIResponse<undefined> =
+    const deleteResponse: BentleyAPIResponse<undefined> =
       await accessControlClient.roles.deleteITwinRoleAsync(accessToken, TestConfig.itwinId, createResponse.data!.id!);
 
     // Assert

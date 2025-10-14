@@ -8,6 +8,7 @@
 
 import type { AccessToken } from "@itwin/core-bentley";
 import { IGroupsClient } from "./subClients/accessControlClientInterfaces/GroupClient";
+import { ITwinJob, ITwinJobActions } from "./types/ITwinJob";
 
 //#region clients
 
@@ -26,13 +27,13 @@ export interface IPermissionsClient {
   /** Retrieves the list of all available permissions **/
   getPermissionsAsync(
     accessToken: AccessToken
-  ): Promise<AccessControlAPIResponse<Permission[]>>;
+  ): Promise<BentleyAPIResponse<Permission[]>>;
 
   /** Retrieves a list of permissions the identity has for a specified iTwin */
   getITwinPermissionsAsync(
     accessToken: AccessToken,
     iTwinId: string
-  ): Promise<AccessControlAPIResponse<Permission[]>>;
+  ): Promise<BentleyAPIResponse<Permission[]>>;
 }
 
 export interface IUserMembersClient {
@@ -41,14 +42,14 @@ export interface IUserMembersClient {
     accessToken: AccessToken,
     iTwinId: string,
     arg?: AccessControlQueryArg
-  ): Promise<AccessControlAPIResponse<UserMember[]>>;
+  ): Promise<BentleyAPIResponse<UserMember[]>>;
 
   /** Retrieves a specific user member for a specified iTwin. */
   getITwinUserMemberAsync(
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string
-  ): Promise<AccessControlAPIResponse<UserMember>>;
+  ): Promise<BentleyAPIResponse<UserMember>>;
 
   /** Add or invite new iTwin user members */
   addITwinUserMembersAsync(
@@ -56,14 +57,14 @@ export interface IUserMembersClient {
     iTwinId: string,
     newMembers: AddUserMember[],
     customMessage?: string
-  ): Promise<AccessControlAPIResponse<AddUserMemberResponse>>;
+  ): Promise<BentleyAPIResponse<AddUserMemberResponse>>;
 
   /**  Remove the specified iTwin user member */
   removeITwinUserMemberAsync(
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string
-  ): Promise<AccessControlAPIResponse<undefined>>;
+  ): Promise<BentleyAPIResponse<undefined>>;
 
   /**  Update iTwin user member roles */
   updateITwinUserMemberAsync(
@@ -71,7 +72,7 @@ export interface IUserMembersClient {
     iTwinId: string,
     memberId: string,
     roleIds: string[]
-  ): Promise<AccessControlAPIResponse<UserMember>>;
+  ): Promise<BentleyAPIResponse<UserMember>>;
 }
 
 export interface IOwnerMembersClient {
@@ -80,21 +81,21 @@ export interface IOwnerMembersClient {
     accessToken: AccessToken,
     iTwinId: string,
     arg?: AccessControlQueryArg
-  ): Promise<AccessControlAPIResponse<OwnerMember[]>>;
+  ): Promise<BentleyAPIResponse<OwnerMember[]>>;
 
   /** Add or invite new iTwin owner member */
   addITwinOwnerMemberAsync(
     accessToken: AccessToken,
     iTwinId: string,
     newMember: OwnerMember
-  ): Promise<AccessControlAPIResponse<AddOwnerMemberResponse>>;
+  ): Promise<BentleyAPIResponse<AddOwnerMemberResponse>>;
 
   /**  Remove the specified iTwin owner member */
   removeITwinOwnerMemberAsync(
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string
-  ): Promise<AccessControlAPIResponse<undefined>>;
+  ): Promise<BentleyAPIResponse<undefined>>;
 }
 
 export interface IGroupMembersClient {
@@ -103,28 +104,28 @@ export interface IGroupMembersClient {
     accessToken: AccessToken,
     iTwinId: string,
     arg?: AccessControlQueryArg
-  ): Promise<AccessControlAPIResponse<GroupMember[]>>;
+  ): Promise<BentleyAPIResponse<GroupMember[]>>;
 
   /** Retrieves a specific group member for a specified iTwin. */
   getITwinGroupMemberAsync(
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string
-  ): Promise<AccessControlAPIResponse<GroupMember>>;
+  ): Promise<BentleyAPIResponse<GroupMember>>;
 
   /** Add new iTwin group members */
   addITwinGroupMembersAsync(
     accessToken: AccessToken,
     iTwinId: string,
     newMembers: AddGroupMember[]
-  ): Promise<AccessControlAPIResponse<GroupMember[]>>;
+  ): Promise<BentleyAPIResponse<GroupMember[]>>;
 
   /**  Remove the specified iTwin group member */
   removeITwinGroupMemberAsync(
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string
-  ): Promise<AccessControlAPIResponse<undefined>>;
+  ): Promise<BentleyAPIResponse<undefined>>;
 
   /**  Update iTwin group member roles */
   updateITwinGroupMemberAsync(
@@ -132,7 +133,7 @@ export interface IGroupMembersClient {
     iTwinId: string,
     memberId: string,
     roleIds: string[]
-  ): Promise<AccessControlAPIResponse<GroupMember>>;
+  ): Promise<BentleyAPIResponse<GroupMember>>;
 }
 
 export interface IRolesClient {
@@ -141,28 +142,28 @@ export interface IRolesClient {
     accessToken: AccessToken,
     iTwinId: string,
     additionalHeaders?: { [key: string]: string }
-  ): Promise<AccessControlAPIResponse<Role[]>>;
+  ): Promise<BentleyAPIResponse<Role[]>>;
 
   /** Retrieves a role for a specified iTwin */
   getITwinRoleAsync(
     accessToken: AccessToken,
     iTwinId: string,
     roleId: string
-  ): Promise<AccessControlAPIResponse<Role>>;
+  ): Promise<BentleyAPIResponse<Role>>;
 
   /** Creates a new iTwin Role */
   createITwinRoleAsync(
     accessToken: AccessToken,
     iTwinId: string,
     role: Role
-  ): Promise<AccessControlAPIResponse<Role>>;
+  ): Promise<BentleyAPIResponse<Role>>;
 
   /** Removes an existing iTwin Role */
   deleteITwinRoleAsync(
     accessToken: AccessToken,
     iTwinId: string,
     roleId: string
-  ): Promise<AccessControlAPIResponse<undefined>>;
+  ): Promise<BentleyAPIResponse<undefined>>;
 
   /** Updates an existing iTwin Role */
   updateITwinRoleAsync(
@@ -170,7 +171,7 @@ export interface IRolesClient {
     iTwinId: string,
     roleId: string,
     role: Role
-  ): Promise<AccessControlAPIResponse<Role>>;
+  ): Promise<BentleyAPIResponse<Role>>;
 }
 
 export interface IMemberInvitationsClient {
@@ -179,14 +180,14 @@ export interface IMemberInvitationsClient {
     accessToken: AccessToken,
     iTwinId: string,
     arg?: AccessControlQueryArg
-  ): Promise<AccessControlAPIResponse<MemberInvitation[]>>;
+  ): Promise<BentleyAPIResponse<MemberInvitation[]>>;
 
   /** Removes an existing member invitation. */
   deleteITwinMemberInvitationAsync(
     accessToken: AccessToken,
     iTwinId: string,
     invitationId: string
-  ): Promise<AccessControlAPIResponse<undefined>>;
+  ): Promise<BentleyAPIResponse<undefined>>;
 }
 
 export interface IITwinJobsClient {
@@ -195,22 +196,22 @@ export interface IITwinJobsClient {
     accessToken: AccessToken,
     iTwinId: string,
     iTwinJobActions: ITwinJobActions
-  ): Promise<AccessControlAPIResponse<ITwinJob>>;
+  ): Promise<BentleyAPIResponse<ITwinJob>>;
 
   /** Gets an iTwin Job. To see errors, pass in the `representation` result mode. */
-  getITwinJobAsync(
+  getITwinJobAsync<T extends AccessControlResultMode = "minimal">(
     accessToken: AccessToken,
     iTwinId: string,
-    iTwinJobId?: string,
-    resultMode?: AccessControlResultMode
-  ): Promise<AccessControlAPIResponse<ITwinJob>>;
+    iTwinJobId: string,
+    resultMode?: T
+  ): Promise<BentleyAPIResponse<T extends "representation" ? ITwinJob : Omit<ITwinJob, "error">>>;
 
   /** Gets the iTwin Job Actions for a specified iTwin Job. */
   getITwinJobActionsAsync(
     accessToken: AccessToken,
     iTwinId: string,
     iTwinJobId?: string
-  ): Promise<AccessControlAPIResponse<ITwinJobActions>>;
+  ): Promise<BentleyAPIResponse<ITwinJobActions>>;
 }
 
 //#endregion
@@ -226,13 +227,6 @@ export interface AccessControlQueryArg {
   top?: number;
   skip?: number;
   resultMode?: AccessControlResultMode;
-}
-
-export interface AccessControlAPIResponse<T> {
-  data?: T;
-  status: number;
-  error?: Error;
-  headers: { [key: string]: any };
 }
 
 export interface Error {
@@ -323,36 +317,6 @@ export interface MemberInvitation {
 export enum MemberInvitationStatus {
   Pending = "Pending",
   Accepted = "Accepted"
-}
-
-export enum ITwinJobStatus {
-  Active = "Active",
-  Complete = "Completed",
-  PartialCompleted = "PartialCompleted",
-  Failed = "Failed"
-}
-
-/** Contains extra properties with "representation" result mode.
- */
-export interface ITwinJob {
-  id: string;
-  itwinId: string;
-  status: ITwinJobStatus;
-
-  // extra properties available with "representation" result mode:
-  error?: ErrorDetail[];
-}
-
-export interface ITwinJobActions {
-  assignRoles?: ITwinJobAction[];
-  unassignRoles?: ITwinJobAction[];
-  removeMembers?: Omit<ITwinJobAction, "roleIds">[];
-  options?: any;
-}
-
-export interface ITwinJobAction {
-  email: string;
-  roleIds: string[];
 }
 
 //#endregion
