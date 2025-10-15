@@ -8,7 +8,6 @@ import { AccessControlClient } from "../../AccessControlClient";
 import type {
   AddUserMemberResponse,
   IAccessControlClient,
-  MemberInvitation,
 } from "../../accessControlTypes";
 import type { BentleyAPIResponse } from "../../types/CommonApiTypes";
 import { TestConfig } from "../TestConfig";
@@ -32,7 +31,7 @@ describe("AccessControlClient Member Invitations", () => {
   beforeAll(async () => {
     accessToken = await TestConfig.getAccessToken();
 
-    const getMemberInvitationsResponse: BentleyAPIResponse<MemberInvitation[]> =
+    const getMemberInvitationsResponse =
       await accessControlClient.memberInvitations.queryITwinMemberInvitationsAsync(
         accessToken,
         TestConfig.itwinId
@@ -40,7 +39,7 @@ describe("AccessControlClient Member Invitations", () => {
     expect(getMemberInvitationsResponse.status).toBe(200);
     expect(getMemberInvitationsResponse.data).not.toBeNull();
 
-    if (getMemberInvitationsResponse.data!.length < 8) {
+    if (getMemberInvitationsResponse.data!.invitations.length < 8) {
       const addUserMemberResponse: BentleyAPIResponse<AddUserMemberResponse> =
       await accessControlClient.userMembers.addITwinUserMembersAsync(
         accessToken,
@@ -90,7 +89,7 @@ describe("AccessControlClient Member Invitations", () => {
 
   it("should get a list of member invitations for an iTwin", async () => {
     // Act
-    const iTwinsResponse: BentleyAPIResponse<MemberInvitation[]> =
+    const iTwinsResponse =
       await accessControlClient.memberInvitations.queryITwinMemberInvitationsAsync(
         accessToken,
         TestConfig.itwinId
@@ -99,7 +98,8 @@ describe("AccessControlClient Member Invitations", () => {
     // Assert
     expect(iTwinsResponse.status).toBe(200);
     expect(iTwinsResponse.data).toBeDefined();
-    expect(iTwinsResponse.data!.length).toBeGreaterThan(7);
+    expect(iTwinsResponse.data!.invitations.length).toBeGreaterThan(7);
+    expect(iTwinsResponse.data?._links).toBeDefined();
   });
 
   it("should get a filtered list of member invitations for an iTwin using $top", async () => {
@@ -107,7 +107,7 @@ describe("AccessControlClient Member Invitations", () => {
     const topAmount = 5;
 
     // Act
-    const iTwinsResponse: BentleyAPIResponse<MemberInvitation[]> =
+    const iTwinsResponse =
     await accessControlClient.memberInvitations.queryITwinMemberInvitationsAsync(
       accessToken,
       TestConfig.itwinId,
@@ -118,12 +118,12 @@ describe("AccessControlClient Member Invitations", () => {
     expect(iTwinsResponse.status).toBe(200);
     expect(iTwinsResponse.data).toBeDefined();
     expect(iTwinsResponse.data!).toBeDefined();
-    expect(iTwinsResponse.data!.length).toBe(topAmount);
+    expect(iTwinsResponse.data!.invitations.length).toBe(topAmount);
   });
 
   it("should get a filtered list of member invitations for an iTwin using $skip", async () => {
     // Arrange
-    const unFilteredList: BentleyAPIResponse<MemberInvitation[]> =
+    const unFilteredList =
     await accessControlClient.memberInvitations.queryITwinMemberInvitationsAsync(
       accessToken,
       TestConfig.itwinId
@@ -132,7 +132,7 @@ describe("AccessControlClient Member Invitations", () => {
     const topAmount = 3;
 
     // Act
-    const iTwinsResponse: BentleyAPIResponse<MemberInvitation[]> =
+    const iTwinsResponse =
     await accessControlClient.memberInvitations.queryITwinMemberInvitationsAsync(
       accessToken,
       TestConfig.itwinId,
@@ -143,9 +143,9 @@ describe("AccessControlClient Member Invitations", () => {
     expect(iTwinsResponse.status).toBe(200);
     expect(iTwinsResponse.data).toBeDefined();
     expect(iTwinsResponse.data!).toBeDefined();
-    expect(iTwinsResponse.data!.length).toBe(topAmount);
-    unFilteredList.data!.slice(0, skipAmmount).forEach((member) => {
-      expect(iTwinsResponse.data!.includes(member)).toBe(false);
+    expect(iTwinsResponse.data!.invitations.length).toBe(topAmount);
+    unFilteredList.data?.invitations!.slice(0, skipAmmount).forEach((member) => {
+      expect(iTwinsResponse.data?.invitations!.includes(member)).toBe(false);
     });
   });
 

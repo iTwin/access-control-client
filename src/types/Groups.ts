@@ -1,4 +1,9 @@
-import { GroupUser } from "./Users";
+/*---------------------------------------------------------------------------------------------
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
+
+import type { GroupUser } from "./Users";
 
 /**
  * Represents an access control group within an iTwin.

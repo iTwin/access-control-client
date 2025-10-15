@@ -69,7 +69,7 @@ describe("AccessControlClient iTwin Jobs", () => {
 
   it("should get a 404 when trying to get a non-existant iTwin Job", async () => {
     // Act
-    const iTwinJobResponse: BentleyAPIResponse<ITwinJob> =
+    const iTwinJobResponse =
       await accessControlClient.itwinJobs.getITwinJobAsync(accessToken, TestConfig.itwinId, "non-existant-job-id");
 
     // Assert

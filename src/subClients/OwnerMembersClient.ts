@@ -35,7 +35,7 @@ export class OwnerMembersClient
     let url = `${this._baseUrl}/${iTwinId}/members/owners`;
 
     if (arg) {
-      url += `?${this.getQueryString(OwnerMembersClient.PAGINATION_PARAM_MAPPING, { top: arg.top, skip: arg.skip })}`;
+      url += `?${this.getQueryString(OwnerMembersClient.paginationParamMapping, { top: arg.top, skip: arg.skip })}`;
     }
 
     return this.sendGenericAPIRequest(

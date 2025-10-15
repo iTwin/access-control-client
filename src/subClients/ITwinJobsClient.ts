@@ -6,10 +6,10 @@
  * @module AccessControlClient
  */
 import type { AccessToken } from "@itwin/core-bentley";
-import type { AccessControlResultMode, IITwinJobsClient } from "../accessControlTypes";
-import type { BentleyAPIResponse } from "../types/CommonApiTypes";
+import type { BentleyAPIResponse, ResultMode } from "../types/CommonApiTypes";
 import type { ITwinJob, ITwinJobActions } from "../types/ITwinJob";
 import { BaseClient } from "./BaseClient";
+import type { IITwinJobsClient } from "./accessControlClientInterfaces/ITwinJobsClient";
 
 export class ITwinJobsClient extends BaseClient implements IITwinJobsClient {
   public constructor(url?: string) {
@@ -38,7 +38,7 @@ export class ITwinJobsClient extends BaseClient implements IITwinJobsClient {
      * @param resultMode (Optional) Access Control result mode: minimal or representation (defaults to minimal)
      * @returns ITwin Job
      */
-  public async getITwinJobAsync<T extends AccessControlResultMode = "minimal">(
+  public async getITwinJobAsync<T extends ResultMode = "minimal">(
     accessToken: AccessToken,
     iTwinId: string,
     iTwinJobId: string,
@@ -69,7 +69,7 @@ export class ITwinJobsClient extends BaseClient implements IITwinJobsClient {
    * @param resultMode (Optional) Access Control result mode
    * @protected
    */
-  protected getResultModeHeaders(resultMode: AccessControlResultMode = "minimal"): Record<string, string> {
+  protected getResultModeHeaders(resultMode: ResultMode = "minimal"): Record<string, string> {
     return {
       prefer: `return=${resultMode}`,
     };

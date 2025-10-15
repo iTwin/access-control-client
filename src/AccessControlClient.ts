@@ -8,22 +8,22 @@
 import type {
   IAccessControlClient,
   IGroupMembersClient,
-  IITwinJobsClient,
-  IMemberInvitationsClient,
   IOwnerMembersClient,
   IPermissionsClient,
   IRolesClient,
   IUserMembersClient,
 } from "./accessControlTypes";
+import { GroupMembersClient } from "./subClients/GroupMembersClient";
+import { GroupsClient } from "./subClients/GroupsClient";
+import { ITwinJobsClient } from "./subClients/ITwinJobsClient";
+import { MemberInvitationsClient } from "./subClients/MemberInvitationsClient";
+import { OwnerMembersClient } from "./subClients/OwnerMembersClient";
 import { PermissionsClient } from "./subClients/PermissionsClient";
 import { RolesClient } from "./subClients/RolesClient";
-import { GroupsClient } from "./subClients/GroupsClient";
 import { UserMembersClient } from "./subClients/UserMembersClient";
-import { GroupMembersClient } from "./subClients/GroupMembersClient";
-import { OwnerMembersClient } from "./subClients/OwnerMembersClient";
-import { MemberInvitationsClient } from "./subClients/MemberInvitationsClient";
-import { ITwinJobsClient } from "./subClients/ITwinJobsClient";
-import { IGroupsClient } from "./subClients/accessControlClientInterfaces/GroupClient";
+import type { IGroupsClient } from "./subClients/accessControlClientInterfaces/GroupClient";
+import { IMemberInvitationsClient } from "./subClients/accessControlClientInterfaces/IMemberInvitationsClient";
+import type { IITwinJobsClient } from "./subClients/accessControlClientInterfaces/ITwinJobsClient";
 
 export class AccessControlClient implements IAccessControlClient {
   public permissions: IPermissionsClient;

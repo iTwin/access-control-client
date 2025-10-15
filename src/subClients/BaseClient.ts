@@ -7,11 +7,11 @@
  */
 import type { AccessToken } from "@itwin/core-bentley";
 import type {
-  BentleyAPIResponse,
-  RequestConfig,
-  Method,
   ApimError,
+  BentleyAPIResponse,
+  Method,
   ODataQueryParams,
+  RequestConfig,
 } from "../types/CommonApiTypes";
 import { hasProperty, ParameterMapping } from "../types/typeUtils";
 
@@ -71,7 +71,7 @@ export class BaseClient {
    *
    * @readonly
    */
-  protected static readonly PAGINATION_PARAM_MAPPING: ParameterMapping<Pick<ODataQueryParams, "top" | "skip">> =
+  protected static readonly paginationParamMapping: ParameterMapping<Pick<ODataQueryParams, "top" | "skip">> =
     {
       top: "$top",
       skip: "$skip",
@@ -158,7 +158,7 @@ export class BaseClient {
    * @param additionalHeaders Optional additional headers to include in the request
    * @returns RequestConfig object with method, url, body, and headers
    */
-  protected getRequestOptions<TData extends unknown>(
+  protected getRequestOptions<TData>(
     accessTokenString: AccessToken,
     method: Method,
     url: string,
@@ -172,8 +172,7 @@ export class BaseClient {
     if (!url) {
       throw new Error("URL is required");
     }
-    let body: string | undefined;
-    body = JSON.stringify(data);
+    const body: string | undefined = JSON.stringify(data);
 
     return {
       method,
@@ -197,7 +196,7 @@ export class BaseClient {
    * @example
    * ```typescript
    * const queryString = this.getQueryString(
-   *   BaseClient.PAGINATION_PARAM_MAPPING,
+   *   BaseClient.paginationParamMapping,
    *   {
    *     top: 10,
    *     skip: 5,

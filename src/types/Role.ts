@@ -3,10 +3,11 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-export interface GroupUser {
+import type { Permission } from "./Permission";
+
+export interface Role {
   id?: string;
-  email?: string;
-  givenName?: string;
-  surname?: string;
-  organization?: string;
+  displayName: string;
+  description: string;
+  permissions: Permission[];
 }

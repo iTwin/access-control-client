@@ -7,8 +7,12 @@
  */
 
 import type { AccessToken } from "@itwin/core-bentley";
-import { IGroupsClient } from "./subClients/accessControlClientInterfaces/GroupClient";
-import { ITwinJob, ITwinJobActions } from "./types/ITwinJob";
+import type { IGroupsClient } from "./subClients/accessControlClientInterfaces/GroupClient";
+import type { IMemberInvitationsClient } from "./subClients/accessControlClientInterfaces/IMemberInvitationsClient";
+import type { IITwinJobsClient } from "./subClients/accessControlClientInterfaces/ITwinJobsClient";
+import type { BentleyAPIResponse, ResultMode } from "./types/CommonApiTypes";
+import type { MemberInvitation } from "./types/Invitations";
+import type { Role } from "./types/Role";
 
 //#region clients
 
@@ -27,13 +31,13 @@ export interface IPermissionsClient {
   /** Retrieves the list of all available permissions **/
   getPermissionsAsync(
     accessToken: AccessToken
-  ): Promise<BentleyAPIResponse<Permission[]>>;
+  ): Promise<BentleyAPIResponse<string[]>>;
 
   /** Retrieves a list of permissions the identity has for a specified iTwin */
   getITwinPermissionsAsync(
     accessToken: AccessToken,
     iTwinId: string
-  ): Promise<BentleyAPIResponse<Permission[]>>;
+  ): Promise<BentleyAPIResponse<string[]>>;
 }
 
 export interface IUserMembersClient {
@@ -174,59 +178,14 @@ export interface IRolesClient {
   ): Promise<BentleyAPIResponse<Role>>;
 }
 
-export interface IMemberInvitationsClient {
-  /** Retrieves a list of member invitations. */
-  queryITwinMemberInvitationsAsync(
-    accessToken: AccessToken,
-    iTwinId: string,
-    arg?: AccessControlQueryArg
-  ): Promise<BentleyAPIResponse<MemberInvitation[]>>;
-
-  /** Removes an existing member invitation. */
-  deleteITwinMemberInvitationAsync(
-    accessToken: AccessToken,
-    iTwinId: string,
-    invitationId: string
-  ): Promise<BentleyAPIResponse<undefined>>;
-}
-
-export interface IITwinJobsClient {
-  /** Creates a new iTwin Job */
-  createITwinJobAsync(
-    accessToken: AccessToken,
-    iTwinId: string,
-    iTwinJobActions: ITwinJobActions
-  ): Promise<BentleyAPIResponse<ITwinJob>>;
-
-  /** Gets an iTwin Job. To see errors, pass in the `representation` result mode. */
-  getITwinJobAsync<T extends AccessControlResultMode = "minimal">(
-    accessToken: AccessToken,
-    iTwinId: string,
-    iTwinJobId: string,
-    resultMode?: T
-  ): Promise<BentleyAPIResponse<T extends "representation" ? ITwinJob : Omit<ITwinJob, "error">>>;
-
-  /** Gets the iTwin Job Actions for a specified iTwin Job. */
-  getITwinJobActionsAsync(
-    accessToken: AccessToken,
-    iTwinId: string,
-    iTwinJobId?: string
-  ): Promise<BentleyAPIResponse<ITwinJobActions>>;
-}
-
 //#endregion
 
 //#region generic-responses
 
-/**
- * Optional result mode. Minimal is the default, representation returns extra properties
- */
-export type AccessControlResultMode = "minimal" | "representation";
-
 export interface AccessControlQueryArg {
   top?: number;
   skip?: number;
-  resultMode?: AccessControlResultMode;
+  resultMode?: ResultMode;
 }
 
 export interface Error {
@@ -259,8 +218,6 @@ export interface AddUserMemberResponse {
 //#endregion
 
 //#region base object
-
-export type Permission = string;
 
 export interface UserMember {
   id?: string;
@@ -296,27 +253,6 @@ export interface GroupMember {
 export interface AddGroupMember {
   groupId: string;
   roleIds: string[];
-}
-
-export interface Role {
-  id?: string;
-  displayName: string;
-  description: string;
-  permissions: Permission[];
-}
-export interface MemberInvitation {
-  id: string;
-  email: string;
-  invitedByEmail: string;
-  status: MemberInvitationStatus;
-  createdDate: string;
-  expirationDate: string;
-  roles?: Omit<Role, "permissions"|"description">[];
-}
-
-export enum MemberInvitationStatus {
-  Pending = "Pending",
-  Accepted = "Accepted"
 }
 
 //#endregion

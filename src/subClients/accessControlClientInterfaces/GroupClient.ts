@@ -1,6 +1,10 @@
+/*---------------------------------------------------------------------------------------------
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 import type { AccessToken } from "@itwin/core-bentley";
-import type { Group, MultipleGroupsResponse, SingleGroupResponse } from "../../types/Groups";
 import type { BentleyAPIResponse } from "../../types/CommonApiTypes";
+import type { Group, MultipleGroupsResponse, SingleGroupResponse } from "../../types/Groups";
 
 export interface IGroupsClient {
   /** Retrieves a list of groups the for a specified iTwin */

@@ -6,8 +6,9 @@
  * @module AccessControlClient
  */
 import type { AccessToken } from "@itwin/core-bentley";
-import type { IRolesClient, Role } from "../accessControlTypes";
+import type { IRolesClient } from "../accessControlTypes";
 import type { BentleyAPIResponse } from "../types/CommonApiTypes";
+import type { Role } from "../types/Role";
 import { BaseClient } from "./BaseClient";
 
 export class RolesClient extends BaseClient implements IRolesClient {

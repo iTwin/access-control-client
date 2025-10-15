@@ -8,10 +8,10 @@
 import type { AccessToken } from "@itwin/core-bentley";
 import type {
   AccessControlQueryArg,
-  IMemberInvitationsClient,
-  MemberInvitation,
 } from "../accessControlTypes";
 import type { BentleyAPIResponse } from "../types/CommonApiTypes";
+import { MultipleMemberInvitationResponse } from "../types/Invitations";
+import { IMemberInvitationsClient } from "./accessControlClientInterfaces/IMemberInvitationsClient";
 import { BaseClient } from "./BaseClient";
 
 export class MemberInvitationsClient
@@ -29,12 +29,12 @@ export class MemberInvitationsClient
   public async queryITwinMemberInvitationsAsync(
     accessToken: AccessToken,
     iTwinId: string,
-    arg?: AccessControlQueryArg
-  ): Promise<BentleyAPIResponse<MemberInvitation[]>> {
+    arg?: Omit<AccessControlQueryArg, "result">
+  ): Promise<BentleyAPIResponse<MultipleMemberInvitationResponse>> {
     let url = `${this._baseUrl}/${iTwinId}/members/invitations`;
 
     if (arg) {
-      url += `?${this.getQueryString(MemberInvitationsClient.PAGINATION_PARAM_MAPPING, { top: arg.top, skip: arg.skip })}`;
+      url += `?${this.getQueryString(MemberInvitationsClient.paginationParamMapping, { top: arg.top, skip: arg.skip })}`;
     }
 
     return this.sendGenericAPIRequest(
@@ -42,7 +42,6 @@ export class MemberInvitationsClient
       "GET",
       url,
       undefined,
-      "invitations"
     );
   }
 

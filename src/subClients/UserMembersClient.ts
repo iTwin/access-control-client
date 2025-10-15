@@ -36,7 +36,7 @@ export class UserMembersClient
     let url = `${this._baseUrl}/${iTwinId}/members/users`;
 
     if (arg) {
-      url += `?${this.getQueryString(UserMembersClient.PAGINATION_PARAM_MAPPING, { top: arg.top, skip: arg.skip })}`;
+      url += `?${this.getQueryString(UserMembersClient.paginationParamMapping, { top: arg.top, skip: arg.skip })}`;
     }
 
     return this.sendGenericAPIRequest(
