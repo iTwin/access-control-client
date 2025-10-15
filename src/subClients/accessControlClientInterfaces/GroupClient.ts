@@ -29,7 +29,7 @@ export interface IGroupsClient {
   ): Promise<BentleyAPIResponse<SingleGroupResponse>>;
 
   /** Removes an existing iTwin group */
-  deleteITwinGroupAsync(
+  deleteITwinGroup(
     accessToken: AccessToken,
     iTwinId: string,
     groupId: string

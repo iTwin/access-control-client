@@ -8,14 +8,14 @@ import type { ITwinJob, ITwinJobActions } from "../../types/ITwinJob";
 
 export interface IITwinJobsClient {
   /** Creates a new iTwin Job */
-  createITwinJobAsync(
+  createITwinJob(
     accessToken: AccessToken,
     iTwinId: string,
     iTwinJobActions: ITwinJobActions
   ): Promise<BentleyAPIResponse<ITwinJob>>;
 
   /** Gets an iTwin Job. To see errors, pass in the `representation` result mode. */
-  getITwinJobAsync<T extends ResultMode = "minimal">(
+  getITwinJob<T extends ResultMode = "minimal">(
     accessToken: AccessToken,
     iTwinId: string,
     iTwinJobId: string,
@@ -23,7 +23,7 @@ export interface IITwinJobsClient {
   ): Promise<BentleyAPIResponse<T extends "representation" ? ITwinJob : Omit<ITwinJob, "error">>>;
 
   /** Gets the iTwin Job Actions for a specified iTwin Job. */
-  getITwinJobActionsAsync(
+  getITwinJobActions(
     accessToken: AccessToken,
     iTwinId: string,
     iTwinJobId?: string

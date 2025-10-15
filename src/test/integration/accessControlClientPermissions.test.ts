@@ -29,7 +29,7 @@ describe("AccessControlClient Permissions", () => {
   it("should get a list of permissions", async () => {
     // Act
     const iTwinsResponse: BentleyAPIResponse<Permission[]> =
-      await accessControlClient.permissions.getPermissionsAsync(accessToken);
+      await accessControlClient.permissions.getPermissions(accessToken);
 
     // Assert
     expect(iTwinsResponse.status).toBe(200);
@@ -40,7 +40,7 @@ describe("AccessControlClient Permissions", () => {
   it("should get a list of permissions with custom url", async () => {
     // Act
     const iTwinsResponse: BentleyAPIResponse<Permission[]> =
-      await customAccessControlClient.permissions.getPermissionsAsync(accessToken);
+      await customAccessControlClient.permissions.getPermissions(accessToken);
 
     // Assert
     expect(iTwinsResponse.status).toBe(200);
@@ -51,7 +51,7 @@ describe("AccessControlClient Permissions", () => {
   it("should get a list of permissions for an iTwin", async () => {
     // Act
     const iTwinsResponse: BentleyAPIResponse<Permission[]> =
-      await accessControlClient.permissions.getITwinPermissionsAsync(accessToken, TestConfig.itwinId);
+      await accessControlClient.permissions.getITwinPermissions(accessToken, TestConfig.itwinId);
 
     // Assert
     expect(iTwinsResponse.status).toBe(200);
@@ -65,7 +65,7 @@ describe("AccessControlClient Permissions", () => {
 
     // Act
     const iTwinsResponse: BentleyAPIResponse<Permission[]> =
-      await accessControlClient.permissions.getITwinPermissionsAsync(accessToken, notExistantITwinId);
+      await accessControlClient.permissions.getITwinPermissions(accessToken, notExistantITwinId);
 
     // Assert
     expect(iTwinsResponse.status).toBe(404);

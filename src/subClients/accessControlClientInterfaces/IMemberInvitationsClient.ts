@@ -9,14 +9,14 @@ import type { MultipleMemberInvitationResponse } from "../../types/Invitations";
 
 export interface IMemberInvitationsClient {
   /** Retrieves a list of member invitations. */
-  queryITwinMemberInvitationsAsync(
+  queryITwinMemberInvitations(
     accessToken: AccessToken,
     iTwinId: string,
     arg?: Omit<AccessControlQueryArg, "result">
   ): Promise<BentleyAPIResponse<MultipleMemberInvitationResponse>>;
 
   /** Removes an existing member invitation. */
-  deleteITwinMemberInvitationAsync(
+  deleteITwinMemberInvitation(
     accessToken: AccessToken,
     iTwinId: string,
     invitationId: string

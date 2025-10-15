@@ -34,7 +34,7 @@ describe("AccessControlClient Owner Members", () => {
   it("should get a list of owner members for an iTwin", async () => {
     // Act
     const iTwinsResponse: BentleyAPIResponse<OwnerMember[]> =
-      await accessControlClient.ownerMembers.queryITwinOwnerMembersAsync(
+      await accessControlClient.ownerMembers.queryITwinOwnerMembers(
         accessToken,
         TestConfig.itwinId
       );
@@ -48,7 +48,7 @@ describe("AccessControlClient Owner Members", () => {
   it("should get a list of owner members for an iTwin with custom url", async () => {
     // Act
     const iTwinsResponse: BentleyAPIResponse<OwnerMember[]> =
-      await customAccessControlClient.ownerMembers.queryITwinOwnerMembersAsync(
+      await customAccessControlClient.ownerMembers.queryITwinOwnerMembers(
         accessToken,
         TestConfig.itwinId,
       );
@@ -65,7 +65,7 @@ describe("AccessControlClient Owner Members", () => {
 
     // Act
     const iTwinsResponse: BentleyAPIResponse<OwnerMember[]> =
-      await accessControlClient.ownerMembers.queryITwinOwnerMembersAsync(
+      await accessControlClient.ownerMembers.queryITwinOwnerMembers(
         accessToken,
         TestConfig.itwinId,
         { top: topAmount }
@@ -81,7 +81,7 @@ describe("AccessControlClient Owner Members", () => {
   it("should get a filtered list of owner members for an iTwin using $skip", async () => {
     // Arrange
     const unFilteredList: BentleyAPIResponse<OwnerMember[]> =
-      await accessControlClient.ownerMembers.queryITwinOwnerMembersAsync(
+      await accessControlClient.ownerMembers.queryITwinOwnerMembers(
         accessToken,
         TestConfig.itwinId
       );
@@ -90,7 +90,7 @@ describe("AccessControlClient Owner Members", () => {
 
     // Act
     const iTwinsResponse: BentleyAPIResponse<OwnerMember[]> =
-      await accessControlClient.ownerMembers.queryITwinOwnerMembersAsync(
+      await accessControlClient.ownerMembers.queryITwinOwnerMembers(
         accessToken,
         TestConfig.itwinId,
         { skip: skipAmmount, top: topAmount }
@@ -111,7 +111,7 @@ describe("AccessControlClient Owner Members", () => {
     const managerEmail = TestUsers.manager.email ? TestUsers.manager.email : TestConfig.managerUserEmail;
     // Act
     const addOwnerMemberResponse: BentleyAPIResponse<AddOwnerMemberResponse> =
-      await accessControlClient.ownerMembers.addITwinOwnerMemberAsync(
+      await accessControlClient.ownerMembers.addITwinOwnerMember(
         accessToken,
         TestConfig.itwinId,
         {
@@ -127,7 +127,7 @@ describe("AccessControlClient Owner Members", () => {
     // --- Check owner exists ---
     // Act
     const queryOwnerMemberResponse: BentleyAPIResponse<OwnerMember[]> =
-      await accessControlClient.ownerMembers.queryITwinOwnerMembersAsync(
+      await accessControlClient.ownerMembers.queryITwinOwnerMembers(
         accessToken,
         TestConfig.itwinId
       );
@@ -141,7 +141,7 @@ describe("AccessControlClient Owner Members", () => {
     // --- Remove owner ---
     // Act
     const removeOwnerMemberResponse: BentleyAPIResponse<undefined> =
-      await accessControlClient.ownerMembers.removeITwinOwnerMemberAsync(
+      await accessControlClient.ownerMembers.removeITwinOwnerMember(
         accessToken,
         TestConfig.itwinId,
         newOwner.id!

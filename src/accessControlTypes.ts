@@ -29,12 +29,12 @@ export interface IAccessControlClient {
 
 export interface IPermissionsClient {
   /** Retrieves the list of all available permissions **/
-  getPermissionsAsync(
+  getPermissions(
     accessToken: AccessToken
   ): Promise<BentleyAPIResponse<string[]>>;
 
   /** Retrieves a list of permissions the identity has for a specified iTwin */
-  getITwinPermissionsAsync(
+  getITwinPermissions(
     accessToken: AccessToken,
     iTwinId: string
   ): Promise<BentleyAPIResponse<string[]>>;
@@ -42,21 +42,21 @@ export interface IPermissionsClient {
 
 export interface IUserMembersClient {
   /** Retrieves a list of user members and their roles assigned to a specified iTwin. */
-  queryITwinUserMembersAsync(
+  queryITwinUserMembers(
     accessToken: AccessToken,
     iTwinId: string,
     arg?: AccessControlQueryArg
   ): Promise<BentleyAPIResponse<UserMember[]>>;
 
   /** Retrieves a specific user member for a specified iTwin. */
-  getITwinUserMemberAsync(
+  getITwinUserMember(
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string
   ): Promise<BentleyAPIResponse<UserMember>>;
 
   /** Add or invite new iTwin user members */
-  addITwinUserMembersAsync(
+  addITwinUserMembers(
     accessToken: AccessToken,
     iTwinId: string,
     newMembers: AddUserMember[],
@@ -64,14 +64,14 @@ export interface IUserMembersClient {
   ): Promise<BentleyAPIResponse<AddUserMemberResponse>>;
 
   /**  Remove the specified iTwin user member */
-  removeITwinUserMemberAsync(
+  removeITwinUserMember(
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string
   ): Promise<BentleyAPIResponse<undefined>>;
 
   /**  Update iTwin user member roles */
-  updateITwinUserMemberAsync(
+  updateITwinUserMember(
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string,
@@ -81,21 +81,21 @@ export interface IUserMembersClient {
 
 export interface IOwnerMembersClient {
   /** Retrieves a list of owner members on a specified iTwin. */
-  queryITwinOwnerMembersAsync(
+  queryITwinOwnerMembers(
     accessToken: AccessToken,
     iTwinId: string,
     arg?: AccessControlQueryArg
   ): Promise<BentleyAPIResponse<OwnerMember[]>>;
 
   /** Add or invite new iTwin owner member */
-  addITwinOwnerMemberAsync(
+  addITwinOwnerMember(
     accessToken: AccessToken,
     iTwinId: string,
     newMember: OwnerMember
   ): Promise<BentleyAPIResponse<AddOwnerMemberResponse>>;
 
   /**  Remove the specified iTwin owner member */
-  removeITwinOwnerMemberAsync(
+  removeITwinOwnerMember(
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string
@@ -142,35 +142,35 @@ export interface IGroupMembersClient {
 
 export interface IRolesClient {
   /** Retrieves a list of roles the for a specified iTwin */
-  getITwinRolesAsync(
+  getITwinRoles(
     accessToken: AccessToken,
     iTwinId: string,
     additionalHeaders?: { [key: string]: string }
   ): Promise<BentleyAPIResponse<Role[]>>;
 
   /** Retrieves a role for a specified iTwin */
-  getITwinRoleAsync(
+  getITwinRole(
     accessToken: AccessToken,
     iTwinId: string,
     roleId: string
   ): Promise<BentleyAPIResponse<Role>>;
 
   /** Creates a new iTwin Role */
-  createITwinRoleAsync(
+  createITwinRole(
     accessToken: AccessToken,
     iTwinId: string,
     role: Role
   ): Promise<BentleyAPIResponse<Role>>;
 
   /** Removes an existing iTwin Role */
-  deleteITwinRoleAsync(
+  deleteITwinRole(
     accessToken: AccessToken,
     iTwinId: string,
     roleId: string
   ): Promise<BentleyAPIResponse<undefined>>;
 
   /** Updates an existing iTwin Role */
-  updateITwinRoleAsync(
+  updateITwinRole(
     accessToken: AccessToken,
     iTwinId: string,
     roleId: string,

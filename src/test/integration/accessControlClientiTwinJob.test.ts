@@ -21,14 +21,14 @@ describe("AccessControlClient iTwin Jobs", () => {
     accessToken = await TestConfig.getAccessToken();
     testiTwinJobActions = { assignRoles : [{ email: TestConfig.temporaryUserEmail, roleIds: [TestConfig.permanentRoleId1]} ]};
 
-    const testJobResponse = await accessControlClient.itwinJobs.createITwinJobAsync(accessToken, TestConfig.itwinId, testiTwinJobActions);
+    const testJobResponse = await accessControlClient.itwinJobs.createITwinJob(accessToken, TestConfig.itwinId, testiTwinJobActions);
     testJob = testJobResponse.data!;
   }, 30000);
 
   it("should get a specific iTwin Job", async () => {
     // Act
     const iTwinJobResponse =
-      await accessControlClient.itwinJobs.getITwinJobAsync(accessToken, TestConfig.itwinId, testJob.id);
+      await accessControlClient.itwinJobs.getITwinJob(accessToken, TestConfig.itwinId, testJob.id);
 
     // Assert
     expect(iTwinJobResponse.status).toBe(200);
@@ -41,7 +41,7 @@ describe("AccessControlClient iTwin Jobs", () => {
   it("should get a specific iTwin Job with minimal result mode", async () => {
     // Act
     const iTwinJobResponse =
-      await accessControlClient.itwinJobs.getITwinJobAsync(accessToken, TestConfig.itwinId, testJob.id, "minimal");
+      await accessControlClient.itwinJobs.getITwinJob(accessToken, TestConfig.itwinId, testJob.id, "minimal");
 
     // Assert
     expect(iTwinJobResponse.status).toBe(200);
@@ -55,7 +55,7 @@ describe("AccessControlClient iTwin Jobs", () => {
   it("should get a specific iTwin Job with representation return", async () => {
     // Act
     const iTwinJobResponse =
-      await accessControlClient.itwinJobs.getITwinJobAsync(accessToken, TestConfig.itwinId, testJob.id, "representation");
+      await accessControlClient.itwinJobs.getITwinJob(accessToken, TestConfig.itwinId, testJob.id, "representation");
 
     // Assert
     expect(iTwinJobResponse.status).toBe(200);
@@ -70,7 +70,7 @@ describe("AccessControlClient iTwin Jobs", () => {
   it("should get a 404 when trying to get a non-existant iTwin Job", async () => {
     // Act
     const iTwinJobResponse =
-      await accessControlClient.itwinJobs.getITwinJobAsync(accessToken, TestConfig.itwinId, "non-existant-job-id");
+      await accessControlClient.itwinJobs.getITwinJob(accessToken, TestConfig.itwinId, "non-existant-job-id");
 
     // Assert
     expect(iTwinJobResponse.status).toBe(404);
@@ -79,7 +79,7 @@ describe("AccessControlClient iTwin Jobs", () => {
   it("should get a specific iTwin Job Actions", async () => {
     // Act
     const iTwinJobActionsResponse: BentleyAPIResponse<ITwinJobActions> =
-      await accessControlClient.itwinJobs.getITwinJobActionsAsync(accessToken, TestConfig.itwinId, testJob.id);
+      await accessControlClient.itwinJobs.getITwinJobActions(accessToken, TestConfig.itwinId, testJob.id);
 
     // Assert
     expect(iTwinJobActionsResponse.status).toBe(200);
@@ -96,7 +96,7 @@ describe("AccessControlClient iTwin Jobs", () => {
   it("should get a 404 when trying to get a non-existant iTwin Job Actions", async () => {
     // Act
     const iTwinJobActionsResponse: BentleyAPIResponse<ITwinJobActions> =
-      await accessControlClient.itwinJobs.getITwinJobActionsAsync(accessToken, TestConfig.itwinId, "non-existant-job-id");
+      await accessControlClient.itwinJobs.getITwinJobActions(accessToken, TestConfig.itwinId, "non-existant-job-id");
 
     // Assert
     expect(iTwinJobActionsResponse.status).toBe(404);
@@ -110,7 +110,7 @@ describe("AccessControlClient iTwin Jobs", () => {
 
     // Act
     const iTwinJobResponse: BentleyAPIResponse<ITwinJob> =
-      await accessControlClient.itwinJobs.createITwinJobAsync(accessToken, TestConfig.itwinId, invalidJobActions);
+      await accessControlClient.itwinJobs.createITwinJob(accessToken, TestConfig.itwinId, invalidJobActions);
 
     // Assert
     expect(iTwinJobResponse.status).toBe(422);
@@ -126,7 +126,7 @@ describe("AccessControlClient iTwin Jobs", () => {
 
     // Act
     const iTwinJobResponse: BentleyAPIResponse<ITwinJob> =
-      await accessControlClient.itwinJobs.createITwinJobAsync(accessToken, TestConfig.itwinId, invalidJobActions);
+      await accessControlClient.itwinJobs.createITwinJob(accessToken, TestConfig.itwinId, invalidJobActions);
 
     // Assert
     expect([422, 400]).toContain(iTwinJobResponse.status); // Could be 422 or 400 depending on validation
@@ -142,7 +142,7 @@ describe("AccessControlClient iTwin Jobs", () => {
 
     // Act
     const iTwinJobResponse: BentleyAPIResponse<ITwinJob> =
-      await accessControlClient.itwinJobs.createITwinJobAsync(accessToken, TestConfig.itwinId, invalidJobActions);
+      await accessControlClient.itwinJobs.createITwinJob(accessToken, TestConfig.itwinId, invalidJobActions);
 
     // Assert
     expect(iTwinJobResponse.status).toBe(422);
@@ -158,7 +158,7 @@ describe("AccessControlClient iTwin Jobs", () => {
 
     // Act
     const iTwinJobResponse: BentleyAPIResponse<ITwinJob> =
-      await accessControlClient.itwinJobs.createITwinJobAsync(accessToken, TestConfig.itwinId, invalidJobActions);
+      await accessControlClient.itwinJobs.createITwinJob(accessToken, TestConfig.itwinId, invalidJobActions);
 
     // Assert
     expect(iTwinJobResponse.status).toBe(422);
@@ -172,7 +172,7 @@ describe("AccessControlClient iTwin Jobs", () => {
 
     // Act
     const iTwinJobResponse: BentleyAPIResponse<ITwinJob> =
-      await accessControlClient.itwinJobs.createITwinJobAsync(accessToken, TestConfig.itwinId, invalidJobActions);
+      await accessControlClient.itwinJobs.createITwinJob(accessToken, TestConfig.itwinId, invalidJobActions);
 
     // Assert
     expect(iTwinJobResponse.status).toBe(422);
@@ -183,7 +183,7 @@ describe("AccessControlClient iTwin Jobs", () => {
   it("should create a iTwin Job", async () => {
     // Act
     const iTwinJobResponse: BentleyAPIResponse<ITwinJob> =
-      await accessControlClient.itwinJobs.createITwinJobAsync(accessToken, TestConfig.itwinId, { unassignRoles : [{ email: TestConfig.temporaryUserEmail, roleIds: [TestConfig.permanentRoleId1]} ]});
+      await accessControlClient.itwinJobs.createITwinJob(accessToken, TestConfig.itwinId, { unassignRoles : [{ email: TestConfig.temporaryUserEmail, roleIds: [TestConfig.permanentRoleId1]} ]});
 
     // Assert
     expect(iTwinJobResponse.status).toBe(201);

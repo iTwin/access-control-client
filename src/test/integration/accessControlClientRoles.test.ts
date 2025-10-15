@@ -29,7 +29,7 @@ describe("AccessControlClient Roles", () => {
   it("should get a list of roles for an iTwin", async () => {
     // Act
     const iTwinsResponse: BentleyAPIResponse<Role[]> =
-      await accessControlClient.roles.getITwinRolesAsync(accessToken, TestConfig.itwinId);
+      await accessControlClient.roles.getITwinRoles(accessToken, TestConfig.itwinId);
 
     // Assert
     expect(iTwinsResponse.status).toBe(200);
@@ -40,7 +40,7 @@ describe("AccessControlClient Roles", () => {
   it("should get a list of roles for an iTwin with custom url", async () => {
     // Act
     const iTwinsResponse: BentleyAPIResponse<Role[]> =
-      await customAccessControlClient.roles.getITwinRolesAsync(accessToken, TestConfig.itwinId);
+      await customAccessControlClient.roles.getITwinRoles(accessToken, TestConfig.itwinId);
 
     // Assert
     expect(iTwinsResponse.status).toBe(200);
@@ -51,7 +51,7 @@ describe("AccessControlClient Roles", () => {
   it("should get a list of roles for an iTwin with additional headers", async () => {
     // Act
     const iTwinsResponse: BentleyAPIResponse<Role[]> =
-      await customAccessControlClient.roles.getITwinRolesAsync(accessToken, TestConfig.itwinId, { "test-custom-header": "custom-value:xyz-123-abc" });
+      await customAccessControlClient.roles.getITwinRoles(accessToken, TestConfig.itwinId, { "test-custom-header": "custom-value:xyz-123-abc" });
 
     // Assert
     expect(iTwinsResponse.status).toBe(200);
@@ -62,7 +62,7 @@ describe("AccessControlClient Roles", () => {
   it("should get a specific role for an iTwin", async () => {
     // Act
     const iTwinsResponse: BentleyAPIResponse<Role> =
-      await accessControlClient.roles.getITwinRoleAsync(accessToken, TestConfig.itwinId, TestConfig.permanentRoleId1);
+      await accessControlClient.roles.getITwinRole(accessToken, TestConfig.itwinId, TestConfig.permanentRoleId1);
 
     // Assert
     expect(iTwinsResponse.status).toBe(200);
@@ -77,7 +77,7 @@ describe("AccessControlClient Roles", () => {
 
     // Act
     const iTwinsResponse: BentleyAPIResponse<Role> =
-      await accessControlClient.roles.getITwinRoleAsync(accessToken, TestConfig.itwinId, nonExistantRoleId);
+      await accessControlClient.roles.getITwinRole(accessToken, TestConfig.itwinId, nonExistantRoleId);
 
     // Assert
     expect(iTwinsResponse.status).toBe(404);
@@ -96,7 +96,7 @@ describe("AccessControlClient Roles", () => {
 
     // Act
     const iTwinsResponse: BentleyAPIResponse<Role> =
-      await accessControlClient.roles.updateITwinRoleAsync(accessToken, TestConfig.itwinId, nonExistantRoleId, emptyUpdatedRole);
+      await accessControlClient.roles.updateITwinRole(accessToken, TestConfig.itwinId, nonExistantRoleId, emptyUpdatedRole);
 
     // Assert
     expect(iTwinsResponse.status).toBe(404);
@@ -110,7 +110,7 @@ describe("AccessControlClient Roles", () => {
 
     // Act
     const iTwinsResponse: BentleyAPIResponse<undefined> =
-      await accessControlClient.roles.deleteITwinRoleAsync(accessToken, TestConfig.itwinId, nonExistantRoleId);
+      await accessControlClient.roles.deleteITwinRole(accessToken, TestConfig.itwinId, nonExistantRoleId);
 
     // Assert
     expect(iTwinsResponse.status).toBe(404);
@@ -131,7 +131,7 @@ describe("AccessControlClient Roles", () => {
 
     // Act
     const createResponse: BentleyAPIResponse<Role> =
-      await accessControlClient.roles.createITwinRoleAsync(accessToken, TestConfig.itwinId, newRole);
+      await accessControlClient.roles.createITwinRole(accessToken, TestConfig.itwinId, newRole);
 
     // Assert
     expect(createResponse.status).toBe(201);
@@ -148,7 +148,7 @@ describe("AccessControlClient Roles", () => {
 
     // Act
     const updateResponse: BentleyAPIResponse<Role> =
-      await accessControlClient.roles.updateITwinRoleAsync(accessToken, TestConfig.itwinId, createResponse.data!.id!, updatedRole);
+      await accessControlClient.roles.updateITwinRole(accessToken, TestConfig.itwinId, createResponse.data!.id!, updatedRole);
 
     // Assert
     expect(updateResponse.status).toBe(200);
@@ -158,7 +158,7 @@ describe("AccessControlClient Roles", () => {
     // --- DELETE ROLE ---
     // Act
     const deleteResponse: BentleyAPIResponse<undefined> =
-      await accessControlClient.roles.deleteITwinRoleAsync(accessToken, TestConfig.itwinId, createResponse.data!.id!);
+      await accessControlClient.roles.deleteITwinRole(accessToken, TestConfig.itwinId, createResponse.data!.id!);
 
     // Assert
     expect(deleteResponse.status).toBe(204);

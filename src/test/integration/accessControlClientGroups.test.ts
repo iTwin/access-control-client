@@ -108,7 +108,7 @@ describe("AccessControlClient Groups", () => {
 
     // Act
     const iTwinsResponse =
-      await accessControlClient.groups.deleteITwinGroupAsync(accessToken, TestConfig.itwinId, nonExistantGroupId);
+      await accessControlClient.groups.deleteITwinGroup(accessToken, TestConfig.itwinId, nonExistantGroupId);
 
     // Assert
     expect(iTwinsResponse.status).toBe(404);
@@ -179,7 +179,7 @@ describe("AccessControlClient Groups", () => {
       expect(updateResponse.data).toBeUndefined();
     } finally {
       // Cleanup - delete the test group
-      await accessControlClient.groups.deleteITwinGroupAsync(accessToken, TestConfig.itwinId, createResponse.data?.group!.id as string);
+      await accessControlClient.groups.deleteITwinGroup(accessToken, TestConfig.itwinId, createResponse.data?.group!.id as string);
     }
   });
 
@@ -211,7 +211,7 @@ describe("AccessControlClient Groups", () => {
       expect(updateResponse.data).toBeUndefined();
     } finally {
       // Cleanup - delete the test group
-      await accessControlClient.groups.deleteITwinGroupAsync(accessToken, TestConfig.itwinId, createResponse.data?.group!.id as string);
+      await accessControlClient.groups.deleteITwinGroup(accessToken, TestConfig.itwinId, createResponse.data?.group!.id as string);
     }
   });
 
@@ -244,7 +244,7 @@ describe("AccessControlClient Groups", () => {
       expect(duplicateCreateResponse.data).toBeUndefined();
     } finally {
       // Cleanup - delete the original group
-      await accessControlClient.groups.deleteITwinGroupAsync(accessToken, TestConfig.itwinId, firstCreateResponse.data?.group!.id as string);
+      await accessControlClient.groups.deleteITwinGroup(accessToken, TestConfig.itwinId, firstCreateResponse.data?.group!.id as string);
     }
   });
 
@@ -308,7 +308,7 @@ describe("AccessControlClient Groups", () => {
     // --- DELETE GROUP ---
     // Act
     const deleteResponse: BentleyAPIResponse<undefined> =
-      await accessControlClient.groups.deleteITwinGroupAsync(accessToken, TestConfig.itwinId, createResponse.data?.group!.id as string);
+      await accessControlClient.groups.deleteITwinGroup(accessToken, TestConfig.itwinId, createResponse.data?.group!.id as string);
 
     // Assert
     expect(deleteResponse.status).toBe(204);

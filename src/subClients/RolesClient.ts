@@ -21,7 +21,7 @@ export class RolesClient extends BaseClient implements IRolesClient {
     * @param iTwinId The id of the iTwin
     * @returns Roles
     */
-  public async getITwinRolesAsync(
+  public async getITwinRoles(
     accessToken: AccessToken,
     iTwinId: string,
     additionalHeaders?: { [key: string]: string }
@@ -35,7 +35,7 @@ export class RolesClient extends BaseClient implements IRolesClient {
     * @param iTwinId The id of the iTwin
     * @returns Role
     */
-  public async getITwinRoleAsync(
+  public async getITwinRole(
     accessToken: AccessToken,
     iTwinId: string,
     roleId: string,
@@ -50,7 +50,7 @@ export class RolesClient extends BaseClient implements IRolesClient {
     * @param role The role to be created
     * @returns Role
     */
-  public async createITwinRoleAsync(
+  public async createITwinRole(
     accessToken: AccessToken,
     iTwinId: string,
     role: Role
@@ -65,7 +65,7 @@ export class RolesClient extends BaseClient implements IRolesClient {
     * @param roleId The id of the role to remove
     * @returns No Content
     */
-  public async deleteITwinRoleAsync(
+  public async deleteITwinRole(
     accessToken: AccessToken,
     iTwinId: string,
     roleId: string,
@@ -81,7 +81,7 @@ export class RolesClient extends BaseClient implements IRolesClient {
     * @param role The updated role
     * @returns Role
     */
-  public async updateITwinRoleAsync(
+  public async updateITwinRole(
     accessToken: AccessToken,
     iTwinId: string,
     roleId: string,

@@ -27,7 +27,7 @@ export class OwnerMembersClient
    * @param iTwinId The id of the iTwin
    * @returns Array of members
    */
-  public async queryITwinOwnerMembersAsync(
+  public async queryITwinOwnerMembers(
     accessToken: AccessToken,
     iTwinId: string,
     arg?: AccessControlQueryArg
@@ -53,7 +53,7 @@ export class OwnerMembersClient
    * @param newMember The new owner member to add or invite
    * @returns AddOwnerMemberResponse -- the added or invited owner
    */
-  public async addITwinOwnerMemberAsync(
+  public async addITwinOwnerMember(
     accessToken: AccessToken,
     iTwinId: string,
     newMember: OwnerMember
@@ -73,7 +73,7 @@ export class OwnerMembersClient
    * @param memberId The id of the member
    * @returns No Content
    */
-  public async removeITwinOwnerMemberAsync(
+  public async removeITwinOwnerMember(
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string

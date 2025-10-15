@@ -26,7 +26,7 @@ export class MemberInvitationsClient
    * @param iTwinId The id of the iTwin
    * @returns Array of member invitations
    */
-  public async queryITwinMemberInvitationsAsync(
+  public async queryITwinMemberInvitations(
     accessToken: AccessToken,
     iTwinId: string,
     arg?: Omit<AccessControlQueryArg, "result">
@@ -45,7 +45,7 @@ export class MemberInvitationsClient
     );
   }
 
-  public async deleteITwinMemberInvitationAsync(
+  public async deleteITwinMemberInvitation(
     accessToken: AccessToken,
     iTwinId: string,
     invitationId: string

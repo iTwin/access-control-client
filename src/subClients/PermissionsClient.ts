@@ -20,7 +20,7 @@ export class PermissionsClient extends BaseClient implements IPermissionsClient{
     * @param accessToken The client access token string
     * @returns Array of permissions
     */
-  public async getPermissionsAsync(
+  public async getPermissions(
     accessToken: AccessToken,
   ): Promise<BentleyAPIResponse<Permission[]>>{
     const url = `${this._baseUrl}/permissions`;
@@ -32,7 +32,7 @@ export class PermissionsClient extends BaseClient implements IPermissionsClient{
     * @param iTwinId The id of the iTwin
     * @returns Array of permissions
     */
-  public async getITwinPermissionsAsync(
+  public async getITwinPermissions(
     accessToken: AccessToken,
     iTwinId: string,
   ): Promise<BentleyAPIResponse<Permission[]>>{

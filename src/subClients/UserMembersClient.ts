@@ -28,7 +28,7 @@ export class UserMembersClient
    * @param iTwinId The id of the iTwin
    * @returns Array of members
    */
-  public async queryITwinUserMembersAsync(
+  public async queryITwinUserMembers(
     accessToken: AccessToken,
     iTwinId: string,
     arg?: AccessControlQueryArg
@@ -54,7 +54,7 @@ export class UserMembersClient
    * @param memberId The id of the member
    * @returns Member
    */
-  public async getITwinUserMemberAsync(
+  public async getITwinUserMember(
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string
@@ -76,7 +76,7 @@ export class UserMembersClient
    * @param customMessage Send custom message in welcome email when adding new members
    * @returns AddUserMemberResponse -- the added or invited user members
    */
-  public async addITwinUserMembersAsync(
+  public async addITwinUserMembers(
     accessToken: AccessToken,
     iTwinId: string,
     newMembers: AddUserMember[],
@@ -101,7 +101,7 @@ export class UserMembersClient
    * @param memberId The id of the member
    * @returns No Content
    */
-  public async removeITwinUserMemberAsync(
+  public async removeITwinUserMember(
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string
@@ -117,7 +117,7 @@ export class UserMembersClient
    * @param roleIds The ids of the roles to be assigned
    * @returns Member
    */
-  public async updateITwinUserMemberAsync(
+  public async updateITwinUserMember(
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string,

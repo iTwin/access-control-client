@@ -34,7 +34,7 @@ describe("AccessControlClient User Members", () => {
   it("should get a list of user members for an iTwin", async () => {
     // Act
     const iTwinsResponse: BentleyAPIResponse<UserMember[]> =
-      await accessControlClient.userMembers.queryITwinUserMembersAsync(
+      await accessControlClient.userMembers.queryITwinUserMembers(
         accessToken,
         TestConfig.itwinId
       );
@@ -48,7 +48,7 @@ describe("AccessControlClient User Members", () => {
   it("should get a list of user members for an iTwin with custom url", async () => {
     // Act
     const iTwinsResponse: BentleyAPIResponse<UserMember[]> =
-      await customAccessControlClient.userMembers.queryITwinUserMembersAsync(
+      await customAccessControlClient.userMembers.queryITwinUserMembers(
         accessToken,
         TestConfig.itwinId
       );
@@ -65,7 +65,7 @@ describe("AccessControlClient User Members", () => {
 
     // Act
     const iTwinsResponse: BentleyAPIResponse<UserMember[]> =
-      await accessControlClient.userMembers.queryITwinUserMembersAsync(
+      await accessControlClient.userMembers.queryITwinUserMembers(
         accessToken,
         TestConfig.itwinId,
         { top: topAmount }
@@ -81,7 +81,7 @@ describe("AccessControlClient User Members", () => {
   it("should get a filtered list of user members for an iTwin using $skip", async () => {
     // Arrange
     const unFilteredList: BentleyAPIResponse<UserMember[]> =
-      await accessControlClient.userMembers.queryITwinUserMembersAsync(
+      await accessControlClient.userMembers.queryITwinUserMembers(
         accessToken,
         TestConfig.itwinId
       );
@@ -90,7 +90,7 @@ describe("AccessControlClient User Members", () => {
 
     // Act
     const iTwinsResponse: BentleyAPIResponse<UserMember[]> =
-      await accessControlClient.userMembers.queryITwinUserMembersAsync(
+      await accessControlClient.userMembers.queryITwinUserMembers(
         accessToken,
         TestConfig.itwinId,
         { skip: skipAmmount, top: topAmount }
@@ -109,7 +109,7 @@ describe("AccessControlClient User Members", () => {
   it("should get a specific user member for an iTwin", async () => {
     // Act
     const iTwinsResponse: BentleyAPIResponse<UserMember> =
-      await accessControlClient.userMembers.getITwinUserMemberAsync(
+      await accessControlClient.userMembers.getITwinUserMember(
         accessToken,
         TestConfig.itwinId,
         TestConfig.regularUserId
@@ -127,7 +127,7 @@ describe("AccessControlClient User Members", () => {
 
     // Act
     const iTwinsResponse: BentleyAPIResponse<UserMember> =
-      await accessControlClient.userMembers.getITwinUserMemberAsync(
+      await accessControlClient.userMembers.getITwinUserMember(
         accessToken,
         TestConfig.itwinId,
         notExistantUserId
@@ -144,7 +144,7 @@ describe("AccessControlClient User Members", () => {
     // --- Add Member ---
     // Act
     const addUserMemberResponse: BentleyAPIResponse<AddUserMemberResponse> =
-      await accessControlClient.userMembers.addITwinUserMembersAsync(
+      await accessControlClient.userMembers.addITwinUserMembers(
         accessToken,
         TestConfig.itwinId,
         [
@@ -166,7 +166,7 @@ describe("AccessControlClient User Members", () => {
     // --- Check member exists and has role ---
     // Act
     const getUserMemberResponse: BentleyAPIResponse<UserMember> =
-      await accessControlClient.userMembers.getITwinUserMemberAsync(
+      await accessControlClient.userMembers.getITwinUserMember(
         accessToken,
         TestConfig.itwinId,
         newMember.id!
@@ -181,7 +181,7 @@ describe("AccessControlClient User Members", () => {
     // --- Update member's role ---
     // Act
     const updatedUserMemberResponse: BentleyAPIResponse<UserMember> =
-      await accessControlClient.userMembers.updateITwinUserMemberAsync(
+      await accessControlClient.userMembers.updateITwinUserMember(
         accessToken,
         TestConfig.itwinId,
         newMember.id!,
@@ -198,7 +198,7 @@ describe("AccessControlClient User Members", () => {
     // --- Remove member ---
     // Act
     const removeUserMemberResponse: BentleyAPIResponse<undefined> =
-      await accessControlClient.userMembers.removeITwinUserMemberAsync(
+      await accessControlClient.userMembers.removeITwinUserMember(
         accessToken,
         TestConfig.itwinId,
         newMember.id!

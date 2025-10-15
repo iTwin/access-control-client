@@ -22,7 +22,7 @@ export class ITwinJobsClient extends BaseClient implements IITwinJobsClient {
      * @param iTwinActions The actions of the iTwin Job
      * @returns ITwin Job
      */
-  public async createITwinJobAsync(
+  public async createITwinJob(
     accessToken: AccessToken,
     iTwinId: string,
     iTwinJobActions: ITwinJobActions
@@ -38,7 +38,7 @@ export class ITwinJobsClient extends BaseClient implements IITwinJobsClient {
      * @param resultMode (Optional) Access Control result mode: minimal or representation (defaults to minimal)
      * @returns ITwin Job
      */
-  public async getITwinJobAsync<T extends ResultMode = "minimal">(
+  public async getITwinJob<T extends ResultMode = "minimal">(
     accessToken: AccessToken,
     iTwinId: string,
     iTwinJobId: string,
@@ -55,7 +55,7 @@ export class ITwinJobsClient extends BaseClient implements IITwinJobsClient {
      * @param iTwinJobId The id of the iTwin Job
      * @returns ITwin Job Actions
      */
-  public async getITwinJobActionsAsync(
+  public async getITwinJobActions(
     accessToken: AccessToken,
     iTwinId: string,
     iTwinJobId?: string

@@ -66,7 +66,7 @@ export class GroupsClient extends BaseClient implements IGroupsClient{
     * @param groupId The id of the group to remove
     * @returns No Content
     */
-  public async deleteITwinGroupAsync(
+  public async deleteITwinGroup(
     accessToken: AccessToken,
     iTwinId: string,
     groupId: string,

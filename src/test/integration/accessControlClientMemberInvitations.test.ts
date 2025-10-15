@@ -32,7 +32,7 @@ describe("AccessControlClient Member Invitations", () => {
     accessToken = await TestConfig.getAccessToken();
 
     const getMemberInvitationsResponse =
-      await accessControlClient.memberInvitations.queryITwinMemberInvitationsAsync(
+      await accessControlClient.memberInvitations.queryITwinMemberInvitations(
         accessToken,
         TestConfig.itwinId
       );
@@ -41,7 +41,7 @@ describe("AccessControlClient Member Invitations", () => {
 
     if (getMemberInvitationsResponse.data!.invitations.length < 8) {
       const addUserMemberResponse: BentleyAPIResponse<AddUserMemberResponse> =
-      await accessControlClient.userMembers.addITwinUserMembersAsync(
+      await accessControlClient.userMembers.addITwinUserMembers(
         accessToken,
         TestConfig.itwinId,
         [
@@ -90,7 +90,7 @@ describe("AccessControlClient Member Invitations", () => {
   it("should get a list of member invitations for an iTwin", async () => {
     // Act
     const iTwinsResponse =
-      await accessControlClient.memberInvitations.queryITwinMemberInvitationsAsync(
+      await accessControlClient.memberInvitations.queryITwinMemberInvitations(
         accessToken,
         TestConfig.itwinId
       );
@@ -108,7 +108,7 @@ describe("AccessControlClient Member Invitations", () => {
 
     // Act
     const iTwinsResponse =
-    await accessControlClient.memberInvitations.queryITwinMemberInvitationsAsync(
+    await accessControlClient.memberInvitations.queryITwinMemberInvitations(
       accessToken,
       TestConfig.itwinId,
       { top: topAmount }
@@ -124,7 +124,7 @@ describe("AccessControlClient Member Invitations", () => {
   it("should get a filtered list of member invitations for an iTwin using $skip", async () => {
     // Arrange
     const unFilteredList =
-    await accessControlClient.memberInvitations.queryITwinMemberInvitationsAsync(
+    await accessControlClient.memberInvitations.queryITwinMemberInvitations(
       accessToken,
       TestConfig.itwinId
     );
@@ -133,7 +133,7 @@ describe("AccessControlClient Member Invitations", () => {
 
     // Act
     const iTwinsResponse =
-    await accessControlClient.memberInvitations.queryITwinMemberInvitationsAsync(
+    await accessControlClient.memberInvitations.queryITwinMemberInvitations(
       accessToken,
       TestConfig.itwinId,
       { skip: skipAmmount, top: topAmount }
@@ -151,7 +151,7 @@ describe("AccessControlClient Member Invitations", () => {
 
   it("delete the temporary member invitation", async () => {
     const addUserMemberResponse: BentleyAPIResponse<AddUserMemberResponse> =
-      await accessControlClient.userMembers.addITwinUserMembersAsync(
+      await accessControlClient.userMembers.addITwinUserMembers(
         accessToken,
         TestConfig.itwinId,
         [
@@ -167,7 +167,7 @@ describe("AccessControlClient Member Invitations", () => {
     expect(addUserMemberResponse.data!.members.length).toBe(0);
     expect(addUserMemberResponse.data!.invitations.length).toBe(1);
 
-    const deleteUserMemberInvitationResponse = await accessControlClient.memberInvitations.deleteITwinMemberInvitationAsync(accessToken, TestConfig.itwinId, addUserMemberResponse.data!.invitations[0].id);
+    const deleteUserMemberInvitationResponse = await accessControlClient.memberInvitations.deleteITwinMemberInvitation(accessToken, TestConfig.itwinId, addUserMemberResponse.data!.invitations[0].id);
 
     expect(deleteUserMemberInvitationResponse.status).toBe(204);
   });
