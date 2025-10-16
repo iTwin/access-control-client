@@ -8,13 +8,11 @@
 import type { AccessToken } from "@itwin/core-bentley";
 import type {
   AccessControlQueryArg,
-  AddUserMember,
-  AddUserMemberResponse,
-  IUserMembersClient,
-  UserMember,
 } from "../accessControlTypes";
 import type { BentleyAPIResponse } from "../types/CommonApiTypes";
+import type { AddUserMember, AddUserMemberResponse, MultipleUserMembersResponse, SingleUserMemberResponse } from "../types/UserMembers";
 import { BaseClient } from "./BaseClient";
+import type { IUserMembersClient } from "./accessControlClientInterfaces/UserMembersClient";
 
 export class UserMembersClient
   extends BaseClient
@@ -32,7 +30,7 @@ export class UserMembersClient
     accessToken: AccessToken,
     iTwinId: string,
     arg?: AccessControlQueryArg
-  ): Promise<BentleyAPIResponse<UserMember[]>> {
+  ): Promise<BentleyAPIResponse<MultipleUserMembersResponse>> {
     let url = `${this._baseUrl}/${iTwinId}/members/users`;
 
     if (arg) {
@@ -43,9 +41,8 @@ export class UserMembersClient
       accessToken,
       "GET",
       url,
-      undefined,
-      "members"
-    ); // TODO: Consider how to handle paging
+      undefined
+    );
   }
 
   /** Retrieves a specific user member for a specified iTwin.
@@ -58,14 +55,13 @@ export class UserMembersClient
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string
-  ): Promise<BentleyAPIResponse<UserMember>> {
+  ): Promise<BentleyAPIResponse<SingleUserMemberResponse>> {
     const url = `${this._baseUrl}/${iTwinId}/members/users/${memberId}`;
     return this.sendGenericAPIRequest(
       accessToken,
       "GET",
       url,
-      undefined,
-      "member"
+      undefined
     );
   }
 
@@ -122,7 +118,7 @@ export class UserMembersClient
     iTwinId: string,
     memberId: string,
     roleIds: string[]
-  ): Promise<BentleyAPIResponse<UserMember>> {
+  ): Promise<BentleyAPIResponse<SingleUserMemberResponse>> {
     const url = `${this._baseUrl}/${iTwinId}/members/users/${memberId}`;
     const body = {
       roleIds,
@@ -131,8 +127,7 @@ export class UserMembersClient
       accessToken,
       "PATCH",
       url,
-      body,
-      "member"
+      body
     );
   }
 }

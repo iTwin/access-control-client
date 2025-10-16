@@ -3,16 +3,15 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 import type { AccessToken } from "@itwin/core-bentley";
-import { TestUsers } from "@itwin/oidc-signin-tool/lib/cjs/frontend";
+import { TestUsers } from "@itwin/oidc-signin-tool";
 import { beforeAll, describe, expect, it } from "vitest";
 import { AccessControlClient } from "../../AccessControlClient";
 import type {
-  AddUserMemberResponse,
   IAccessControlClient,
-  UserMember,
 } from "../../accessControlTypes";
 import type { BentleyAPIResponse } from "../../types/CommonApiTypes";
 import { TestConfig } from "../TestConfig";
+import { UserMember } from "src/types/UserMembers";
 
 describe("AccessControlClient User Members", () => {
   let baseUrl: string = "https://api.bentley.com/accesscontrol/itwins";
@@ -33,7 +32,7 @@ describe("AccessControlClient User Members", () => {
 
   it("should get a list of user members for an iTwin", async () => {
     // Act
-    const iTwinsResponse: BentleyAPIResponse<UserMember[]> =
+    const iTwinsResponse =
       await accessControlClient.userMembers.queryITwinUserMembers(
         accessToken,
         TestConfig.itwinId
@@ -42,12 +41,13 @@ describe("AccessControlClient User Members", () => {
     // Assert
     expect(iTwinsResponse.status).toBe(200);
     expect(iTwinsResponse.data).toBeDefined();
-    expect(iTwinsResponse.data!.length).toBeGreaterThan(0);
+    expect(iTwinsResponse.data?.members.length).toBeGreaterThan(0);
+    expect(iTwinsResponse.data?._links).toBeDefined();
   });
 
   it("should get a list of user members for an iTwin with custom url", async () => {
     // Act
-    const iTwinsResponse: BentleyAPIResponse<UserMember[]> =
+    const iTwinsResponse =
       await customAccessControlClient.userMembers.queryITwinUserMembers(
         accessToken,
         TestConfig.itwinId
@@ -56,7 +56,7 @@ describe("AccessControlClient User Members", () => {
     // Assert
     expect(iTwinsResponse.status).toBe(200);
     expect(iTwinsResponse.data).toBeDefined();
-    expect(iTwinsResponse.data!.length).toBeGreaterThan(0);
+    expect(iTwinsResponse.data?.members.length).toBeGreaterThan(0);
   });
 
   it("should get a filtered list of user members for an iTwin using $top", async () => {
@@ -64,7 +64,7 @@ describe("AccessControlClient User Members", () => {
     const topAmount = 5;
 
     // Act
-    const iTwinsResponse: BentleyAPIResponse<UserMember[]> =
+    const iTwinsResponse =
       await accessControlClient.userMembers.queryITwinUserMembers(
         accessToken,
         TestConfig.itwinId,
@@ -74,41 +74,41 @@ describe("AccessControlClient User Members", () => {
     // Assert
     expect(iTwinsResponse.status).toBe(200);
     expect(iTwinsResponse.data).toBeDefined();
-    expect(iTwinsResponse.data!).toBeDefined();
-    expect(iTwinsResponse.data!.length).toBe(topAmount);
+    expect(iTwinsResponse.data).toBeDefined();
+    expect(iTwinsResponse.data?.members.length).toBe(topAmount);
   });
 
   it("should get a filtered list of user members for an iTwin using $skip", async () => {
     // Arrange
-    const unFilteredList: BentleyAPIResponse<UserMember[]> =
+    const unFilteredList =
       await accessControlClient.userMembers.queryITwinUserMembers(
         accessToken,
         TestConfig.itwinId
       );
-    const skipAmmount = 5;
+    const skipAmount = 5;
     const topAmount = 3;
 
     // Act
-    const iTwinsResponse: BentleyAPIResponse<UserMember[]> =
+    const iTwinsResponse =
       await accessControlClient.userMembers.queryITwinUserMembers(
         accessToken,
         TestConfig.itwinId,
-        { skip: skipAmmount, top: topAmount }
+        { skip: skipAmount, top: topAmount }
       );
 
     // Assert
     expect(iTwinsResponse.status).toBe(200);
     expect(iTwinsResponse.data).toBeDefined();
-    expect(iTwinsResponse.data!).toBeDefined();
-    expect(iTwinsResponse.data!.length).toBe(topAmount);
-    unFilteredList.data!.slice(0, skipAmmount).forEach((member) => {
-      expect(iTwinsResponse.data!.includes(member)).toBe(false);
+    expect(iTwinsResponse.data).toBeDefined();
+    expect(iTwinsResponse.data?.members.length).toBe(topAmount);
+    unFilteredList.data?.members.slice(0, skipAmount).forEach((member) => {
+      expect(iTwinsResponse.data?.members.includes(member)).toBe(false);
     });
   });
 
   it("should get a specific user member for an iTwin", async () => {
     // Act
-    const iTwinsResponse: BentleyAPIResponse<UserMember> =
+    const iTwinsResponse =
       await accessControlClient.userMembers.getITwinUserMember(
         accessToken,
         TestConfig.itwinId,
@@ -118,7 +118,7 @@ describe("AccessControlClient User Members", () => {
     // Assert
     expect(iTwinsResponse.status).toBe(200);
     expect(iTwinsResponse.data).toBeDefined();
-    expect(iTwinsResponse.data!.id).toBe(TestConfig.regularUserId);
+    expect(iTwinsResponse.data?.member.id).toBe(TestConfig.regularUserId);
   });
 
   it("should get a 404 when trying to get a non-existant user member", async () => {
@@ -126,7 +126,7 @@ describe("AccessControlClient User Members", () => {
     const notExistantUserId = "22acf21e-0575-4faf-849b-bcd538718269";
 
     // Act
-    const iTwinsResponse: BentleyAPIResponse<UserMember> =
+    const iTwinsResponse =
       await accessControlClient.userMembers.getITwinUserMember(
         accessToken,
         TestConfig.itwinId,
@@ -136,14 +136,14 @@ describe("AccessControlClient User Members", () => {
     // Assert
     expect(iTwinsResponse.status).toBe(404);
     expect(iTwinsResponse.data).toBeUndefined();
-    expect(iTwinsResponse.error!.code).toBe("TeamMemberNotFound");
+    expect(iTwinsResponse.error?.code).toBe("TeamMemberNotFound");
   });
 
   it("should get add, get, update, and remove a user member", async () => {
     const regularEmail = TestUsers.regular.email ? TestUsers.regular.email : TestConfig.regularUserEmail;
     // --- Add Member ---
     // Act
-    const addUserMemberResponse: BentleyAPIResponse<AddUserMemberResponse> =
+    const addUserMemberResponse =
       await accessControlClient.userMembers.addITwinUserMembers(
         accessToken,
         TestConfig.itwinId,
@@ -159,41 +159,41 @@ describe("AccessControlClient User Members", () => {
     // Assert
     expect(addUserMemberResponse.status).toBe(201);
     expect(addUserMemberResponse.data).toBeDefined();
-    expect(addUserMemberResponse.data!.members.length).toBe(1);
-    expect(addUserMemberResponse.data!.invitations.length).toBe(0);
-    const newMember = addUserMemberResponse.data!.members[0];
+    expect(addUserMemberResponse.data?.members.length).toBe(1);
+    expect(addUserMemberResponse.data?.invitations.length).toBe(0);
+    const newMember = addUserMemberResponse.data?.members[0] as UserMember;
 
     // --- Check member exists and has role ---
     // Act
-    const getUserMemberResponse: BentleyAPIResponse<UserMember> =
+    const getUserMemberResponse =
       await accessControlClient.userMembers.getITwinUserMember(
         accessToken,
         TestConfig.itwinId,
-        newMember.id!
+        newMember.id
       );
 
     expect(getUserMemberResponse.status).toBe(200);
     expect(getUserMemberResponse.data).toBeDefined();
-    expect(getUserMemberResponse.data!.email).toBe(regularEmail);
-    expect(getUserMemberResponse.data!.roles!.length).toBe(2);
-    expect(getUserMemberResponse.data!.roles![0].id).toBe(TestConfig.permanentRoleId1);
+    expect(getUserMemberResponse.data?.member.email).toBe(regularEmail);
+    expect(getUserMemberResponse.data?.member.roles.length).toBe(2);
+    expect(getUserMemberResponse.data?.member.roles[0].id).toBe(TestConfig.permanentRoleId1);
 
     // --- Update member's role ---
     // Act
-    const updatedUserMemberResponse: BentleyAPIResponse<UserMember> =
+    const updatedUserMemberResponse =
       await accessControlClient.userMembers.updateITwinUserMember(
         accessToken,
         TestConfig.itwinId,
-        newMember.id!,
+        newMember.id,
         [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2]
       );
 
     expect(updatedUserMemberResponse.status).toBe(200);
     expect(updatedUserMemberResponse.data).toBeDefined();
-    expect(updatedUserMemberResponse.data!.id).toBe(newMember.id!);
-    expect(updatedUserMemberResponse.data!.roles!.length).toBe(2);
-    expect(updatedUserMemberResponse.data!.roles!.map((x) => x.id)).toContain(TestConfig.permanentRoleId1);
-    expect(updatedUserMemberResponse.data!.roles!.map((x) => x.id)).toContain(TestConfig.permanentRoleId2);
+    expect(updatedUserMemberResponse.data?.member.id).toBe(newMember.id);
+    expect(updatedUserMemberResponse.data?.member.roles.length).toBe(2);
+    expect(updatedUserMemberResponse.data?.member.roles.map((x) => x.id)).toContain(TestConfig.permanentRoleId1);
+    expect(updatedUserMemberResponse.data?.member.roles.map((x) => x.id)).toContain(TestConfig.permanentRoleId2);
 
     // --- Remove member ---
     // Act
@@ -201,7 +201,7 @@ describe("AccessControlClient User Members", () => {
       await accessControlClient.userMembers.removeITwinUserMember(
         accessToken,
         TestConfig.itwinId,
-        newMember.id!
+        newMember.id
       );
 
     expect(removeUserMemberResponse.status).toBe(204);

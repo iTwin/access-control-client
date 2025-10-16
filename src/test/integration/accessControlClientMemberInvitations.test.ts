@@ -6,10 +6,8 @@ import type { AccessToken } from "@itwin/core-bentley";
 import { beforeAll, describe, expect, it } from "vitest";
 import { AccessControlClient } from "../../AccessControlClient";
 import type {
-  AddUserMemberResponse,
   IAccessControlClient,
 } from "../../accessControlTypes";
-import type { BentleyAPIResponse } from "../../types/CommonApiTypes";
 import { TestConfig } from "../TestConfig";
 
 function randomIntFromInterval(min: number, max: number) {
@@ -40,7 +38,7 @@ describe("AccessControlClient Member Invitations", () => {
     expect(getMemberInvitationsResponse.data).not.toBeNull();
 
     if (getMemberInvitationsResponse.data!.invitations.length < 8) {
-      const addUserMemberResponse: BentleyAPIResponse<AddUserMemberResponse> =
+      const addUserMemberResponse =
       await accessControlClient.userMembers.addITwinUserMembers(
         accessToken,
         TestConfig.itwinId,
@@ -150,7 +148,7 @@ describe("AccessControlClient Member Invitations", () => {
   });
 
   it("delete the temporary member invitation", async () => {
-    const addUserMemberResponse: BentleyAPIResponse<AddUserMemberResponse> =
+    const addUserMemberResponse =
       await accessControlClient.userMembers.addITwinUserMembers(
         accessToken,
         TestConfig.itwinId,

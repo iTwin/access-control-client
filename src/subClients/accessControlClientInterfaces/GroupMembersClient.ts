@@ -3,10 +3,10 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 import type { AccessToken } from "@itwin/core-bentley";
-import type { AccessControlQueryArg } from "src/accessControlTypes";
-import type { BentleyAPIResponse } from "src/types/CommonApiTypes";
-import type { AddGroupMembers, MultipleGroupMembersResponse, SingleGroupMemberResponse } from "src/types/GroupMember";
 import type { Links } from "src/types/links";
+import type { AccessControlQueryArg } from "../../accessControlTypes";
+import type { BentleyAPIResponse } from "../../types/CommonApiTypes";
+import type { AddGroupMembers, MultipleGroupMembersResponse, SingleGroupMemberResponse } from "../../types/GroupMember";
 
 export interface IGroupMembersClient {
   /** Retrieves a list of group members and their roles assigned to a specified iTwin. */

@@ -11,7 +11,6 @@ import type { Group, MultipleGroupsResponse, SingleGroupResponse } from "../type
 import type { IGroupsClient } from "./accessControlClientInterfaces/GroupClient";
 import { BaseClient } from "./BaseClient";
 
-
 export class GroupsClient extends BaseClient implements IGroupsClient{
   public constructor(url?: string) {
     super(url);

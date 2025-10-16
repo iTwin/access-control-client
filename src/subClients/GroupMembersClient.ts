@@ -6,12 +6,12 @@
  * @module AccessControlClient
  */
 import type { AccessToken } from "@itwin/core-bentley";
-import type { AddGroupMembers, MultipleGroupMembersResponse, SingleGroupMemberResponse } from "src/types/GroupMember";
-import type { Links } from "src/types/links";
 import type {
   AccessControlQueryArg,
 } from "../accessControlTypes";
 import type { BentleyAPIResponse } from "../types/CommonApiTypes";
+import type { AddGroupMembers, MultipleGroupMembersResponse, SingleGroupMemberResponse } from "../types/GroupMember";
+import type { Links } from "../types/links";
 import type { IGroupMembersClient } from "./accessControlClientInterfaces/GroupMembersClient";
 import { BaseClient } from "./BaseClient";
 

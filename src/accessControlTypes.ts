@@ -14,6 +14,7 @@ import type { IITwinJobsClient } from "./subClients/accessControlClientInterface
 import type { BentleyAPIResponse, ResultMode } from "./types/CommonApiTypes";
 import type { MemberInvitation } from "./types/Invitations";
 import type { Role } from "./types/Role";
+import type { AddUserMember, AddUserMemberResponse, MultipleUserMembersResponse, SingleUserMemberResponse } from "./types/UserMembers";
 
 //#region clients
 
@@ -39,45 +40,6 @@ export interface IPermissionsClient {
     accessToken: AccessToken,
     iTwinId: string
   ): Promise<BentleyAPIResponse<string[]>>;
-}
-
-export interface IUserMembersClient {
-  /** Retrieves a list of user members and their roles assigned to a specified iTwin. */
-  queryITwinUserMembers(
-    accessToken: AccessToken,
-    iTwinId: string,
-    arg?: AccessControlQueryArg
-  ): Promise<BentleyAPIResponse<UserMember[]>>;
-
-  /** Retrieves a specific user member for a specified iTwin. */
-  getITwinUserMember(
-    accessToken: AccessToken,
-    iTwinId: string,
-    memberId: string
-  ): Promise<BentleyAPIResponse<UserMember>>;
-
-  /** Add or invite new iTwin user members */
-  addITwinUserMembers(
-    accessToken: AccessToken,
-    iTwinId: string,
-    newMembers: AddUserMember[],
-    customMessage?: string
-  ): Promise<BentleyAPIResponse<AddUserMemberResponse>>;
-
-  /**  Remove the specified iTwin user member */
-  removeITwinUserMember(
-    accessToken: AccessToken,
-    iTwinId: string,
-    memberId: string
-  ): Promise<BentleyAPIResponse<undefined>>;
-
-  /**  Update iTwin user member roles */
-  updateITwinUserMember(
-    accessToken: AccessToken,
-    iTwinId: string,
-    memberId: string,
-    roleIds: string[]
-  ): Promise<BentleyAPIResponse<UserMember>>;
 }
 
 export interface IOwnerMembersClient {
@@ -173,29 +135,9 @@ export interface AddOwnerMemberResponse {
   invitation?: MemberInvitation;
 }
 
-export interface AddUserMemberResponse {
-  members: UserMember[];
-  invitations: MemberInvitation[];
-}
-
 //#endregion
 
 //#region base object
-
-export interface UserMember {
-  id?: string;
-  email?: string;
-  givenName?: string;
-  surname?: string;
-  organization?: string;
-  roles?: Omit<Role, "permissions">[];
-}
-
-export interface AddUserMember {
-  roleIds: string[];
-  email: string;
-}
-
 export interface OwnerMember {
   id?: string;
   email?: string;

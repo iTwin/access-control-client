@@ -3,7 +3,7 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 import type { AccessToken } from "@itwin/core-bentley";
-import { TestUsers } from "@itwin/oidc-signin-tool/lib/cjs/frontend";
+import { TestUsers } from "@itwin/oidc-signin-tool";
 import { beforeAll, describe, expect, it } from "vitest";
 import { AccessControlClient } from "../../AccessControlClient";
 import type {
