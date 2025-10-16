@@ -5,10 +5,7 @@
 import type { AccessToken } from "@itwin/core-bentley";
 import { beforeAll, describe, expect, it } from "vitest";
 import { AccessControlClient } from "../../AccessControlClient";
-import type {
-  GroupMember,
-  IAccessControlClient,
-} from "../../accessControlTypes";
+import type { IAccessControlClient } from "../../accessControlTypes";
 import type { BentleyAPIResponse } from "../../types/CommonApiTypes";
 import { TestConfig } from "../TestConfig";
 
@@ -31,8 +28,8 @@ describe("AccessControlClient Group Members", () => {
 
   it("should get a list of group members for an iTwin", async () => {
     // Act
-    const iTwinsResponse: BentleyAPIResponse<GroupMember[]> =
-      await accessControlClient.groupMembers.queryITwinGroupMembersAsync(
+    const iTwinsResponse =
+      await accessControlClient.groupMembers.queryITwinGroupMembers(
         accessToken,
         TestConfig.itwinId
       );
@@ -40,13 +37,14 @@ describe("AccessControlClient Group Members", () => {
     // Assert
     expect(iTwinsResponse.status).toBe(200);
     expect(iTwinsResponse.data).toBeDefined();
-    expect(iTwinsResponse.data!.length).toBeGreaterThan(0);
+    expect(iTwinsResponse.data?.members?.length).toBeGreaterThan(0);
+    expect(iTwinsResponse.data?._links).toBeDefined();
   });
 
   it("should get a list of group members for an iTwin with custom url", async () => {
     // Act
-    const iTwinsResponse: BentleyAPIResponse<GroupMember[]> =
-      await customAccessControlClient.groupMembers.queryITwinGroupMembersAsync(
+    const iTwinsResponse =
+      await customAccessControlClient.groupMembers.queryITwinGroupMembers(
         accessToken,
         TestConfig.itwinId
       );
@@ -54,7 +52,7 @@ describe("AccessControlClient Group Members", () => {
     // Assert
     expect(iTwinsResponse.status).toBe(200);
     expect(iTwinsResponse.data).toBeDefined();
-    expect(iTwinsResponse.data!.length).toBeGreaterThan(0);
+    expect(iTwinsResponse.data?.members?.length).toBeGreaterThan(0);
   });
 
   it("should get a filtered list of group members for an iTwin using $top", async () => {
@@ -62,8 +60,8 @@ describe("AccessControlClient Group Members", () => {
     const topAmount = 2;
 
     // Act
-    const iTwinsResponse: BentleyAPIResponse<GroupMember[]> =
-      await accessControlClient.groupMembers.queryITwinGroupMembersAsync(
+    const iTwinsResponse =
+      await accessControlClient.groupMembers.queryITwinGroupMembers(
         accessToken,
         TestConfig.itwinId,
         { top: topAmount }
@@ -72,42 +70,51 @@ describe("AccessControlClient Group Members", () => {
     // Assert
     expect(iTwinsResponse.status).toBe(200);
     expect(iTwinsResponse.data).toBeDefined();
-    expect(iTwinsResponse.data!).toBeDefined();
-    expect(iTwinsResponse.data!.length).toBe(topAmount);
+    expect(iTwinsResponse.data).toBeDefined();
+    expect(iTwinsResponse.data?.members?.length).toBe(topAmount);
   });
 
   it("should get a filtered list of group members for an iTwin using $skip", async () => {
     // Arrange
-    const unFilteredList: BentleyAPIResponse<GroupMember[]> =
-      await accessControlClient.groupMembers.queryITwinGroupMembersAsync(
+    const unFilteredList =
+      await accessControlClient.groupMembers.queryITwinGroupMembers(
         accessToken,
         TestConfig.itwinId
       );
-    const skipAmmount = 1;
+    const skipAmount = 1;
     const topAmount = 3;
 
     // Act
-    const iTwinsResponse: BentleyAPIResponse<GroupMember[]> =
-      await accessControlClient.groupMembers.queryITwinGroupMembersAsync(
+    const iTwinsResponse =
+      await accessControlClient.groupMembers.queryITwinGroupMembers(
         accessToken,
         TestConfig.itwinId,
-        { skip: skipAmmount, top: topAmount }
+        { skip: skipAmount, top: topAmount }
       );
 
     // Assert
     expect(iTwinsResponse.status).toBe(200);
     expect(iTwinsResponse.data).toBeDefined();
-    expect(iTwinsResponse.data!).toBeDefined();
-    expect(iTwinsResponse.data!.length).toBe(topAmount);
-    unFilteredList.data!.slice(0, skipAmmount).forEach((member) => {
-      expect(iTwinsResponse.data!.includes(member)).toBe(false);
+    expect(iTwinsResponse.data).toBeDefined();
+    expect(iTwinsResponse.data?.members?.length).toBe(topAmount);
+    // Get the IDs of skipped members
+    const skippedMemberIds =
+      unFilteredList.data?.members?.slice(0, skipAmount).map((m) => m.id) || [];
+
+    // Get the IDs of returned members
+    const returnedMemberIds =
+      iTwinsResponse.data?.members?.map((m) => m.id) || [];
+
+    // Check that none of the skipped members appear in the returned results
+    skippedMemberIds.forEach((skippedId) => {
+      expect(returnedMemberIds).not.toContain(skippedId);
     });
   });
 
   it("should get a specific group member for an iTwin", async () => {
     // Act
-    const iTwinsResponse: BentleyAPIResponse<GroupMember> =
-      await accessControlClient.groupMembers.getITwinGroupMemberAsync(
+    const iTwinsResponse =
+      await accessControlClient.groupMembers.getITwinGroupMember(
         accessToken,
         TestConfig.itwinId,
         TestConfig.permanentGroupId1
@@ -116,51 +123,56 @@ describe("AccessControlClient Group Members", () => {
     // Assert
     expect(iTwinsResponse.status).toBe(200);
     expect(iTwinsResponse.data).toBeDefined();
-    expect(iTwinsResponse.data!.id).toBe(TestConfig.permanentGroupId1);
+    expect(iTwinsResponse.data?.member.id).toBe(TestConfig.permanentGroupId1);
   });
 
   it("should get a 404 when trying to get a non-existant group member", async () => {
     // Arrange
-    const notExistantGroupId = "22acf21e-0575-4faf-849b-bcd538718269";
+    const notExistentGroupId = "22acf21e-0575-4faf-849b-bcd538718269";
 
     // Act
-    const iTwinsResponse: BentleyAPIResponse<GroupMember> =
-      await accessControlClient.groupMembers.getITwinGroupMemberAsync(
+    const iTwinsResponse =
+      await accessControlClient.groupMembers.getITwinGroupMember(
         accessToken,
         TestConfig.itwinId,
-        notExistantGroupId
+        notExistentGroupId
       );
 
     // Assert
     expect(iTwinsResponse.status).toBe(404);
     expect(iTwinsResponse.data).toBeUndefined();
-    expect(iTwinsResponse.error!.code).toBe("TeamMemberNotFound");
+    expect(iTwinsResponse.error?.code).toBe("TeamMemberNotFound");
   });
 
   it("should get add, get, update, and remove a group member", async () => {
     // --- Add Member ---
     // Act
-    const addUserMemberResponse: BentleyAPIResponse<GroupMember[]> =
-      await accessControlClient.groupMembers.addITwinGroupMembersAsync(
+    const addUserMemberResponse =
+      await accessControlClient.groupMembers.addITwinGroupMembers(
         accessToken,
         TestConfig.itwinId,
-        [
-          {
-            groupId: TestConfig.permanentGroupId2,
-            roleIds: [ TestConfig.permanentRoleId1, TestConfig.permanentRoleId2 ],
-          },
-        ]
+        {
+          members: [
+            {
+              groupId: TestConfig.permanentGroupId2,
+              roleIds: [
+                TestConfig.permanentRoleId1,
+                TestConfig.permanentRoleId2,
+              ],
+            },
+          ],
+        }
       );
 
     // Assert
     expect(addUserMemberResponse.status).toBe(201);
     expect(addUserMemberResponse.data).toBeDefined();
-    expect(addUserMemberResponse.data!.length).toBeGreaterThan(0);
+    expect(addUserMemberResponse.data?.members?.length).toBeGreaterThan(0);
 
     // --- Check member exists and has role ---
     // Act
-    const getGroupMemberResponse: BentleyAPIResponse<GroupMember> =
-      await accessControlClient.groupMembers.getITwinGroupMemberAsync(
+    const getGroupMemberResponse =
+      await accessControlClient.groupMembers.getITwinGroupMember(
         accessToken,
         TestConfig.itwinId,
         TestConfig.permanentGroupId2
@@ -168,14 +180,18 @@ describe("AccessControlClient Group Members", () => {
 
     expect(getGroupMemberResponse.status).toBe(200);
     expect(getGroupMemberResponse.data).toBeDefined();
-    expect(getGroupMemberResponse.data!.id).toBe(TestConfig.permanentGroupId2);
-    expect(getGroupMemberResponse.data!.roles!.length).toBe(2);
-    expect(getGroupMemberResponse.data!.roles![0].id).toBe(TestConfig.permanentRoleId1);
+    expect(getGroupMemberResponse.data?.member?.id).toBe(
+      TestConfig.permanentGroupId2
+    );
+    expect(getGroupMemberResponse.data?.member?.roles?.length).toBe(2);
+    expect(getGroupMemberResponse.data?.member?.roles[0].id).toBe(
+      TestConfig.permanentRoleId1
+    );
 
     // --- Update member's role ---
     // Act
-    const updatedUserMemberResponse: BentleyAPIResponse<GroupMember> =
-      await accessControlClient.groupMembers.updateITwinGroupMemberAsync(
+    const updatedUserMemberResponse =
+      await accessControlClient.groupMembers.updateITwinGroupMember(
         accessToken,
         TestConfig.itwinId,
         TestConfig.permanentGroupId2,
@@ -184,15 +200,21 @@ describe("AccessControlClient Group Members", () => {
 
     expect(updatedUserMemberResponse.status).toBe(200);
     expect(updatedUserMemberResponse.data).toBeDefined();
-    expect(updatedUserMemberResponse.data!.id).toBe(TestConfig.permanentGroupId2);
-    expect(updatedUserMemberResponse.data!.roles!.length).toBe(2);
-    expect(updatedUserMemberResponse.data!.roles!.map((x) => x.id)).toContain(TestConfig.permanentRoleId1);
-    expect(updatedUserMemberResponse.data!.roles!.map((x) => x.id)).toContain(TestConfig.permanentRoleId2);
+    expect(updatedUserMemberResponse.data?.member.id).toBe(
+      TestConfig.permanentGroupId2
+    );
+    expect(updatedUserMemberResponse.data?.member.roles.length).toBe(2);
+    expect(
+      updatedUserMemberResponse.data?.member.roles.map((x) => x.id)
+    ).toContain(TestConfig.permanentRoleId1);
+    expect(
+      updatedUserMemberResponse.data?.member.roles.map((x) => x.id)
+    ).toContain(TestConfig.permanentRoleId2);
 
     // --- Remove member ---
     // Act
     const removeUserMemberResponse: BentleyAPIResponse<undefined> =
-      await accessControlClient.groupMembers.removeITwinGroupMemberAsync(
+      await accessControlClient.groupMembers.removeITwinGroupMember(
         accessToken,
         TestConfig.itwinId,
         TestConfig.permanentGroupId2

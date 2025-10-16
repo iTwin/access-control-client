@@ -7,7 +7,6 @@
  */
 import type {
   IAccessControlClient,
-  IGroupMembersClient,
   IOwnerMembersClient,
   IPermissionsClient,
   IRolesClient,
@@ -22,6 +21,7 @@ import { PermissionsClient } from "./subClients/PermissionsClient";
 import { RolesClient } from "./subClients/RolesClient";
 import { UserMembersClient } from "./subClients/UserMembersClient";
 import type { IGroupsClient } from "./subClients/accessControlClientInterfaces/GroupClient";
+import type { IGroupMembersClient } from "./subClients/accessControlClientInterfaces/GroupMembersClient";
 import { IMemberInvitationsClient } from "./subClients/accessControlClientInterfaces/IMemberInvitationsClient";
 import type { IITwinJobsClient } from "./subClients/accessControlClientInterfaces/ITwinJobsClient";
 

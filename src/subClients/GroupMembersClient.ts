@@ -6,13 +6,13 @@
  * @module AccessControlClient
  */
 import type { AccessToken } from "@itwin/core-bentley";
+import type { AddGroupMembers, MultipleGroupMembersResponse, SingleGroupMemberResponse } from "src/types/GroupMember";
+import type { Links } from "src/types/links";
 import type {
   AccessControlQueryArg,
-  AddGroupMember,
-  GroupMember,
-  IGroupMembersClient,
 } from "../accessControlTypes";
 import type { BentleyAPIResponse } from "../types/CommonApiTypes";
+import type { IGroupMembersClient } from "./accessControlClientInterfaces/GroupMembersClient";
 import { BaseClient } from "./BaseClient";
 
 export class GroupMembersClient
@@ -27,11 +27,16 @@ export class GroupMembersClient
    * @param iTwinId The id of the iTwin
    * @returns Array of members
    */
-  public async queryITwinGroupMembersAsync(
+  public async queryITwinGroupMembers(
     accessToken: AccessToken,
     iTwinId: string,
     arg?: AccessControlQueryArg
-  ): Promise<BentleyAPIResponse<GroupMember[]>> {
+  ): Promise<BentleyAPIResponse<MultipleGroupMembersResponse &
+  {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+  _links: Links
+  }
+  >> {
     let url = `${this._baseUrl}/${iTwinId}/members/groups`;
 
     if (arg) {
@@ -43,8 +48,7 @@ export class GroupMembersClient
       "GET",
       url,
       undefined,
-      "members"
-    ); // TODO: Consider how to handle paging
+    );
   }
 
   /** Retrieves a specific group member for a specified iTwin.
@@ -53,18 +57,17 @@ export class GroupMembersClient
    * @param memberId The id of the member
    * @returns Member
    */
-  public async getITwinGroupMemberAsync(
+  public async getITwinGroupMember(
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string
-  ): Promise<BentleyAPIResponse<GroupMember>> {
+  ): Promise<BentleyAPIResponse<SingleGroupMemberResponse>>{
     const url = `${this._baseUrl}/${iTwinId}/members/groups/${memberId}`;
     return this.sendGenericAPIRequest(
       accessToken,
       "GET",
       url,
       undefined,
-      "member"
     );
   }
 
@@ -74,21 +77,17 @@ export class GroupMembersClient
    * @param newMembers The list of new members to be added along with their role
    * @returns Member[]
    */
-  public async addITwinGroupMembersAsync(
+  public async addITwinGroupMembers(
     accessToken: AccessToken,
     iTwinId: string,
-    newMembers: AddGroupMember[]
-  ): Promise<BentleyAPIResponse<GroupMember[]>> {
+    newMembers: AddGroupMembers
+  ): Promise<BentleyAPIResponse<MultipleGroupMembersResponse>> {
     const url = `${this._baseUrl}/${iTwinId}/members/groups`;
-    const body = {
-      members: newMembers,
-    };
     return this.sendGenericAPIRequest(
       accessToken,
       "POST",
       url,
-      body,
-      "members"
+      newMembers,
     );
   }
 
@@ -98,7 +97,7 @@ export class GroupMembersClient
    * @param memberId The id of the member
    * @returns No Content
    */
-  public async removeITwinGroupMemberAsync(
+  public async removeITwinGroupMember(
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string
@@ -114,12 +113,12 @@ export class GroupMembersClient
    * @param roleIds The ids of the roles to be assigned
    * @returns Member
    */
-  public async updateITwinGroupMemberAsync(
+  public async updateITwinGroupMember(
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string,
     roleIds: string[]
-  ): Promise<BentleyAPIResponse<GroupMember>> {
+  ): Promise<BentleyAPIResponse<SingleGroupMemberResponse>> {
     const url = `${this._baseUrl}/${iTwinId}/members/groups/${memberId}`;
     const body = {
       roleIds,
@@ -128,8 +127,7 @@ export class GroupMembersClient
       accessToken,
       "PATCH",
       url,
-      body,
-      "member"
+      body
     );
   }
 }

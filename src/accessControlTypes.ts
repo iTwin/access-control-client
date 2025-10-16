@@ -8,6 +8,7 @@
 
 import type { AccessToken } from "@itwin/core-bentley";
 import type { IGroupsClient } from "./subClients/accessControlClientInterfaces/GroupClient";
+import type { IGroupMembersClient } from "./subClients/accessControlClientInterfaces/GroupMembersClient";
 import type { IMemberInvitationsClient } from "./subClients/accessControlClientInterfaces/IMemberInvitationsClient";
 import type { IITwinJobsClient } from "./subClients/accessControlClientInterfaces/ITwinJobsClient";
 import type { BentleyAPIResponse, ResultMode } from "./types/CommonApiTypes";
@@ -100,44 +101,6 @@ export interface IOwnerMembersClient {
     iTwinId: string,
     memberId: string
   ): Promise<BentleyAPIResponse<undefined>>;
-}
-
-export interface IGroupMembersClient {
-  /** Retrieves a list of group members and their roles assigned to a specified iTwin. */
-  queryITwinGroupMembersAsync(
-    accessToken: AccessToken,
-    iTwinId: string,
-    arg?: AccessControlQueryArg
-  ): Promise<BentleyAPIResponse<GroupMember[]>>;
-
-  /** Retrieves a specific group member for a specified iTwin. */
-  getITwinGroupMemberAsync(
-    accessToken: AccessToken,
-    iTwinId: string,
-    memberId: string
-  ): Promise<BentleyAPIResponse<GroupMember>>;
-
-  /** Add new iTwin group members */
-  addITwinGroupMembersAsync(
-    accessToken: AccessToken,
-    iTwinId: string,
-    newMembers: AddGroupMember[]
-  ): Promise<BentleyAPIResponse<GroupMember[]>>;
-
-  /**  Remove the specified iTwin group member */
-  removeITwinGroupMemberAsync(
-    accessToken: AccessToken,
-    iTwinId: string,
-    memberId: string
-  ): Promise<BentleyAPIResponse<undefined>>;
-
-  /**  Update iTwin group member roles */
-  updateITwinGroupMemberAsync(
-    accessToken: AccessToken,
-    iTwinId: string,
-    memberId: string,
-    roleIds: string[]
-  ): Promise<BentleyAPIResponse<GroupMember>>;
 }
 
 export interface IRolesClient {
@@ -239,20 +202,6 @@ export interface OwnerMember {
   givenName?: string;
   surname?: string;
   organization?: string;
-}
-
-export interface GroupMember {
-  id?: string;
-  groupName?: string;
-  groupDescription?: string;
-  roles?: Omit<Role, "permissions">[];
-  imsGroupsCount?: number;
-  membersCount?: number;
-}
-
-export interface AddGroupMember {
-  groupId: string;
-  roleIds: string[];
 }
 
 //#endregion
