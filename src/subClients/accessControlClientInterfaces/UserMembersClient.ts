@@ -5,7 +5,7 @@
 import type { AccessToken } from "@itwin/core-bentley";
 import type { AccessControlQueryArg } from "src/accessControlTypes";
 import type { BentleyAPIResponse } from "src/types/CommonApiTypes";
-import type { AddUserMemberResponse, MultipleUserMembersResponse, SingleUserMemberResponse } from "src/types/UserMembers";
+import type { AddUserMember, AddUserMemberResponse, MultipleUserMembersResponse, SingleUserMemberResponse } from "src/types/UserMembers";
 
 export interface IUserMembersClient {
   /** Retrieves a list of user members and their roles assigned to a specified iTwin. */
