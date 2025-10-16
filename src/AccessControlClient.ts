@@ -10,7 +10,6 @@ import type {
   IOwnerMembersClient,
   IPermissionsClient,
   IRolesClient,
-  IUserMembersClient,
 } from "./accessControlTypes";
 import { GroupMembersClient } from "./subClients/GroupMembersClient";
 import { GroupsClient } from "./subClients/GroupsClient";
@@ -22,8 +21,9 @@ import { RolesClient } from "./subClients/RolesClient";
 import { UserMembersClient } from "./subClients/UserMembersClient";
 import type { IGroupsClient } from "./subClients/accessControlClientInterfaces/GroupClient";
 import type { IGroupMembersClient } from "./subClients/accessControlClientInterfaces/GroupMembersClient";
-import { IMemberInvitationsClient } from "./subClients/accessControlClientInterfaces/IMemberInvitationsClient";
+import type { IMemberInvitationsClient } from "./subClients/accessControlClientInterfaces/IMemberInvitationsClient";
 import type { IITwinJobsClient } from "./subClients/accessControlClientInterfaces/ITwinJobsClient";
+import type { IUserMembersClient } from "./subClients/accessControlClientInterfaces/UserMembersClient";
 
 export class AccessControlClient implements IAccessControlClient {
   public permissions: IPermissionsClient;
