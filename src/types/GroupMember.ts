@@ -4,13 +4,36 @@
  *--------------------------------------------------------------------------------------------*/
 import type { Role } from "./Role";
 
+/**
+ * Represents a group that is a member of an iTwin with associated roles and metadata.
+ *
+ * @remarks
+ * Group members are groups that have been added to an iTwin and assigned specific roles.
+ * This provides information about the group's identity, assigned roles, and aggregate
+ * counts of its nested membership structure.
+ *
+ * @example
+ * ```typescript
+ * const groupMember: GroupMember = {
+ *   id: "550e8400-e29b-41d4-a716-446655440000",
+ *   groupName: "Engineering Team",
+ *   groupDescription: "Software engineering team members",
+ *   roles: [
+ *     { id: "admin-role", displayName: "Administrator" },
+ *     { id: "viewer-role", displayName: "Viewer" }
+ *   ],
+ * };
+ * ```
+ */
 export interface GroupMember {
+  /** Unique identifier for the group member */
   id: string;
+  /** Display name of the group */
   groupName: string;
+  /** Human-readable description of the group's purpose */
   groupDescription: string;
+  /** Array of roles assigned to this group member (excludes permissions for security) */
   roles: Omit<Role, "permissions">[];
-  imsGroupsCount: number;
-  membersCount: number;
 }
 
 /**
@@ -42,10 +65,18 @@ export interface AddGroupMembers {
   }[];
 }
 
+/**
+ * API response wrapper for a single group member operation.
+ */
 export interface SingleGroupMemberResponse {
+  /** The group member data returned by the API */
   member: Omit<GroupMember, "membersCount" | "imsGroupsCount">;
 }
 
+/**
+ * API response wrapper for multiple group members operations.
+ */
 export interface MultipleGroupMembersResponse {
+  /** Array of group members returned by the API */
   members: Omit<GroupMember, "membersCount" | "imsGroupsCount">[];
 }
