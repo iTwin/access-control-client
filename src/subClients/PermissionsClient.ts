@@ -6,10 +6,10 @@
  * @module AccessControlClient
  */
 import type { AccessToken } from "@itwin/core-bentley";
-import type { IPermissionsClient } from "../accessControlTypes";
 import type { BentleyAPIResponse } from "../types/CommonApiTypes";
 import type { Permission } from "../types/Permission";
 import { BaseClient } from "./BaseClient";
+import type { IPermissionsClient } from "./accessControlClientInterfaces/PermissionsClient";
 
 export class PermissionsClient extends BaseClient implements IPermissionsClient{
   public constructor(url?: string) {

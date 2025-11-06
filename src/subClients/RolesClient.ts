@@ -6,10 +6,11 @@
  * @module AccessControlClient
  */
 import type { AccessToken } from "@itwin/core-bentley";
-import type { IRolesClient } from "../accessControlTypes";
 import type { BentleyAPIResponse } from "../types/CommonApiTypes";
 import type { Role } from "../types/Role";
 import { BaseClient } from "./BaseClient";
+import { IRolesClient } from "./accessControlClientInterfaces/RolesClient";
+
 
 export class RolesClient extends BaseClient implements IRolesClient {
   public constructor(url?: string) {
@@ -24,7 +25,7 @@ export class RolesClient extends BaseClient implements IRolesClient {
   public async getITwinRoles(
     accessToken: AccessToken,
     iTwinId: string,
-    additionalHeaders?: { [key: string]: string }
+    additionalHeaders?: Record<string, string>
   ): Promise<BentleyAPIResponse<Role[]>> {
     const url = `${this._baseUrl}/${iTwinId}/roles`;
     return this.sendGenericAPIRequest(accessToken, "GET", url, undefined, "roles", additionalHeaders);

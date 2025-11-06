@@ -267,51 +267,53 @@ describe("AccessControlClient Groups", () => {
     expect(createResponse.data?.group!.name).toBe(newGroup.name);
     expect(createResponse.data?.group!.description).toBe(newGroup.description);
 
-    // --- UPDATE GROUP ---
-    // Arrange
-    const updatedGroup = {
-      name: `${newGroupName} Updated Name`,
-      description: `${newGroupDescription} Updated Description`,
-      members: [TestConfig.temporaryUserEmail],
-      imsGroups: [TestConfig.permanentImsGroupName],
-    };
+    try {
+      // --- UPDATE GROUP ---
+      // Arrange
+      const updatedGroup = {
+        name: `${newGroupName} Updated Name`,
+        description: `${newGroupDescription} Updated Description`,
+        members: [TestConfig.temporaryUserEmail],
+        imsGroups: [TestConfig.permanentImsGroupName],
+      };
 
-    // Act
-    const updateResponse =
-      await accessControlClient.groups.updateITwinGroup(accessToken, TestConfig.itwinId, createResponse.data?.group!.id as string, updatedGroup);
+      // Act
+      const updateResponse =
+        await accessControlClient.groups.updateITwinGroup(accessToken, TestConfig.itwinId, createResponse.data?.group!.id as string, updatedGroup);
 
-    // Assert
-    expect(updateResponse.status).toBe(200);
-    expect(updateResponse.data?.group!.name).toBe(updatedGroup.name);
-    expect(updateResponse.data?.group!.description).toBe(updatedGroup.description);
-    expect(updateResponse.data?.group!.members!.map((x) => x.email!)).toContain(TestConfig.temporaryUserEmail);
-    expect(updateResponse.data?.group!.imsGroups!.map((x) => x)).toContain(TestConfig.permanentImsGroupName);
+      // Assert
+      expect(updateResponse.status).toBe(200);
+      expect(updateResponse.data?.group!.name).toBe(updatedGroup.name);
+      expect(updateResponse.data?.group!.description).toBe(updatedGroup.description);
+      expect(updateResponse.data?.group!.members!.map((x) => x.email!)).toContain(TestConfig.temporaryUserEmail);
+      expect(updateResponse.data?.group!.imsGroups!.map((x) => x)).toContain(TestConfig.permanentImsGroupName);
 
-    // --- UPDATE GROUP BACK TO EMPTY---
-    // Arrange
-    const updatedEmptyGroup = {
-      members: [],
-      imsGroups: [],
-    };
+      // --- UPDATE GROUP BACK TO EMPTY---
+      // Arrange
+      const updatedEmptyGroup = {
+        members: [],
+        imsGroups: [],
+      };
 
-    // Act
-    const updateEmptyResponse =
-      await accessControlClient.groups.updateITwinGroup(accessToken, TestConfig.itwinId, createResponse.data?.group!.id as string, updatedEmptyGroup);
+      // Act
+      const updateEmptyResponse =
+        await accessControlClient.groups.updateITwinGroup(accessToken, TestConfig.itwinId, createResponse.data?.group!.id as string, updatedEmptyGroup);
 
-    // Assert
-    expect(updateEmptyResponse.status).toBe(200);
-    expect(updateEmptyResponse.data?.group!.name).toBe(updatedGroup.name);
-    expect(updateEmptyResponse.data?.group!.description).toBe(updatedGroup.description);
-    expect(updateEmptyResponse.data?.group!.members!.length).toBe(0);
-    expect(updateEmptyResponse.data?.group!.imsGroups!.length).toBe(0);
+      // Assert
+      expect(updateEmptyResponse.status).toBe(200);
+      expect(updateEmptyResponse.data?.group!.name).toBe(updatedGroup.name);
+      expect(updateEmptyResponse.data?.group!.description).toBe(updatedGroup.description);
+      expect(updateEmptyResponse.data?.group!.members!.length).toBe(0);
+      expect(updateEmptyResponse.data?.group!.imsGroups!.length).toBe(0);
+    } finally {
+      // --- DELETE GROUP (cleanup) ---
+      // Ensure group is deleted even if test fails
+      const deleteResponse: BentleyAPIResponse<undefined> =
+        await accessControlClient.groups.deleteITwinGroup(accessToken, TestConfig.itwinId, createResponse.data?.group!.id as string);
 
-    // --- DELETE GROUP ---
-    // Act
-    const deleteResponse: BentleyAPIResponse<undefined> =
-      await accessControlClient.groups.deleteITwinGroup(accessToken, TestConfig.itwinId, createResponse.data?.group!.id as string);
-
-    // Assert
-    expect(deleteResponse.status).toBe(204);
-    expect(deleteResponse.data).toBeUndefined();
+      // Assert cleanup was successful
+      expect(deleteResponse.status).toBe(204);
+      expect(deleteResponse.data).toBeUndefined();
+    }
   });
 });

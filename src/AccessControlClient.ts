@@ -5,12 +5,8 @@
 /** @packageDocumentation
  * @module AccessControlClient
  */
-import type {
-  IAccessControlClient,
-  IOwnerMembersClient,
-  IPermissionsClient,
-  IRolesClient,
-} from "./accessControlTypes";
+
+import type { IAccessControlClient } from "./accessControlTypes";
 import { GroupMembersClient } from "./subClients/GroupMembersClient";
 import { GroupsClient } from "./subClients/GroupsClient";
 import { ITwinJobsClient } from "./subClients/ITwinJobsClient";
@@ -23,6 +19,9 @@ import type { IGroupsClient } from "./subClients/accessControlClientInterfaces/G
 import type { IGroupMembersClient } from "./subClients/accessControlClientInterfaces/GroupMembersClient";
 import type { IMemberInvitationsClient } from "./subClients/accessControlClientInterfaces/IMemberInvitationsClient";
 import type { IITwinJobsClient } from "./subClients/accessControlClientInterfaces/ITwinJobsClient";
+import type { IOwnerMembersClient } from "./subClients/accessControlClientInterfaces/OwnerMembersClient ";
+import type { IPermissionsClient } from "./subClients/accessControlClientInterfaces/PermissionsClient";
+import type { IRolesClient } from "./subClients/accessControlClientInterfaces/RolesClient";
 import type { IUserMembersClient } from "./subClients/accessControlClientInterfaces/UserMembersClient";
 
 export class AccessControlClient implements IAccessControlClient {

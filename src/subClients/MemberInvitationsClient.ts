@@ -6,10 +6,7 @@
  * @module AccessControlClient
  */
 import type { AccessToken } from "@itwin/core-bentley";
-import type {
-  AccessControlQueryArg,
-} from "../accessControlTypes";
-import type { BentleyAPIResponse } from "../types/CommonApiTypes";
+import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes";
 import { MultipleMemberInvitationResponse } from "../types/Invitations";
 import { IMemberInvitationsClient } from "./accessControlClientInterfaces/IMemberInvitationsClient";
 import { BaseClient } from "./BaseClient";
@@ -29,13 +26,11 @@ export class MemberInvitationsClient
   public async queryITwinMemberInvitations(
     accessToken: AccessToken,
     iTwinId: string,
-    arg?: Omit<AccessControlQueryArg, "result">
+    arg?: Pick<ODataQueryParams, "top" | "skip">
   ): Promise<BentleyAPIResponse<MultipleMemberInvitationResponse>> {
-    let url = `${this._baseUrl}/${iTwinId}/members/invitations`;
-
-    if (arg) {
-      url += `?${this.getQueryString(MemberInvitationsClient.paginationParamMapping, { top: arg.top, skip: arg.skip })}`;
-    }
+    const url = `${this._baseUrl}/${iTwinId}/members/invitations${
+      arg ? `?${this.getQueryString(MemberInvitationsClient.paginationParamMapping, { top: arg.top, skip: arg.skip })}` : ''
+    }`;
 
     return this.sendGenericAPIRequest(
       accessToken,

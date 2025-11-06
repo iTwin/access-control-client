@@ -6,10 +6,7 @@
  * @module AccessControlClient
  */
 import type { AccessToken } from "@itwin/core-bentley";
-import type {
-  AccessControlQueryArg,
-} from "../accessControlTypes";
-import type { BentleyAPIResponse } from "../types/CommonApiTypes";
+import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes";
 import type { AddGroupMembers, MultipleGroupMembersResponse, SingleGroupMemberResponse } from "../types/GroupMember";
 import type { Links } from "../types/links";
 import type { IGroupMembersClient } from "./accessControlClientInterfaces/GroupMembersClient";
@@ -30,7 +27,7 @@ export class GroupMembersClient
   public async queryITwinGroupMembers(
     accessToken: AccessToken,
     iTwinId: string,
-    arg?: AccessControlQueryArg
+    arg?: Pick<ODataQueryParams, "top" | "skip">
   ): Promise<BentleyAPIResponse<MultipleGroupMembersResponse &
   {
     // eslint-disable-next-line @typescript-eslint/naming-convention

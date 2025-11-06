@@ -3,16 +3,16 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 import type { AccessToken } from "@itwin/core-bentley";
-import type { AccessControlQueryArg } from "src/accessControlTypes";
-import type { BentleyAPIResponse } from "src/types/CommonApiTypes";
-import type { AddUserMember, AddUserMemberResponse, MultipleUserMembersResponse, SingleUserMemberResponse } from "src/types/UserMembers";
+import type { BentleyAPIResponse, ODataQueryParams } from "../../types/CommonApiTypes";
+import type { AddUserMember, AddUserMemberResponse, MultipleUserMembersResponse, SingleUserMemberResponse } from "../../types/UserMembers";
+
 
 export interface IUserMembersClient {
   /** Retrieves a list of user members and their roles assigned to a specified iTwin. */
   queryITwinUserMembers(
     accessToken: AccessToken,
     iTwinId: string,
-    arg?: AccessControlQueryArg
+    arg?: Pick<ODataQueryParams, "top" | "skip">
   ): Promise<BentleyAPIResponse<MultipleUserMembersResponse>>;
 
   /** Retrieves a specific user member for a specified iTwin. */

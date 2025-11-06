@@ -3,17 +3,16 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 import type { AccessToken } from "@itwin/core-bentley";
-import type { Links } from "src/types/links";
-import type { AccessControlQueryArg } from "../../accessControlTypes";
-import type { BentleyAPIResponse } from "../../types/CommonApiTypes";
+import type { BentleyAPIResponse, ODataQueryParams } from "../../types/CommonApiTypes";
 import type { AddGroupMembers, MultipleGroupMembersResponse, SingleGroupMemberResponse } from "../../types/GroupMember";
+import type { Links } from "../../types/links";
 
 export interface IGroupMembersClient {
   /** Retrieves a list of group members and their roles assigned to a specified iTwin. */
   queryITwinGroupMembers(
     accessToken: AccessToken,
     iTwinId: string,
-    arg?: AccessControlQueryArg
+    arg?: Pick<ODataQueryParams, "top" | "skip">
   ):  Promise<BentleyAPIResponse<MultipleGroupMembersResponse &
     {
       // eslint-disable-next-line @typescript-eslint/naming-convention

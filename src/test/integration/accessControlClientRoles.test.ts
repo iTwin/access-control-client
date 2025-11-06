@@ -138,30 +138,32 @@ describe("AccessControlClient Roles", () => {
     expect(createResponse.data!.displayName).toBe(newRole.displayName);
     expect(createResponse.data!.description).toBe(newRole.description);
 
-    // --- UPDATE ROLE ---
-    // Arrange
-    const updatedRole: Role = {
-      displayName: newRoleName,
-      description: "UPDATED ROLE DESCRIPTION",
-      permissions: [],
-    };
+    try {
+      // --- UPDATE ROLE ---
+      // Arrange
+      const updatedRole: Role = {
+        displayName: newRoleName,
+        description: "UPDATED ROLE DESCRIPTION",
+        permissions: [],
+      };
 
-    // Act
-    const updateResponse: BentleyAPIResponse<Role> =
-      await accessControlClient.roles.updateITwinRole(accessToken, TestConfig.itwinId, createResponse.data!.id!, updatedRole);
+      // Act
+      const updateResponse: BentleyAPIResponse<Role> =
+        await accessControlClient.roles.updateITwinRole(accessToken, TestConfig.itwinId, createResponse.data!.id!, updatedRole);
 
-    // Assert
-    expect(updateResponse.status).toBe(200);
-    expect(updateResponse.data!.displayName).toBe(updatedRole.displayName);
-    expect(updateResponse.data!.description).toBe(updatedRole.description);
+      // Assert
+      expect(updateResponse.status).toBe(200);
+      expect(updateResponse.data!.displayName).toBe(updatedRole.displayName);
+      expect(updateResponse.data!.description).toBe(updatedRole.description);
+    } finally {
+      // --- DELETE ROLE (cleanup) ---
+      // Ensure role is deleted even if test fails
+      const deleteResponse: BentleyAPIResponse<undefined> =
+        await accessControlClient.roles.deleteITwinRole(accessToken, TestConfig.itwinId, createResponse.data!.id!);
 
-    // --- DELETE ROLE ---
-    // Act
-    const deleteResponse: BentleyAPIResponse<undefined> =
-      await accessControlClient.roles.deleteITwinRole(accessToken, TestConfig.itwinId, createResponse.data!.id!);
-
-    // Assert
-    expect(deleteResponse.status).toBe(204);
-    expect(deleteResponse.data).toBeUndefined();
+      // Assert cleanup was successful
+      expect(deleteResponse.status).toBe(204);
+      expect(deleteResponse.data).toBeUndefined();
+    }
   });
 });

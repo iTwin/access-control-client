@@ -6,10 +6,7 @@
  * @module AccessControlClient
  */
 import type { AccessToken } from "@itwin/core-bentley";
-import type {
-  AccessControlQueryArg,
-} from "../accessControlTypes";
-import type { BentleyAPIResponse } from "../types/CommonApiTypes";
+import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes";
 import type { AddUserMember, AddUserMemberResponse, MultipleUserMembersResponse, SingleUserMemberResponse } from "../types/UserMembers";
 import { BaseClient } from "./BaseClient";
 import type { IUserMembersClient } from "./accessControlClientInterfaces/UserMembersClient";
@@ -29,7 +26,7 @@ export class UserMembersClient
   public async queryITwinUserMembers(
     accessToken: AccessToken,
     iTwinId: string,
-    arg?: AccessControlQueryArg
+    arg?: Pick<ODataQueryParams, "top" | "skip">
   ): Promise<BentleyAPIResponse<MultipleUserMembersResponse>> {
     let url = `${this._baseUrl}/${iTwinId}/members/users`;
 

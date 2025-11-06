@@ -10,8 +10,8 @@ import type {
   IAccessControlClient,
 } from "../../accessControlTypes";
 import type { BentleyAPIResponse } from "../../types/CommonApiTypes";
+import type { UserMember } from "../../types/UserMembers";
 import { TestConfig } from "../TestConfig";
-import { UserMember } from "src/types/UserMembers";
 
 describe("AccessControlClient User Members", () => {
   let baseUrl: string = "https://api.bentley.com/accesscontrol/itwins";
@@ -163,48 +163,50 @@ describe("AccessControlClient User Members", () => {
     expect(addUserMemberResponse.data?.invitations.length).toBe(0);
     const newMember = addUserMemberResponse.data?.members[0] as UserMember;
 
-    // --- Check member exists and has role ---
-    // Act
-    const getUserMemberResponse =
-      await accessControlClient.userMembers.getITwinUserMember(
-        accessToken,
-        TestConfig.itwinId,
-        newMember.id
-      );
+    try {
+      // --- Check member exists and has role ---
+      // Act
+      const getUserMemberResponse =
+        await accessControlClient.userMembers.getITwinUserMember(
+          accessToken,
+          TestConfig.itwinId,
+          newMember.id
+        );
 
-    expect(getUserMemberResponse.status).toBe(200);
-    expect(getUserMemberResponse.data).toBeDefined();
-    expect(getUserMemberResponse.data?.member.email).toBe(regularEmail);
-    expect(getUserMemberResponse.data?.member.roles.length).toBe(2);
-    expect(getUserMemberResponse.data?.member.roles[0].id).toBe(TestConfig.permanentRoleId1);
+      expect(getUserMemberResponse.status).toBe(200);
+      expect(getUserMemberResponse.data).toBeDefined();
+      expect(getUserMemberResponse.data?.member.email).toBe(regularEmail);
+      expect(getUserMemberResponse.data?.member.roles.length).toBe(2);
+      expect(getUserMemberResponse.data?.member.roles[0].id).toBe(TestConfig.permanentRoleId1);
 
-    // --- Update member's role ---
-    // Act
-    const updatedUserMemberResponse =
-      await accessControlClient.userMembers.updateITwinUserMember(
-        accessToken,
-        TestConfig.itwinId,
-        newMember.id,
-        [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2]
-      );
+      // --- Update member's role ---
+      // Act
+      const updatedUserMemberResponse =
+        await accessControlClient.userMembers.updateITwinUserMember(
+          accessToken,
+          TestConfig.itwinId,
+          newMember.id,
+          [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2]
+        );
 
-    expect(updatedUserMemberResponse.status).toBe(200);
-    expect(updatedUserMemberResponse.data).toBeDefined();
-    expect(updatedUserMemberResponse.data?.member.id).toBe(newMember.id);
-    expect(updatedUserMemberResponse.data?.member.roles.length).toBe(2);
-    expect(updatedUserMemberResponse.data?.member.roles.map((x) => x.id)).toContain(TestConfig.permanentRoleId1);
-    expect(updatedUserMemberResponse.data?.member.roles.map((x) => x.id)).toContain(TestConfig.permanentRoleId2);
+      expect(updatedUserMemberResponse.status).toBe(200);
+      expect(updatedUserMemberResponse.data).toBeDefined();
+      expect(updatedUserMemberResponse.data?.member.id).toBe(newMember.id);
+      expect(updatedUserMemberResponse.data?.member.roles.length).toBe(2);
+      expect(updatedUserMemberResponse.data?.member.roles.map((x) => x.id)).toContain(TestConfig.permanentRoleId1);
+      expect(updatedUserMemberResponse.data?.member.roles.map((x) => x.id)).toContain(TestConfig.permanentRoleId2);
+    } finally {
+      // --- Remove member (cleanup) ---
+      // Ensure member is removed even if test fails
+      const removeUserMemberResponse: BentleyAPIResponse<undefined> =
+        await accessControlClient.userMembers.removeITwinUserMember(
+          accessToken,
+          TestConfig.itwinId,
+          newMember.id
+        );
 
-    // --- Remove member ---
-    // Act
-    const removeUserMemberResponse: BentleyAPIResponse<undefined> =
-      await accessControlClient.userMembers.removeITwinUserMember(
-        accessToken,
-        TestConfig.itwinId,
-        newMember.id
-      );
-
-    expect(removeUserMemberResponse.status).toBe(204);
-    expect(removeUserMemberResponse.data).toBeUndefined();
+      expect(removeUserMemberResponse.status).toBe(204);
+      expect(removeUserMemberResponse.data).toBeUndefined();
+    }
   });
 });

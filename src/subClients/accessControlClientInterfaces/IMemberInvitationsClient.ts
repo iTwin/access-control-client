@@ -3,8 +3,7 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 import { AccessToken } from "@itwin/core-bentley";
-import type { AccessControlQueryArg } from "../../accessControlTypes";
-import type { BentleyAPIResponse } from "../../types/CommonApiTypes";
+import type { BentleyAPIResponse, ODataQueryParams } from "../../types/CommonApiTypes";
 import type { MultipleMemberInvitationResponse } from "../../types/Invitations";
 
 export interface IMemberInvitationsClient {
@@ -12,7 +11,7 @@ export interface IMemberInvitationsClient {
   queryITwinMemberInvitations(
     accessToken: AccessToken,
     iTwinId: string,
-    arg?: Omit<AccessControlQueryArg, "result">
+    arg?: Pick<ODataQueryParams, "top" | "skip">
   ): Promise<BentleyAPIResponse<MultipleMemberInvitationResponse>>;
 
   /** Removes an existing member invitation. */

@@ -169,58 +169,60 @@ describe("AccessControlClient Group Members", () => {
     expect(addUserMemberResponse.data).toBeDefined();
     expect(addUserMemberResponse.data?.members?.length).toBeGreaterThan(0);
 
-    // --- Check member exists and has role ---
-    // Act
-    const getGroupMemberResponse =
-      await accessControlClient.groupMembers.getITwinGroupMember(
-        accessToken,
-        TestConfig.itwinId,
+    try {
+      // --- Check member exists and has role ---
+      // Act
+      const getGroupMemberResponse =
+        await accessControlClient.groupMembers.getITwinGroupMember(
+          accessToken,
+          TestConfig.itwinId,
+          TestConfig.permanentGroupId2
+        );
+
+      expect(getGroupMemberResponse.status).toBe(200);
+      expect(getGroupMemberResponse.data).toBeDefined();
+      expect(getGroupMemberResponse.data?.member?.id).toBe(
         TestConfig.permanentGroupId2
       );
-
-    expect(getGroupMemberResponse.status).toBe(200);
-    expect(getGroupMemberResponse.data).toBeDefined();
-    expect(getGroupMemberResponse.data?.member?.id).toBe(
-      TestConfig.permanentGroupId2
-    );
-    expect(getGroupMemberResponse.data?.member?.roles?.length).toBe(2);
-    expect(getGroupMemberResponse.data?.member?.roles[0].id).toBe(
-      TestConfig.permanentRoleId1
-    );
-
-    // --- Update member's role ---
-    // Act
-    const updatedUserMemberResponse =
-      await accessControlClient.groupMembers.updateITwinGroupMember(
-        accessToken,
-        TestConfig.itwinId,
-        TestConfig.permanentGroupId2,
-        [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2]
+      expect(getGroupMemberResponse.data?.member?.roles?.length).toBe(2);
+      expect(getGroupMemberResponse.data?.member?.roles[0].id).toBe(
+        TestConfig.permanentRoleId1
       );
 
-    expect(updatedUserMemberResponse.status).toBe(200);
-    expect(updatedUserMemberResponse.data).toBeDefined();
-    expect(updatedUserMemberResponse.data?.member.id).toBe(
-      TestConfig.permanentGroupId2
-    );
-    expect(updatedUserMemberResponse.data?.member.roles.length).toBe(2);
-    expect(
-      updatedUserMemberResponse.data?.member.roles.map((x) => x.id)
-    ).toContain(TestConfig.permanentRoleId1);
-    expect(
-      updatedUserMemberResponse.data?.member.roles.map((x) => x.id)
-    ).toContain(TestConfig.permanentRoleId2);
+      // --- Update member's role ---
+      // Act
+      const updatedUserMemberResponse =
+        await accessControlClient.groupMembers.updateITwinGroupMember(
+          accessToken,
+          TestConfig.itwinId,
+          TestConfig.permanentGroupId2,
+          [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2]
+        );
 
-    // --- Remove member ---
-    // Act
-    const removeUserMemberResponse: BentleyAPIResponse<undefined> =
-      await accessControlClient.groupMembers.removeITwinGroupMember(
-        accessToken,
-        TestConfig.itwinId,
+      expect(updatedUserMemberResponse.status).toBe(200);
+      expect(updatedUserMemberResponse.data).toBeDefined();
+      expect(updatedUserMemberResponse.data?.member.id).toBe(
         TestConfig.permanentGroupId2
       );
+      expect(updatedUserMemberResponse.data?.member.roles.length).toBe(2);
+      expect(
+        updatedUserMemberResponse.data?.member.roles.map((x) => x.id)
+      ).toContain(TestConfig.permanentRoleId1);
+      expect(
+        updatedUserMemberResponse.data?.member.roles.map((x) => x.id)
+      ).toContain(TestConfig.permanentRoleId2);
+    } finally {
+      // --- Remove member (cleanup) ---
+      // Ensure member is removed even if test fails
+      const removeUserMemberResponse: BentleyAPIResponse<undefined> =
+        await accessControlClient.groupMembers.removeITwinGroupMember(
+          accessToken,
+          TestConfig.itwinId,
+          TestConfig.permanentGroupId2
+        );
 
-    expect(removeUserMemberResponse.status).toBe(204);
-    expect(removeUserMemberResponse.data).toBeUndefined();
+      expect(removeUserMemberResponse.status).toBe(204);
+      expect(removeUserMemberResponse.data).toBeUndefined();
+    }
   });
 });
