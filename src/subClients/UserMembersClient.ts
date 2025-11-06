@@ -9,7 +9,7 @@ import type { AccessToken } from "@itwin/core-bentley";
 import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes";
 import type { AddUserMember, AddUserMemberResponse, MultipleUserMembersResponse, SingleUserMemberResponse } from "../types/UserMembers";
 import { BaseClient } from "./BaseClient";
-import type { IUserMembersClient } from "./accessControlClientInterfaces/UserMembersClient";
+import type { IUserMembersClient } from "../accessControlClientInterfaces/UserMembersClient";
 
 export class UserMembersClient
   extends BaseClient

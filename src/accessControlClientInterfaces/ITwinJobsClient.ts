@@ -3,8 +3,8 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 import type { AccessToken } from "@itwin/core-bentley";
-import type { BentleyAPIResponse, ResultMode } from "../../types/CommonApiTypes";
-import type { ITwinJob, ITwinJobActions } from "../../types/ITwinJob";
+import type { BentleyAPIResponse, ResultMode } from "../types/CommonApiTypes";
+import type { ITwinJob, ITwinJobActions } from "../types/ITwinJob";
 
 export interface IITwinJobsClient {
   /** Creates a new iTwin Job */

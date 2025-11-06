@@ -7,7 +7,7 @@ import { beforeAll, describe, expect, it } from "vitest";
 import { AccessControlClient } from "../../AccessControlClient";
 import type {
   IAccessControlClient,
-} from "../../accessControlTypes";
+} from "../../accessControlClientInterfaces/accessControl";
 import { TestConfig } from "../TestConfig";
 
 function randomIntFromInterval(min: number, max: number) {

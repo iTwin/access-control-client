@@ -3,8 +3,8 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 import type { AccessToken } from "@itwin/core-bentley";
-import type { AddOwnerMemberResponse, OwnerMember, OwnerMemberMultiResponse } from "../../types/OwnerMember";
-import type { BentleyAPIResponse, ODataQueryParams } from "../../types/CommonApiTypes";
+import type { AddOwnerMemberResponse, OwnerMember, OwnerMemberMultiResponse } from "../types/OwnerMember";
+import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes";
 
 
 export interface IOwnerMembersClient {

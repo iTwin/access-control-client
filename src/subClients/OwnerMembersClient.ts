@@ -8,7 +8,7 @@
 import type { AccessToken } from "@itwin/core-bentley";
 import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes";
 import type { AddOwnerMemberResponse, OwnerMember, OwnerMemberMultiResponse } from "../types/OwnerMember";
-import type { IOwnerMembersClient } from "./accessControlClientInterfaces/OwnerMembersClient ";
+import type { IOwnerMembersClient } from "../accessControlClientInterfaces/OwnerMembersClient ";
 import { BaseClient } from "./BaseClient";
 
 export class OwnerMembersClient

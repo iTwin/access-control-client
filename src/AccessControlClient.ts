@@ -6,7 +6,7 @@
  * @module AccessControlClient
  */
 
-import type { IAccessControlClient } from "./accessControlTypes";
+import type { IAccessControlClient } from "./accessControlClientInterfaces/accessControl";
 import { GroupMembersClient } from "./subClients/GroupMembersClient";
 import { GroupsClient } from "./subClients/GroupsClient";
 import { ITwinJobsClient } from "./subClients/ITwinJobsClient";
@@ -15,14 +15,14 @@ import { OwnerMembersClient } from "./subClients/OwnerMembersClient";
 import { PermissionsClient } from "./subClients/PermissionsClient";
 import { RolesClient } from "./subClients/RolesClient";
 import { UserMembersClient } from "./subClients/UserMembersClient";
-import type { IGroupsClient } from "./subClients/accessControlClientInterfaces/GroupClient";
-import type { IGroupMembersClient } from "./subClients/accessControlClientInterfaces/GroupMembersClient";
-import type { IMemberInvitationsClient } from "./subClients/accessControlClientInterfaces/IMemberInvitationsClient";
-import type { IITwinJobsClient } from "./subClients/accessControlClientInterfaces/ITwinJobsClient";
-import type { IOwnerMembersClient } from "./subClients/accessControlClientInterfaces/OwnerMembersClient ";
-import type { IPermissionsClient } from "./subClients/accessControlClientInterfaces/PermissionsClient";
-import type { IRolesClient } from "./subClients/accessControlClientInterfaces/RolesClient";
-import type { IUserMembersClient } from "./subClients/accessControlClientInterfaces/UserMembersClient";
+import type { IGroupsClient } from "./accessControlClientInterfaces/GroupClient";
+import type { IGroupMembersClient } from "./accessControlClientInterfaces/GroupMembersClient";
+import type { IMemberInvitationsClient } from "./accessControlClientInterfaces/MemberInvitationsClient";
+import type { IITwinJobsClient } from "./accessControlClientInterfaces/ITwinJobsClient";
+import type { IOwnerMembersClient } from "./accessControlClientInterfaces/OwnerMembersClient ";
+import type { IPermissionsClient } from "./accessControlClientInterfaces/PermissionsClient";
+import type { IRolesClient } from "./accessControlClientInterfaces/RolesClient";
+import type { IUserMembersClient } from "./accessControlClientInterfaces/UserMembersClient";
 
 export class AccessControlClient implements IAccessControlClient {
   public permissions: IPermissionsClient;

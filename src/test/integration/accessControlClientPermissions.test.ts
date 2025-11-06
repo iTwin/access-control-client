@@ -5,7 +5,7 @@
 import type { AccessToken } from "@itwin/core-bentley";
 import { beforeAll, describe, expect, it } from "vitest";
 import { AccessControlClient } from "../../AccessControlClient";
-import type { IAccessControlClient } from "../../accessControlTypes";
+import type { IAccessControlClient } from "../../accessControlClientInterfaces/accessControl";
 import type { BentleyAPIResponse } from "../../types/CommonApiTypes";
 import type { Permission } from "../../types/Permission";
 import { TestConfig } from "../TestConfig";

@@ -8,7 +8,7 @@
 import type { AccessToken } from "@itwin/core-bentley";
 import type { BentleyAPIResponse } from "../types/CommonApiTypes";
 import type { Group, MultipleGroupsResponse, SingleGroupResponse } from "../types/Groups";
-import type { IGroupsClient } from "./accessControlClientInterfaces/GroupClient";
+import type { IGroupsClient } from "../accessControlClientInterfaces/GroupClient";
 import { BaseClient } from "./BaseClient";
 
 export class GroupsClient extends BaseClient implements IGroupsClient{

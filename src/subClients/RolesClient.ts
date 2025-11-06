@@ -9,7 +9,7 @@ import type { AccessToken } from "@itwin/core-bentley";
 import type { BentleyAPIResponse } from "../types/CommonApiTypes";
 import type { Role } from "../types/Role";
 import { BaseClient } from "./BaseClient";
-import { IRolesClient } from "./accessControlClientInterfaces/RolesClient";
+import { IRolesClient } from "../accessControlClientInterfaces/RolesClient";
 
 
 export class RolesClient extends BaseClient implements IRolesClient {

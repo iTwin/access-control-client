@@ -9,7 +9,7 @@ import type { AccessToken } from "@itwin/core-bentley";
 import type { BentleyAPIResponse, ResultMode } from "../types/CommonApiTypes";
 import type { ITwinJob, ITwinJobActions } from "../types/ITwinJob";
 import { BaseClient } from "./BaseClient";
-import type { IITwinJobsClient } from "./accessControlClientInterfaces/ITwinJobsClient";
+import type { IITwinJobsClient } from "../accessControlClientInterfaces/ITwinJobsClient";
 
 export class ITwinJobsClient extends BaseClient implements IITwinJobsClient {
   public constructor(url?: string) {

@@ -8,7 +8,7 @@
 import type { AccessToken } from "@itwin/core-bentley";
 import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes";
 import { MultipleMemberInvitationResponse } from "../types/Invitations";
-import { IMemberInvitationsClient } from "./accessControlClientInterfaces/IMemberInvitationsClient";
+import { IMemberInvitationsClient } from "../accessControlClientInterfaces/MemberInvitationsClient";
 import { BaseClient } from "./BaseClient";
 
 export class MemberInvitationsClient

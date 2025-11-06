@@ -8,7 +8,7 @@ import { beforeAll, describe, expect, it } from "vitest";
 import { AccessControlClient } from "../../AccessControlClient";
 import type {
   IAccessControlClient,
-} from "../../accessControlTypes";
+} from "../../accessControlClientInterfaces/accessControl";
 import type { BentleyAPIResponse } from "../../types/CommonApiTypes";
 import { TestConfig } from "../TestConfig";
 import { OwnerMember } from "../../types/OwnerMember";

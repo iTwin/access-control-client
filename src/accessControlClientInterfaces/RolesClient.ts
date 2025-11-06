@@ -3,8 +3,8 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 import { AccessToken } from "@itwin/core-bentley";
-import { BentleyAPIResponse } from "../../types/CommonApiTypes";
-import { Role } from "../../types/Role";
+import { BentleyAPIResponse } from "../types/CommonApiTypes";
+import { Role } from "../types/Role";
 
 
 export interface IRolesClient {
