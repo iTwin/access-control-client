@@ -5,14 +5,19 @@
 /** @packageDocumentation
  * @module AccessControlClient
  */
+
 import type { AccessToken } from "@itwin/core-bentley";
+import type { IRolesClient } from "../accessControlClientInterfaces/RolesClient";
 import type { BentleyAPIResponse } from "../types/CommonApiTypes";
 import type { Role } from "../types/Role";
 import { BaseClient } from "./BaseClient";
-import { IRolesClient } from "../accessControlClientInterfaces/RolesClient";
 
-
+/** Client API to perform iTwin role operations.
+ */
 export class RolesClient extends BaseClient implements IRolesClient {
+  /** Create a new RolesClient instance
+   * @param url Optional base URL for the access control service. If not provided, defaults to base url.
+   */
   public constructor(url?: string) {
     super(url);
   }

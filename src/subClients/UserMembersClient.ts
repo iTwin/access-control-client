@@ -5,15 +5,21 @@
 /** @packageDocumentation
  * @module AccessControlClient
  */
+
 import type { AccessToken } from "@itwin/core-bentley";
+import type { IUserMembersClient } from "../accessControlClientInterfaces/UserMembersClient";
 import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes";
 import type { AddUserMember, AddUserMemberResponse, MultipleUserMembersResponse, SingleUserMemberResponse } from "../types/UserMembers";
 import { BaseClient } from "./BaseClient";
-import type { IUserMembersClient } from "../accessControlClientInterfaces/UserMembersClient";
 
+/** Client API to perform user members operations.
+ */
 export class UserMembersClient
   extends BaseClient
   implements IUserMembersClient {
+  /** Create a new UserMembersClient instance
+   * @param url Optional base URL for the access control service. If not provided, defaults to base url.
+   */
   public constructor(url?: string) {
     super(url);
   }

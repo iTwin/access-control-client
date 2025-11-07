@@ -5,6 +5,7 @@
 /** @packageDocumentation
  * @module AccessControlClient
  */
+
 import type { AccessToken } from "@itwin/core-bentley";
 import type {
   ApimError,
@@ -43,9 +44,26 @@ function isErrorResponse(data: unknown): data is { error: ApimError } {
   return "error" in obj && isValidError(obj.error);
 }
 
+/**
+ * Base client class providing common functionality for Access Control API requests.
+ * Handles authentication, request configuration, and query string building, and error validation.
+ */
 export class BaseClient {
   protected _baseUrl: string = "https://api.bentley.com/accesscontrol/itwins";
 
+    /**
+   * Creates a new BaseClient instance for Access Control API operations
+   * @param url - Optional custom base URL, defaults to production iTwins API URL
+   *
+   * @example
+   * ```typescript
+   * // Use default production URL
+   * const client = new BaseClient();
+   *
+   * // Use custom URL for development/testing
+   * const client = new ITwinsAccessClient("https://api.bentley.com/accesscontrol/itwins");
+   * ```
+   */
   public constructor(url?: string) {
     if (url !== undefined) {
       this._baseUrl = url;

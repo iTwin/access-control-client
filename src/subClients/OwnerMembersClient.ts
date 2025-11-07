@@ -5,15 +5,21 @@
 /** @packageDocumentation
  * @module AccessControlClient
  */
+
 import type { AccessToken } from "@itwin/core-bentley";
+import type { IOwnerMembersClient } from "../accessControlClientInterfaces/OwnerMembersClient ";
 import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes";
 import type { AddOwnerMemberResponse, OwnerMember, OwnerMemberMultiResponse } from "../types/OwnerMember";
-import type { IOwnerMembersClient } from "../accessControlClientInterfaces/OwnerMembersClient ";
 import { BaseClient } from "./BaseClient";
 
+/** Client API to perform owner member operations.
+ */
 export class OwnerMembersClient
   extends BaseClient
   implements IOwnerMembersClient {
+  /** Create a new OwnerMembersClient instance
+   * @param url Optional base URL for the access control service. If not provided, defaults to base url.
+   */
   public constructor(url?: string) {
     super(url);
   }

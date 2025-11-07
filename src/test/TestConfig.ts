@@ -2,9 +2,10 @@
  * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
+
 import type { AccessToken } from "@itwin/core-bentley";
-import type { TestUserCredentials } from "@itwin/oidc-signin-tool/lib/cjs/frontend";
 import { TestUsers, TestUtility } from "@itwin/oidc-signin-tool";
+import type { TestUserCredentials } from "@itwin/oidc-signin-tool/lib/cjs/frontend";
 
 /** Basic configuration used by all tests
  */

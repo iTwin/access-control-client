@@ -2,6 +2,7 @@
  * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
+
 import type { AccessToken } from "@itwin/core-bentley";
 import { TestUsers } from "@itwin/oidc-signin-tool";
 import { beforeAll, describe, expect, it } from "vitest";
@@ -10,8 +11,8 @@ import type {
   IAccessControlClient,
 } from "../../accessControlClientInterfaces/accessControl";
 import type { BentleyAPIResponse } from "../../types/CommonApiTypes";
-import { TestConfig } from "../TestConfig";
 import { OwnerMember } from "../../types/OwnerMember";
+import { TestConfig } from "../TestConfig";
 
 describe("AccessControlClient Owner Members", () => {
   let baseUrl: string = "https://api.bentley.com/accesscontrol/itwins";
@@ -122,7 +123,7 @@ describe("AccessControlClient Owner Members", () => {
     expect(addOwnerMemberResponse.status).toBe(201);
     expect(addOwnerMemberResponse.data).toBeDefined();
     expect(addOwnerMemberResponse.data!.member).toBeDefined();
-    expect(addOwnerMemberResponse.data!.member!.email).toBe(managerEmail);
+    expect(addOwnerMemberResponse.data!.member.email).toBe(managerEmail);
 
     let newOwner : OwnerMember | undefined;
     try {
@@ -147,7 +148,7 @@ describe("AccessControlClient Owner Members", () => {
           await accessControlClient.ownerMembers.removeITwinOwnerMember(
             accessToken,
             TestConfig.itwinId,
-            newOwner.id!
+            newOwner.id
           );
 
         expect(removeOwnerMemberResponse.status).toBe(204);

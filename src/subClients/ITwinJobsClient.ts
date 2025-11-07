@@ -5,13 +5,19 @@
 /** @packageDocumentation
  * @module AccessControlClient
  */
+
 import type { AccessToken } from "@itwin/core-bentley";
+import type { IITwinJobsClient } from "../accessControlClientInterfaces/ITwinJobsClient";
 import type { BentleyAPIResponse, ResultMode } from "../types/CommonApiTypes";
 import type { ITwinJob, ITwinJobActions } from "../types/ITwinJob";
 import { BaseClient } from "./BaseClient";
-import type { IITwinJobsClient } from "../accessControlClientInterfaces/ITwinJobsClient";
 
+/** Client API to perform iTwin job operations.
+ */
 export class ITwinJobsClient extends BaseClient implements IITwinJobsClient {
+  /** Create a new ITwinJobsClient instance
+   * @param url Optional base URL for the access control service. If not provided, defaults to base url.
+   */
   public constructor(url?: string) {
     super(url);
   }

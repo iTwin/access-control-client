@@ -5,13 +5,19 @@
 /** @packageDocumentation
  * @module AccessControlClient
  */
+
 import type { AccessToken } from "@itwin/core-bentley";
+import type { IGroupsClient } from "../accessControlClientInterfaces/GroupClient";
 import type { BentleyAPIResponse } from "../types/CommonApiTypes";
 import type { Group, MultipleGroupsResponse, SingleGroupResponse } from "../types/Groups";
-import type { IGroupsClient } from "../accessControlClientInterfaces/GroupClient";
 import { BaseClient } from "./BaseClient";
 
+/** Client API to perform iTwin group operations.
+ */
 export class GroupsClient extends BaseClient implements IGroupsClient{
+  /** Create a new GroupsClient instance
+   * @param url Optional base URL for the access control service. If not provided, defaults to base url.
+   */
   public constructor(url?: string) {
     super(url);
   }

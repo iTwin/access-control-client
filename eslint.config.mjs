@@ -11,7 +11,15 @@ export default [
     ignores: ["**/*.test.ts", "src/test/**/*"],
     ...iTwinPlugin.configs.jsdocConfig,
     rules: {
-      "jsdoc/require-jsdoc": "warn",
+      "jsdoc/require-jsdoc": ["error", {
+        require: {
+          FunctionDeclaration: true,
+          MethodDefinition: true,
+          ClassDeclaration: true,
+          ArrowFunctionExpression: false,
+          FunctionExpression: false,
+        },
+      }],
     },
   },
   // Rules for all source files

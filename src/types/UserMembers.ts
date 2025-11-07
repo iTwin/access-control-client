@@ -3,9 +3,9 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { MemberInvitation } from "./Invitations";
-import { Links } from "./links";
-import { Role } from "./Role";
+import type { MemberInvitation } from "./Invitations";
+import type { Links } from "./links";
+import type { Role } from "./Role";
 
 /**
  * Represents a user who is a member of an iTwin with associated roles and profile information.

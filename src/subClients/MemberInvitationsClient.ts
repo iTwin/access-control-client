@@ -5,15 +5,21 @@
 /** @packageDocumentation
  * @module AccessControlClient
  */
+
 import type { AccessToken } from "@itwin/core-bentley";
+import type { IMemberInvitationsClient } from "../accessControlClientInterfaces/MemberInvitationsClient";
 import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes";
-import { MultipleMemberInvitationResponse } from "../types/Invitations";
-import { IMemberInvitationsClient } from "../accessControlClientInterfaces/MemberInvitationsClient";
+import type { MultipleMemberInvitationResponse } from "../types/Invitations";
 import { BaseClient } from "./BaseClient";
 
+/** Client API to perform iTwin member invitation operations.
+ */
 export class MemberInvitationsClient
   extends BaseClient
   implements IMemberInvitationsClient {
+  /** Create a new MemberInvitationsClient instance
+   * @param url Optional base URL for the access control service. If not provided, defaults to base url.
+   */
   public constructor(url?: string) {
     super(url);
   }
@@ -40,6 +46,12 @@ export class MemberInvitationsClient
     );
   }
 
+  /** Deletes a member invitations.
+   * @param accessToken The client access token string
+   * @param iTwinId The id of the iTwin
+   * @param invitationId The id of the invitation id
+   * @returns Array of member invitations
+   */
   public async deleteITwinMemberInvitation(
     accessToken: AccessToken,
     iTwinId: string,

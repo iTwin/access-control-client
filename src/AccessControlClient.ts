@@ -26,6 +26,9 @@ import { PermissionsClient } from "./subClients/PermissionsClient";
 import { RolesClient } from "./subClients/RolesClient";
 import { UserMembersClient } from "./subClients/UserMembersClient";
 
+/** Client API to access the access control service.
+ * @beta
+ */
 export class AccessControlClient implements IAccessControlClient {
   public permissions: IPermissionsClient;
   public roles: IRolesClient;
@@ -37,6 +40,9 @@ export class AccessControlClient implements IAccessControlClient {
   public itwinJobs: IITwinJobsClient;
   public itwinShares: IITwinSharesClient;
 
+  /** Create a new AccessControlClient instance
+   * @param url Optional base URL for the access control service. If not provided, defaults to base url.
+   */
   public constructor(url?: string) {
     this.permissions = new PermissionsClient(url);
     this.roles = new RolesClient(url);

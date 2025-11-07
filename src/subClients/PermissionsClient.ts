@@ -5,13 +5,19 @@
 /** @packageDocumentation
  * @module AccessControlClient
  */
+
 import type { AccessToken } from "@itwin/core-bentley";
+import type { IPermissionsClient } from "../accessControlClientInterfaces/PermissionsClient";
 import type { BentleyAPIResponse } from "../types/CommonApiTypes";
 import type { Permission } from "../types/Permission";
 import { BaseClient } from "./BaseClient";
-import type { IPermissionsClient } from "../accessControlClientInterfaces/PermissionsClient";
 
+/** Client API to perform iTwin permission operations.
+ */
 export class PermissionsClient extends BaseClient implements IPermissionsClient{
+  /** Create a new PermissionsClient instance
+   * @param url Optional base URL for the access control service. If not provided, defaults to base url.
+   */
   public constructor(url?: string) {
     super(url);
   }

@@ -5,16 +5,23 @@
 /** @packageDocumentation
  * @module AccessControlClient
  */
+
 import type { AccessToken } from "@itwin/core-bentley";
 import type { IITwinSharesClient } from "../accessControlClientInterfaces/ItwinSharesClient";
-import type { BentleyAPIResponse, ResultMode } from "../types/CommonApiTypes";
+import type { BentleyAPIResponse } from "../types/CommonApiTypes";
 import type { MultiShareContractResponse, ShareContract, SingleShareContractResponse } from "../types/ShareContract";
 import { BaseClient } from "./BaseClient";
 
+/** Client API to perform iTwin share operations.
+ * @beta
+ */
 export class ITwinSharesClient
   extends BaseClient
   implements IITwinSharesClient
 {
+  /** Create a new ITwinSharesClient instance
+   * @param url Optional base URL for the access control service. If not provided, defaults to base url.
+   */
   public constructor(url?: string) {
     super(url);
   }
@@ -90,5 +97,5 @@ export class ITwinSharesClient
     const url = `${this._baseUrl}/${iTwinId}/shares/${sharedId}`;
     return this.sendGenericAPIRequest(accessToken, "DELETE", url);
   }
-  
+
 }

@@ -5,16 +5,22 @@
 /** @packageDocumentation
  * @module AccessControlClient
  */
+
 import type { AccessToken } from "@itwin/core-bentley";
+import type { IGroupMembersClient } from "../accessControlClientInterfaces/GroupMembersClient";
 import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes";
 import type { AddGroupMembers, MultipleGroupMembersResponse, SingleGroupMemberResponse } from "../types/GroupMember";
 import type { Links } from "../types/links";
-import type { IGroupMembersClient } from "../accessControlClientInterfaces/GroupMembersClient";
 import { BaseClient } from "./BaseClient";
 
+/** Client API to perform iTwin group members operations.
+ */
 export class GroupMembersClient
   extends BaseClient
   implements IGroupMembersClient {
+  /** Create a new GroupMembersClient instance
+   * @param url Optional base URL for the access control service. If not provided, defaults to base url.
+   */
   public constructor(url?: string) {
     super(url);
   }
