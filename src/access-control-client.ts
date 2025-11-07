@@ -27,6 +27,7 @@ export * from "./types/Permission";
 export * from "./types/Role";
 export * from "./types/UserMembers";
 export * from "./types/Users";
+export * from "./types/ShareContract";
 
 // Client interfaces exports
 export * from "./accessControlClientInterfaces/accessControl";
@@ -38,3 +39,4 @@ export * from "./accessControlClientInterfaces/OwnerMembersClient ";
 export * from "./accessControlClientInterfaces/PermissionsClient";
 export * from "./accessControlClientInterfaces/RolesClient";
 export * from "./accessControlClientInterfaces/UserMembersClient";
+export * from "./accessControlClientInterfaces/ItwinSharesClient";
