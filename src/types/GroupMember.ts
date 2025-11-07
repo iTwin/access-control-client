@@ -71,7 +71,7 @@ export interface AddGroupMembers {
  */
 export interface SingleGroupMemberResponse {
   /** The group member data returned by the API */
-  member: Omit<GroupMember, "membersCount" | "imsGroupsCount">;
+  member: GroupMember;
 }
 
 /**
@@ -79,5 +79,5 @@ export interface SingleGroupMemberResponse {
  */
 export interface MultipleGroupMembersResponse {
   /** Array of group members returned by the API */
-  members: Omit<GroupMember, "membersCount" | "imsGroupsCount">[];
+  members: GroupMember[];
 }

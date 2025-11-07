@@ -27,8 +27,8 @@ export interface IRolesClient {
   createITwinRole(
     accessToken: AccessToken,
     iTwinId: string,
-    role: Role
-  ): Promise<BentleyAPIResponse<Role>>;
+    role: Pick<Role, "displayName" | "description">
+  ): Promise<BentleyAPIResponse<Pick<Role, "id" | "displayName" | "description">>>;
 
   /** Removes an existing iTwin Role */
   deleteITwinRole(
@@ -42,6 +42,6 @@ export interface IRolesClient {
     accessToken: AccessToken,
     iTwinId: string,
     roleId: string,
-    role: Role
+    role: Partial<Omit<Role, "id">>
   ): Promise<BentleyAPIResponse<Role>>;
 }

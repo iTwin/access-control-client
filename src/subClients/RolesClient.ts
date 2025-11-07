@@ -12,6 +12,9 @@ import type { BentleyAPIResponse } from "../types/CommonApiTypes";
 import type { Role } from "../types/Role";
 import { BaseClient } from "./BaseClient";
 
+/** Limited role information returned when creating a role */
+type CreatedRole = Pick<Role, "id" | "displayName" | "description">;
+
 /** Client API to perform iTwin role operations.
  */
 export class RolesClient extends BaseClient implements IRolesClient {
@@ -59,8 +62,8 @@ export class RolesClient extends BaseClient implements IRolesClient {
   public async createITwinRole(
     accessToken: AccessToken,
     iTwinId: string,
-    role: Role
-  ): Promise<BentleyAPIResponse<Role>> {
+    role: Pick<Role, "displayName" | "description">
+  ): Promise<BentleyAPIResponse<Pick<Role, "id" | "displayName" | "description">>> {
     const url = `${this._baseUrl}/${iTwinId}/roles`;
     return this.sendGenericAPIRequest(accessToken, "POST", url, role, "role");
   }
@@ -91,7 +94,7 @@ export class RolesClient extends BaseClient implements IRolesClient {
     accessToken: AccessToken,
     iTwinId: string,
     roleId: string,
-    role: Role
+    role: Partial<Omit<Role, "id">>
   ): Promise<BentleyAPIResponse<Role>> {
     const url = `${this._baseUrl}/${iTwinId}/roles/${roleId}`;
     return this.sendGenericAPIRequest(accessToken, "PATCH", url, role, "role");

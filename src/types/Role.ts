@@ -10,7 +10,7 @@ import type { Permission } from "./Permission";
  */
 export interface Role {
   /** Unique identifier for the role. Optional when creating a new role. */
-  id?: string;
+  id: string;
   /** Human-readable name for the role */
   displayName: string;
   /** Detailed description of what this role provides */

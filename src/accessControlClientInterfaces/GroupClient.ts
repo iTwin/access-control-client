@@ -12,7 +12,7 @@ export interface IGroupsClient {
   getITwinGroups(
     accessToken: AccessToken,
     iTwinId: string,
-    additionalHeaders?: { [key: string]: string }
+    additionalHeaders?: Record<string, string>
   ): Promise<BentleyAPIResponse<MultipleGroupsResponse>>;
 
   /** Retrieves a group for a specified iTwin */
