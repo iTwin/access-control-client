@@ -146,6 +146,8 @@ describe("AccessControlClient Group Members", () => {
   });
 
   it("should get add, get, update, and remove a group member", async () => {
+
+    try {
     // --- Add Member ---
     // Act
     const addUserMemberResponse =
@@ -169,8 +171,6 @@ describe("AccessControlClient Group Members", () => {
     expect(addUserMemberResponse.status).toBe(201);
     expect(addUserMemberResponse.data).toBeDefined();
     expect(addUserMemberResponse.data?.members?.length).toBeGreaterThan(0);
-
-    try {
       // --- Check member exists and has role ---
       // Act
       const getGroupMemberResponse =

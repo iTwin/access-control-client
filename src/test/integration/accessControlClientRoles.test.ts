@@ -62,7 +62,7 @@ describe("AccessControlClient Roles", () => {
 
   it("should get a specific role for an iTwin", async () => {
     // Act
-    const iTwinsResponse: BentleyAPIResponse<Role> =
+    const iTwinsResponse =
       await accessControlClient.roles.getITwinRole(accessToken, TestConfig.itwinId, TestConfig.permanentRoleId1);
 
     // Assert
@@ -77,7 +77,7 @@ describe("AccessControlClient Roles", () => {
     const nonExistantRoleId = "22acf21e-0575-4faf-849b-bcd538718269";
 
     // Act
-    const iTwinsResponse: BentleyAPIResponse<Role> =
+    const iTwinsResponse =
       await accessControlClient.roles.getITwinRole(accessToken, TestConfig.itwinId, nonExistantRoleId);
 
     // Assert
@@ -89,14 +89,14 @@ describe("AccessControlClient Roles", () => {
   it("should get a 404 when trying to update a non-existant role", async () => {
     // Arrange
     const nonExistantRoleId = "22acf21e-0575-4faf-849b-bcd538718269";
-    const emptyUpdatedRole: Role = {
+    const emptyUpdatedRole = {
       displayName: "NonExistantRoleName",
       description: "NonExistantRoleDescription",
       permissions: [],
     };
 
     // Act
-    const iTwinsResponse: BentleyAPIResponse<Role> =
+    const iTwinsResponse =
       await accessControlClient.roles.updateITwinRole(accessToken, TestConfig.itwinId, nonExistantRoleId, emptyUpdatedRole);
 
     // Assert
@@ -124,14 +124,14 @@ describe("AccessControlClient Roles", () => {
     // Arrange
     const newRoleName = `APIM Access Control Typescript Client Test Role 1 ${new Date().toISOString()}`;
     const newRoleDescription = "Integration test role - should not persist";
-    const newRole: Role = {
+    const newRole = {
       displayName: newRoleName,
       description: newRoleDescription,
       permissions: [],
     };
 
     // Act
-    const createResponse: BentleyAPIResponse<Role> =
+    const createResponse =
       await accessControlClient.roles.createITwinRole(accessToken, TestConfig.itwinId, newRole);
 
     // Assert
@@ -142,14 +142,14 @@ describe("AccessControlClient Roles", () => {
     try {
       // --- UPDATE ROLE ---
       // Arrange
-      const updatedRole: Role = {
+      const updatedRole = {
         displayName: newRoleName,
         description: "UPDATED ROLE DESCRIPTION",
         permissions: [],
       };
 
       // Act
-      const updateResponse: BentleyAPIResponse<Role> =
+      const updateResponse =
         await accessControlClient.roles.updateITwinRole(accessToken, TestConfig.itwinId, createResponse.data!.id!, updatedRole);
 
       // Assert

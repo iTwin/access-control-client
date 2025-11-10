@@ -59,7 +59,7 @@ export class GroupsClient extends BaseClient implements IGroupsClient{
   public async createITwinGroup(
     accessToken: AccessToken,
     iTwinId: string,
-    group: Group
+    group: Pick< Group, "name" | "description">
   ): Promise<BentleyAPIResponse<SingleGroupResponse>>{
     const url = `${this._baseUrl}/${iTwinId}/groups`;
     return this.sendGenericAPIRequest(accessToken, "POST", url, group);

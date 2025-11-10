@@ -25,20 +25,22 @@ import { OwnerMembersClient } from "./subClients/OwnerMembersClient";
 import { PermissionsClient } from "./subClients/PermissionsClient";
 import { RolesClient } from "./subClients/RolesClient";
 import { UserMembersClient } from "./subClients/UserMembersClient";
+import { GroupMemberInvitationClient } from './subClients/GroupMemberInvitationsClient';
 
 /** Client API to access the access control service.
  * @beta
  */
 export class AccessControlClient implements IAccessControlClient {
-  public permissions: IPermissionsClient;
-  public roles: IRolesClient;
-  public groups: IGroupsClient;
-  public userMembers: IUserMembersClient;
-  public groupMembers: IGroupMembersClient;
-  public ownerMembers: IOwnerMembersClient;
-  public memberInvitations: IMemberInvitationsClient;
-  public itwinJobs: IITwinJobsClient;
-  public itwinShares: IITwinSharesClient;
+  public readonly permissions: IPermissionsClient;
+  public readonly roles: IRolesClient;
+  public readonly groups: IGroupsClient;
+  public readonly userMembers: IUserMembersClient;
+  public readonly groupMembers: IGroupMembersClient;
+  public readonly ownerMembers: IOwnerMembersClient;
+  public readonly memberInvitations: IMemberInvitationsClient;
+  public readonly itwinJobs: IITwinJobsClient;
+  public readonly itwinShares: IITwinSharesClient;
+  public readonly groupMemberInvitations: GroupMemberInvitationClient;
 
   /** Create a new AccessControlClient instance
    * @param url Optional base URL for the access control service. If not provided, defaults to base url.
@@ -53,5 +55,6 @@ export class AccessControlClient implements IAccessControlClient {
     this.memberInvitations = new MemberInvitationsClient(url);
     this.itwinJobs = new ITwinJobsClient(url);
     this.itwinShares = new ITwinSharesClient(url);
+    this.groupMemberInvitations = new GroupMemberInvitationClient(url);
   }
 }

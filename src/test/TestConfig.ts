@@ -33,6 +33,8 @@ export class TestConfig {
 
   public static readonly itwinId: string = process.env.IMJS_TEST_ITWIN_ID!;
 
+  public static readonly assetId: string = process.env.IMJS_TEST_ASSET_ID!;
+
   /** Login the specified user and return the AuthorizationToken */
   public static async getAccessToken(
   ): Promise<AccessToken> {

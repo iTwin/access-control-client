@@ -71,9 +71,9 @@ export type MemberInvitationStatus = "Pending" | "Accepted";
  *     { id: "inv2", email: "user2@external.com", status: "Accepted", ... }
  *   ],
  *   _links: {
- *     self: { href: "/invitations?page=1" },
- *     next: { href: "/invitations?page=2" },
- *     prev: { href: "/invitations?page=0" }
+ *     self: { href: "/members/invitations?$skip=0&$top=100" },
+ *     next: { href: "/members/invitations?$skip=100&$top=100" },
+ *     prev: { href: "/members/invitations?$skip=0&$top=100" }
  *   }
  * };
  * ```
@@ -81,6 +81,58 @@ export type MemberInvitationStatus = "Pending" | "Accepted";
 export interface MultipleMemberInvitationResponse {
   /** Array of member invitations in the current page */
   invitations: MemberInvitation[];
+  /** HAL-style navigation links for pagination (first, next, prev, last) */
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  _links: Links;
+}
+
+/**
+ * Represents an invitation sent to a group member to join an iTwin.
+ *
+ * @remarks
+ * Retrieves a list of iTwin group member invitations. By default, users will receive the invitations they have sent.
+ * If the user is an iTwin Owner, they will receive all invitations for the iTwin.
+ * Invitations have an expiration of 7 days after their creation. Once that expiration passes, the invitation will not be returned.
+ *
+ * @example
+ * ```typescript
+ * const groupInvitation: GroupMemberInvitation = {
+ *   id: "550e8400-e29b-41d4-a716-446655440000",
+ *   email: "group.member@external.com",
+ *   invitedByEmail: "admin@mycompany.com",
+ *   status: "Pending",
+ *   createdDate: "2023-10-15T10:30:00Z",
+ *   expirationDate: "2023-11-15T10:30:00Z"
+ * };
+ * ```
+ */
+export type GroupMemberInvitation = Omit<MemberInvitation, "roles">;
+
+/**
+ * API response wrapper for multiple group member invitations with pagination support.
+ *
+ * @remarks
+ * This interface is used for API responses that return collections of group member invitations.
+ * Includes HAL-style navigation links for pagination to handle large numbers of group invitations efficiently.
+ *
+ * @example
+ * ```typescript
+ * const response: MultipleGroupMemberInvitationResponse = {
+ *   invitations: [
+ *     { id: "inv1", email: "user1@external.com", status: "Pending", ... },
+ *     { id: "inv2", email: "user2@external.com", status: "Accepted", ... }
+ *   ],
+ *   _links: {
+ *     self: { href: "/groups/invitations?$skip=0&$top=100" },
+ *     next: { href: "/groups/invitations?$skip=100&$top=100" },
+ *     prev: { href: "/groups/invitations?$skip=0&$top=100" }
+ *   }
+ * };
+ * ```
+ */
+export interface MultipleGroupMemberInvitationResponse {
+  /** Array of group member invitations in the current page */
+  invitations: GroupMemberInvitation[];
   /** HAL-style navigation links for pagination (first, next, prev, last) */
   // eslint-disable-next-line @typescript-eslint/naming-convention
   _links: Links;
