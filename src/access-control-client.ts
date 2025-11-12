@@ -40,3 +40,4 @@ export * from "./accessControlClientInterfaces/PermissionsClient";
 export * from "./accessControlClientInterfaces/RolesClient";
 export * from "./accessControlClientInterfaces/UserMembersClient";
 export * from "./accessControlClientInterfaces/ItwinSharesClient";
+export * from "./accessControlClientInterfaces/GroupMemberInvitationClient"
