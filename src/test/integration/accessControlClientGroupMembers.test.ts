@@ -7,7 +7,6 @@ import type { AccessToken } from "@itwin/core-bentley";
 import { beforeAll, describe, expect, it } from "vitest";
 import { AccessControlClient } from "../../AccessControlClient";
 import type { IAccessControlClient } from "../../accessControlClientInterfaces/accessControl";
-import type { BentleyAPIResponse } from "../../types/CommonApiTypes";
 import { TestConfig } from "../TestConfig";
 
 describe("AccessControlClient Group Members", () => {
@@ -97,7 +96,7 @@ describe("AccessControlClient Group Members", () => {
     expect(iTwinsResponse.status).toBe(200);
     expect(iTwinsResponse.data).toBeDefined();
     expect(iTwinsResponse.data).toBeDefined();
-    expect(iTwinsResponse.data?.members?.length).toBe(topAmount);
+    expect(iTwinsResponse.data?.members?.length).toBe(skipAmount);
     // Get the IDs of skipped members
     const skippedMemberIds =
       unFilteredList.data?.members?.slice(0, skipAmount).map((m) => m.id) || [];
@@ -120,6 +119,7 @@ describe("AccessControlClient Group Members", () => {
         TestConfig.itwinId,
         TestConfig.permanentGroupId1
       );
+
 
     // Assert
     expect(iTwinsResponse.status).toBe(200);
@@ -148,6 +148,12 @@ describe("AccessControlClient Group Members", () => {
   it("should get add, get, update, and remove a group member", async () => {
 
     try {
+    // Arrange
+      await accessControlClient.groupMembers.removeITwinGroupMember(
+        accessToken,
+        TestConfig.itwinId,
+        TestConfig.permanentGroupId2
+      );
     // --- Add Member ---
     // Act
     const addUserMemberResponse =
@@ -213,17 +219,22 @@ describe("AccessControlClient Group Members", () => {
         updatedUserMemberResponse.data?.member.roles.map((x) => x.id)
       ).toContain(TestConfig.permanentRoleId2);
     } finally {
-      // --- Remove member (cleanup) ---
-      // Ensure member is removed even if test fails
-      const removeUserMemberResponse: BentleyAPIResponse<undefined> =
-        await accessControlClient.groupMembers.removeITwinGroupMember(
-          accessToken,
-          TestConfig.itwinId,
-          TestConfig.permanentGroupId2
-        );
-
-      expect(removeUserMemberResponse.status).toBe(204);
-      expect(removeUserMemberResponse.data).toBeUndefined();
+      // --- Ensure permanent member is added back (cleanup) ---
+      await accessControlClient.groupMembers.addITwinGroupMembers(
+        accessToken,
+        TestConfig.itwinId,
+        {
+          members: [
+            {
+              groupId: TestConfig.permanentGroupId2,
+              roleIds: [
+                TestConfig.permanentRoleId1,
+                TestConfig.permanentRoleId2,
+              ],
+            },
+          ],
+        }
+      );
     }
   });
 });

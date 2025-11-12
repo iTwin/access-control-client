@@ -35,6 +35,8 @@ export class TestConfig {
 
   public static readonly assetId: string = process.env.IMJS_TEST_ASSET_ID!;
 
+  public static readonly accountId: string = process.env.TEST_QA_ACCOUNT!;
+
   /** Login the specified user and return the AuthorizationToken */
   public static async getAccessToken(
   ): Promise<AccessToken> {
