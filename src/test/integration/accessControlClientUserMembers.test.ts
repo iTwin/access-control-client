@@ -6,12 +6,12 @@
 import type { AccessToken } from "@itwin/core-bentley";
 import { TestUsers } from "@itwin/oidc-signin-tool";
 import { beforeAll, describe, expect, it } from "vitest";
+import type { UserMember } from "../../access-control-client";
 import { AccessControlClient } from "../../AccessControlClient";
 import type {
   IAccessControlClient,
 } from "../../accessControlClientInterfaces/accessControl";
 import type { BentleyAPIResponse } from "../../types/CommonApiTypes";
-import type { UserMember } from "../../types/UserMembers";
 import { TestConfig } from "../TestConfig";
 
 describe("AccessControlClient User Members", () => {

@@ -34,7 +34,7 @@ export interface GroupMember {
   /** Human-readable description of the group's purpose */
   groupDescription: string;
   /** Array of roles assigned to this group member (excludes permissions for security) */
-  roles: Omit<Role, "permissions">[];
+  roles: Role[];
 }
 
 /**

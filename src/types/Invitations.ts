@@ -5,6 +5,7 @@
 
 import type { Links } from "./links";
 import type { Role } from "./Role";
+import { UserMember } from "./Members";
 
 /**
  * Represents an invitation sent to a user to join an iTwin as a member.
@@ -24,7 +25,7 @@ import type { Role } from "./Role";
  *   createdDate: "2023-10-15T10:30:00Z",
  *   expirationDate: "2023-11-15T10:30:00Z",
  *   roles: [
- *     { id: "viewer-role", displayName: "Project Viewer" }
+ *     { id: "viewer-role", displayName: "Project Viewer", description : "Can view project details" }
  *   ]
  * };
  * ```
@@ -42,8 +43,8 @@ export interface MemberInvitation {
   createdDate: string;
   /** ISO 8601 timestamp when the invitation expires */
   expirationDate: string;
-  /** Optional array of roles that will be assigned upon acceptance (excludes permissions and descriptions) */
-  roles?: Omit<Role, "permissions" | "description">[];
+  /** Optional array of roles that will be assigned upon acceptance (excludes permissions) */
+  roles?: Role[];
 }
 
 /**

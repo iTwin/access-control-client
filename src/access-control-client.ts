@@ -26,7 +26,7 @@ export * from "./types/OwnerMember";
 export * from "./types/Permission";
 export * from "./types/Role";
 export * from "./types/UserMembers";
-export * from "./types/Users";
+export * from "./types/Members";
 export * from "./types/ShareContract";
 
 // Client interfaces exports

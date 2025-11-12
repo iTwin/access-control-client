@@ -11,7 +11,6 @@ import type {
   IAccessControlClient,
 } from "../../accessControlClientInterfaces/accessControl";
 import type { BentleyAPIResponse } from "../../types/CommonApiTypes";
-import { OwnerMember } from "../../types/OwnerMember";
 import { TestConfig } from "../TestConfig";
 
 describe("AccessControlClient Owner Members", () => {
@@ -125,7 +124,7 @@ describe("AccessControlClient Owner Members", () => {
     expect(addOwnerMemberResponse.data!.member).toBeDefined();
     expect(addOwnerMemberResponse.data!.member.email).toBe(managerEmail);
 
-    let newOwner : OwnerMember | undefined;
+    let newOwner: NonNullable<Awaited<ReturnType<typeof accessControlClient.ownerMembers.queryITwinOwnerMembers>>["data"]>["members"][0] | undefined;
     try {
       // --- Check owner exists ---
       // Act
@@ -139,7 +138,7 @@ describe("AccessControlClient Owner Members", () => {
       expect(queryOwnerMemberResponse.data).toBeDefined();
       newOwner = queryOwnerMemberResponse.data!.members.filter((member) => member.email === managerEmail)[0];
       expect(newOwner).toBeDefined();
-      expect(newOwner.email).toBe(managerEmail);
+      expect(newOwner!.email).toBe(managerEmail);
     } finally {
       // --- Remove owner (cleanup) ---
       // Ensure owner is removed even if test fails

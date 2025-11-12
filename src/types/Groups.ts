@@ -3,7 +3,7 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import type { GroupUser } from "./Users";
+import type { GroupUser } from "./Members";
 
 /**
  * Represents an access control group within an iTwin.
