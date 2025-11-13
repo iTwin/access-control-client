@@ -64,7 +64,7 @@ describe("AccessControlClient Group Member Invitations", () => {
         await accessControlClient.groups.updateITwinGroup(
           accessToken,
           TestConfig.accountId,
-          createGroupResponse.data!.group!.id!,
+          createGroupResponse.data!.group.id,
           updatedGroup
         );
 
@@ -72,7 +72,7 @@ describe("AccessControlClient Group Member Invitations", () => {
       expect(updateGroupResponse.status).toBe(200);
       expect(updateGroupResponse.data).toBeDefined();
       expect(
-        updateGroupResponse.data!.group!.members!.length
+        updateGroupResponse.data!.group.members.length
       ).toBeGreaterThanOrEqual(0);
 
       // --- GET LIST OF GROUP MEMBER INVITATIONS ---
@@ -81,7 +81,7 @@ describe("AccessControlClient Group Member Invitations", () => {
         await accessControlClient.groupMemberInvitations.queryITwinGroupMemberInvitations(
           accessToken,
           TestConfig.accountId,
-          createGroupResponse.data!.group!.id!
+          createGroupResponse.data!.group.id
         );
 
       // Assert
@@ -115,7 +115,7 @@ describe("AccessControlClient Group Member Invitations", () => {
         await accessControlClient.groupMemberInvitations.queryITwinGroupMemberInvitations(
           accessToken,
           TestConfig.accountId,
-          createGroupResponse.data!.group!.id!
+          createGroupResponse.data!.group.id
         );
 
       // Assert
@@ -126,9 +126,9 @@ describe("AccessControlClient Group Member Invitations", () => {
         accessToken,
         TestConfig.accountId
       );
-      const groupId = groups.data?.groups.filter(
+      const groupId = groups.data!.groups.filter(
         (group) => group.name === "User invite test group" && group.description
-      )[0].id!;
+      )[0].id;
       await accessControlClient.groups.updateITwinGroup(
         accessToken,
         TestConfig.accountId,

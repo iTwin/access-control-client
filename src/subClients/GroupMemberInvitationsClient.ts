@@ -7,11 +7,10 @@
  */
 
 import type { AccessToken } from "@itwin/core-bentley";
+import type { MultipleGroupMemberInvitationResponse } from "../access-control-client";
+import type { IGroupMemberInvitationClient } from "../accessControlClientInterfaces/GroupMemberInvitationClient";
 import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes";
 import { BaseClient } from "./BaseClient";
-import { IGroupMemberInvitationClient } from "../accessControlClientInterfaces/GroupMemberInvitationClient";
-import { MultipleGroupMemberInvitationResponse } from "../access-control-client";
-import { GroupMembersClient } from "./GroupMembersClient";
 
 /** Client API to perform iTwin group members operations.
  */
@@ -39,7 +38,7 @@ export class GroupMemberInvitationClient
     let url = `${this._baseUrl}/${iTwinId}/groups/${groupId}/invitations`;
 
     if (arg) {
-      url += `?${this.getQueryString(GroupMembersClient.paginationParamMapping, { top: arg.top, skip: arg.skip })}`;
+      url += `?${this.getQueryString(GroupMemberInvitationClient.paginationParamMapping, { top: arg.top, skip: arg.skip })}`;
     }
 
     return this.sendGenericAPIRequest(

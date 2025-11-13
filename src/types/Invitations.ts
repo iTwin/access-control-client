@@ -5,7 +5,6 @@
 
 import type { Links } from "./links";
 import type { Role } from "./Role";
-import { UserMember } from "./Members";
 
 /**
  * Represents an invitation sent to a user to join an iTwin as a member.

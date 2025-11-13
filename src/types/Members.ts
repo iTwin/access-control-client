@@ -3,7 +3,7 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { Role } from "./Role";
+import type { Role } from "./Role";
 
 
 interface UserBase {
@@ -33,7 +33,7 @@ interface UserBase {
  * };
  * ```
  */
-export interface GroupUser extends UserBase{};
+export type GroupUser = UserBase;
 
 /**
  * Represents a user who is a member of an iTwin with associated roles and profile information.
@@ -76,4 +76,4 @@ export interface UserMember extends UserBase{
  * };
  * ```
  */
-export interface OwnerMember extends UserBase {}
+export type OwnerMember = UserBase;

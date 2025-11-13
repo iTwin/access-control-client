@@ -138,7 +138,7 @@ describe("AccessControlClient Owner Members", () => {
       expect(queryOwnerMemberResponse.data).toBeDefined();
       newOwner = queryOwnerMemberResponse.data!.members.filter((member) => member.email === managerEmail)[0];
       expect(newOwner).toBeDefined();
-      expect(newOwner!.email).toBe(managerEmail);
+      expect(newOwner.email).toBe(managerEmail);
     } finally {
       // --- Remove owner (cleanup) ---
       // Ensure owner is removed even if test fails

@@ -5,7 +5,7 @@
 
 import type { MemberInvitation } from "./Invitations";
 import type { Links } from "./links";
-import { OwnerMember } from "./Members";
+import type { OwnerMember } from "./Members";
 
 /**
  * Response object when adding a new owner member to an iTwin.

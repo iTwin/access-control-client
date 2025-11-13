@@ -286,8 +286,8 @@ describe("AccessControlClient Groups", () => {
       expect(updateResponse.status).toBe(200);
       expect(updateResponse.data?.group!.name).toBe(updatedGroup.name);
       expect(updateResponse.data?.group!.description).toBe(updatedGroup.description);
-      expect(updateResponse.data?.group!.members!.map((x) => x.email!)).toContain(TestConfig.temporaryUserEmail);
-      expect(updateResponse.data?.group!.imsGroups!.map((x) => x)).toContain(TestConfig.permanentImsGroupName);
+      expect(updateResponse.data?.group!.members.map((x) => x.email)).toContain(TestConfig.temporaryUserEmail);
+      expect(updateResponse.data?.group!.imsGroups.map((x) => x)).toContain(TestConfig.permanentImsGroupName);
 
       // --- UPDATE GROUP BACK TO EMPTY---
       // Arrange

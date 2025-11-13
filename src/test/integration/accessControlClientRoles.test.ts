@@ -150,7 +150,7 @@ describe("AccessControlClient Roles", () => {
 
       // Act
       const updateResponse =
-        await accessControlClient.roles.updateITwinRole(accessToken, TestConfig.itwinId, createResponse.data!.id!, updatedRole);
+        await accessControlClient.roles.updateITwinRole(accessToken, TestConfig.itwinId, createResponse.data!.id, updatedRole);
 
       // Assert
       expect(updateResponse.status).toBe(200);
@@ -160,7 +160,7 @@ describe("AccessControlClient Roles", () => {
       // --- DELETE ROLE (cleanup) ---
       // Ensure role is deleted even if test fails
       const deleteResponse: BentleyAPIResponse<undefined> =
-        await accessControlClient.roles.deleteITwinRole(accessToken, TestConfig.itwinId, createResponse.data!.id!);
+        await accessControlClient.roles.deleteITwinRole(accessToken, TestConfig.itwinId, createResponse.data!.id);
 
       // Assert cleanup was successful
       expect(deleteResponse.status).toBe(204);

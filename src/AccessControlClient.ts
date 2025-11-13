@@ -8,6 +8,7 @@
 
 import type { IAccessControlClient } from "./accessControlClientInterfaces/accessControl";
 import type { IGroupsClient } from "./accessControlClientInterfaces/GroupClient";
+import type { IGroupMemberInvitationClient } from "./accessControlClientInterfaces/GroupMemberInvitationClient";
 import type { IGroupMembersClient } from "./accessControlClientInterfaces/GroupMembersClient";
 import type { IITwinJobsClient } from "./accessControlClientInterfaces/ITwinJobsClient";
 import type { IITwinSharesClient } from "./accessControlClientInterfaces/ItwinSharesClient";
@@ -16,6 +17,7 @@ import type { IOwnerMembersClient } from "./accessControlClientInterfaces/OwnerM
 import type { IPermissionsClient } from "./accessControlClientInterfaces/PermissionsClient";
 import type { IRolesClient } from "./accessControlClientInterfaces/RolesClient";
 import type { IUserMembersClient } from "./accessControlClientInterfaces/UserMembersClient";
+import { GroupMemberInvitationClient } from './subClients/GroupMemberInvitationsClient';
 import { GroupMembersClient } from "./subClients/GroupMembersClient";
 import { GroupsClient } from "./subClients/GroupsClient";
 import { ITwinJobsClient } from "./subClients/ITwinJobsClient";
@@ -25,7 +27,6 @@ import { OwnerMembersClient } from "./subClients/OwnerMembersClient";
 import { PermissionsClient } from "./subClients/PermissionsClient";
 import { RolesClient } from "./subClients/RolesClient";
 import { UserMembersClient } from "./subClients/UserMembersClient";
-import { GroupMemberInvitationClient } from './subClients/GroupMemberInvitationsClient';
 
 /** Client API to access the access control service.
  * @beta
@@ -40,7 +41,7 @@ export class AccessControlClient implements IAccessControlClient {
   public readonly memberInvitations: IMemberInvitationsClient;
   public readonly itwinJobs: IITwinJobsClient;
   public readonly itwinShares: IITwinSharesClient;
-  public readonly groupMemberInvitations: GroupMemberInvitationClient;
+  public readonly groupMemberInvitations: IGroupMemberInvitationClient;
 
   /** Create a new AccessControlClient instance
    * @param url Optional base URL for the access control service. If not provided, defaults to base url.

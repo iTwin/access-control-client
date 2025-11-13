@@ -3,8 +3,8 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import type { GroupMemberInvitationClient } from "../subClients/GroupMemberInvitationsClient";
 import type { IGroupsClient } from "./GroupClient";
+import type { IGroupMemberInvitationClient } from "./GroupMemberInvitationClient";
 import type { IGroupMembersClient } from "./GroupMembersClient";
 import type { IITwinJobsClient } from "./ITwinJobsClient";
 import type { IITwinSharesClient } from "./ItwinSharesClient";
@@ -24,5 +24,5 @@ export interface IAccessControlClient {
   memberInvitations: IMemberInvitationsClient;
   itwinJobs: IITwinJobsClient;
   itwinShares: IITwinSharesClient;
-  groupMemberInvitations: GroupMemberInvitationClient
+  groupMemberInvitations: IGroupMemberInvitationClient
 }

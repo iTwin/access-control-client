@@ -5,8 +5,7 @@
 
 import type { MemberInvitation } from "./Invitations";
 import type { Links } from "./links";
-import { Role } from "./Role";
-import { UserMember } from "./Members";
+import type { UserMember } from "./Members";
 
 /**
  * Request to add or invite a user member to an iTwin with role assignments.
