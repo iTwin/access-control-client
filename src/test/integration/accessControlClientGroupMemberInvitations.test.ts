@@ -37,6 +37,7 @@ describe("AccessControlClient Group Member Invitations", () => {
         `access-control-client-${randomIntFromInterval(0, 10000)}@example.com`
       );
     }
+    console.log(`Debug - TEST_QA_ACCOUNT: ${TestConfig.accountId}`)
     // --- CREATE GROUP ---
     // Act
     const createGroupResponse =
@@ -147,7 +148,7 @@ describe("AccessControlClient Group Member Invitations", () => {
     // --- TEST 404 FOR NON-EXISTENT GROUP ---
     // Arrange
     const nonExistentGroupId = "22acf21e-0575-4faf-849b-bcd538718269";
-
+    console.log(`Debug - TEST_QA_ACCOUNT: ${TestConfig.accountId}`)
     // Act
     const notFoundGroupResponse = await accessControlClient.groupMemberInvitations.queryITwinGroupMemberInvitations(
       accessToken,
@@ -227,7 +228,7 @@ describe("AccessControlClient Group Member Invitations", () => {
       name: tempGroupName,
       description: "Temporary group for 422 testing",
     };
-
+    console.log(`Debug - TEST_QA_ACCOUNT: ${TestConfig.accountId}`)
     const createTempGroupResponse = await accessControlClient.groups.createITwinGroup(
       accessToken,
       TestConfig.accountId,
