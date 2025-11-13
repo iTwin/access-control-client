@@ -80,5 +80,10 @@
     "Bentley",
     "iTwin",
     "access-control"
-  ]
+  ],
+    "pnpm": {
+    "overrides": {
+      "playwright": "^1.55.1"
+    }
+  }
 }
