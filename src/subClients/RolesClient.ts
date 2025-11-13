@@ -12,8 +12,6 @@ import type { BentleyAPIResponse } from "../types/CommonApiTypes";
 import type { Role } from "../types/Role";
 import { BaseClient } from "./BaseClient";
 
-/** Limited role information returned when creating a role */
-type CreatedRole = Pick<Role, "id" | "displayName" | "description">;
 
 /** Client API to perform iTwin role operations.
  */
