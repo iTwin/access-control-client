@@ -742,6 +742,212 @@ async function printiTwinRole(): Promise<void> {
 }
 ```
 
+### Get list of Group Member Invitations for an iTwin
+
+```typescript
+import type { AccessToken } from "@itwin/core-bentley";
+import {
+  AccessControlClient,
+  IAccessControlClient,
+  MultipleGroupMemberInvitationResponse,
+  AccessControlAPIResponse,
+} from "@itwin/access-control-client";
+
+/** Function that queries all Group Member Invitations for a given iTwin group and prints their ids to the console. */
+async function printiTwinGroupMemberInvitationIds(): Promise<void> {
+  const accessControlClient: IAccessControlClient = new AccessControlClient();
+  const accessToken: AccessToken = { get_access_token_logic_here };
+
+  const iTwinsResponse: AccessControlAPIResponse<MultipleGroupMemberInvitationResponse> =
+    await accessControlClient.groupMemberInvitations.queryITwinGroupMemberInvitations(
+      accessToken,
+      "2f981e83-47e4-4f36-8ee9-4264453688a1",
+      "d8215a6b-465d-44ff-910b-40d4541d1ebf"
+    );
+
+  iTwinsResponse.data!.invitations!.forEach((invitation) => {
+    console.log(invitation.id);
+  });
+}
+```
+
+### Get filtered list of Group Member Invitations with pagination
+
+```typescript
+import type { AccessToken } from "@itwin/core-bentley";
+import {
+  AccessControlClient,
+  IAccessControlClient,
+  MultipleGroupMemberInvitationResponse,
+  AccessControlAPIResponse,
+} from "@itwin/access-control-client";
+
+/** Function that queries Group Member Invitations with pagination for a given iTwin group. */
+async function printiTwinGroupMemberInvitationIds(): Promise<void> {
+  const skipAmount = 5;
+  const topAmount = 10;
+  const accessControlClient: IAccessControlClient = new AccessControlClient();
+  const accessToken: AccessToken = { get_access_token_logic_here };
+
+  const iTwinsResponse: AccessControlAPIResponse<MultipleGroupMemberInvitationResponse> =
+    await accessControlClient.groupMemberInvitations.queryITwinGroupMemberInvitations(
+      accessToken,
+      "2f981e83-47e4-4f36-8ee9-4264453688a1",
+      "d8215a6b-465d-44ff-910b-40d4541d1ebf",
+      { skip: skipAmount, top: topAmount }
+    );
+
+  iTwinsResponse.data!.invitations!.forEach((invitation) => {
+    console.log(invitation.id, invitation.email);
+  });
+}
+```
+
+### Delete a Group Member Invitation
+
+```typescript
+import type { AccessToken } from "@itwin/core-bentley";
+import {
+  AccessControlClient,
+  IAccessControlClient,
+  AccessControlAPIResponse,
+} from "@itwin/access-control-client";
+
+/** Function that deletes a specific group member invitation. */
+async function deleteGroupMemberInvitation(): Promise<void> {
+  const accessControlClient: IAccessControlClient = new AccessControlClient();
+  const accessToken: AccessToken = { get_access_token_logic_here };
+
+  const deleteResponse: AccessControlAPIResponse<undefined> =
+    await accessControlClient.groupMemberInvitations.deleteITwinGroupMemberInvitation(
+      accessToken,
+      "2f981e83-47e4-4f36-8ee9-4264453688a1",
+      "d8215a6b-465d-44ff-910b-40d4541d1ebf",
+      "a083cc1c-f51a-4c52-8614-5774ab79eca1"
+    );
+
+  console.log("Group member invitation deleted successfully");
+}
+```
+
+### Create an iTwin Share
+
+```typescript
+import type { AccessToken } from "@itwin/core-bentley";
+import {
+  AccessControlClient,
+  IAccessControlClient,
+  SingleShareContractResponse,
+  AccessControlAPIResponse,
+} from "@itwin/access-control-client";
+
+/** Function that creates a new iTwin share. */
+async function createiTwinShare(): Promise<void> {
+  const accessControlClient: IAccessControlClient = new AccessControlClient();
+  const accessToken: AccessToken = { get_access_token_logic_here };
+
+  const shareDetails = {
+    shareContract: ["imodels:read", "reality-data:read"],
+    expiration: "2024-12-31T23:59:59Z" // Optional: defaults to 90 days if not specified
+  };
+
+  const createResponse: AccessControlAPIResponse<SingleShareContractResponse> =
+    await accessControlClient.itwinShares.createITwinShare(
+      accessToken,
+      "2f981e83-47e4-4f36-8ee9-4264453688a1",
+      shareDetails
+    );
+
+  const share = createResponse.data!.share!;
+  console.log(`Share created with ID: ${share.id}`);
+  console.log(`Share key: ${share.shareKey}`);
+}
+```
+
+### Get specific iTwin Share
+
+```typescript
+import type { AccessToken } from "@itwin/core-bentley";
+import {
+  AccessControlClient,
+  IAccessControlClient,
+  SingleShareContractResponse,
+  AccessControlAPIResponse,
+} from "@itwin/access-control-client";
+
+/** Function that gets details of a specific iTwin share. */
+async function getiTwinShare(): Promise<void> {
+  const accessControlClient: IAccessControlClient = new AccessControlClient();
+  const accessToken: AccessToken = { get_access_token_logic_here };
+
+  const shareResponse: AccessControlAPIResponse<SingleShareContractResponse> =
+    await accessControlClient.itwinShares.getITwinShare(
+      accessToken,
+      "2f981e83-47e4-4f36-8ee9-4264453688a1",
+      "d8215a6b-465d-44ff-910b-40d4541d1ebf"
+    );
+
+  const share = shareResponse.data!.share!;
+  console.log(`Share ID: ${share.id}`);
+  console.log(`Share contract: ${share.shareContract.join(", ")}`);
+  console.log(`Expires at: ${share.expiration}`);
+}
+```
+
+### Get all iTwin Shares
+
+```typescript
+import type { AccessToken } from "@itwin/core-bentley";
+import {
+  AccessControlClient,
+  IAccessControlClient,
+  MultiShareContractResponse,
+  AccessControlAPIResponse,
+} from "@itwin/access-control-client";
+
+/** Function that gets all iTwin shares and prints their details. */
+async function getiTwinShares(): Promise<void> {
+  const accessControlClient: IAccessControlClient = new AccessControlClient();
+  const accessToken: AccessToken = { get_access_token_logic_here };
+
+  const sharesResponse: AccessControlAPIResponse<MultiShareContractResponse> =
+    await accessControlClient.itwinShares.getITwinShares(
+      accessToken,
+      "2f981e83-47e4-4f36-8ee9-4264453688a1"
+    );
+
+  sharesResponse.data!.shares!.forEach((share) => {
+    console.log(`Share ID: ${share.id}, Contract: ${share.shareContract.join(", ")}`);
+  });
+}
+```
+
+### Revoke an iTwin Share
+
+```typescript
+import type { AccessToken } from "@itwin/core-bentley";
+import {
+  AccessControlClient,
+  IAccessControlClient,
+  AccessControlAPIResponse,
+} from "@itwin/access-control-client";
+
+/** Function that revokes a specific iTwin share. */
+async function revokeiTwinShare(): Promise<void> {
+  const accessControlClient: IAccessControlClient = new AccessControlClient();
+  const accessToken: AccessToken = { get_access_token_logic_here };
+
+  const revokeResponse: AccessControlAPIResponse<undefined> =
+    await accessControlClient.itwinShares.revokeITwinShare(
+      accessToken,
+      "2f981e83-47e4-4f36-8ee9-4264453688a1",
+      "d8215a6b-465d-44ff-910b-40d4541d1ebf"
+    );
+
+  console.log("iTwin share revoked successfully");
+}
+```
+
 ## Contributing to this Repository
 
 For information on how to contribute to this project, please read [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines, [GETTINGSTARTED.md](GETTINGSTARTED.md) for information on working with the documentation in this repository.

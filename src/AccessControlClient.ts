@@ -29,7 +29,6 @@ import { RolesClient } from "./subClients/RolesClient";
 import { UserMembersClient } from "./subClients/UserMembersClient";
 
 /** Client API to access the access control service.
- * @beta
  */
 export class AccessControlClient implements IAccessControlClient {
   public readonly permissions: IPermissionsClient;

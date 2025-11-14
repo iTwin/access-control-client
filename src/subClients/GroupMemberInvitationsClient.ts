@@ -27,6 +27,7 @@ export class GroupMemberInvitationClient
   /** Retrieves a list of iTwin group members and their roles assignments.
    * @param accessToken The client access token string
    * @param iTwinId The id of the iTwin
+   * @beta
    * @returns Array of members
    */
   public async queryITwinGroupMemberInvitations(
@@ -53,6 +54,7 @@ export class GroupMemberInvitationClient
    * @param accessToken The client access token string
    * @param iTwinId The id of the iTwin
    * @param invitationId The id of the invitation id
+   * @beta
    * @returns Array of member invitations
    */
   public async deleteITwinGroupMemberInvitation(

@@ -8,7 +8,9 @@ import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTyp
 import type { MultipleMemberInvitationResponse } from "../types/Invitations";
 
 export interface IGroupMemberInvitationClient {
-  /** Retrieves a list of iTwin group member invitations. */
+  /** Retrieves a list of iTwin group member invitations.
+   * @beta
+  */
   queryITwinGroupMemberInvitations(
     accessToken: AccessToken,
     iTwinId: string,
@@ -16,7 +18,9 @@ export interface IGroupMemberInvitationClient {
     arg?: Pick<ODataQueryParams, "top" | "skip">
   ): Promise<BentleyAPIResponse<MultipleMemberInvitationResponse>>;
 
-  /** Removes an existing iTwin group member invitation. */
+  /** Removes an existing iTwin group member invitation.
+   * @beta
+  */
   deleteITwinGroupMemberInvitation(
     accessToken: AccessToken,
     iTwinId: string,
