@@ -5,7 +5,7 @@
 
 import type { AccessToken } from "@itwin/core-bentley";
 import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes";
-import type { AddGroupMembers, MultipleGroupMembersResponse, SingleGroupMemberResponse } from "../types/GroupMember";
+import type { GroupMemberAssignment, MultipleGroupMembersResponse, SingleGroupMemberResponse } from "../types/GroupMember";
 import type { Links } from "../types/links";
 
 export interface IGroupMembersClient {
@@ -32,7 +32,7 @@ export interface IGroupMembersClient {
   addITwinGroupMembers(
     accessToken: AccessToken,
     iTwinId: string,
-    newMembers: AddGroupMembers
+    newMembers: GroupMemberAssignment
   ): Promise<BentleyAPIResponse<MultipleGroupMembersResponse>>;
 
   /**  Remove the specified iTwin group member */

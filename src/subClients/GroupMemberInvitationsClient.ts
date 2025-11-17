@@ -13,6 +13,7 @@ import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTyp
 import { BaseClient } from "./BaseClient";
 
 /** Client API to perform iTwin group members operations.
+ * @beta
  */
 export class GroupMemberInvitationClient
   extends BaseClient

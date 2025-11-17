@@ -7,6 +7,7 @@ import type { AccessToken } from "@itwin/core-bentley";
 import type { BentleyAPIResponse } from "../types/CommonApiTypes";
 import type { MultiShareContractResponse, ShareContract, SingleShareContractResponse } from "../types/ShareContract";
 
+/** @beta */
 export interface IITwinSharesClient {
   /** Create a new iTwin Share
    * @beta

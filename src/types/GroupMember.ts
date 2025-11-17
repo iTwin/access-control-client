@@ -56,7 +56,7 @@ export interface GroupMember {
  * };
  * ```
  */
-export interface AddGroupMembers {
+export interface GroupMemberAssignment {
   /** Array of groups to add as members with their assigned roles */
   members: {
     /** The ID of the group to add as a member */

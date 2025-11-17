@@ -9,7 +9,7 @@
 import type { AccessToken } from "@itwin/core-bentley";
 import type { IGroupMembersClient } from "../accessControlClientInterfaces/GroupMembersClient";
 import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes";
-import type { AddGroupMembers, MultipleGroupMembersResponse, SingleGroupMemberResponse } from "../types/GroupMember";
+import type { GroupMemberAssignment, MultipleGroupMembersResponse, SingleGroupMemberResponse } from "../types/GroupMember";
 import type { Links } from "../types/links";
 import { BaseClient } from "./BaseClient";
 
@@ -83,7 +83,7 @@ export class GroupMembersClient
   public async addITwinGroupMembers(
     accessToken: AccessToken,
     iTwinId: string,
-    newMembers: AddGroupMembers
+    newMembers: GroupMemberAssignment
   ): Promise<BentleyAPIResponse<MultipleGroupMembersResponse>> {
     const url = `${this._baseUrl}/${iTwinId}/members/groups`;
     return this.sendGenericAPIRequest(

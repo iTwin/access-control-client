@@ -111,7 +111,7 @@ export class BaseClient {
     url: string,
     data?: TData,
     property?: string,
-    additionalHeaders?: { [key: string]: string }
+    additionalHeaders?: Record<string, string>
   ): Promise<BentleyAPIResponse<TResponse>> {
     const requestOptions = this.getRequestOptions(
       accessToken,
@@ -181,7 +181,7 @@ export class BaseClient {
     method: Method,
     url: string,
     data?: TData,
-    additionalHeaders?: { [key: string]: string }
+    additionalHeaders?: Record<string, string>
   ): RequestConfig {
     if (!accessTokenString) {
       throw new Error("Access token is required");

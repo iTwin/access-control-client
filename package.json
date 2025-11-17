@@ -83,7 +83,8 @@
   ],
     "pnpm": {
     "overrides": {
-      "playwright": "^1.55.1"
+      "playwright": "^1.55.1",
+      "glob": "11.1.0"
     }
   }
 }
