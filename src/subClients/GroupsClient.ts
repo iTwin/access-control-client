@@ -29,11 +29,10 @@ export class GroupsClient extends BaseClient implements IGroupsClient{
     */
   public async getITwinGroups(
     accessToken: AccessToken,
-    iTwinId: string,
-    additionalHeaders?: Record<string, string>
+    iTwinId: string
   ): Promise<BentleyAPIResponse<MultipleGroupsResponse>>{
     const url = `${this._baseUrl}/${iTwinId}/groups`;
-    return this.sendGenericAPIRequest(accessToken, "GET", url, undefined, undefined, additionalHeaders);
+    return this.sendGenericAPIRequest(accessToken, "GET", url);
   }
 
   /** Retrieves the specified role for the specified iTwin

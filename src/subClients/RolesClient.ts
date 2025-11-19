@@ -31,10 +31,9 @@ export class RolesClient extends BaseClient implements IRolesClient {
   public async getITwinRoles(
     accessToken: AccessToken,
     iTwinId: string,
-    additionalHeaders?: Record<string, string>
   ): Promise<BentleyAPIResponse<Role[]>> {
     const url = `${this._baseUrl}/${iTwinId}/roles`;
-    return this.sendGenericAPIRequest(accessToken, "GET", url, undefined, "roles", additionalHeaders);
+    return this.sendGenericAPIRequest(accessToken, "GET", url);
   }
 
   /** Retrieves the specified role for the specified iTwin

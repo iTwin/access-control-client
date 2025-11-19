@@ -13,7 +13,6 @@ export interface IRolesClient {
   getITwinRoles(
     accessToken: AccessToken,
     iTwinId: string,
-    additionalHeaders?: Record<string, string>
   ): Promise<BentleyAPIResponse<Role[]>>;
 
   /** Retrieves a role for a specified iTwin */
