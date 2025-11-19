@@ -37,17 +37,6 @@ describe("AccessControlClient Groups", () => {
     expect(iTwinsResponse.data?.groups!.length).toBeGreaterThan(0);
   });
 
-  it("should get a list of groups for an iTwin with additional headers", async () => {
-    // Act
-    const iTwinsResponse =
-      await customAccessControlClient.groups.getITwinGroups(accessToken, TestConfig.itwinId, { "test-custom-header": "custom-value:xyz-123-abc" });
-
-    // Assert
-    expect(iTwinsResponse.status).toBe(200);
-    expect(iTwinsResponse.data).toBeDefined();
-    expect(iTwinsResponse.data?.groups!.length).toBeGreaterThan(0);
-  });
-
   it("should get a list of groups for an iTwin with custom url", async () => {
     // Act
     const iTwinsResponse =

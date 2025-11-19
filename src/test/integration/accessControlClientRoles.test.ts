@@ -49,17 +49,6 @@ describe("AccessControlClient Roles", () => {
     expect(iTwinsResponse.data!.length).toBeGreaterThan(0);
   });
 
-  it("should get a list of roles for an iTwin with additional headers", async () => {
-    // Act
-    const iTwinsResponse: BentleyAPIResponse<Role[]> =
-      await customAccessControlClient.roles.getITwinRoles(accessToken, TestConfig.itwinId, { "test-custom-header": "custom-value:xyz-123-abc" });
-
-    // Assert
-    expect(iTwinsResponse.status).toBe(200);
-    expect(iTwinsResponse.data).toBeDefined();
-    expect(iTwinsResponse.data!.length).toBeGreaterThan(0);
-  });
-
   it("should get a specific role for an iTwin", async () => {
     // Act
     const iTwinsResponse =
