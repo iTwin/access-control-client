@@ -40,12 +40,13 @@ function incrementVersion(version, versionType) {
  * @returns {Promise<string>} - The release line for the changelog
  */
 async function getReleaseLine(changeset, versionType, changelogOpts) {
-  const newVersion = incrementVersion(await getPackageVersion(), versionType);
+  // Note: changelogOpts contains the new version calculated by changesets
+  const newVersion = changelogOpts?.newVersion || incrementVersion(await getPackageVersion(), versionType);
   // Get the current date in yyyy-mm-dd format
   const date = new Date().toISOString().split('T')[0];
-  const releaseDateAndLinkToRelease = `#### [${newVersion}](https://www.npmjs.com/package/@itwin/access-control-client/v/${newVersion}) - ${date}`;
+  const releaseDateAndLinkToRelease = `### [${newVersion}](https://www.npmjs.com/package/@itwin/access-control-client/v/${newVersion}) - ${date}`;
   // Customize your release line here
-  return `${releaseDateAndLinkToRelease}\n${changeset.summary}`;
+  return `${releaseDateAndLinkToRelease}\n\n${changeset.summary}`;
 }
 
 /**
