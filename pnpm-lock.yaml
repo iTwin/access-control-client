@@ -33,6 +33,9 @@ importers:
       '@itwin/oidc-signin-tool':
         specifier: ^5.0.1
         version: 5.0.2(@itwin/core-bentley@5.3.3)
+      '@playwright/test':
+        specifier: 1.48.2
+        version: 1.48.2
       '@types/node':
         specifier: 20.19.16
         version: 20.19.16
@@ -437,6 +440,11 @@ packages:
   '@nodelib/fs.walk@1.2.8':
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
+
+  '@playwright/test@1.48.2':
+    resolution: {integrity: sha512-54w1xCWfXuax7dz4W2M9uw0gDyh+ti/0K/MxcCUxChFh37kkdxPdfZDw5QBbuPUJHr1CiHJ1hXgSs+GgeQc5Zw==}
+    engines: {node: '>=18'}
+    hasBin: true
 
   '@playwright/test@1.56.1':
     resolution: {integrity: sha512-vSMYtL/zOcFpvJCW71Q/OEGQb7KYBPAdKh35WNSkaZA75JlAO8ED8UN6GUNTm3drWomcbcqRPFqQbLae8yBTdg==}
@@ -3735,6 +3743,10 @@ snapshots:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.19.1
+
+  '@playwright/test@1.48.2':
+    dependencies:
+      playwright: 1.56.1
 
   '@playwright/test@1.56.1':
     dependencies:
