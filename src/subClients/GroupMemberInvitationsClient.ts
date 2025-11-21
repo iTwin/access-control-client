@@ -7,36 +7,41 @@
  */
 
 import type { AccessToken } from "@itwin/core-bentley";
-import type { IMemberInvitationsClient } from "../accessControlClientInterfaces/MemberInvitationsClient";
+import type { MultipleGroupMemberInvitationResponse } from "../access-control-client";
+import type { IGroupMemberInvitationClient } from "../accessControlClientInterfaces/GroupMemberInvitationClient";
 import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes";
-import type { MultipleMemberInvitationResponse } from "../types/Invitations";
 import { BaseClient } from "./BaseClient";
 
-/** Client API to perform iTwin member invitation operations.
+/** Client API to perform iTwin group members operations.
+ * @beta
  */
-export class MemberInvitationsClient
+export class GroupMemberInvitationClient
   extends BaseClient
-  implements IMemberInvitationsClient {
-  /** Create a new MemberInvitationsClient instance
+  implements IGroupMemberInvitationClient {
+  /** Create a new GroupMembersClient instance
    * @param url Optional base URL for the access control service. If not provided, defaults to base url.
    */
   public constructor(url?: string) {
     super(url);
   }
 
-  /** Retrieves a list of iTwin member invitations.
+  /** Retrieves a list of iTwin group members and their roles assignments.
    * @param accessToken The client access token string
    * @param iTwinId The id of the iTwin
-   * @returns Array of member invitations
+   * @beta
+   * @returns Array of members
    */
-  public async queryITwinMemberInvitations(
+  public async queryITwinGroupMemberInvitations(
     accessToken: AccessToken,
     iTwinId: string,
+    groupId: string,
     arg?: Pick<ODataQueryParams, "top" | "skip">
-  ): Promise<BentleyAPIResponse<MultipleMemberInvitationResponse>> {
-    const url = `${this._baseUrl}/${iTwinId}/members/invitations${
-      arg ? `?${this.getQueryString(MemberInvitationsClient.paginationParamMapping, { top: arg.top, skip: arg.skip })}` : ''
-    }`;
+  ): Promise<BentleyAPIResponse<MultipleGroupMemberInvitationResponse>> {
+    let url = `${this._baseUrl}/${iTwinId}/groups/${groupId}/invitations`;
+
+    if (arg) {
+      url += `?${this.getQueryString(GroupMemberInvitationClient.paginationParamMapping, { top: arg.top, skip: arg.skip })}`;
+    }
 
     return this.sendGenericAPIRequest(
       accessToken,
@@ -46,18 +51,20 @@ export class MemberInvitationsClient
     );
   }
 
-  /** Deletes a member invitations.
+    /** Deletes a member invitations.
    * @param accessToken The client access token string
    * @param iTwinId The id of the iTwin
    * @param invitationId The id of the invitation id
-   * @returns No Content
+   * @beta
+   * @returns Array of member invitations
    */
-  public async deleteITwinMemberInvitation(
+  public async deleteITwinGroupMemberInvitation(
     accessToken: AccessToken,
     iTwinId: string,
+    groupId: string,
     invitationId: string
   ): Promise<BentleyAPIResponse<undefined>> {
-    const url = `${this._baseUrl}/${iTwinId}/members/invitations/${invitationId}`;
+    const url = `${this._baseUrl}/${iTwinId}/groups/${groupId}/invitations/${invitationId}`;
     return this.sendGenericAPIRequest(accessToken, "DELETE", url);
   }
 }

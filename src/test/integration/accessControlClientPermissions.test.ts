@@ -2,10 +2,13 @@
  * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
+
 import type { AccessToken } from "@itwin/core-bentley";
 import { beforeAll, describe, expect, it } from "vitest";
 import { AccessControlClient } from "../../AccessControlClient";
-import type { AccessControlAPIResponse, IAccessControlClient, Permission } from "../../accessControlTypes";
+import type { IAccessControlClient } from "../../accessControlClientInterfaces/accessControl";
+import type { BentleyAPIResponse } from "../../types/CommonApiTypes";
+import type { Permission } from "../../types/Permission";
 import { TestConfig } from "../TestConfig";
 
 describe("AccessControlClient Permissions", () => {
@@ -26,8 +29,8 @@ describe("AccessControlClient Permissions", () => {
 
   it("should get a list of permissions", async () => {
     // Act
-    const iTwinsResponse: AccessControlAPIResponse<Permission[]> =
-      await accessControlClient.permissions.getPermissionsAsync(accessToken);
+    const iTwinsResponse: BentleyAPIResponse<Permission[]> =
+      await accessControlClient.permissions.getPermissions(accessToken);
 
     // Assert
     expect(iTwinsResponse.status).toBe(200);
@@ -37,8 +40,8 @@ describe("AccessControlClient Permissions", () => {
 
   it("should get a list of permissions with custom url", async () => {
     // Act
-    const iTwinsResponse: AccessControlAPIResponse<Permission[]> =
-      await customAccessControlClient.permissions.getPermissionsAsync(accessToken);
+    const iTwinsResponse: BentleyAPIResponse<Permission[]> =
+      await customAccessControlClient.permissions.getPermissions(accessToken);
 
     // Assert
     expect(iTwinsResponse.status).toBe(200);
@@ -48,8 +51,8 @@ describe("AccessControlClient Permissions", () => {
 
   it("should get a list of permissions for an iTwin", async () => {
     // Act
-    const iTwinsResponse: AccessControlAPIResponse<Permission[]> =
-      await accessControlClient.permissions.getITwinPermissionsAsync(accessToken, TestConfig.itwinId);
+    const iTwinsResponse: BentleyAPIResponse<Permission[]> =
+      await accessControlClient.permissions.getITwinPermissions(accessToken, TestConfig.itwinId);
 
     // Assert
     expect(iTwinsResponse.status).toBe(200);
@@ -62,8 +65,8 @@ describe("AccessControlClient Permissions", () => {
     const notExistantITwinId = "22acf21e-0575-4faf-849b-bcd538718269";
 
     // Act
-    const iTwinsResponse: AccessControlAPIResponse<Permission[]> =
-      await accessControlClient.permissions.getITwinPermissionsAsync(accessToken, notExistantITwinId);
+    const iTwinsResponse: BentleyAPIResponse<Permission[]> =
+      await accessControlClient.permissions.getITwinPermissions(accessToken, notExistantITwinId);
 
     // Assert
     expect(iTwinsResponse.status).toBe(404);
