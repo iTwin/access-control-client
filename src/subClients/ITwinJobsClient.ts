@@ -5,11 +5,19 @@
 /** @packageDocumentation
  * @module AccessControlClient
  */
+
 import type { AccessToken } from "@itwin/core-bentley";
-import type { AccessControlAPIResponse, AccessControlResultMode, IITwinJobsClient, ITwinJob, ITwinJobActions } from "../accessControlTypes";
+import type { IITwinJobsClient } from "../accessControlClientInterfaces/ITwinJobsClient";
+import type { BentleyAPIResponse, ResultMode } from "../types/CommonApiTypes";
+import type { ITwinJob, ITwinJobActions } from "../types/ITwinJob";
 import { BaseClient } from "./BaseClient";
 
+/** Client API to perform iTwin job operations.
+ */
 export class ITwinJobsClient extends BaseClient implements IITwinJobsClient {
+  /** Create a new ITwinJobsClient instance
+   * @param url Optional base URL for the access control service. If not provided, defaults to base url.
+   */
   public constructor(url?: string) {
     super(url);
   }
@@ -20,11 +28,11 @@ export class ITwinJobsClient extends BaseClient implements IITwinJobsClient {
      * @param iTwinActions The actions of the iTwin Job
      * @returns ITwin Job
      */
-  public async createITwinJobAsync(
+  public async createITwinJob(
     accessToken: AccessToken,
     iTwinId: string,
     iTwinJobActions: ITwinJobActions
-  ): Promise<AccessControlAPIResponse<ITwinJob>> {
+  ): Promise<BentleyAPIResponse<ITwinJob>> {
     const url = `${this._baseUrl}/${iTwinId}/jobs`;
     return this.sendGenericAPIRequest(accessToken, "POST", url, { actions: iTwinJobActions });
   }
@@ -36,12 +44,12 @@ export class ITwinJobsClient extends BaseClient implements IITwinJobsClient {
      * @param resultMode (Optional) Access Control result mode: minimal or representation (defaults to minimal)
      * @returns ITwin Job
      */
-  public async getITwinJobAsync(
+  public async getITwinJob<T extends ResultMode = "minimal">(
     accessToken: AccessToken,
     iTwinId: string,
     iTwinJobId: string,
-    resultMode?: AccessControlResultMode
-  ): Promise<AccessControlAPIResponse<ITwinJob>> {
+    resultMode?: T
+  ): Promise<BentleyAPIResponse<T extends "representation" ? ITwinJob : Omit<ITwinJob, "error">>> {
     const headers = this.getResultModeHeaders(resultMode);
     const url = `${this._baseUrl}/${iTwinId}/jobs/${iTwinJobId}`;
     return this.sendGenericAPIRequest(accessToken, "GET", url, undefined, undefined, headers);
@@ -53,11 +61,11 @@ export class ITwinJobsClient extends BaseClient implements IITwinJobsClient {
      * @param iTwinJobId The id of the iTwin Job
      * @returns ITwin Job Actions
      */
-  public async getITwinJobActionsAsync(
+  public async getITwinJobActions(
     accessToken: AccessToken,
     iTwinId: string,
     iTwinJobId?: string
-  ): Promise<AccessControlAPIResponse<ITwinJobActions>> {
+  ): Promise<BentleyAPIResponse<ITwinJobActions>> {
     const url = `${this._baseUrl}/${iTwinId}/jobs/${iTwinJobId}/actions`;
     return this.sendGenericAPIRequest(accessToken, "GET", url, undefined, "actions");
   }
@@ -67,7 +75,7 @@ export class ITwinJobsClient extends BaseClient implements IITwinJobsClient {
    * @param resultMode (Optional) Access Control result mode
    * @protected
    */
-  protected getResultModeHeaders(resultMode: AccessControlResultMode = "minimal"): Record<string, string> {
+  protected getResultModeHeaders(resultMode: ResultMode = "minimal"): Record<string, string> {
     return {
       prefer: `return=${resultMode}`,
     };

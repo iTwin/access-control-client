@@ -2,16 +2,15 @@
  * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
+
 import type { AccessToken } from "@itwin/core-bentley";
-import { TestUsers } from "@itwin/oidc-signin-tool/lib/cjs/frontend";
+import { TestUsers } from "@itwin/oidc-signin-tool";
 import { beforeAll, describe, expect, it } from "vitest";
 import { AccessControlClient } from "../../AccessControlClient";
 import type {
-  AccessControlAPIResponse,
-  AddOwnerMemberResponse,
   IAccessControlClient,
-  OwnerMember,
-} from "../../accessControlTypes";
+} from "../../accessControlClientInterfaces/accessControl";
+import type { BentleyAPIResponse } from "../../types/CommonApiTypes";
 import { TestConfig } from "../TestConfig";
 
 describe("AccessControlClient Owner Members", () => {
@@ -33,8 +32,8 @@ describe("AccessControlClient Owner Members", () => {
 
   it("should get a list of owner members for an iTwin", async () => {
     // Act
-    const iTwinsResponse: AccessControlAPIResponse<OwnerMember[]> =
-      await accessControlClient.ownerMembers.queryITwinOwnerMembersAsync(
+    const iTwinsResponse =
+      await accessControlClient.ownerMembers.queryITwinOwnerMembers(
         accessToken,
         TestConfig.itwinId
       );
@@ -42,13 +41,14 @@ describe("AccessControlClient Owner Members", () => {
     // Assert
     expect(iTwinsResponse.status).toBe(200);
     expect(iTwinsResponse.data).toBeDefined();
-    expect(iTwinsResponse.data!.length).toBeGreaterThan(0);
+    expect(iTwinsResponse.data!.members.length).toBeGreaterThan(0);
+    expect(iTwinsResponse.data!._links).toBeDefined();
   });
 
   it("should get a list of owner members for an iTwin with custom url", async () => {
     // Act
-    const iTwinsResponse: AccessControlAPIResponse<OwnerMember[]> =
-      await customAccessControlClient.ownerMembers.queryITwinOwnerMembersAsync(
+    const iTwinsResponse =
+      await customAccessControlClient.ownerMembers.queryITwinOwnerMembers(
         accessToken,
         TestConfig.itwinId,
       );
@@ -56,7 +56,7 @@ describe("AccessControlClient Owner Members", () => {
     // Assert
     expect(iTwinsResponse.status).toBe(200);
     expect(iTwinsResponse.data).toBeDefined();
-    expect(iTwinsResponse.data!.length).toBeGreaterThan(0);
+    expect(iTwinsResponse.data!.members.length).toBeGreaterThan(0);
   });
 
   it("should get a filtered list of owner members for an iTwin using $top", async () => {
@@ -64,8 +64,8 @@ describe("AccessControlClient Owner Members", () => {
     const topAmount = 1;
 
     // Act
-    const iTwinsResponse: AccessControlAPIResponse<OwnerMember[]> =
-      await accessControlClient.ownerMembers.queryITwinOwnerMembersAsync(
+    const iTwinsResponse =
+      await accessControlClient.ownerMembers.queryITwinOwnerMembers(
         accessToken,
         TestConfig.itwinId,
         { top: topAmount }
@@ -75,13 +75,13 @@ describe("AccessControlClient Owner Members", () => {
     expect(iTwinsResponse.status).toBe(200);
     expect(iTwinsResponse.data).toBeDefined();
     expect(iTwinsResponse.data!).toBeDefined();
-    expect(iTwinsResponse.data!.length).toBe(topAmount);
+    expect(iTwinsResponse.data!.members.length).toBe(topAmount);
   });
 
   it("should get a filtered list of owner members for an iTwin using $skip", async () => {
     // Arrange
-    const unFilteredList: AccessControlAPIResponse<OwnerMember[]> =
-      await accessControlClient.ownerMembers.queryITwinOwnerMembersAsync(
+    const unFilteredList =
+      await accessControlClient.ownerMembers.queryITwinOwnerMembers(
         accessToken,
         TestConfig.itwinId
       );
@@ -89,8 +89,8 @@ describe("AccessControlClient Owner Members", () => {
     const topAmount = 1;
 
     // Act
-    const iTwinsResponse: AccessControlAPIResponse<OwnerMember[]> =
-      await accessControlClient.ownerMembers.queryITwinOwnerMembersAsync(
+    const iTwinsResponse =
+      await accessControlClient.ownerMembers.queryITwinOwnerMembers(
         accessToken,
         TestConfig.itwinId,
         { skip: skipAmmount, top: topAmount }
@@ -100,9 +100,9 @@ describe("AccessControlClient Owner Members", () => {
     expect(iTwinsResponse.status).toBe(200);
     expect(iTwinsResponse.data).toBeDefined();
     expect(iTwinsResponse.data!).toBeDefined();
-    expect(iTwinsResponse.data!.length).toBe(topAmount);
-    unFilteredList.data!.slice(0, skipAmmount).forEach((member) => {
-      expect(iTwinsResponse.data!.includes(member)).toBe(false);
+    expect(iTwinsResponse.data!.members.length).toBe(topAmount);
+    unFilteredList.data!.members.slice(0, skipAmmount).forEach((member) => {
+      expect(iTwinsResponse.data!.members.includes(member)).toBe(false);
     });
   });
 
@@ -110,8 +110,8 @@ describe("AccessControlClient Owner Members", () => {
     // --- Add Owner ---
     const managerEmail = TestUsers.manager.email ? TestUsers.manager.email : TestConfig.managerUserEmail;
     // Act
-    const addOwnerMemberResponse: AccessControlAPIResponse<AddOwnerMemberResponse> =
-      await accessControlClient.ownerMembers.addITwinOwnerMemberAsync(
+    const addOwnerMemberResponse =
+      await accessControlClient.ownerMembers.addITwinOwnerMember(
         accessToken,
         TestConfig.itwinId,
         {
@@ -122,32 +122,55 @@ describe("AccessControlClient Owner Members", () => {
     expect(addOwnerMemberResponse.status).toBe(201);
     expect(addOwnerMemberResponse.data).toBeDefined();
     expect(addOwnerMemberResponse.data!.member).toBeDefined();
-    expect(addOwnerMemberResponse.data!.member!.email).toBe(managerEmail);
+    expect(addOwnerMemberResponse.data!.member.email).toBe(managerEmail);
 
-    // --- Check owner exists ---
-    // Act
-    const queryOwnerMemberResponse: AccessControlAPIResponse<OwnerMember[]> =
-      await accessControlClient.ownerMembers.queryITwinOwnerMembersAsync(
-        accessToken,
-        TestConfig.itwinId
-      );
+    let newOwner: NonNullable<Awaited<ReturnType<typeof accessControlClient.ownerMembers.queryITwinOwnerMembers>>["data"]>["members"][0] | undefined;
+    try {
+      // --- Check owner exists ---
+      // Act
+      const queryOwnerMemberResponse =
+        await accessControlClient.ownerMembers.queryITwinOwnerMembers(
+          accessToken,
+          TestConfig.itwinId
+        );
 
-    expect(queryOwnerMemberResponse.status).toBe(200);
-    expect(queryOwnerMemberResponse.data).toBeDefined();
-    const newOwner = queryOwnerMemberResponse.data!.filter((member) => member.email === managerEmail)[0];
-    expect(newOwner).toBeDefined();
-    expect(newOwner.email).toBe(managerEmail);
+      expect(queryOwnerMemberResponse.status).toBe(200);
+      expect(queryOwnerMemberResponse.data).toBeDefined();
+      newOwner = queryOwnerMemberResponse.data!.members.filter((member) => member.email === managerEmail)[0];
+      expect(newOwner).toBeDefined();
+      expect(newOwner.email).toBe(managerEmail);
+    } finally {
+      // --- Remove owner (cleanup) ---
+      // Ensure owner is removed even if test fails
+      if (newOwner?.id) {
+        const removeOwnerMemberResponse: BentleyAPIResponse<undefined> =
+          await accessControlClient.ownerMembers.removeITwinOwnerMember(
+            accessToken,
+            TestConfig.itwinId,
+            newOwner.id
+          );
 
-    // --- Remove owner ---
-    // Act
-    const removeOwnerMemberResponse: AccessControlAPIResponse<undefined> =
-      await accessControlClient.ownerMembers.removeITwinOwnerMemberAsync(
-        accessToken,
-        TestConfig.itwinId,
-        newOwner.id!
-      );
+        expect(removeOwnerMemberResponse.status).toBe(204);
+        expect(removeOwnerMemberResponse.data).toBeUndefined();
+      } else {
+        // Fallback: if we don't have the owner ID, try to find and remove by email
+        const queryResponse = await accessControlClient.ownerMembers.queryITwinOwnerMembers(
+          accessToken,
+          TestConfig.itwinId
+        );
+        const ownerToRemove = queryResponse.data?.members.find((member) => member.email === managerEmail);
+        if (ownerToRemove?.id) {
+          const removeOwnerMemberResponse: BentleyAPIResponse<undefined> =
+            await accessControlClient.ownerMembers.removeITwinOwnerMember(
+              accessToken,
+              TestConfig.itwinId,
+              ownerToRemove.id
+            );
 
-    expect(removeOwnerMemberResponse.status).toBe(204);
-    expect(removeOwnerMemberResponse.data).toBeUndefined();
+          expect(removeOwnerMemberResponse.status).toBe(204);
+          expect(removeOwnerMemberResponse.data).toBeUndefined();
+        }
+      }
+    }
   });
 });

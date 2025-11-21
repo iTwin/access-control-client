@@ -5,11 +5,19 @@
 /** @packageDocumentation
  * @module AccessControlClient
  */
+
 import type { AccessToken } from "@itwin/core-bentley";
-import type { AccessControlAPIResponse, Group, GroupUpdate, IGroupsClient } from "../accessControlTypes";
+import type { IGroupsClient } from "../accessControlClientInterfaces/GroupClient";
+import type { BentleyAPIResponse } from "../types/CommonApiTypes";
+import type { Group, MultipleGroupsResponse, SingleGroupResponse } from "../types/Groups";
 import { BaseClient } from "./BaseClient";
 
+/** Client API to perform iTwin group operations.
+ */
 export class GroupsClient extends BaseClient implements IGroupsClient{
+  /** Create a new GroupsClient instance
+   * @param url Optional base URL for the access control service. If not provided, defaults to base url.
+   */
   public constructor(url?: string) {
     super(url);
   }
@@ -19,13 +27,12 @@ export class GroupsClient extends BaseClient implements IGroupsClient{
     * @param iTwinId The id of the iTwin
     * @returns Group[]
     */
-  public async getITwinGroupsAsync(
+  public async getITwinGroups(
     accessToken: AccessToken,
-    iTwinId: string,
-    additionalHeaders?: { [key: string]: string }
-  ): Promise<AccessControlAPIResponse<Group[]>>{
+    iTwinId: string
+  ): Promise<BentleyAPIResponse<MultipleGroupsResponse>>{
     const url = `${this._baseUrl}/${iTwinId}/groups`;
-    return this.sendGenericAPIRequest(accessToken, "GET", url, undefined, "groups", additionalHeaders);
+    return this.sendGenericAPIRequest(accessToken, "GET", url);
   }
 
   /** Retrieves the specified role for the specified iTwin
@@ -33,13 +40,13 @@ export class GroupsClient extends BaseClient implements IGroupsClient{
     * @param iTwinId The id of the iTwin
     * @returns Group
     */
-  public async getITwinGroupAsync(
+  public async getITwinGroup(
     accessToken: AccessToken,
     iTwinId: string,
     groupId: string,
-  ): Promise<AccessControlAPIResponse<Group>>{
+  ): Promise<BentleyAPIResponse<SingleGroupResponse>>{
     const url = `${this._baseUrl}/${iTwinId}/groups/${groupId}`;
-    return this.sendGenericAPIRequest(accessToken, "GET", url, undefined, "group");
+    return this.sendGenericAPIRequest(accessToken, "GET", url);
   }
 
   /** Creates a new iTwin group
@@ -48,13 +55,13 @@ export class GroupsClient extends BaseClient implements IGroupsClient{
     * @param group The group to be created
     * @returns Group
     */
-  public async createITwinGroupAsync(
+  public async createITwinGroup(
     accessToken: AccessToken,
     iTwinId: string,
-    group: Group
-  ): Promise<AccessControlAPIResponse<Group>>{
+    group: Pick< Group, "name" | "description">
+  ): Promise<BentleyAPIResponse<SingleGroupResponse>>{
     const url = `${this._baseUrl}/${iTwinId}/groups`;
-    return this.sendGenericAPIRequest(accessToken, "POST", url, group, "group");
+    return this.sendGenericAPIRequest(accessToken, "POST", url, group);
   }
 
   /** Delete the specified iTwin group
@@ -63,11 +70,11 @@ export class GroupsClient extends BaseClient implements IGroupsClient{
     * @param groupId The id of the group to remove
     * @returns No Content
     */
-  public async deleteITwinGroupAsync(
+  public async deleteITwinGroup(
     accessToken: AccessToken,
     iTwinId: string,
     groupId: string,
-  ): Promise<AccessControlAPIResponse<undefined>>{
+  ): Promise<BentleyAPIResponse<undefined>>{
     const url = `${this._baseUrl}/${iTwinId}/groups/${groupId}`;
     return this.sendGenericAPIRequest(accessToken, "DELETE", url);
   }
@@ -77,15 +84,15 @@ export class GroupsClient extends BaseClient implements IGroupsClient{
     * @param iTwinId The id of the iTwin
     * @param groupId The id of the role to update
     * @param group The updated group
-    * @returns Role
+    * @returns Group that was updated
     */
-  public async updateITwinGroupAsync(
+  public async updateITwinGroup(
     accessToken: AccessToken,
     iTwinId: string,
     groupId: string,
-    group: GroupUpdate
-  ): Promise<AccessControlAPIResponse<Group>>{
+    group: Partial<Pick<Group, "name" | "description"> & { members: string[]; imsGroups: string[] }>
+  ): Promise<BentleyAPIResponse<SingleGroupResponse>>{
     const url = `${this._baseUrl}/${iTwinId}/groups/${groupId}`;
-    return this.sendGenericAPIRequest(accessToken, "PATCH", url, group, "group");
+    return this.sendGenericAPIRequest(accessToken, "PATCH", url, group);
   }
 }

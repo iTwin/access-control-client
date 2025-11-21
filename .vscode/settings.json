@@ -107,5 +107,8 @@
     "source.fixAll.markdownlint": "always",
     "editor.action.fixAll": "always",
     "source.fixAll.eslint": "always"
-  }
+  },
+  "typescript.preferences.includePackageJsonAutoImports": "off",
+  "typescript.suggest.autoImports": true,
+  "typescript.preferences.importModuleSpecifier": "relative"
 }

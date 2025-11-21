@@ -2,15 +2,13 @@
  * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
+
 import type { AccessToken } from "@itwin/core-bentley";
 import { beforeAll, describe, expect, it } from "vitest";
 import { AccessControlClient } from "../../AccessControlClient";
 import type {
-  AccessControlAPIResponse,
-  AddUserMemberResponse,
   IAccessControlClient,
-  MemberInvitation,
-} from "../../accessControlTypes";
+} from "../../accessControlClientInterfaces/accessControl";
 import { TestConfig } from "../TestConfig";
 
 function randomIntFromInterval(min: number, max: number) {
@@ -32,17 +30,17 @@ describe("AccessControlClient Member Invitations", () => {
   beforeAll(async () => {
     accessToken = await TestConfig.getAccessToken();
 
-    const getMemberInvitationsResponse: AccessControlAPIResponse<MemberInvitation[]> =
-      await accessControlClient.memberInvitations.queryITwinMemberInvitationsAsync(
+    const getMemberInvitationsResponse =
+      await accessControlClient.memberInvitations.queryITwinMemberInvitations(
         accessToken,
         TestConfig.itwinId
       );
     expect(getMemberInvitationsResponse.status).toBe(200);
     expect(getMemberInvitationsResponse.data).not.toBeNull();
 
-    if (getMemberInvitationsResponse.data!.length < 8) {
-      const addUserMemberResponse: AccessControlAPIResponse<AddUserMemberResponse> =
-      await accessControlClient.userMembers.addITwinUserMembersAsync(
+    if (getMemberInvitationsResponse.data!.invitations.length < 8) {
+      const addUserMemberResponse =
+      await accessControlClient.userMembers.addITwinUserMembers(
         accessToken,
         TestConfig.itwinId,
         [
@@ -90,8 +88,8 @@ describe("AccessControlClient Member Invitations", () => {
 
   it("should get a list of member invitations for an iTwin", async () => {
     // Act
-    const iTwinsResponse: AccessControlAPIResponse<MemberInvitation[]> =
-      await accessControlClient.memberInvitations.queryITwinMemberInvitationsAsync(
+    const iTwinsResponse =
+      await accessControlClient.memberInvitations.queryITwinMemberInvitations(
         accessToken,
         TestConfig.itwinId
       );
@@ -99,7 +97,8 @@ describe("AccessControlClient Member Invitations", () => {
     // Assert
     expect(iTwinsResponse.status).toBe(200);
     expect(iTwinsResponse.data).toBeDefined();
-    expect(iTwinsResponse.data!.length).toBeGreaterThan(7);
+    expect(iTwinsResponse.data!.invitations.length).toBeGreaterThan(7);
+    expect(iTwinsResponse.data?._links).toBeDefined();
   });
 
   it("should get a filtered list of member invitations for an iTwin using $top", async () => {
@@ -107,8 +106,8 @@ describe("AccessControlClient Member Invitations", () => {
     const topAmount = 5;
 
     // Act
-    const iTwinsResponse: AccessControlAPIResponse<MemberInvitation[]> =
-    await accessControlClient.memberInvitations.queryITwinMemberInvitationsAsync(
+    const iTwinsResponse =
+    await accessControlClient.memberInvitations.queryITwinMemberInvitations(
       accessToken,
       TestConfig.itwinId,
       { top: topAmount }
@@ -118,13 +117,13 @@ describe("AccessControlClient Member Invitations", () => {
     expect(iTwinsResponse.status).toBe(200);
     expect(iTwinsResponse.data).toBeDefined();
     expect(iTwinsResponse.data!).toBeDefined();
-    expect(iTwinsResponse.data!.length).toBe(topAmount);
+    expect(iTwinsResponse.data!.invitations.length).toBe(topAmount);
   });
 
   it("should get a filtered list of member invitations for an iTwin using $skip", async () => {
     // Arrange
-    const unFilteredList: AccessControlAPIResponse<MemberInvitation[]> =
-    await accessControlClient.memberInvitations.queryITwinMemberInvitationsAsync(
+    const unFilteredList =
+    await accessControlClient.memberInvitations.queryITwinMemberInvitations(
       accessToken,
       TestConfig.itwinId
     );
@@ -132,8 +131,8 @@ describe("AccessControlClient Member Invitations", () => {
     const topAmount = 3;
 
     // Act
-    const iTwinsResponse: AccessControlAPIResponse<MemberInvitation[]> =
-    await accessControlClient.memberInvitations.queryITwinMemberInvitationsAsync(
+    const iTwinsResponse =
+    await accessControlClient.memberInvitations.queryITwinMemberInvitations(
       accessToken,
       TestConfig.itwinId,
       { skip: skipAmmount, top: topAmount }
@@ -143,15 +142,15 @@ describe("AccessControlClient Member Invitations", () => {
     expect(iTwinsResponse.status).toBe(200);
     expect(iTwinsResponse.data).toBeDefined();
     expect(iTwinsResponse.data!).toBeDefined();
-    expect(iTwinsResponse.data!.length).toBe(topAmount);
-    unFilteredList.data!.slice(0, skipAmmount).forEach((member) => {
-      expect(iTwinsResponse.data!.includes(member)).toBe(false);
+    expect(iTwinsResponse.data!.invitations.length).toBe(topAmount);
+    unFilteredList.data?.invitations!.slice(0, skipAmmount).forEach((member) => {
+      expect(iTwinsResponse.data?.invitations!.includes(member)).toBe(false);
     });
   });
 
   it("delete the temporary member invitation", async () => {
-    const addUserMemberResponse: AccessControlAPIResponse<AddUserMemberResponse> =
-      await accessControlClient.userMembers.addITwinUserMembersAsync(
+    const addUserMemberResponse =
+      await accessControlClient.userMembers.addITwinUserMembers(
         accessToken,
         TestConfig.itwinId,
         [
@@ -167,7 +166,7 @@ describe("AccessControlClient Member Invitations", () => {
     expect(addUserMemberResponse.data!.members.length).toBe(0);
     expect(addUserMemberResponse.data!.invitations.length).toBe(1);
 
-    const deleteUserMemberInvitationResponse = await accessControlClient.memberInvitations.deleteITwinMemberInvitationAsync(accessToken, TestConfig.itwinId, addUserMemberResponse.data!.invitations[0].id);
+    const deleteUserMemberInvitationResponse = await accessControlClient.memberInvitations.deleteITwinMemberInvitation(accessToken, TestConfig.itwinId, addUserMemberResponse.data!.invitations[0].id);
 
     expect(deleteUserMemberInvitationResponse.status).toBe(204);
   });

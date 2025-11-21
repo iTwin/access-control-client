@@ -5,20 +5,21 @@
 /** @packageDocumentation
  * @module AccessControlClient
  */
+
 import type { AccessToken } from "@itwin/core-bentley";
-import type {
-  AccessControlAPIResponse,
-  AccessControlQueryArg,
-  AddUserMember,
-  AddUserMemberResponse,
-  IUserMembersClient,
-  UserMember,
-} from "../accessControlTypes";
+import type { IUserMembersClient } from "../accessControlClientInterfaces/UserMembersClient";
+import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes";
+import type { AddUserMember, AddUserMemberResponse, MultipleUserMembersResponse, SingleUserMemberResponse } from "../types/UserMembers";
 import { BaseClient } from "./BaseClient";
 
+/** Client API to perform user members operations.
+ */
 export class UserMembersClient
   extends BaseClient
   implements IUserMembersClient {
+  /** Create a new UserMembersClient instance
+   * @param url Optional base URL for the access control service. If not provided, defaults to base url.
+   */
   public constructor(url?: string) {
     super(url);
   }
@@ -28,24 +29,23 @@ export class UserMembersClient
    * @param iTwinId The id of the iTwin
    * @returns Array of members
    */
-  public async queryITwinUserMembersAsync(
+  public async queryITwinUserMembers(
     accessToken: AccessToken,
     iTwinId: string,
-    arg?: AccessControlQueryArg
-  ): Promise<AccessControlAPIResponse<UserMember[]>> {
+    arg?: Pick<ODataQueryParams, "top" | "skip">
+  ): Promise<BentleyAPIResponse<MultipleUserMembersResponse>> {
     let url = `${this._baseUrl}/${iTwinId}/members/users`;
 
     if (arg) {
-      url += `?${this.getQueryString(arg)}`;
+      url += `?${this.getQueryString(UserMembersClient.paginationParamMapping, { top: arg.top, skip: arg.skip })}`;
     }
 
     return this.sendGenericAPIRequest(
       accessToken,
       "GET",
       url,
-      undefined,
-      "members"
-    ); // TODO: Consider how to handle paging
+      undefined
+    );
   }
 
   /** Retrieves a specific user member for a specified iTwin.
@@ -54,18 +54,17 @@ export class UserMembersClient
    * @param memberId The id of the member
    * @returns Member
    */
-  public async getITwinUserMemberAsync(
+  public async getITwinUserMember(
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string
-  ): Promise<AccessControlAPIResponse<UserMember>> {
+  ): Promise<BentleyAPIResponse<SingleUserMemberResponse>> {
     const url = `${this._baseUrl}/${iTwinId}/members/users/${memberId}`;
     return this.sendGenericAPIRequest(
       accessToken,
       "GET",
       url,
-      undefined,
-      "member"
+      undefined
     );
   }
 
@@ -76,12 +75,12 @@ export class UserMembersClient
    * @param customMessage Send custom message in welcome email when adding new members
    * @returns AddUserMemberResponse -- the added or invited user members
    */
-  public async addITwinUserMembersAsync(
+  public async addITwinUserMembers(
     accessToken: AccessToken,
     iTwinId: string,
     newMembers: AddUserMember[],
     customMessage?: string
-  ): Promise<AccessControlAPIResponse<AddUserMemberResponse>> {
+  ): Promise<BentleyAPIResponse<AddUserMemberResponse>> {
     const url = `${this._baseUrl}/${iTwinId}/members/users`;
     const body = {
       members: newMembers,
@@ -101,11 +100,11 @@ export class UserMembersClient
    * @param memberId The id of the member
    * @returns No Content
    */
-  public async removeITwinUserMemberAsync(
+  public async removeITwinUserMember(
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string
-  ): Promise<AccessControlAPIResponse<undefined>> {
+  ): Promise<BentleyAPIResponse<undefined>> {
     const url = `${this._baseUrl}/${iTwinId}/members/users/${memberId}`;
     return this.sendGenericAPIRequest(accessToken, "DELETE", url);
   }
@@ -117,12 +116,12 @@ export class UserMembersClient
    * @param roleIds The ids of the roles to be assigned
    * @returns Member
    */
-  public async updateITwinUserMemberAsync(
+  public async updateITwinUserMember(
     accessToken: AccessToken,
     iTwinId: string,
     memberId: string,
     roleIds: string[]
-  ): Promise<AccessControlAPIResponse<UserMember>> {
+  ): Promise<BentleyAPIResponse<SingleUserMemberResponse>> {
     const url = `${this._baseUrl}/${iTwinId}/members/users/${memberId}`;
     const body = {
       roleIds,
@@ -131,8 +130,7 @@ export class UserMembersClient
       accessToken,
       "PATCH",
       url,
-      body,
-      "member"
+      body
     );
   }
 }
