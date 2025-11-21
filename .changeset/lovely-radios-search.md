@@ -2,98 +2,75 @@
 "@itwin/access-control-client": major
 ---
 
-\## 🚨 BREAKING CHANGES
+## 🚨 BREAKING CHANGES
 
 Complete redesign with enhanced functionality. See `MIGRATION-GUIDE-v3-to-v4.md` for migration instructions.
 
-\### API Changes
+### API Changes
 
-\- \*\*Response Type\*\*: `AccessControlAPIResponse<T>` → `BentleyAPIResponse<T>`
+- **Response Type**: `AccessControlAPIResponse<T>` → `BentleyAPIResponse<T>`
+- **Error Type**: `Error` → `ApimError` (avoids JS built-in conflict)
+- **Method Names**: Removed 'Async' suffix (e.g., `getITwinRolesAsync` → `getITwinRoles`)
+- **Type System**: All enums → string union types for better tree shaking
+- **Response Structure**: Direct arrays/objects → wrapped responses with HAL links
+- **Query Parameters**: `AccessControlQueryArg` → `ODataQueryParams`
 
-\- \*\*Error Type\*\*: `Error` → `ApimError` (avoids JS built-in conflict)
+## ✨ NEW FEATURES
 
-\- \*\*Method Names\*\*: Removed 'Async' suffix (e.g., `getITwinRolesAsync` → `getITwinRoles`)
+### iTwin Shares Client
 
-\- \*\*Type System\*\*: All enums → string union types for better tree shaking
+- `createITwinShare()`, `getITwinShares()`, `getITwinShare()`, `updateITwinShare()`, `deleteITwinShare()`
 
-\- \*\*Response Structure\*\*: Direct arrays/objects → wrapped responses with HAL links
+### Group Member Invitations Client
 
-\- \*\*Query Parameters\*\*: `AccessControlQueryArg` → `ODataQueryParams`
+- `queryITwinGroupMemberInvitations()`, `deleteITwinGroupMemberInvitation()`
 
-\## ✨ NEW FEATURES
+### Enhanced Type Safety
 
-\### iTwin Shares Client
+- Conditional types: `getITwinJob<T extends ResultMode>()` automatically infers return type
+- `"minimal"` mode: Returns `Omit<ITwinJob, "error">`
+- `"representation"` mode: Returns full `ITwinJob`
+- Zero type casting required
 
-\- `createITwinShare()`, `getITwinShares()`, `getITwinShare()`, `updateITwinShare()`, `deleteITwinShare()`
+### HAL Compliance
 
-\### Group Member Invitations Client
+All collections include `_links` for navigation (`self`, `next`, `prev`)
 
-\- `queryITwinGroupMemberInvitations()`, `deleteITwinGroupMemberInvitation()`
+## 🔧 TECHNICAL IMPROVEMENTS
 
-\### Enhanced Type Safety
+- **String Unions**: Zero runtime overhead, better tree shaking, JSON compatibility
+- **Conditional Types**: Type-safe result modes
+- **Response Wrappers**: Self-documenting structures
+- **File Structure**: Reorganized types into `src/types/`
+- **Performance**: Smaller bundles, native fetch API, type elimination
 
-\- Conditional types: `getITwinJob<T extends ResultMode>()` automatically infers return type
+## 📝 MIGRATION
 
-\- `"minimal"` mode: Returns `Omit<ITwinJob, "error">`
+**Key Steps:**
 
-\- `"representation"` mode: Returns full `ITwinJob`
+1. `AccessControlAPIResponse` → `BentleyAPIResponse`
+2. `Error` → `ApimError`
+3. Remove 'Async' suffix from methods
+4. Update response access: `response.data.userMembers`
+5. Convert enums to string unions
+6. Use `import type` for types
 
-\- Zero type casting required
+**Benefits:**
 
-\### HAL Compliance
+- Smaller bundles via tree-shaking
+- Better type safety with conditional types
+- Enhanced developer experience
+- Modern patterns (string unions, HAL, OData)
 
-All collections include `\_links` for navigation (`self`, `next`, `prev`)
+See [`MIGRATION-GUIDE-v3-to-v4.md`](MIGRATION-GUIDE-v3-to-v4.md) for complete examples.
 
-\## 🔧 TECHNICAL IMPROVEMENTS
+## 🎯 TESTING & DEPLOYMENT
 
-\- \*\*String Unions\*\*: Zero runtime overhead, better tree shaking, JSON compatibility
+- All integration tests updated for new patterns
+- **Major version release** (v4.0.0) - not backward compatible
+- Migration guide required for v3.x users
 
-\- \*\*Conditional Types\*\*: Type-safe result modes
+## Addresses issues
 
-\- \*\*Response Wrappers\*\*: Self-documenting structures
-
-\- \*\*File Structure\*\*: Reorganized types into `src/types/`
-
-\- \*\*Performance\*\*: Smaller bundles, native fetch API, type elimination
-
-\## 📝 MIGRATION
-
-\*\*Key Steps:\*\*
-
-1\. `AccessControlAPIResponse` → `BentleyAPIResponse`
-
-2\. `Error` → `ApimError`
-
-3\. Remove 'Async' suffix from methods
-
-4\. Update response access: `response.data.userMembers`
-
-5\. Convert enums to string unions
-
-6\. Use `import type` for types
-
-\*\*Benefits:\*\*
-
-\- Smaller bundles via tree-shaking
-
-\- Better type safety with conditional types
-
-\- Enhanced developer experience
-
-\- Modern patterns (string unions, HAL, OData)
-
-See \[`MIGRATION-GUIDE-v3-to-v4.md`](MIGRATION-GUIDE-v3-to-v4.md) for complete examples.
-
-\## 🎯 TESTING \& DEPLOYMENT
-
-\- All integration tests updated for new patterns
-
-\- \*\*Major version release\*\* (v4.0.0) - not backward compatible
-
-\- Migration guide required for v3.x users
-
-\## Addresses issues :
-
-\- #38
-
-\- #9
+- #38
+- #9
