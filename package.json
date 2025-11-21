@@ -1,6 +1,6 @@
 {
   "name": "@itwin/access-control-client",
-  "version": "3.7.0",
+  "version": "4.0.0",
   "description": "Access control client for the iTwin platform",
   "main": "lib/cjs/access-control-client.js",
   "module": "lib/esm/access-control-client.js",
@@ -82,7 +82,7 @@
     "iTwin",
     "access-control"
   ],
-    "pnpm": {
+  "pnpm": {
     "overrides": {
       "playwright": "^1.55.1",
       "glob": "11.1.0"
