@@ -32,7 +32,7 @@ export class TestConfig {
   public static readonly regularUserId: string = process.env.IMJS_TEST_REGULAR_USER_ID!;
 
   public static readonly itwinId: string = process.env.IMJS_TEST_ITWIN_ID!;
-  public static readonly accountId: string = process.env.TEST_QA_ACCOUNT!;
+  public static readonly accountId: string = process.env.IMJS_TEST_QA_ACCOUNT!;
 
   /** Login the specified user and return the AuthorizationToken */
   public static async getAccessToken(

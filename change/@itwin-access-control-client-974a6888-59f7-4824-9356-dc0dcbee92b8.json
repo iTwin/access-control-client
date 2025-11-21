@@ -1,7 +1,0 @@
-{
-  "type": "major",
-  "comment": "Complete API redesign with enhanced TypeScript support and new functionality\n\nBREAKING CHANGES:\n- Renamed AccessControlAPIResponse<T> → BentleyAPIResponse<T>\n- Renamed Error → ApimError (avoids JS built-in conflict)\n- Removed 'Async' suffix from all method names (e.g., getITwinRolesAsync → getITwinRoles)\n- Converted all enums to string union types for better tree shaking\n- Response structure: Direct arrays/objects → wrapped responses with HAL links\n- Query parameters: AccessControlQueryArg → ODataQueryParams with OData v4 support\n\nNEW FEATURES:\n- iTwin Shares client with complete CRUD operations\n- Group Member Invitations client for invitation management\n- Enhanced type safety with conditional types for result modes\n- HAL specification compliance with _links navigation\n- Advanced mapped types for handling missing users in member responses\n\nTECHNICAL IMPROVEMENTS:\n- String unions over enums (zero runtime overhead, better tree shaking)\n- Conditional types for type-safe result modes\n- Self-documenting response wrappers with descriptive property names\n- Reorganized type system into dedicated files under src/types/\n- Enhanced error handling with proper null/undefined type safety\n\nSee MIGRATION-GUIDE-v3-to-v4.md for complete migration instructions.",
-  "packageName": "@itwin/access-control-client",
-  "email": "caleb.german@bentley.com",
-  "dependentChangeType": "patch"
-}

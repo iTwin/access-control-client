@@ -1,58 +1,77 @@
 # Change Log - @itwin/access-control-client
 
-<!-- This log was last generated on Thu, 02 Oct 2025 15:53:41 GMT and should not be manually modified. -->
-
-<!-- Start content -->
-
 ## 3.7.0
 
-Thu, 02 Oct 2025 15:53:41 GMT
+### [3.7.0](https://www.npmjs.com/package/@itwin/access-control-client/v/3.7.0) - 2025-10-02
 
-### Minor changes
+feat: refactor BaseClient to use fetch API and improve error handling; remove axios dependency
 
-- Refactor BaseClient to use fetch API and improve error handling; remove axios dependency ([commit](https://github.com/iTwin/access-control-client/commit/165fa8ae00423c7c375fad98286d83c6ce27d5c8))
+- Complete migration from axios to native fetch API
+- Improved error handling and response parsing
+- Reduced bundle size by removing axios dependency
+- Enhanced type safety and modern JavaScript standards compliance
 
 ## 3.6.0
 
-Wed, 23 Jul 2025 13:27:49 GMT
+### [3.6.0](https://www.npmjs.com/package/@itwin/access-control-client/v/3.6.0) - 2025-07-23
 
-### Minor changes
+feat: add optional data params 'membersCount' and 'imsGroupsCount' to Group and GroupMember types
 
-- Add optional data params 'membersCount' and 'imsGroupsCount' to Group and GroupMember types ([commit](https://github.com/iTwin/access-control-client/commit/868b2ff35829b867a3230cc66d3f7d0c074e6dd5))
+- Enhanced type definitions to support additional metadata fields
 
 ## 3.5.0
 
-Wed, 18 Jun 2025 22:14:32 GMT
+### [3.5.0](https://www.npmjs.com/package/@itwin/access-control-client/v/3.5.0) - 2025-06-18
 
-### Minor changes
+feat: allow sending additionalHeaders for getITwinGroupsAsync
 
-- Allow sending additionalHeaders for getITwinGroupsAsync ([commit](https://github.com/iTwin/access-control-client/commit/96a0431d91886c4a3ca316cb566b62e0f778ebc1))
+- Added support for custom headers in `getITwinGroupsAsync` method
 
 ## 3.4.0
 
-Thu, 15 May 2025 14:36:59 GMT
+### [3.4.0](https://www.npmjs.com/package/@itwin/access-control-client/v/3.4.0) - 2025-05-15
 
-### Minor changes
+feat: add optional customMessage parameter to addITwinUserMembersAsync function
 
-- Adding optional `customMessage` param to the `addITwinUserMembersAsync` function. ([commit](https://github.com/iTwin/access-control-client/commit/470d52c12eaf310f6d73aa356f49996703e0c29a))
+- Added `customMessage` parameter to `addITwinUserMembersAsync` for personalized invitation messages
 
 ## 3.3.0
 
-- Adding `deleteITwinMemberInvitationAsync` method to the `MemberInvitationsClient`.
+### [3.3.0](https://www.npmjs.com/package/@itwin/access-control-client/v/3.3.0) - 2025-04-01
+
+feat: add deleteITwinMemberInvitationAsync method to MemberInvitationsClient
+
+- Added `deleteITwinMemberInvitationAsync` method for invitation management
 
 ## 3.2.0
 
-- Adding iTwin jobs client
+### [3.2.0](https://www.npmjs.com/package/@itwin/access-control-client/v/3.2.0) - 2025-03-01
+
+feat: add iTwin jobs client
+
+- Introduced iTwin jobs client for asynchronous operation management
 
 ## 3.1.0
 
-- Add headers to the API response object
+### [3.1.0](https://www.npmjs.com/package/@itwin/access-control-client/v/3.1.0) - 2025-02-01
+
+feat: add headers to the API response object
+
+- Enhanced API response objects to include response headers
+- Improved debugging and monitoring capabilities
+- Added support for response metadata access
 
 ## 3.0.2
 
-- Upgrading axios version to ^1.7.4
+### [3.0.2](https://www.npmjs.com/package/@itwin/access-control-client/v/3.0.2) - 2024-12-15
+
+chore: upgrade axios version to ^1.7.4
+
+- Updated axios dependency to address security vulnerabilities
 
 ## 3.0.0
+
+### [3.0.0](https://www.npmjs.com/package/@itwin/access-control-client/v/3.0.0) - 2024-11-01
 
 - **Breaking** Adjusting add user & add owner schemas to include invitations
 - **Breaking** Adjusting add user member and add group member schemas to support multiple roleIds
@@ -60,18 +79,35 @@ Thu, 15 May 2025 14:36:59 GMT
 
 ## 2.3.1
 
-- Upgrading axios version to ^1.6.1
+### [2.3.1](https://www.npmjs.com/package/@itwin/access-control-client/v/2.3.1) - 2024-10-15
+
+chore: upgrade axios version to ^1.6.1
+
+- Updated axios dependency to address security vulnerabilities
+- Improved stability and compatibility
 
 ## 2.2.0
 
-- Added owner member client
+### [2.2.0](https://www.npmjs.com/package/@itwin/access-control-client/v/2.2.0) - 2024-09-15
+
+feat: add owner member client
+
+- Introduced dedicated owner member management client
 
 ## 2.1.0
+
+### [2.1.0](https://www.npmjs.com/package/@itwin/access-control-client/v/2.1.0) - 2024-08-15
+
+feat: enhance group member structure and type safety
 
 - Changed the `users` property to `members` on the `Groups` object.
   - `members` property now accepts a `GroupUser[]` object instead of a `string[]`
 
 ## 2.0.0
+
+### [2.0.0](https://www.npmjs.com/package/@itwin/access-control-client/v/2.0.0) - 2024-07-01
+
+feat: restructure clients for better modularity
 
 - Added groups client
 - Added group member client
@@ -80,20 +116,40 @@ Thu, 15 May 2025 14:36:59 GMT
 
 ## 1.3.0
 
-- Added support for the `accept` header inside of `BaseClient`.
+### [1.3.0](https://www.npmjs.com/package/@itwin/access-control-client/v/1.3.0) - 2024-05-15
+
+feat: add support for accept header in BaseClient
+
+- Added support for the `accept` header inside of `BaseClient`
 
 ## 1.2.0
 
-- Return newly added members.
+### [1.2.0](https://www.npmjs.com/package/@itwin/access-control-client/v/1.2.0) - 2024-04-15
+
+feat: return newly added members
+
+- Enhanced member addition operations to return created member objects
 
 ## 1.1.1
 
-- Fixed custom url bug.
+### [1.1.1](https://www.npmjs.com/package/@itwin/access-control-client/v/1.1.1) - 2024-03-20
+
+fix: resolve custom URL configuration bug
+
+- Fixed custom URL bug affecting client initialization
 
 ## 1.1.0
 
-- Added constructor parameter to AccessControlClient for custom url.
+### [1.1.0](https://www.npmjs.com/package/@itwin/access-control-client/v/1.1.0) - 2024-03-01
+
+feat: add custom URL support to AccessControlClient
+
+- Added constructor parameter to AccessControlClient for custom URL configuration
 
 ## 1.0.0
 
-- Intial commit.
+### [1.0.0](https://www.npmjs.com/package/@itwin/access-control-client/v/1.0.0) - 2024-02-01
+
+feat: initial release of @itwin/access-control-client
+
+- Initial commit with core access control functionality
