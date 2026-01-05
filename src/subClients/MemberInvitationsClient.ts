@@ -67,7 +67,7 @@ export class MemberInvitationsClient
    * @param invitationId The id of the invitation id
    * @returns A member invitation or error object
    */
-  getITwinMemberInvitation(accessToken: AccessToken, iTwinId: string, invitationId: string): Promise<BentleyAPIResponse<SingleMemberInvitationResponse>> {
+  public async getITwinMemberInvitation(accessToken: AccessToken, iTwinId: string, invitationId: string): Promise<BentleyAPIResponse<SingleMemberInvitationResponse>> {
     const url = `${this._baseUrl}/${iTwinId}/members/invitations/${invitationId}`;
     return this.sendGenericAPIRequest(accessToken, "GET", url);
   }

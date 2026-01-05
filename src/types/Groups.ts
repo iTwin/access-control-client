@@ -88,5 +88,6 @@ export interface MultipleGroupsResponse {
   /** Array of groups returned by the API */
   groups: Group[];
   /** HAL-style links for pagination and related resources */
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   _links: Links;
 }
