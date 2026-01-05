@@ -3,6 +3,7 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
+import type { Links } from "./links";
 import type { GroupUser } from "./Members";
 
 /**
@@ -57,6 +58,24 @@ export interface SingleGroupResponse {
   group: Group;
 }
 
+/** Utility type to determine if any pagination parameters are present */
+export type HasAnyPaginationParam<T> =
+  T extends { top?: unknown } | { skip?: unknown } ? true : false;
+
+/**
+ * API response wrapper for multiple groups operations.
+ * Conditional inclusion of HAL-style links based on pagination parameters.
+ *
+ * @remarks
+ * This interface is used for API responses that return multiple groups,
+ * such as GET /groups operations. The array may be empty if no groups
+ * match the query criteria or if the iTwin has no groups defined.
+ */
+export type GroupsResponseWithConditionalLinks<T> =
+  HasAnyPaginationParam<T> extends true
+    ? MultipleGroupsResponse
+    : Omit<MultipleGroupsResponse, "_links">;
+
 /**
  * API response wrapper for multiple groups operations.
  *
@@ -68,4 +87,6 @@ export interface SingleGroupResponse {
 export interface MultipleGroupsResponse {
   /** Array of groups returned by the API */
   groups: Group[];
+  /** HAL-style links for pagination and related resources */
+  _links: Links;
 }

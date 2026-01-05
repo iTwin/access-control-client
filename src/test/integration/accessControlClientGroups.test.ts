@@ -29,9 +29,10 @@ describe("AccessControlClient Groups", () => {
   it("should get a list of groups for an iTwin", async () => {
     // Act
     const iTwinsResponse =
-      await accessControlClient.groups.getITwinGroups(accessToken, TestConfig.itwinId);
+      await accessControlClient.groups.getITwinGroups(accessToken, TestConfig.itwinId, { top: 10, skip: 0 });
 
     // Assert
+    expect(iTwinsResponse.data?._links).toBeDefined();
     expect(iTwinsResponse.status).toBe(200);
     expect(iTwinsResponse.data).toBeDefined();
     expect(iTwinsResponse.data?.groups!.length).toBeGreaterThan(0);
