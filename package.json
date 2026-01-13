@@ -1,6 +1,6 @@
 {
   "name": "@itwin/access-control-client",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "Access control client for the iTwin platform",
   "main": "lib/cjs/access-control-client.js",
   "module": "lib/esm/access-control-client.js",
