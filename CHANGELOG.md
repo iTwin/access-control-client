@@ -1,5 +1,13 @@
 # Change Log - @itwin/access-control-client
 
+## 4.1.0
+
+### Minor Changes
+
+### [4.1.0](https://www.npmjs.com/package/@itwin/access-control-client/v/4.1.0) - 2026-01-13
+
+Added Hal links to get all groups endpoint only when paging params are present. Added new endpoint for getting member invite by ID.
+
 ## 4.0.0
 
 ### Major Changes
