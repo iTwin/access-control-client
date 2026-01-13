@@ -87,6 +87,25 @@ export interface MultipleMemberInvitationResponse {
 }
 
 /**
+ * API response wrapper for a member invitation.
+ *
+ * @remarks
+ * This interface is used for API responses that a single member invitation,
+ * such as GET /invitations operations.
+ *
+ * @example
+ * ```typescript
+ * const response: MultipleMemberInvitationResponse = {
+ *   invitation: {{ id: "inv1", email: "user1@external.com", status: "Pending", ... }} ,
+ * };
+ * ```
+ */
+export interface SingleMemberInvitationResponse {
+  /** The member invitation */
+  invitation: MemberInvitation;
+}
+
+/**
  * Represents an invitation sent to a group member to join an iTwin.
  *
  * @remarks

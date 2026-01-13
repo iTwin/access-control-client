@@ -5,7 +5,7 @@
 
 import type { AccessToken } from "@itwin/core-bentley";
 import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes";
-import type { MultipleMemberInvitationResponse } from "../types/Invitations";
+import type { MultipleMemberInvitationResponse, SingleMemberInvitationResponse } from "../types/Invitations";
 
 export interface IMemberInvitationsClient {
   /** Retrieves a list of member invitations. */
@@ -14,6 +14,13 @@ export interface IMemberInvitationsClient {
     iTwinId: string,
     arg?: Pick<ODataQueryParams, "top" | "skip">
   ): Promise<BentleyAPIResponse<MultipleMemberInvitationResponse>>;
+
+  /** Retrieves a member invitations by invite id. */
+  getITwinMemberInvitation(
+    accessToken: AccessToken,
+    iTwinId: string,
+    invitationId: string
+  ): Promise<BentleyAPIResponse<SingleMemberInvitationResponse>>;
 
   /** Removes an existing member invitation. */
   deleteITwinMemberInvitation(

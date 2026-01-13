@@ -8,8 +8,8 @@
 
 import type { AccessToken } from "@itwin/core-bentley";
 import type { IGroupsClient } from "../accessControlClientInterfaces/GroupClient";
-import type { BentleyAPIResponse } from "../types/CommonApiTypes";
-import type { Group, MultipleGroupsResponse, SingleGroupResponse } from "../types/Groups";
+import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes";
+import type { Group, GroupsResponseWithConditionalLinks, SingleGroupResponse } from "../types/Groups";
 import { BaseClient } from "./BaseClient";
 
 /** Client API to perform iTwin group operations.
@@ -25,13 +25,18 @@ export class GroupsClient extends BaseClient implements IGroupsClient{
   /** Retrieves a list of available user roles that are defined for a specified iTwin
     * @param accessToken The client access token string
     * @param iTwinId The id of the iTwin
-    * @returns Group[]
+    * @returns MultipleGroupsResponse
     */
-  public async getITwinGroups(
+  public async getITwinGroups<T extends Pick<ODataQueryParams, "top" | "skip"> | undefined = undefined>(
     accessToken: AccessToken,
-    iTwinId: string
-  ): Promise<BentleyAPIResponse<MultipleGroupsResponse>>{
-    const url = `${this._baseUrl}/${iTwinId}/groups`;
+    iTwinId: string,
+    arg?: T
+  ): Promise<BentleyAPIResponse<GroupsResponseWithConditionalLinks<T>>>{
+    let url = `${this._baseUrl}/${iTwinId}/groups`;
+
+    if (arg) {
+      url += `?${this.getQueryString(GroupsClient.paginationParamMapping, { top: arg.top, skip: arg.skip })}`;
+    }
     return this.sendGenericAPIRequest(accessToken, "GET", url);
   }
 

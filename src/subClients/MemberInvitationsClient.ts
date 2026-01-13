@@ -9,7 +9,7 @@
 import type { AccessToken } from "@itwin/core-bentley";
 import type { IMemberInvitationsClient } from "../accessControlClientInterfaces/MemberInvitationsClient";
 import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes";
-import type { MultipleMemberInvitationResponse } from "../types/Invitations";
+import type { MultipleMemberInvitationResponse, SingleMemberInvitationResponse } from "../types/Invitations";
 import { BaseClient } from "./BaseClient";
 
 /** Client API to perform iTwin member invitation operations.
@@ -60,4 +60,16 @@ export class MemberInvitationsClient
     const url = `${this._baseUrl}/${iTwinId}/members/invitations/${invitationId}`;
     return this.sendGenericAPIRequest(accessToken, "DELETE", url);
   }
+
+    /** Deletes a member invitations.
+   * @param accessToken The client access token string
+   * @param iTwinId The id of the iTwin
+   * @param invitationId The id of the invitation id
+   * @returns A member invitation or error object
+   */
+  public async getITwinMemberInvitation(accessToken: AccessToken, iTwinId: string, invitationId: string): Promise<BentleyAPIResponse<SingleMemberInvitationResponse>> {
+    const url = `${this._baseUrl}/${iTwinId}/members/invitations/${invitationId}`;
+    return this.sendGenericAPIRequest(accessToken, "GET", url);
+  }
+
 }

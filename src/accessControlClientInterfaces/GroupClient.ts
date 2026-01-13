@@ -4,15 +4,16 @@
  *--------------------------------------------------------------------------------------------*/
 
 import type { AccessToken } from "@itwin/core-bentley";
-import type { BentleyAPIResponse } from "../types/CommonApiTypes";
-import type { Group, MultipleGroupsResponse, SingleGroupResponse } from "../types/Groups";
+import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes";
+import type { Group, GroupsResponseWithConditionalLinks, SingleGroupResponse } from "../types/Groups";
 
 export interface IGroupsClient {
   /** Retrieves a list of groups the for a specified iTwin */
-  getITwinGroups(
+  getITwinGroups<T extends Pick<ODataQueryParams, "top" | "skip"> | undefined = undefined>(
     accessToken: AccessToken,
     iTwinId: string,
-  ): Promise<BentleyAPIResponse<MultipleGroupsResponse>>;
+    arg?: T
+  ): Promise<BentleyAPIResponse<GroupsResponseWithConditionalLinks<T>>>;
 
   /** Retrieves a group for a specified iTwin */
   getITwinGroup(

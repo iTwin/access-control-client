@@ -170,4 +170,49 @@ describe("AccessControlClient Member Invitations", () => {
 
     expect(deleteUserMemberInvitationResponse.status).toBe(204);
   });
+
+ it("Get a temporary member invitation", async () => {
+    const addUserMemberResponse =
+      await accessControlClient.userMembers.addITwinUserMembers(
+        accessToken,
+        TestConfig.itwinId,
+        [
+          {
+            email: `access-control-client-${randomIntFromInterval(0, 10000)}-temp@example.com`,
+            roleIds: [TestConfig.permanentRoleId1, TestConfig.permanentRoleId2],
+          },
+        ]
+      );
+    try {
+      const memberInvitation = await accessControlClient.memberInvitations.getITwinMemberInvitation(accessToken, TestConfig.itwinId, addUserMemberResponse.data!.invitations[0].id);
+      expect(memberInvitation.status).toBe(200);
+      expect(memberInvitation.data).toBeDefined();
+      expect(memberInvitation.data!.invitation.id).toBe(addUserMemberResponse.data!.invitations[0].id);
+      expect(memberInvitation.data!.invitation.email).toBe(addUserMemberResponse.data!.invitations[0].email);
+      expect(memberInvitation.data!.invitation.status).toBe("Pending");
+    }
+    finally {
+      const deleteUserMemberInvitationResponse = await accessControlClient.memberInvitations.deleteITwinMemberInvitation(accessToken, TestConfig.itwinId, addUserMemberResponse.data!.invitations[0].id);
+      expect(deleteUserMemberInvitationResponse.status).toBe(204);
+    }
+
+  });
+
+ it("Get a temporary member invitation fake member invite id, 404", async () => {
+    const zeroGuid = "00000000-0000-0000-0000-000000000000";
+    const memberInvitation = await accessControlClient.memberInvitations.getITwinMemberInvitation(accessToken, TestConfig.itwinId, zeroGuid);
+    expect(memberInvitation.status).toBe(404);
+    expect(memberInvitation.data).toBeUndefined();
+    expect(memberInvitation.error!.message).toBe("Requested invitation is not available.");
+    expect(memberInvitation.error!.code).toBe("InvitationNotFound");
+  });
+
+ it("Get a temporary member invitation fake itwin id, 404", async () => {
+    const zeroGuid = "00000000-0000-0000-0000-000000000000";
+    const memberInvitation = await accessControlClient.memberInvitations.getITwinMemberInvitation(accessToken, zeroGuid, zeroGuid);
+    expect(memberInvitation.status).toBe(404);
+    expect(memberInvitation.data).toBeUndefined();
+    expect(memberInvitation.error!.message).toBe("Requested iTwin is not available.");
+    expect(memberInvitation.error!.code).toBe("ItwinNotFound");
+  });
 });
