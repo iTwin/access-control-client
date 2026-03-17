@@ -17,7 +17,17 @@ export default defineConfig({
     },
     // Debugging configuration
     pool: process.env.NODE_ENV === 'debug' ? 'forks' : 'threads',
-    maxWorkers: process.env.NODE_ENV === 'debug' ? 1 : undefined
+    poolOptions: {
+      forks: {
+        singleFork: true
+      }
+    },
+    coverage: {
+      provider: 'v8',
+      include: ['src/**/*.ts'],
+      exclude: ['src/test/**', 'lib/**'],
+      reporter: ['text'],
+    }
   },
   define: {
     global: 'globalThis',
