@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import type { AccessToken } from "@itwin/core-bentley";
+import { randomUUID } from "node:crypto";
 import { beforeAll, describe, expect, it } from "vitest";
 import { AccessControlClient } from "../../AccessControlClient";
 import type {
@@ -214,5 +215,28 @@ describe("AccessControlClient Member Invitations", () => {
     expect(memberInvitation.data).toBeUndefined();
     expect(memberInvitation.error!.message).toBe("Requested iTwin is not available.");
     expect(memberInvitation.error!.code).toBe("ItwinNotFound");
+  });
+
+  it("should return 204 when accepting a random invitation GUID if the user is already a member", async () => {
+    const invitationId = randomUUID();
+    const response = await accessControlClient.memberInvitations.acceptITwinMemberInvitation(
+      accessToken,
+      TestConfig.itwinId,
+      invitationId,
+    );
+
+    expect(response.status).toBe(204);
+  });
+
+  it("accept member invitation fake itwin id, 404", async () => {
+    const fakeITwinId = randomUUID();
+    const invitationId = randomUUID();
+    const response = await accessControlClient.memberInvitations.acceptITwinMemberInvitation(
+      accessToken,
+      fakeITwinId,
+      invitationId,
+    );
+
+    expect(response.status).toBe(404);
   });
 });

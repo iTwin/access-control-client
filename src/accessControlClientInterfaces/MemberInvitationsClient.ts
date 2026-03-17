@@ -28,4 +28,11 @@ export interface IMemberInvitationsClient {
     iTwinId: string,
     invitationId: string
   ): Promise<BentleyAPIResponse<undefined>>;
+
+  /** Accepts an existing member invitation. */
+  acceptITwinMemberInvitation(
+    accessToken: AccessToken,
+    iTwinId: string,
+    invitationId: string
+  ): Promise<BentleyAPIResponse<undefined>>;
 }
