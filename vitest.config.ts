@@ -21,6 +21,12 @@ export default defineConfig({
       forks: {
         singleFork: true
       }
+    },
+    coverage: {
+      provider: 'v8',
+      include: ['src/**/*.ts'],
+      exclude: ['src/test/**', 'lib/**'],
+      reporter: ['text'],
     }
   },
   define: {
