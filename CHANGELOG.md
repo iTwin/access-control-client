@@ -1,5 +1,19 @@
 # Change Log - @itwin/access-control-client
 
+## 4.2.0
+
+### Minor Changes
+
+### [4.2.0](https://www.npmjs.com/package/@itwin/access-control-client/v/4.2.0) - 2026-03-19
+
+Added new endpoint for accepting user invites
+
+### Patch Changes
+
+### [4.1.1](https://www.npmjs.com/package/@itwin/access-control-client/v/4.1.1) - 2026-03-19
+
+Fixed dev dep audit issues and updated packages
+
 ## 4.1.0
 
 ### Minor Changes
