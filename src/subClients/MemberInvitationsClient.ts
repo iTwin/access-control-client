@@ -61,6 +61,24 @@ export class MemberInvitationsClient
     return this.sendGenericAPIRequest(accessToken, "DELETE", url);
   }
 
+  /** Accepts a member invitation.
+   * @param accessToken The client access token string
+   * @param iTwinId The id of the iTwin
+   * @param invitationId The id of the invitation id
+   * @returns No Content
+   * @beta
+   * @remarks On success, the invited user is added as an iTwin member with the roles from all pending invitations for that user. After acceptance, all of that user’s pending invitations for the iTwin are consumed and can no longer be accessed.
+   * If the invited user is already a member of the iTwin, the request is treated as a success. Only the invited user can accept this invitation through this API. The invited user must already exist as a member in IMS.
+   */
+  public async acceptITwinMemberInvitation(
+    accessToken: AccessToken,
+    iTwinId: string,
+    invitationId: string
+  ): Promise<BentleyAPIResponse<undefined>> {
+    const url = `${this._baseUrl}/${iTwinId}/members/invitations/${invitationId}/accept`;
+    return this.sendGenericAPIRequest(accessToken, "POST", url);
+  }
+
     /** Deletes a member invitations.
    * @param accessToken The client access token string
    * @param iTwinId The id of the iTwin
