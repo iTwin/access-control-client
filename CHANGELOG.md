@@ -1,5 +1,19 @@
 # Change Log - @itwin/access-control-client
 
+## 4.3.0
+
+### Minor Changes
+
+### [4.3.0](https://www.npmjs.com/package/@itwin/access-control-client/v/4.3.0) - 2026-03-26
+
+add support for role 'type' property in role create/get responses
+
+### Patch Changes
+
+### [4.2.1](https://www.npmjs.com/package/@itwin/access-control-client/v/4.2.1) - 2026-03-26
+
+updating picomatch and changesets packages to latest versions to avoid vulnerabilities
+
 ## 4.2.0
 
 ### Minor Changes
