@@ -15,6 +15,7 @@ import type { Permission } from "./Permission";
  *   id: "550e8400-e29b-41d4-a716-446655440000",
  *   displayName: "Project Manager",
  *   description: "Full access to manage project resources, users, and settings",
+ *   type: "Custom",
  *   permissions: [
  *     "itwins_read",
  *     "itwins_modify",
@@ -35,4 +36,6 @@ export interface Role {
   description: string;
   /** Array of permissions associated with this role */
   permissions: Permission[];
+  /** The type of role, either Custom or Default */
+  type: string;
 }

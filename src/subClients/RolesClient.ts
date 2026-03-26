@@ -60,7 +60,7 @@ export class RolesClient extends BaseClient implements IRolesClient {
     accessToken: AccessToken,
     iTwinId: string,
     role: Pick<Role, "displayName" | "description">
-  ): Promise<BentleyAPIResponse<Pick<Role, "id" | "displayName" | "description">>> {
+  ): Promise<BentleyAPIResponse<Pick<Role, "id" | "displayName" | "description" | "type">>> {
     const url = `${this._baseUrl}/${iTwinId}/roles`;
     return this.sendGenericAPIRequest(accessToken, "POST", url, role, "role");
   }
@@ -91,7 +91,7 @@ export class RolesClient extends BaseClient implements IRolesClient {
     accessToken: AccessToken,
     iTwinId: string,
     roleId: string,
-    role: Partial<Omit<Role, "id">>
+    role: Partial<Omit<Role, "id" | "type">>
   ): Promise<BentleyAPIResponse<Role>> {
     const url = `${this._baseUrl}/${iTwinId}/roles/${roleId}`;
     return this.sendGenericAPIRequest(accessToken, "PATCH", url, role, "role");
