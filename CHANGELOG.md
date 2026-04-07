@@ -1,5 +1,13 @@
 # Change Log - @itwin/access-control-client
 
+## 4.3.1
+
+### Patch Changes
+
+### [4.3.1](https://www.npmjs.com/package/@itwin/access-control-client/v/4.3.1) - 2026-04-06
+
+Fixed vulnerable dev deps
+
 ## 4.3.0
 
 ### Minor Changes
