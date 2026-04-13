@@ -44,6 +44,14 @@ export interface MemberInvitation {
   expirationDate: string;
   /** Optional array of roles that will be assigned upon acceptance (excludes permissions) */
   roles?: Role[];
+  /** Given name of the user that sent the invitation.*/
+  inviterGivenName: string;
+  /** Surname of the user that sent the invitation.*/
+  inviterSurname: string;
+  /** Organization of the user that sent the invitation.*/
+  inviterOrganization: string;
+  /** Display name of the project associated with the invitation.*/
+  projectDisplayName: string;
 }
 
 /**
