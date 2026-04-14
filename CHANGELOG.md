@@ -1,5 +1,18 @@
 # Change Log - @itwin/access-control-client
 
+## 4.4.0
+
+### Minor Changes
+
+### [4.4.0](https://www.npmjs.com/package/@itwin/access-control-client/v/4.4.0) - 2026-04-13
+
+Added 4 new fields to the member invite interface
+
+- inviterGivenName
+- inviterSurname
+- inviterOrganization
+- projectDisplayName
+
 ## 4.3.1
 
 ### Patch Changes
