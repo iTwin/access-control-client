@@ -347,7 +347,7 @@ describe("AccessControlClient iTwin Jobs", () => {
       await accessControlClient.itwinShares.createITwinShare(
         accessToken,
         TestConfig.itwinId,
-        invalidShare as any
+        invalidShare
       );
 
     // Assert
