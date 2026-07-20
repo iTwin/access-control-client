@@ -43,11 +43,11 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.30.0",
+    "@changesets/cli": "^2.30.1",
     "@changesets/types": "6.1.0",
     "@eslint/eslintrc": "^3.3.5",
-    "@itwin/build-tools": "^5.9.2",
-    "@itwin/core-bentley": "^5.7.2",
+    "@itwin/build-tools": "^5.11.3",
+    "@itwin/core-bentley": "^5.11.3",
     "@itwin/eslint-plugin": "^6.0.0",
     "@itwin/oidc-signin-tool": "^5.1.2",
     "@playwright/test": "1.56.0",
@@ -63,7 +63,7 @@
     "source-map-loader": "^5.0.0",
     "typedoc": "^0.28.17",
     "typescript": "~5.9.3",
-    "vite": "^5.4.10",
+    "vite": "^6.4.3",
     "vitest": "^3.2.4"
   },
   "repository": {
@@ -91,7 +91,8 @@
       "picomatch@<2.3.2": "2.3.2",
       "picomatch@>=4.0.0 <4.0.4": "4.0.4",
       "yaml@>=2.0.0 <2.8.3": "2.8.3",
-      "lodash": ">=4.18.0"
+      "lodash": ">=4.18.0",
+      "@changesets/write>human-id": "4.1.1"
     }
   }
 }
