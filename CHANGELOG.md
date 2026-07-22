@@ -1,5 +1,13 @@
 # Change Log - @itwin/access-control-client
 
+## 4.4.1
+
+### Patch Changes
+
+### [4.4.1](https://www.npmjs.com/package/@itwin/access-control-client/v/4.4.1) - 2026-07-22
+
+Updated dependencies to fix audit vulnerabilities
+
 ## 4.4.0
 
 ### Minor Changes
