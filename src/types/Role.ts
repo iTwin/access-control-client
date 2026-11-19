@@ -3,7 +3,7 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import type { Permission } from "./Permission";
+import type { Permission } from "./Permission.js";
 
 /**
  * Represents a role that defines a set of permissions for iTwin access control.

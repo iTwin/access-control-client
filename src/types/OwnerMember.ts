@@ -3,9 +3,9 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import type { MemberInvitation } from "./Invitations";
-import type { Links } from "./links";
-import type { OwnerMember } from "./Members";
+import type { MemberInvitation } from "./Invitations.js";
+import type { Links } from "./links.js";
+import type { OwnerMember } from "./Members.js";
 
 /**
  * Response object when adding a new owner member to an iTwin.

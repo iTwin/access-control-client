@@ -7,10 +7,10 @@
  */
 
 import type { AccessToken } from "@itwin/core-bentley";
-import type { IITwinJobsClient } from "../accessControlClientInterfaces/ITwinJobsClient";
-import type { BentleyAPIResponse, ResultMode } from "../types/CommonApiTypes";
-import type { ITwinJob, ITwinJobActions } from "../types/ITwinJob";
-import { BaseClient } from "./BaseClient";
+import type { IITwinJobsClient } from "../accessControlClientInterfaces/ITwinJobsClient.js";
+import type { BentleyAPIResponse, ResultMode } from "../types/CommonApiTypes.js";
+import type { ITwinJob, ITwinJobActions } from "../types/ITwinJob.js";
+import { BaseClient } from "./BaseClient.js";
 
 /** Client API to perform iTwin job operations.
  */

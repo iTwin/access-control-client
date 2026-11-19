@@ -3,9 +3,9 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import type { MemberInvitation } from "./Invitations";
-import type { Links } from "./links";
-import type { UserMember } from "./Members";
+import type { MemberInvitation } from "./Invitations.js";
+import type { Links } from "./links.js";
+import type { UserMember } from "./Members.js";
 
 /**
  * Request to add or invite a user member to an iTwin with role assignments.

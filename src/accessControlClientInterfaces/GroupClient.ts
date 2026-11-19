@@ -4,8 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 
 import type { AccessToken } from "@itwin/core-bentley";
-import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes";
-import type { Group, GroupsResponseWithConditionalLinks, SingleGroupResponse } from "../types/Groups";
+import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes.js";
+import type { Group, GroupsResponseWithConditionalLinks, SingleGroupResponse } from "../types/Groups.js";
 
 export interface IGroupsClient {
   /** Retrieves a list of groups the for a specified iTwin */

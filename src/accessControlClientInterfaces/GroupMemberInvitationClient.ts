@@ -4,8 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 
 import type { AccessToken } from "@itwin/core-bentley";
-import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes";
-import type { MultipleMemberInvitationResponse } from "../types/Invitations";
+import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes.js";
+import type { MultipleMemberInvitationResponse } from "../types/Invitations.js";
 
 /** @beta */
 export interface IGroupMemberInvitationClient {

@@ -4,8 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 
 import type { AccessToken } from "@itwin/core-bentley";
-import type { BentleyAPIResponse } from "../types/CommonApiTypes";
-import type { Permission } from "../types/Permission";
+import type { BentleyAPIResponse } from "../types/CommonApiTypes.js";
+import type { Permission } from "../types/Permission.js";
 
 export interface IPermissionsClient {
   /** Retrieves the list of all available permissions **/

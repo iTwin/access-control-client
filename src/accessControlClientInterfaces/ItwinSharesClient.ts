@@ -4,8 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 
 import type { AccessToken } from "@itwin/core-bentley";
-import type { BentleyAPIResponse } from "../types/CommonApiTypes";
-import type { MultiShareContractResponse, ShareContract, SingleShareContractResponse } from "../types/ShareContract";
+import type { BentleyAPIResponse } from "../types/CommonApiTypes.js";
+import type { MultiShareContractResponse, ShareContract, SingleShareContractResponse } from "../types/ShareContract.js";
 
 /** @beta */
 export interface IITwinSharesClient {

@@ -7,10 +7,10 @@
  */
 
 import type { AccessToken } from "@itwin/core-bentley";
-import type { IRolesClient } from "../accessControlClientInterfaces/RolesClient";
-import type { BentleyAPIResponse } from "../types/CommonApiTypes";
-import type { Role } from "../types/Role";
-import { BaseClient } from "./BaseClient";
+import type { IRolesClient } from "../accessControlClientInterfaces/RolesClient.js";
+import type { BentleyAPIResponse } from "../types/CommonApiTypes.js";
+import type { Role } from "../types/Role.js";
+import { BaseClient } from "./BaseClient.js";
 
 
 /** Client API to perform iTwin role operations.

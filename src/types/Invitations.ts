@@ -3,8 +3,8 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import type { Links } from "./links";
-import type { Role } from "./Role";
+import type { Links } from "./links.js";
+import type { Role } from "./Role.js";
 
 /**
  * Represents an invitation sent to a user to join an iTwin as a member.

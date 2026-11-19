@@ -3,7 +3,7 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import type { Role } from "./Role";
+import type { Role } from "./Role.js";
 
 /**
  * Represents a group that is a member of an iTwin with associated roles and metadata.

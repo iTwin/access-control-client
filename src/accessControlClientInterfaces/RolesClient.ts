@@ -4,8 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 
 import type { AccessToken } from "@itwin/core-bentley";
-import type { BentleyAPIResponse } from "../types/CommonApiTypes";
-import type { Role } from "../types/Role";
+import type { BentleyAPIResponse } from "../types/CommonApiTypes.js";
+import type { Role } from "../types/Role.js";
 
 
 export interface IRolesClient {

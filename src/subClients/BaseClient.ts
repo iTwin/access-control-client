@@ -13,8 +13,8 @@ import type {
   Method,
   ODataQueryParams,
   RequestConfig,
-} from "../types/CommonApiTypes";
-import { hasProperty, ParameterMapping } from "../types/typeUtils";
+} from "../types/CommonApiTypes.js";
+import { hasProperty, ParameterMapping } from "../types/typeUtils.js";
 
 /**
  * Type guard to validate if an object is a valid Error structure

@@ -13,31 +13,31 @@
  */
 
 // Main client export
-export * from "./AccessControlClient";
+export * from "./AccessControlClient.js";
 
 // Types exports
-export * from "./types/CommonApiTypes";
-export * from "./types/GroupMember";
-export * from "./types/Groups";
-export * from "./types/Invitations";
-export * from "./types/ITwinJob";
-export * from "./types/links";
-export * from "./types/OwnerMember";
-export * from "./types/Permission";
-export * from "./types/Role";
-export * from "./types/UserMembers";
-export * from "./types/Members";
-export * from "./types/ShareContract";
+export * from "./types/CommonApiTypes.js";
+export * from "./types/GroupMember.js";
+export * from "./types/Groups.js";
+export * from "./types/Invitations.js";
+export * from "./types/ITwinJob.js";
+export * from "./types/links.js";
+export * from "./types/OwnerMember.js";
+export * from "./types/Permission.js";
+export * from "./types/Role.js";
+export * from "./types/UserMembers.js";
+export * from "./types/Members.js";
+export * from "./types/ShareContract.js";
 
 // Client interfaces exports
-export * from "./accessControlClientInterfaces/accessControl";
-export * from "./accessControlClientInterfaces/GroupClient";
-export * from "./accessControlClientInterfaces/GroupMembersClient";
-export * from "./accessControlClientInterfaces/ITwinJobsClient";
-export * from "./accessControlClientInterfaces/MemberInvitationsClient";
-export * from "./accessControlClientInterfaces/OwnerMembersClient ";
-export * from "./accessControlClientInterfaces/PermissionsClient";
-export * from "./accessControlClientInterfaces/RolesClient";
-export * from "./accessControlClientInterfaces/UserMembersClient";
-export * from "./accessControlClientInterfaces/ItwinSharesClient";
-export * from "./accessControlClientInterfaces/GroupMemberInvitationClient"
+export * from "./accessControlClientInterfaces/accessControl.js";
+export * from "./accessControlClientInterfaces/GroupClient.js";
+export * from "./accessControlClientInterfaces/GroupMembersClient.js";
+export * from "./accessControlClientInterfaces/ITwinJobsClient.js";
+export * from "./accessControlClientInterfaces/MemberInvitationsClient.js";
+export * from "./accessControlClientInterfaces/OwnerMembersClient .js";
+export * from "./accessControlClientInterfaces/PermissionsClient.js";
+export * from "./accessControlClientInterfaces/RolesClient.js";
+export * from "./accessControlClientInterfaces/UserMembersClient.js";
+export * from "./accessControlClientInterfaces/ItwinSharesClient.js";
+export * from "./accessControlClientInterfaces/GroupMemberInvitationClient.js"

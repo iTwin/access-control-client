@@ -3,8 +3,8 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import type { Links } from "./links";
-import type { GroupUser } from "./Members";
+import type { Links } from "./links.js";
+import type { GroupUser } from "./Members.js";
 
 /**
  * Represents an access control group within an iTwin.

@@ -3,7 +3,7 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import type { ErrorDetail } from "./CommonApiTypes";
+import type { ErrorDetail } from "./CommonApiTypes.js";
 
 /**
  * Represents the current status of an iTwin job operation.

@@ -7,11 +7,11 @@
  */
 
 import type { AccessToken } from "@itwin/core-bentley";
-import type { IOwnerMembersClient } from "../accessControlClientInterfaces/OwnerMembersClient ";
-import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes";
-import type { OwnerMember } from "../types/Members";
-import type { AddOwnerMemberResponse, OwnerMemberMultiResponse } from "../types/OwnerMember";
-import { BaseClient } from "./BaseClient";
+import type { IOwnerMembersClient } from "../accessControlClientInterfaces/OwnerMembersClient .js";
+import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes.js";
+import type { OwnerMember } from "../types/Members.js";
+import type { AddOwnerMemberResponse, OwnerMemberMultiResponse } from "../types/OwnerMember.js";
+import { BaseClient } from "./BaseClient.js";
 
 /** Client API to perform owner member operations.
  */

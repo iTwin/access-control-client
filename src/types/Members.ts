@@ -3,7 +3,7 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import type { Role } from "./Role";
+import type { Role } from "./Role.js";
 
 
 interface UserBase {

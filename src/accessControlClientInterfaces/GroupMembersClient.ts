@@ -4,9 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 
 import type { AccessToken } from "@itwin/core-bentley";
-import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes";
-import type { GroupMemberAssignment, MultipleGroupMembersResponse, SingleGroupMemberResponse } from "../types/GroupMember";
-import type { Links } from "../types/links";
+import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes.js";
+import type { GroupMemberAssignment, MultipleGroupMembersResponse, SingleGroupMemberResponse } from "../types/GroupMember.js";
+import type { Links } from "../types/links.js";
 
 export interface IGroupMembersClient {
   /** Retrieves a list of group members and their roles assigned to a specified iTwin. */
