@@ -3,16 +3,16 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import type { IGroupsClient } from "./GroupClient";
-import type { IGroupMemberInvitationClient } from "./GroupMemberInvitationClient";
-import type { IGroupMembersClient } from "./GroupMembersClient";
-import type { IITwinJobsClient } from "./ITwinJobsClient";
-import type { IITwinSharesClient } from "./ItwinSharesClient";
-import type { IMemberInvitationsClient } from "./MemberInvitationsClient";
-import type { IOwnerMembersClient } from "./OwnerMembersClient ";
-import type { IPermissionsClient } from "./PermissionsClient";
-import type { IRolesClient } from "./RolesClient";
-import type { IUserMembersClient } from "./UserMembersClient";
+import type { IGroupsClient } from "./GroupClient.js";
+import type { IGroupMemberInvitationClient } from "./GroupMemberInvitationClient.js";
+import type { IGroupMembersClient } from "./GroupMembersClient.js";
+import type { IITwinJobsClient } from "./ITwinJobsClient.js";
+import type { IITwinSharesClient } from "./ItwinSharesClient.js";
+import type { IMemberInvitationsClient } from "./MemberInvitationsClient.js";
+import type { IOwnerMembersClient } from "./OwnerMembersClient .js";
+import type { IPermissionsClient } from "./PermissionsClient.js";
+import type { IRolesClient } from "./RolesClient.js";
+import type { IUserMembersClient } from "./UserMembersClient.js";
 
 export interface IAccessControlClient {
   permissions: IPermissionsClient;

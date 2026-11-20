@@ -4,8 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 
 import type { AccessToken } from "@itwin/core-bentley";
-import type { BentleyAPIResponse, ResultMode } from "../types/CommonApiTypes";
-import type { ITwinJob, ITwinJobActions } from "../types/ITwinJob";
+import type { BentleyAPIResponse, ResultMode } from "../types/CommonApiTypes.js";
+import type { ITwinJob, ITwinJobActions } from "../types/ITwinJob.js";
 
 export interface IITwinJobsClient {
   /** Creates a new iTwin Job */

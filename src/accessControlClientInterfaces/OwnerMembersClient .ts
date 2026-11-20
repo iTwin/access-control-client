@@ -4,9 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 
 import type { AccessToken } from "@itwin/core-bentley";
-import type { OwnerMember } from "../access-control-client";
-import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes";
-import type { AddOwnerMemberResponse, OwnerMemberMultiResponse } from "../types/OwnerMember";
+import type { OwnerMember } from "../access-control-client.js";
+import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes.js";
+import type { AddOwnerMemberResponse, OwnerMemberMultiResponse } from "../types/OwnerMember.js";
 
 
 export interface IOwnerMembersClient {

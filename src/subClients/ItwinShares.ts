@@ -7,10 +7,10 @@
  */
 
 import type { AccessToken } from "@itwin/core-bentley";
-import type { IITwinSharesClient } from "../accessControlClientInterfaces/ItwinSharesClient";
-import type { BentleyAPIResponse } from "../types/CommonApiTypes";
-import type { MultiShareContractResponse, ShareContract, SingleShareContractResponse } from "../types/ShareContract";
-import { BaseClient } from "./BaseClient";
+import type { IITwinSharesClient } from "../accessControlClientInterfaces/ItwinSharesClient.js";
+import type { BentleyAPIResponse } from "../types/CommonApiTypes.js";
+import type { MultiShareContractResponse, ShareContract, SingleShareContractResponse } from "../types/ShareContract.js";
+import { BaseClient } from "./BaseClient.js";
 
 /** Client API to perform iTwin share operations.
  * @beta

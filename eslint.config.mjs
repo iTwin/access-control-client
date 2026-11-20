@@ -22,6 +22,19 @@ export default [
       }],
     },
   },
+  // Shipped ESM is loaded by Node, which requires file extensions on relative imports (#81)
+  {
+    files: ["src/**/*.{ts,tsx}"],
+    ignores: ["**/*.test.ts", "src/test/**/*"],
+    rules: {
+      "no-restricted-imports": ["error", {
+        patterns: [{
+          regex: "^\\.{1,2}/(?!.*\\.js$)",
+          message: "Relative imports must end in .js so the ESM build loads in Node.js.",
+        }],
+      }],
+    },
+  },
   // Rules for all source files
   {
     files: ["src/**/*.{ts,tsx}"],

@@ -7,10 +7,10 @@
  */
 
 import type { AccessToken } from "@itwin/core-bentley";
-import type { IUserMembersClient } from "../accessControlClientInterfaces/UserMembersClient";
-import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes";
-import type { AddUserMember, AddUserMemberResponse, MultipleUserMembersResponse, SingleUserMemberResponse } from "../types/UserMembers";
-import { BaseClient } from "./BaseClient";
+import type { IUserMembersClient } from "../accessControlClientInterfaces/UserMembersClient.js";
+import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes.js";
+import type { AddUserMember, AddUserMemberResponse, MultipleUserMembersResponse, SingleUserMemberResponse } from "../types/UserMembers.js";
+import { BaseClient } from "./BaseClient.js";
 
 /** Client API to perform user members operations.
  */

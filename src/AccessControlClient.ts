@@ -6,27 +6,27 @@
  * @module AccessControlClient
  */
 
-import type { IAccessControlClient } from "./accessControlClientInterfaces/accessControl";
-import type { IGroupsClient } from "./accessControlClientInterfaces/GroupClient";
-import type { IGroupMemberInvitationClient } from "./accessControlClientInterfaces/GroupMemberInvitationClient";
-import type { IGroupMembersClient } from "./accessControlClientInterfaces/GroupMembersClient";
-import type { IITwinJobsClient } from "./accessControlClientInterfaces/ITwinJobsClient";
-import type { IITwinSharesClient } from "./accessControlClientInterfaces/ItwinSharesClient";
-import type { IMemberInvitationsClient } from "./accessControlClientInterfaces/MemberInvitationsClient";
-import type { IOwnerMembersClient } from "./accessControlClientInterfaces/OwnerMembersClient ";
-import type { IPermissionsClient } from "./accessControlClientInterfaces/PermissionsClient";
-import type { IRolesClient } from "./accessControlClientInterfaces/RolesClient";
-import type { IUserMembersClient } from "./accessControlClientInterfaces/UserMembersClient";
-import { GroupMemberInvitationClient } from './subClients/GroupMemberInvitationsClient';
-import { GroupMembersClient } from "./subClients/GroupMembersClient";
-import { GroupsClient } from "./subClients/GroupsClient";
-import { ITwinJobsClient } from "./subClients/ITwinJobsClient";
-import { ITwinSharesClient } from "./subClients/ItwinShares";
-import { MemberInvitationsClient } from "./subClients/MemberInvitationsClient";
-import { OwnerMembersClient } from "./subClients/OwnerMembersClient";
-import { PermissionsClient } from "./subClients/PermissionsClient";
-import { RolesClient } from "./subClients/RolesClient";
-import { UserMembersClient } from "./subClients/UserMembersClient";
+import type { IAccessControlClient } from "./accessControlClientInterfaces/accessControl.js";
+import type { IGroupsClient } from "./accessControlClientInterfaces/GroupClient.js";
+import type { IGroupMemberInvitationClient } from "./accessControlClientInterfaces/GroupMemberInvitationClient.js";
+import type { IGroupMembersClient } from "./accessControlClientInterfaces/GroupMembersClient.js";
+import type { IITwinJobsClient } from "./accessControlClientInterfaces/ITwinJobsClient.js";
+import type { IITwinSharesClient } from "./accessControlClientInterfaces/ItwinSharesClient.js";
+import type { IMemberInvitationsClient } from "./accessControlClientInterfaces/MemberInvitationsClient.js";
+import type { IOwnerMembersClient } from "./accessControlClientInterfaces/OwnerMembersClient .js";
+import type { IPermissionsClient } from "./accessControlClientInterfaces/PermissionsClient.js";
+import type { IRolesClient } from "./accessControlClientInterfaces/RolesClient.js";
+import type { IUserMembersClient } from "./accessControlClientInterfaces/UserMembersClient.js";
+import { GroupMemberInvitationClient } from './subClients/GroupMemberInvitationsClient.js';
+import { GroupMembersClient } from "./subClients/GroupMembersClient.js";
+import { GroupsClient } from "./subClients/GroupsClient.js";
+import { ITwinJobsClient } from "./subClients/ITwinJobsClient.js";
+import { ITwinSharesClient } from "./subClients/ItwinShares.js";
+import { MemberInvitationsClient } from "./subClients/MemberInvitationsClient.js";
+import { OwnerMembersClient } from "./subClients/OwnerMembersClient.js";
+import { PermissionsClient } from "./subClients/PermissionsClient.js";
+import { RolesClient } from "./subClients/RolesClient.js";
+import { UserMembersClient } from "./subClients/UserMembersClient.js";
 
 /** Client API to access the access control service.
  */

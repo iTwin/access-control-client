@@ -7,10 +7,10 @@
  */
 
 import type { AccessToken } from "@itwin/core-bentley";
-import type { MultipleGroupMemberInvitationResponse } from "../access-control-client";
-import type { IGroupMemberInvitationClient } from "../accessControlClientInterfaces/GroupMemberInvitationClient";
-import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes";
-import { BaseClient } from "./BaseClient";
+import type { MultipleGroupMemberInvitationResponse } from "../access-control-client.js";
+import type { IGroupMemberInvitationClient } from "../accessControlClientInterfaces/GroupMemberInvitationClient.js";
+import type { BentleyAPIResponse, ODataQueryParams } from "../types/CommonApiTypes.js";
+import { BaseClient } from "./BaseClient.js";
 
 /** Client API to perform iTwin group members operations.
  * @beta

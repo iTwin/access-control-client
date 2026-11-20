@@ -143,7 +143,7 @@ describe("AccessControlClient Groups", () => {
     expect(createResponse.data).toBeUndefined();
   });
 
-  it("should get a 404 when trying to update a group with invalid email format", async () => {
+  it("should get a 422 when trying to update a group with invalid email format", async () => {
     // First create a group to update
     const newGroup = {
       name: `Test Group ${new Date().toISOString()}`,
@@ -166,8 +166,8 @@ describe("AccessControlClient Groups", () => {
         await accessControlClient.groups.updateITwinGroup(accessToken, TestConfig.itwinId, createResponse.data?.group!.id as string, invalidUpdateGroup);
 
       // Assert
-      expect(updateResponse.status).toBe(404);
-      expect(updateResponse.error!.code).toBe("TeamMemberNotFound");
+      expect(updateResponse.status).toBe(422);
+      expect(updateResponse.error!.code).toBe("InvalidiTwinsGroupRequest");
       expect(updateResponse.data).toBeUndefined();
     } finally {
       // Cleanup - delete the test group
@@ -175,7 +175,7 @@ describe("AccessControlClient Groups", () => {
     }
   });
 
-  it("should get a 404 when trying to update a group with non-existent user email", async () => {
+  it("should invite a non-existent user email instead of adding them as a member", async () => {
     // First create a group to update
     const newGroup = {
       name: `Test Group ${new Date().toISOString()}`,
@@ -188,19 +188,25 @@ describe("AccessControlClient Groups", () => {
     expect(createResponse.status).toBe(201);
 
     // Arrange - non-existent user email
+    const nonExistentEmail = "nonexistent.user@example.com"; // Valid format but user doesn't exist
     const invalidUpdateGroup = {
-      members: ["nonexistent.user@example.com"], // Valid format but user doesn't exist
+      members: [nonExistentEmail],
     };
+    const groupId = createResponse.data?.group!.id as string;
 
     try {
       // Act
       const updateResponse =
-        await accessControlClient.groups.updateITwinGroup(accessToken, TestConfig.itwinId, createResponse.data?.group!.id as string, invalidUpdateGroup);
+        await accessControlClient.groups.updateITwinGroup(accessToken, TestConfig.itwinId, groupId, invalidUpdateGroup);
 
       // Assert
-      expect(404).toBe(updateResponse.status); // Could be 404 depending on API implementation
-      expect(updateResponse.error).toBeDefined();
-      expect(updateResponse.data).toBeUndefined();
+      expect(updateResponse.status).toBe(200);
+      expect(updateResponse.data?.group!.members).toHaveLength(0);
+
+      const invitationsResponse =
+        await accessControlClient.groupMemberInvitations.queryITwinGroupMemberInvitations(accessToken, TestConfig.itwinId, groupId);
+      expect(invitationsResponse.status).toBe(200);
+      expect(invitationsResponse.data!.invitations.map((x) => x.email)).toContain(nonExistentEmail);
     } finally {
       // Cleanup - delete the test group
       await accessControlClient.groups.deleteITwinGroup(accessToken, TestConfig.itwinId, createResponse.data?.group!.id as string);
@@ -277,8 +283,13 @@ describe("AccessControlClient Groups", () => {
       expect(updateResponse.status).toBe(200);
       expect(updateResponse.data?.group!.name).toBe(updatedGroup.name);
       expect(updateResponse.data?.group!.description).toBe(updatedGroup.description);
-      expect(updateResponse.data?.group!.members.map((x) => x.email)).toContain(TestConfig.temporaryUserEmail);
       expect(updateResponse.data?.group!.imsGroups.map((x) => x)).toContain(TestConfig.permanentImsGroupName);
+
+      // The API now invites users who are outside the iTwin's organization instead of adding them directly
+      const invitationsResponse =
+        await accessControlClient.groupMemberInvitations.queryITwinGroupMemberInvitations(accessToken, TestConfig.itwinId, createResponse.data?.group!.id as string);
+      expect(invitationsResponse.status).toBe(200);
+      expect(invitationsResponse.data!.invitations.map((x) => x.email.toLowerCase())).toContain(TestConfig.temporaryUserEmail.toLowerCase());
 
       // --- UPDATE GROUP BACK TO EMPTY---
       // Arrange

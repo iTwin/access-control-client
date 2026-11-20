@@ -7,10 +7,10 @@
  */
 
 import type { AccessToken } from "@itwin/core-bentley";
-import type { IPermissionsClient } from "../accessControlClientInterfaces/PermissionsClient";
-import type { BentleyAPIResponse } from "../types/CommonApiTypes";
-import type { Permission } from "../types/Permission";
-import { BaseClient } from "./BaseClient";
+import type { IPermissionsClient } from "../accessControlClientInterfaces/PermissionsClient.js";
+import type { BentleyAPIResponse } from "../types/CommonApiTypes.js";
+import type { Permission } from "../types/Permission.js";
+import { BaseClient } from "./BaseClient.js";
 
 /** Client API to perform iTwin permission operations.
  */
