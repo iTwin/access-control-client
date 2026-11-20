@@ -1,6 +1,7 @@
 ---
+"@itwin/access-control-client": patch
 ---
 
-Bumped Node to 24 in CI and release workflows
+Republish of the 4.4.2 ESM fix
 
-`@changesets/cli` 3.x requires Node 22.11+, so the release workflow failed on Node 20.12.1.
+4.4.2 was never published to npm because the release workflow failed on Node 20.12.1. This release ships the same fix: the ESM entry point now loads in native Node.js. Fixes #81.
