@@ -1,5 +1,15 @@
 # Change Log - @itwin/access-control-client
 
+## 4.4.2
+
+### Patch Changes
+
+### [4.4.2](https://www.npmjs.com/package/@itwin/access-control-client/v/4.4.2) - 2026-11-20
+
+Fix ESM entry point failing to load in Node.js with ERR_MODULE_NOT_FOUND
+
+Relative imports in the ESM build now include `.js` extensions, and `lib/esm` ships a `package.json` with `"type": "module"`, so `import { AccessControlClient } from "@itwin/access-control-client"` works in native Node.js ESM. CommonJS and bundler consumers are unaffected. Fixes #81.
+
 ## 4.4.1
 
 ### Patch Changes
